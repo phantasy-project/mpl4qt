@@ -6,10 +6,13 @@ from PyQt5.QtWidgets import QWidget
 
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+import matplotlib as mpl
 
 import numpy as np
 
 from mpl4qt.widgets.mpltoolbar import NavigationToolbar
+
+MPL_VERSION = mpl.__version__
 
 
 class BasePlotWidget(FigureCanvas):
@@ -39,19 +42,14 @@ class BasePlotWidget(FigureCanvas):
             color = self.sys_bg_color.getRgbF()
         self.figure.set_facecolor(color)
         self.figure.set_edgecolor(color)
-        self.axes.set_axis_bgcolor(color)
+        if MPL_VERSION > "1.5.1":
+            self.axes.set_facecolor(color)
+        else:
+            self.axes.set_axis_bgcolor(color)
 
     def update_canvas(self):
         self.draw_idle()
 
-    #def resizeEvent(self, e):
-    #    print(self.size())
-    #    self.updateGeometry()
-    #    #self.resize(self.size())
-    #    QWidget.resizeEvent(self, e)
-        #self.figure.subplots_adjust(
-        #        top=0.9999, bottom=0.0001, left=0.0001, right=0.9999)
-        
 #class BasePlotWidget(QWidget):
 #    """Base class for figure plot panel.
 #
