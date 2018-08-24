@@ -122,7 +122,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
     @pyqtSlot(QColor)
     def setFigureGridColor(self, c, **kws):
         self._fig_grid_color = c
-        self.toggle_grid(color=c.getRgbF(), **kws)
+        self.toggle_grid(color=c.getRgbF(), toggle_checked=self._fig_grid_toggle, **kws)
         self.update_figure()
 
     figureGridColor = pyqtProperty(QColor, getFigureGridColor,
