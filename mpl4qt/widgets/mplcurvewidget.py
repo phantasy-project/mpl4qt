@@ -58,7 +58,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         super(MatplotlibCurveWidget, self).__init__(parent,
                 self._fig_width, self._fig_height, self._fig_dpi)
         self._fig_bgcolor = self.sys_bg_color
-        self._fig_ticks_color = self.sys_bg_color
+        self._fig_ticks_color = self.sys_fg_color
         self._fig_grid_color = QColor('gray')
         self._fig_title = ''
         self._fig_xlabel = ''

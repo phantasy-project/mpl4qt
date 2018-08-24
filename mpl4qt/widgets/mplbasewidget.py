@@ -49,6 +49,7 @@ class BasePlotWidget(FigureCanvas):
         self.setParent(parent)
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.sys_bg_color = self.palette().color(QPalette.Background)
+        self.sys_fg_color = self.palette().color(QPalette.Foreground)
         DEFAULT_FONTS = {
             'title': QFontDatabase.systemFont(QFontDatabase.TitleFont),
             'fixed': QFontDatabase.systemFont(QFontDatabase.FixedFont),
