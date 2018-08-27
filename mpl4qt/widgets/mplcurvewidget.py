@@ -50,7 +50,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def __init__(self, parent=None):
         self._fig_width = 4
         self._fig_height = 3
-        self._fig_dpi = 75
+        self._fig_dpi = 120
         self._fig_tight_layout = False
         self._fig_auto_scale = False
         self._fig_mticks_toggle = False
