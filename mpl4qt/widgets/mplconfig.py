@@ -12,6 +12,7 @@ from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QIntValidator
 
 from mpl4qt.ui.ui_mplconfig import Ui_Dialog
 
@@ -52,6 +53,10 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         # UI
         self.setupUi(self)
         self.setWindowTitle("Figure Configurations")
+
+        self.figWidth_lineEdit.setValidator(QIntValidator(2, 20, self))
+        self.figHeight_lineEdit.setValidator(QIntValidator(2, 20, self))
+        self.figDpi_lineEdit.setValidator(QIntValidator(50, 500, self))
         
         # events
         self.bkgd_color_btn.clicked.connect(self.set_fig_bkgdcolor)
@@ -193,16 +198,19 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
 
     @pyqtSlot('QString')
     def set_figsize_width(self, s):
+        if s=='': return
         w = max(int(s), 2)
         self.figWidthChanged.emit(w)
 
     @pyqtSlot('QString')
     def set_figsize_height(self, s):
+        if s=='': return
         h = max(int(s), 2)
         self.figHeightChanged.emit(h)
 
     @pyqtSlot('QString')
     def set_figdpi(self, s):
+        if s=='': return
         d = max(int(s), 20)
         self.figDpiChanged.emit(d)
 
