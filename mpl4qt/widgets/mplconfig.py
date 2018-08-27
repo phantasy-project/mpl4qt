@@ -66,6 +66,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.figHeight_lineEdit.textChanged.connect(self.set_figsize_height)
         self.figDpi_lineEdit.textChanged.connect(self.set_figdpi)
         self.autoScale_chkbox.stateChanged.connect(self.set_fig_autoscale)
+        self.show_xyrange_box(not self.autoScale_chkbox.isChecked())
         self.tightLayout_chkbox.stateChanged.connect(self.set_fig_tightlayout)
         self.xy_label_font_btn.clicked.connect(self.set_xy_label_font)
         self.xy_ticks_font_btn.clicked.connect(self.set_xy_ticks_font)
@@ -217,6 +218,16 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     @pyqtSlot(int)
     def set_fig_autoscale(self, state):
         self.figAutoScaleChanged.emit(state==Qt.Checked)
+        self.show_xyrange_box(state!=Qt.Checked)
+
+    def show_xyrange_box(self, b):
+        """Show widgets in xyrange box or not.
+        """
+        widgets = (self.xmin_lbl, self.xmax_lbl,
+                   self.ymin_lbl, self.ymax_lbl,
+                   self.xmin_lineEdit, self.xmax_lineEdit,
+                   self.ymin_lineEdit, self.ymax_lineEdit)
+        [w.setEnabled(b) for w in widgets]
 
     @pyqtSlot(int)
     def set_fig_tightlayout(self, state):
