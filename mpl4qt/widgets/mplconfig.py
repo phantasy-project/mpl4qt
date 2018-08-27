@@ -6,7 +6,6 @@
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtWidgets import QColorDialog
 from PyQt5.QtWidgets import QFontDialog
-from PyQt5.QtWidgets import QDialogButtonBox
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtCore import Qt
@@ -23,11 +22,11 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     figWidthChanged = pyqtSignal(int)
     figHeightChanged = pyqtSignal(int)
     figDpiChanged = pyqtSignal(int)
-    
+
     # layout and scale
     figAutoScaleChanged = pyqtSignal(bool)
     figTightLayoutChanged = pyqtSignal(bool)
-    
+
     # title string
     figTitleFontChanged = pyqtSignal(QFont)
 
@@ -45,6 +44,12 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     figGridChanged = pyqtSignal(bool)
     figGridColorChanged = pyqtSignal(QColor)
 
+    # xy limits
+    figXminLimitChanged = pyqtSignal(float)
+    figXmaxLimitChanged = pyqtSignal(float)
+    figYminLimitChanged = pyqtSignal(float)
+    figYmaxLimitChanged = pyqtSignal(float)
+
     def __init__(self, parent=None):
         super(MatplotlibConfigPanel, self).__init__()
         self.parent = parent
@@ -57,11 +62,10 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.figWidth_lineEdit.setValidator(QIntValidator(2, 20, self))
         self.figHeight_lineEdit.setValidator(QIntValidator(2, 20, self))
         self.figDpi_lineEdit.setValidator(QIntValidator(50, 500, self))
-        
+
         # events
         self.bkgd_color_btn.clicked.connect(self.set_fig_bkgdcolor)
         self.ticks_color_btn.clicked.connect(self.set_fig_xyticks_color)
-        self.buttonBox.clicked.connect(self.control_btnbox)
         self.figWidth_lineEdit.textChanged.connect(self.set_figsize_width)
         self.figHeight_lineEdit.textChanged.connect(self.set_figsize_height)
         self.figDpi_lineEdit.textChanged.connect(self.set_figdpi)
@@ -71,6 +75,10 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.xy_label_font_btn.clicked.connect(self.set_xy_label_font)
         self.xy_ticks_font_btn.clicked.connect(self.set_xy_ticks_font)
         self.title_font_btn.clicked.connect(self.set_title_font)
+        self.xmin_lineEdit.textChanged.connect(self.set_xlimit_min)
+        self.xmax_lineEdit.textChanged.connect(self.set_xlimit_max)
+        self.ymin_lineEdit.textChanged.connect(self.set_ylimit_min)
+        self.ymax_lineEdit.textChanged.connect(self.set_ylimit_max)
 
         # link to main mpl widget
         self.bgcolorChanged[QColor].connect(self.set_bgcolor_label)
@@ -80,6 +88,10 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.figDpiChanged[int].connect(self.parent.setFigureDpi)
         self.figAutoScaleChanged[bool].connect(self.parent.setFigureAutoScale)
         self.figTightLayoutChanged[bool].connect(self.parent.setTightLayoutToggle)
+        self.figXminLimitChanged[float].connect(self.parent.setXLimitMin)
+        self.figXmaxLimitChanged[float].connect(self.parent.setXLimitMax)
+        self.figYminLimitChanged[float].connect(self.parent.setYLimitMin)
+        self.figYmaxLimitChanged[float].connect(self.parent.setYLimitMax)
 
         ## xy label
         self.figXYlabelFontChanged[QFont].connect(self.parent.setFigureXYlabelFont)
@@ -89,7 +101,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         ## title
         self.fig_title_lineEdit.textChanged.connect(self.parent.setFigureTitle)
         self.figTitleFontChanged.connect(self.parent.setFigureTitleFont)
-        
+
         # xy ticks
         self.figXYticksFontChanged.connect(self.parent.setFigureXYticksFont)
         self.figXYticksColorChanged[QColor].connect(self.parent.setFigureXYticksColor)
@@ -103,7 +115,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.figGridColorChanged[QColor].connect(self.set_grid_color_btn)
         self.gridon_chkbox.stateChanged.connect(self.set_fig_grid)
         self.grid_color_btn.clicked.connect(self.set_grid_color)
-        
+
         # post UI update
         self.post_init_ui()
 
@@ -122,6 +134,49 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.mticks_chkbox.setChecked(self.parent.getFigureMTicksToggle())
         self.gridon_chkbox.setChecked(self.parent.getFigureGridToggle())
         self.set_grid_color_btn(self.parent.getFigureGridColor())
+        self.set_xylimits()
+
+    def set_xylimits(self, xlim=None, ylim=None):
+        """Set xy limits.
+        """
+        xmin, xmax = self.parent.get_xlim()
+        ymin, ymax = self.parent.get_ylim()
+        self.xmin_lineEdit.setText('{0:3g}'.format(xmin))
+        self.xmax_lineEdit.setText('{0:3g}'.format(xmax))
+        self.ymin_lineEdit.setText('{0:3g}'.format(ymin))
+        self.ymax_lineEdit.setText('{0:3g}'.format(ymax))
+
+    @pyqtSlot('QString')
+    def set_xlimit_min(self, s):
+        try:
+            x = float(s)
+            self.figXminLimitChanged.emit(float(s))
+        except:
+            pass
+
+    @pyqtSlot('QString')
+    def set_xlimit_max(self, s):
+        try:
+            x = float(s)
+            self.figXmaxLimitChanged.emit(float(s))
+        except:
+            pass
+
+    @pyqtSlot('QString')
+    def set_ylimit_min(self, s):
+        try:
+            x = float(s)
+            self.figYminLimitChanged.emit(float(s))
+        except:
+            pass
+
+    @pyqtSlot('QString')
+    def set_ylimit_max(self, s):
+        try:
+            x = float(s)
+            self.figYmaxLimitChanged.emit(float(s))
+        except:
+            pass
 
     @pyqtSlot()
     def set_grid_color(self):
@@ -144,11 +199,11 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
             "QPushButton:pressed {\n"
             "  background-color: white;\n"
             "}")
-    
+
     @pyqtSlot(int)
     def set_fig_grid(self, state):
         self.figGridChanged.emit(state==Qt.Checked)
-    
+
     @pyqtSlot(int)
     def set_fig_mticks(self, state):
         self.figMTicksChanged.emit(state==Qt.Checked)
@@ -250,17 +305,6 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
                 "  background-color: %s;\n" % color.name() +
                 "  border-radius: 5px;\n"
                 "}")
-
-    def control_btnbox(self, btn):
-        """Handle different control btns."""
-        sbtn = self.buttonBox.standardButton(btn)
-        if sbtn == QDialogButtonBox.Apply:
-            pass
-            
-        elif sbtn == QDialogButtonBox.Ok:
-            print('Ok clicked')
-        elif sbtn == QDialogButtonBox.Cancel:
-            print('Cancel clicked')
 
 
 if __name__ == '__main__':
