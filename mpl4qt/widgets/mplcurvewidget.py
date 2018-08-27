@@ -66,6 +66,11 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._fig_xylabel_font = self.sys_label_font
         self._fig_xyticks_font = self.sys_label_font
         self._fig_title_font = self.sys_title_font
+        # x,y limits
+        self.setXLimitMin()
+        self.setXLimitMax()
+        self.setYLimitMin()
+        self.setYLimitMax()
 
     def init_figure(self):
         # initial xy data and line
@@ -286,6 +291,86 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     def getYData(self):
         return self._y_data
+
+    def getXLimitMin(self):
+        return self._xlim_min
+
+    @pyqtSlot(float)
+    def setXLimitMin(self, x=None):
+        if x is None:
+            x, _ = self._get_default_xlim()
+        self._xlim_min = x
+        xmin, xmax = self.get_xlim()
+        if x < xmax:
+            self.axes.set_xlim([x, xmax])
+            self.update_figure()
+
+    figureXLimitMin = pyqtProperty(float, getXLimitMin, setXLimitMin)
+
+    def getXLimitMax(self):
+        return self._xlim_max
+
+    @pyqtSlot(float)
+    def setXLimitMax(self, x=None):
+        if x is None:
+            _, x = self._get_default_xlim()
+        self._xlim_max = x
+        xmin, xmax = self.get_xlim()
+        if x > xmin:
+            self.axes.set_xlim([xmin, x])
+            self.update_figure()
+
+    figureXLimitMax = pyqtProperty(float, getXLimitMax, setXLimitMax)
+
+    def getYLimitMin(self):
+        return self._ylim_min
+
+    @pyqtSlot(float)
+    def setYLimitMin(self, y=None):
+        if y is None:
+            y, _ = self._get_default_ylim()
+        self._ylim_min = y
+        ymin, ymax = self.get_ylim()
+        if y < ymax:
+            self.axes.set_ylim([y, ymax])
+            self.update_figure()
+
+    figureYLimitMin = pyqtProperty(float, getYLimitMin, setYLimitMin)
+
+    def getYLimitMax(self):
+        return self._ylim_max
+
+    @pyqtSlot(float)
+    def setYLimitMax(self, y=None):
+        if y is None:
+            _, y = self._get_default_ylim()
+        self._ylim_max = y
+        ymin, ymax = self.get_ylim()
+        if y > ymin:
+            self.axes.set_ylim([ymin, y])
+            self.update_figure()
+
+    figureYLimitMax = pyqtProperty(float, getYLimitMax, setYLimitMax)
+
+    def _get_default_xlim(self):
+        """limit range from data
+        """
+        xmin, xmax = self._x_data.min(), self._x_data.max()
+        x0, xhw = (xmin + xmax) * 0.5, (xmax - xmin) * 0.5
+        return x0 - xhw * 1.1, x0 + xhw * 1.1
+
+    def get_xlim(self):
+        return self.axes.get_xlim()
+
+    def _get_default_ylim(self):
+        """limit range from data
+        """
+        ymin, ymax = self._y_data.min(), self._y_data.max()
+        y0, yhw = (ymin + ymax) * 0.5, (ymax - ymin) * 0.5
+        return y0 - yhw * 1.1, y0 + yhw * 1.1
+
+    def get_ylim(self):
+        return self.axes.get_ylim()
 
     def update_figure(self):
         if self.getFigureAutoScale():
