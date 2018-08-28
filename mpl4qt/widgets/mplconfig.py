@@ -67,6 +67,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     figMkfColorChanged = pyqtSignal(QColor)
     figMkStyleChanged = pyqtSignal('QString')
     figMkSizeChanged = pyqtSignal(float)
+    figMkWidthChanged = pyqtSignal(float)
 
     # legend
     figLegendToggleChanged = pyqtSignal(bool)
@@ -85,6 +86,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.figDpi_lineEdit.setValidator(QIntValidator(50, 500, self))
         self.line_width_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
         self.mk_size_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
+        self.mk_width_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
 
         # events
         self.bkgd_color_btn.clicked.connect(self.set_fig_bkgdcolor)
@@ -165,6 +167,9 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         # marker size
         self.mk_size_lineEdit.textChanged.connect(self.set_marker_size)
         self.figMkSizeChanged[float].connect(self.parent.setMarkerSize)
+        # marker thickness
+        self.mk_width_lineEdit.textChanged.connect(self.set_marker_thickness)
+        self.figMkWidthChanged[float].connect(self.parent.setMarkerThickness)
         # marker style
         self.figMkStyleChanged['QString'].connect(self.parent.setMarkerStyle)
         self.mk_style_cbb.currentIndexChanged[int].connect(self.set_marker_style)
@@ -240,6 +245,8 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.line_width_lineEdit.setText('{}'.format(config['lw']))
         # marker size
         self.mk_size_lineEdit.setText('{}'.format(config['ms']))
+        # mew
+        self.mk_width_lineEdit.setText('{}'.format(config['mew']))
         # line label
         self.line_label_lineEdit.setText('{}'.format(config['label']))
 
@@ -254,6 +261,12 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         if s=='': return
         w = max(float(s), 1.0)
         self.figMkSizeChanged.emit(w)
+
+    @pyqtSlot('QString')
+    def set_marker_thickness(self, s):
+        if s=='': return
+        w = max(float(s), 0.1)
+        self.figMkWidthChanged.emit(w)
 
     @pyqtSlot('QString')
     def set_xlimit_min(self, s):

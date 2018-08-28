@@ -81,6 +81,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._line_color = QColor('red')
         self._line_width = 1.5
         self._mec, self._mfc = QColor('red'), QColor('red')
+        self._mew = 1.0
         self._line_style = 'solid'
         self._marker_style = ''
         self._marker_size = 6.0
@@ -335,6 +336,17 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     figureMarkerStyle = pyqtProperty('QString', getMarkerStyle, setMarkerStyle)
 
+    def getMarkerThickness(self):
+        return self._mew
+
+    @pyqtSlot(float)
+    def setMarkerThickness(self, x):
+        self._mew = x
+        self._line.set_mew(x)
+        self.update_figure()
+
+    figureMarkerThickness = pyqtProperty(float, getMarkerThickness, setMarkerThickness)
+
     def getLineLabel(self):
         return self._line_label
 
@@ -381,11 +393,11 @@ class MatplotlibCurveWidget(BasePlotWidget):
             print("Currnet line changed to {}:{}".format(i, self._line))
 
     def get_line_config(self):
-        """Get line config: ls, lw, c, marker, ms, mec, mfc, label
+        """Get line config: ls, lw, c, marker, ms, mew, mec, mfc, label
         """
         print(self._line)
         return {p:getattr(self._line, 'get_'+p)() for p in
-                ('ls', 'lw', 'c', 'ms', 'mec', 'mfc', 'marker', 'label')}
+                ('ls', 'lw', 'c', 'ms', 'mew', 'mec', 'mfc', 'marker', 'label')}
 
     def getFigureAutoScale(self):
         return self._fig_auto_scale
