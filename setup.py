@@ -22,12 +22,12 @@ app_url = "https://archman.github.io/python-mpl4qt/"
 app_keywords = "widgets Qt designer PyQt matplotlib"
 installrequires = [
     'matplotlib',
-    'PyQt5',
+    #'PyQt5',
 ]
 
 setup(
     name=app_name,
-    version="0.1.0",
+    version="1.0.0",
     description=app_description,
     long_description=app_long_description,
     author=app_author,
