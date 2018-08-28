@@ -66,6 +66,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     figMkeColorChanged = pyqtSignal(QColor)
     figMkfColorChanged = pyqtSignal(QColor)
     figMkStyleChanged = pyqtSignal('QString')
+    figMkSizeChanged = pyqtSignal(float)
 
     def __init__(self, parent=None):
         super(MatplotlibConfigPanel, self).__init__()
@@ -80,6 +81,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.figHeight_lineEdit.setValidator(QIntValidator(2, 20, self))
         self.figDpi_lineEdit.setValidator(QIntValidator(50, 500, self))
         self.line_width_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
+        self.mk_size_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
 
         # events
         self.bkgd_color_btn.clicked.connect(self.set_fig_bkgdcolor)
@@ -150,6 +152,9 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         # line width
         self.line_width_lineEdit.textChanged.connect(self.set_line_width)
         self.figLineWidthChanged[float].connect(self.parent.setLineWidth)
+        # marker size
+        self.mk_size_lineEdit.textChanged.connect(self.set_marker_size)
+        self.figMkSizeChanged[float].connect(self.parent.setMarkerSize)
         # marker style
         self.figMkStyleChanged['QString'].connect(self.parent.setMarkerStyle)
         self.mk_style_cbb.currentIndexChanged[int].connect(self.set_marker_style)
@@ -221,12 +226,20 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.mk_style_cbb.setCurrentIndex(MK_SYMBOL.index(style['marker']))
         # line width
         self.line_width_lineEdit.setText('{}'.format(style['lw']))
+        # marker size
+        self.mk_size_lineEdit.setText('{}'.format(style['ms']))
 
     @pyqtSlot('QString')
     def set_line_width(self, s):
         if s=='': return
         w = max(float(s), 0.05)
         self.figLineWidthChanged.emit(w)
+
+    @pyqtSlot('QString')
+    def set_marker_size(self, s):
+        if s=='': return
+        w = max(float(s), 1.0)
+        self.figMkSizeChanged.emit(w)
 
     @pyqtSlot('QString')
     def set_xlimit_min(self, s):

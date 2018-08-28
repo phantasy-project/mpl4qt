@@ -81,6 +81,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._mec, self._mfc = QColor('red'), QColor('red')
         self._line_style = 'solid'
         self._marker_style = ''
+        self._marker_size = 6.0
     
     def add_curve(self, x_data=None, y_data=None, **kws):
         """Add one curve to figure.
@@ -315,7 +316,16 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     figureLineWidth = pyqtProperty(float, getLineWidth, setLineWidth)
 
+    def getMarkerSize(self):
+        return self._marker_size
 
+    @pyqtSlot(float)
+    def setMarkerSize(self, x):
+        self._marker_size = x
+        self._line.set_ms(x)
+        self.update_figure()
+
+    figureMarkerSize = pyqtProperty(float, getMarkerSize, setMarkerSize)
 
     def getLineID(self):
         return self._line_id
