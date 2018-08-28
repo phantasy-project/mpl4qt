@@ -77,6 +77,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._line_ids = range(self._lines.__len__())
         self._line = self._lines[0]  # current selected line
         self._line_color = QColor('red')
+        self._line_width = 1.5
         self._mec, self._mfc = QColor('red'), QColor('red')
         self._line_style = 'solid'
         self._marker_style = ''
@@ -302,6 +303,17 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.update_figure()
 
     figureMarkerStyle = pyqtProperty('QString', getMarkerStyle, setMarkerStyle)
+
+    def getLineWidth(self):
+        return self._line_width
+
+    @pyqtSlot(float)
+    def setLineWidth(self, x):
+        self._line_width = x
+        self._line.set_lw(x)
+        self.update_figure()
+
+    figureLineWidth = pyqtProperty(float, getLineWidth, setLineWidth)
 
 
 
