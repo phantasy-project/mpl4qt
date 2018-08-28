@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 """
 mplcurvewidget.py
 
@@ -47,6 +46,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
     Provides a custom widget to draw curves with matplotlib, with properties
     and slots that can be used to customize its appearance.
     """
+
     def __init__(self, parent=None):
         self._fig_width = 4
         self._fig_height = 3
@@ -57,8 +57,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._fig_grid_toggle = False
         self._legend_toggle = False
         self._legend_location = 0
-        super(MatplotlibCurveWidget, self).__init__(parent,
-                self._fig_width, self._fig_height, self._fig_dpi)
+        super(MatplotlibCurveWidget, self).__init__(
+            parent, self._fig_width, self._fig_height, self._fig_dpi)
         self._fig_bgcolor = self.sys_bg_color
         self._fig_ticks_color = self.sys_fg_color
         self._fig_grid_color = QColor('gray')
@@ -75,7 +75,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.setYLimitMax()
         # line_id
         self._line_id = 0
-        self._lines = self.get_all_curves() # all lines
+        self._lines = self.get_all_curves()  # all lines
         self._line_ids = range(self._lines.__len__())
         self._line = self._lines[0]  # current selected line
         self._line_color = QColor('red')
@@ -124,7 +124,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.update_figure()
 
     figureTightLayout = pyqtProperty(bool, getTightLayoutToggle,
-            setTightLayoutToggle)
+                                     setTightLayoutToggle)
 
     def getFigureMTicksToggle(self):
         return self._fig_mticks_toggle
@@ -136,7 +136,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.update_figure()
 
     figureMTicksToggle = pyqtProperty(bool, getFigureMTicksToggle,
-            setFigureMTicksToggle)
+                                      setFigureMTicksToggle)
 
     def getFigureGridToggle(self):
         return self._fig_grid_toggle
@@ -144,11 +144,17 @@ class MatplotlibCurveWidget(BasePlotWidget):
     @pyqtSlot(bool)
     def setFigureGridToggle(self, f, **kws):
         self._fig_grid_toggle = f
-        self.toggle_grid(toggle_checked=f, color=self._fig_grid_color.getRgbF(), **{k:v for k,v in kws.items() if k not in ('toggle_checked', 'color')})
+        self.toggle_grid(
+            toggle_checked=f,
+            color=self._fig_grid_color.getRgbF(),
+            **{
+                k: v
+                for k, v in kws.items() if k not in ('toggle_checked', 'color')
+            })
         self.update_figure()
 
     figureGridToggle = pyqtProperty(bool, getFigureGridToggle,
-            setFigureGridToggle)
+                                    setFigureGridToggle)
 
     def getLegendToggle(self):
         return self._legend_toggle
@@ -174,7 +180,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
             self._legend_box = self.axes.legend(loc=i)
             self.update_figure()
 
-    figureLegendLocation = pyqtProperty(int, getLegendLocation, setLegendLocation)
+    figureLegendLocation = pyqtProperty(int, getLegendLocation,
+                                        setLegendLocation)
 
     def getFigureGridColor(self):
         return self._fig_grid_color
@@ -182,11 +189,17 @@ class MatplotlibCurveWidget(BasePlotWidget):
     @pyqtSlot(QColor)
     def setFigureGridColor(self, c, **kws):
         self._fig_grid_color = c
-        self.toggle_grid(toggle_checked=self._fig_grid_toggle, color=c.getRgbF(), **{k:v for k,v in kws.items() if k not in ('toggle_checked', 'color')})
+        self.toggle_grid(
+            toggle_checked=self._fig_grid_toggle,
+            color=c.getRgbF(),
+            **{
+                k: v
+                for k, v in kws.items() if k not in ('toggle_checked', 'color')
+            })
         self.update_figure()
 
     figureGridColor = pyqtProperty(QColor, getFigureGridColor,
-            setFigureGridColor)
+                                   setFigureGridColor)
 
     def getFigureWidth(self):
         return self._fig_width
@@ -231,7 +244,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.update_figure()
 
     figureXYlabelFont = pyqtProperty(QFont, getFigureXYlabelFont,
-            setFigureXYlabelFont)
+                                     setFigureXYlabelFont)
 
     def getFigureXYticksFont(self):
         return self._fig_xyticks_font
@@ -243,7 +256,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.update_figure()
 
     figureXYticksFont = pyqtProperty(QFont, getFigureXYticksFont,
-            setFigureXYticksFont)
+                                     setFigureXYticksFont)
 
     def getFigureTitleFont(self):
         return self._fig_title_font
@@ -255,7 +268,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.update_figure()
 
     figureTitleFont = pyqtProperty(QFont, getFigureTitleFont,
-            setFigureTitleFont)
+                                   setFigureTitleFont)
 
     def getFigureBgColor(self):
         return self._fig_bgcolor
@@ -267,7 +280,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.update_figure()
 
     figureBackgroundColor = pyqtProperty(QColor, getFigureBgColor,
-            setFigureBgColor)
+                                         setFigureBgColor)
 
     def getFigureXYticksColor(self):
         return self._fig_ticks_color
@@ -279,7 +292,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.update_figure()
 
     figureXYticksColor = pyqtProperty(QColor, getFigureXYticksColor,
-            setFigureXYticksColor)
+                                      setFigureXYticksColor)
 
     def getLineColor(self):
         return self._line_color
@@ -345,7 +358,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._line.set_mew(x)
         self.update_figure()
 
-    figureMarkerThickness = pyqtProperty(float, getMarkerThickness, setMarkerThickness)
+    figureMarkerThickness = pyqtProperty(float, getMarkerThickness,
+                                         setMarkerThickness)
 
     def getLineLabel(self):
         return self._line_label
@@ -390,14 +404,15 @@ class MatplotlibCurveWidget(BasePlotWidget):
         if i < lines.__len__():
             self._line_id = i
             self._line = lines[i]
-            print("Currnet line changed to {}:{}".format(i, self._line))
 
     def get_line_config(self):
         """Get line config: ls, lw, c, marker, ms, mew, mec, mfc, label
         """
-        print(self._line)
-        return {p:getattr(self._line, 'get_'+p)() for p in
-                ('ls', 'lw', 'c', 'ms', 'mew', 'mec', 'mfc', 'marker', 'label')}
+        return {
+            p: getattr(self._line, 'get_' + p)()
+            for p in ('ls', 'lw', 'c', 'ms', 'mew', 'mec', 'mfc', 'marker',
+                      'label')
+        }
 
     def getFigureAutoScale(self):
         return self._fig_auto_scale
@@ -410,7 +425,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
             self.update_canvas()
             self.update_figure()
 
-    figureAutoScale = pyqtProperty(bool, getFigureAutoScale, setFigureAutoScale)
+    figureAutoScale = pyqtProperty(bool, getFigureAutoScale,
+                                   setFigureAutoScale)
 
     def getFigureTitle(self):
         return self._fig_title
@@ -572,8 +588,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def on_config(self):
         config_panel = MatplotlibConfigPanel(self)
         r = config_panel.exec_()
-        #print(r == QDialog.Accepted)
-        #print(r == QDialog.Rejected)
 
     def on_reset(self):
         print("Reset action triggered")
