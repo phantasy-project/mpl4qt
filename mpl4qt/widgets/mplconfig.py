@@ -152,6 +152,8 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         # line width
         self.line_width_lineEdit.textChanged.connect(self.set_line_width)
         self.figLineWidthChanged[float].connect(self.parent.setLineWidth)
+        # line label
+        self.line_label_lineEdit.textChanged.connect(self.parent.setLineLabel)
         # marker size
         self.mk_size_lineEdit.textChanged.connect(self.set_marker_size)
         self.figMkSizeChanged[float].connect(self.parent.setMarkerSize)
@@ -210,24 +212,25 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     @pyqtSlot(int)
     def on_change_line_id(self, i):
         self.figLineIDChanged.emit(i)
-        self._set_line_style_panel(self.parent.get_line_style())
+        self._set_line_config_panel(self.parent.get_line_config())
 
-    def _set_line_style_panel(self, style_dict):
-        """Update line style panel when line id is switched."""
-        style = self.parent.get_line_style()
-        print(style)
+    def _set_line_config_panel(self, config):
+        """Update line config panel when line id is switched."""
+        print(config)
         # colors
-        self.set_line_color_btn(QColor(mplcolor2hex(style['c'])))
-        self.set_mec_btn(QColor(mplcolor2hex(style['mec'])))
-        self.set_mfc_btn(QColor(mplcolor2hex(style['mfc'])))
+        self.set_line_color_btn(QColor(mplcolor2hex(config['c'])))
+        self.set_mec_btn(QColor(mplcolor2hex(config['mec'])))
+        self.set_mfc_btn(QColor(mplcolor2hex(config['mfc'])))
         # line style
-        self.line_style_cbb.setCurrentText(LINE_STY_DICT[style['ls']])
+        self.line_style_cbb.setCurrentText(LINE_STY_DICT[config['ls']])
         # marker style
-        self.mk_style_cbb.setCurrentIndex(MK_SYMBOL.index(style['marker']))
+        self.mk_style_cbb.setCurrentIndex(MK_SYMBOL.index(config['marker']))
         # line width
-        self.line_width_lineEdit.setText('{}'.format(style['lw']))
+        self.line_width_lineEdit.setText('{}'.format(config['lw']))
         # marker size
-        self.mk_size_lineEdit.setText('{}'.format(style['ms']))
+        self.mk_size_lineEdit.setText('{}'.format(config['ms']))
+        # line label
+        self.line_label_lineEdit.setText('{}'.format(config['label']))
 
     @pyqtSlot('QString')
     def set_line_width(self, s):
