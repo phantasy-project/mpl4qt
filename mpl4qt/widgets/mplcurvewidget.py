@@ -55,6 +55,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._fig_auto_scale = False
         self._fig_mticks_toggle = False
         self._fig_grid_toggle = False
+        self._legend_toggle = False
+        self._legend_location = 0
         super(MatplotlibCurveWidget, self).__init__(parent,
                 self._fig_width, self._fig_height, self._fig_dpi)
         self._fig_bgcolor = self.sys_bg_color
@@ -83,7 +85,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._marker_style = ''
         self._marker_size = 6.0
         self._line_label = '_line0'
-    
+
     def add_curve(self, x_data=None, y_data=None, **kws):
         """Add one curve to figure.
         """
@@ -91,6 +93,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
             self.axes.plot([], [], **kws)
         else:
             self.axes.plot(x_data, y_data, **kws)
+        self.update_legend()
         self.update_figure()
 
     def get_all_curves(self):
@@ -145,6 +148,32 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     figureGridToggle = pyqtProperty(bool, getFigureGridToggle,
             setFigureGridToggle)
+
+    def getLegendToggle(self):
+        return self._legend_toggle
+
+    @pyqtSlot(bool)
+    def setLegendToggle(self, f):
+        self._legend_toggle = f
+        if f:
+            self._legend_box = self.axes.legend(loc=self._legend_location)
+        else:
+            self._legend_box.set_visible(False)
+        self.update_figure()
+
+    figureLegendToggle = pyqtProperty(bool, getLegendToggle, setLegendToggle)
+
+    def getLegendLocation(self):
+        return self._legend_location
+
+    @pyqtSlot(int)
+    def setLegendLocation(self, i):
+        self._legend_location = i
+        if self._legend_toggle:
+            self._legend_box = self.axes.legend(loc=i)
+            self.update_figure()
+
+    figureLegendLocation = pyqtProperty(int, getLegendLocation, setLegendLocation)
 
     def getFigureGridColor(self):
         return self._fig_grid_color
@@ -250,7 +279,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     figureXYticksColor = pyqtProperty(QColor, getFigureXYticksColor,
             setFigureXYticksColor)
-    
+
     def getLineColor(self):
         return self._line_color
 
@@ -313,6 +342,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def setLineLabel(self, s):
         self._line_label = s
         self._line.set_label(s)
+        self.update_legend()
         self.update_figure()
 
     figureLineLabel = pyqtProperty('QString', getLineLabel, setLineLabel)
@@ -535,6 +565,10 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     def on_reset(self):
         print("Reset action triggered")
+
+    def update_legend(self):
+        # update legend if on
+        self.setLegendToggle(self._legend_toggle)
 
 
 if __name__ == "__main__":

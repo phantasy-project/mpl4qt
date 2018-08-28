@@ -68,6 +68,9 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     figMkStyleChanged = pyqtSignal('QString')
     figMkSizeChanged = pyqtSignal(float)
 
+    # legend
+    figLegendToggleChanged = pyqtSignal(bool)
+
     def __init__(self, parent=None):
         super(MatplotlibConfigPanel, self).__init__()
         self.parent = parent
@@ -136,6 +139,11 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.gridon_chkbox.stateChanged.connect(self.set_fig_grid)
         self.grid_color_btn.clicked.connect(self.set_grid_color)
 
+        # legend
+        self.legend_on_chkbox.stateChanged.connect(self.set_legend)
+        self.figLegendToggleChanged[bool].connect(self.parent.setLegendToggle)
+        self.legend_loc_cbb.currentIndexChanged[int].connect(self.parent.setLegendLocation)
+
         # post UI update
         self.post_init_ui()
 
@@ -194,6 +202,9 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         current_line_id = self.parent.get_all_curves().index(self.parent._line)
         self.line_id_cbb.setCurrentIndex(current_line_id)
         self.on_change_line_id(current_line_id)
+        # legend on/off
+        self.legend_on_chkbox.setChecked(self.parent.getLegendToggle())
+        self.legend_loc_cbb.setCurrentIndex(self.parent.getLegendLocation())
 
     def set_xylimits(self, xlim=None, ylim=None):
         """Set xy limits.
@@ -337,6 +348,10 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     @pyqtSlot(int)
     def set_fig_grid(self, state):
         self.figGridChanged.emit(state==Qt.Checked)
+
+    @pyqtSlot(int)
+    def set_legend(self, state):
+        self.figLegendToggleChanged.emit(state==Qt.Checked)
 
     @pyqtSlot(int)
     def set_fig_mticks(self, state):
