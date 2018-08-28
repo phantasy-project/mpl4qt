@@ -71,12 +71,34 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.setXLimitMax()
         self.setYLimitMin()
         self.setYLimitMax()
+        # line_id
+        self._line_id = 0
+        self._lines = self.get_all_curves() # all lines
+        self._line_ids = range(self._lines.__len__())
+        self._line = self._lines[0]  # current selected line
+        self._line_color = QColor('red')
+        self._mec, self._mfc = QColor('red'), QColor('red')
+        self._line_style = 'solid'
+        self._marker_style = ''
+    
+    def add_curve(self, x_data=None, y_data=None, **kws):
+        """Add one curve to figure.
+        """
+        if x_data is None or y_data is None:
+            self.axes.plot([], [], **kws)
+        else:
+            self.axes.plot(x_data, y_data, **kws)
+        self.update_figure()
+
+    def get_all_curves(self):
+        """Return all curves."""
+        return self.axes.lines
 
     def init_figure(self):
         # initial xy data and line
         self._x_data = x = np.linspace(-4, 4, 100)
         self._y_data = y = np.sin(10 * x) / x
-        self._line, = self.axes.plot(x, y, 'r-')
+        self._lines = self.axes.plot(x, y, 'r-')
 
     def sizeHint(self):
         return QSize(1.1 * self._fig_width * self._fig_dpi,
@@ -225,6 +247,81 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     figureXYticksColor = pyqtProperty(QColor, getFigureXYticksColor,
             setFigureXYticksColor)
+    
+    def getLineColor(self):
+        return self._line_color
+
+    @pyqtSlot(QColor)
+    def setLineColor(self, c):
+        self._line_color = c
+        self._line.set_color(c.getRgbF())
+        self.update_figure()
+
+    figureLineColor = pyqtProperty(QColor, getLineColor, setLineColor)
+
+    def getMkEdgeColor(self):
+        return self._mec
+
+    @pyqtSlot(QColor)
+    def setMkEdgeColor(self, c):
+        self._mec = c
+        self._line.set_mec(c.getRgbF())
+        self.update_figure()
+
+    figureMakerEdgeColor = pyqtProperty(QColor, getMkEdgeColor, setMkEdgeColor)
+
+    def getMkFaceColor(self):
+        return self._mfc
+
+    @pyqtSlot(QColor)
+    def setMkFaceColor(self, c):
+        self._mfc = c
+        self._line.set_mfc(c.getRgbF())
+        self.update_figure()
+
+    figureMakerFaceColor = pyqtProperty(QColor, getMkFaceColor, setMkFaceColor)
+
+    def getLineStyle(self):
+        return self._line_style
+
+    @pyqtSlot('QString')
+    def setLineStyle(self, s):
+        self._line_style = s
+        self._line.set_ls(s)
+        self.update_figure()
+
+    figureLineStyle = pyqtProperty('QString', getLineStyle, setLineStyle)
+
+    def getMarkerStyle(self):
+        return self._marker_style
+
+    @pyqtSlot('QString')
+    def setMarkerStyle(self, s):
+        self._marker_style = s
+        self._line.set_marker(s)
+        self.update_figure()
+
+    figureMarkerStyle = pyqtProperty('QString', getMarkerStyle, setMarkerStyle)
+
+
+
+    def getLineID(self):
+        return self._line_id
+
+    @pyqtSlot(int)
+    def setLineID(self, i):
+        lines = self.get_all_curves()
+        if i < lines.__len__():
+            self._line_id = i
+            self._line = lines[i]
+            print("Currnet line changed to {}:{}".format(i, self._line))
+
+    def get_line_style(self):
+        """Get line style: ls, lw, c, marker, ms, mec, mfc
+        """
+        print(self._line)
+        return {p:getattr(self._line, 'get_'+p)() for p in
+                ('ls', 'lw', 'c', 'ms', 'mec', 'mfc', 'marker')}
 
     def getFigureAutoScale(self):
         return self._fig_auto_scale
