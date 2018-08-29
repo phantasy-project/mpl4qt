@@ -56,6 +56,29 @@
     <string>Update</string>
    </property>
   </widget>
+  <widget class="QDoubleSpinBox" name="doubleSpinBox">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>600</y>
+     <width>81</width>
+     <height>36</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>610</y>
+     <width>96</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Line Width</string>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
@@ -65,5 +88,22 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>doubleSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>matplotlibcurveWidget</receiver>
+   <slot>setLineWidth(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>530</x>
+     <y>617</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>473</x>
+     <y>297</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
