@@ -88,7 +88,15 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._line_label = '_line0'
 
     def add_curve(self, x_data=None, y_data=None, **kws):
-        """Add one curve to figure.
+        """Add one curve to figure, accepts all ``pyplot.plot`` keyword
+        arguments, see `matplotlib.pyplot.plot <https://matplotlib.org/api/_as_gen/matplotlib.pyplot.plot.html>`_.
+
+        Parameters
+        ----------
+        x_data : list or array
+            Array of x data.
+        y_data : list or array
+            Array of y data.
         """
         if x_data is None or y_data is None:
             self.axes.plot([], [], **kws)
@@ -116,6 +124,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(bool)
     def setTightLayoutToggle(self, f):
+        """Toggle for the tight layout.
+
+        Parameters
+        ----------
+        f : bool
+            Tight layout toggle.
+        """
         self._fig_tight_layout = f
         if f:
             self.figure.set_tight_layout({'pad': 0.1})
@@ -131,6 +146,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(bool)
     def setFigureMTicksToggle(self, f):
+        """Toggle for the minor ticks.
+        
+        Parameters
+        ----------
+        f : bool
+            Minor ticks on/off toggle.
+        """
         self._fig_mticks_toggle = f
         self.toggle_mticks(f)
         self.update_figure()
@@ -143,6 +165,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(bool)
     def setFigureGridToggle(self, f, **kws):
+        """Toggle for the figure grid.
+
+        Parameters
+        ----------
+        f : bool
+            Figure grid toggle.
+        """
         self._fig_grid_toggle = f
         self.toggle_grid(
             toggle_checked=f,
@@ -161,6 +190,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(bool)
     def setLegendToggle(self, f):
+        """Toggle for figure legend.
+
+        Parameters
+        ----------
+        f : bool
+            Figure legend on/off toggle.
+        """
         self._legend_toggle = f
         if f:
             self._legend_box = self.axes.legend(loc=self._legend_location)
@@ -175,6 +211,14 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(int)
     def setLegendLocation(self, i):
+        """Set legend location.
+
+        Parameters
+        ----------
+        i : int
+            Index number of legend location,
+            see `matplotlib.pyplot.legend <https://matplotlib.org/api/_as_gen/matplotlib.pyplot.legend.html>`_.
+        """
         self._legend_location = i
         if self._legend_toggle:
             self._legend_box = self.axes.legend(loc=i)
@@ -188,6 +232,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(QColor)
     def setFigureGridColor(self, c, **kws):
+        """Set color for the grid line.
+        
+        Parameters
+        ----------
+        c : QColor
+            Color of the grid line.
+        """
         self._fig_grid_color = c
         self.toggle_grid(
             toggle_checked=self._fig_grid_toggle,
@@ -206,6 +257,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(int)
     def setFigureWidth(self, w):
+        """Set figure width.
+
+        Parameters
+        ----------
+        w : int
+            Figure width in inch (>= 2).
+        """
         self._fig_width = max(w, 2)
         self.figure.set_size_inches([self._fig_width, self._fig_height])
         self.update_figure()
@@ -217,6 +275,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(int)
     def setFigureHeight(self, h):
+        """Set figure height.
+
+        Parameters
+        ----------
+        h : int
+            Figure height in inch (>= 2).
+        """
         self._fig_height = max(h, 2)
         self.figure.set_size_inches([self._fig_width, self._fig_height])
         self.update_figure()
@@ -228,6 +293,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(int)
     def setFigureDpi(self, d):
+        """Set figure dpi.
+
+        Parameters
+        ----------
+        d : int
+            Figure dpi in [50, 1000].
+        """
         self._fig_dpi = min(1000, max(d, 50))
         self.figure.set_dpi(d)
         self.update_figure()
@@ -239,6 +311,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(QFont)
     def setFigureXYlabelFont(self, font):
+        """Set font for x and y labels.
+
+        Parameters
+        ----------
+        font : QFont
+            Font to set.
+        """
         self._fig_xylabel_font = font
         self.set_xylabel_font(font)
         self.update_figure()
@@ -251,6 +330,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(QFont)
     def setFigureXYticksFont(self, font):
+        """Set font for the tick labels.
+
+        Parameters
+        ----------
+        font : QFont
+            Font to set.
+        """
         self._fig_xyticks_font = font
         self.set_xyticks_font(font)
         self.update_figure()
@@ -263,6 +349,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(QFont)
     def setFigureTitleFont(self, font):
+        """Set font for figure title.
+
+        Parameters
+        ----------
+        font : QFont
+            Font to set.
+        """
         self._fig_title_font = font
         self.set_title_font(font)
         self.update_figure()
@@ -275,6 +368,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(QColor)
     def setFigureBgColor(self, color):
+        """Set figure background color.
+
+        Parameters
+        ----------
+        color : QColor
+            Color to set.
+        """
         self._fig_bgcolor = color
         self.set_figure_color(color.getRgbF())
         self.update_figure()
@@ -287,6 +387,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(QColor)
     def setFigureXYticksColor(self, color):
+        """Set color for the ticks.
+
+        Parameters
+        ----------
+        color : QColor
+            Color to set.
+        """
         self._fig_ticks_color = color
         self.set_ticks_color(color.getRgbF())
         self.update_figure()
@@ -299,6 +406,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(QColor)
     def setLineColor(self, c):
+        """Set line color for the current curve.
+
+        Parameters
+        ----------
+        c : QColor
+            Color to set.
+        """
         self._line_color = c
         self._line.set_color(c.getRgbF())
         self.update_figure()
@@ -310,6 +424,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(QColor)
     def setMkEdgeColor(self, c):
+        """Set marker edgecolor.
+
+        Parameters
+        ----------
+        c : QColor
+            Color to set.
+        """
         self._mec = c
         self._line.set_mec(c.getRgbF())
         self.update_figure()
@@ -321,6 +442,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(QColor)
     def setMkFaceColor(self, c):
+        """Set marker facecolor.
+
+        Parameters
+        ----------
+        c : QColor
+            Color to set.
+        """
         self._mfc = c
         self._line.set_mfc(c.getRgbF())
         self.update_figure()
@@ -332,6 +460,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot('QString')
     def setLineStyle(self, s):
+        """Set line style for the current curve.
+
+        Parameters
+        ----------
+        s : str
+            String for the line style, see `line style <https://matplotlib.org/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D>`_.
+        """
         self._line_style = s
         self._line.set_ls(s)
         self.update_figure()
@@ -343,6 +478,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot('QString')
     def setMarkerStyle(self, s):
+        """Set marker style.
+
+        Parameters
+        ----------
+        s : str
+            String for the marker style, see `marker style <https://matplotlib.org/api/markers_api.html>`_.
+        """
         self._marker_style = s
         self._line.set_marker(s)
         self.update_figure()
@@ -354,6 +496,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(float)
     def setMarkerThickness(self, x):
+        """Set the thickness of marker.
+
+        Parameters
+        ----------
+        x : float
+            Number for marker thickness.
+        """
         self._mew = x
         self._line.set_mew(x)
         self.update_figure()
@@ -366,6 +515,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot('QString')
     def setLineLabel(self, s):
+        """Set label for current curve.
+
+        Parameters
+        ----------
+        s : str
+            Label string which will be shown as legend.
+        """
         self._line_label = s
         self._line.set_label(s)
         self.update_legend()
@@ -378,6 +534,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(float)
     def setLineWidth(self, x):
+        """Set line width for the current curve.
+
+        Parameters
+        ----------
+        x : float
+            Line width.
+        """
         self._line_width = x
         self._line.set_lw(x)
         self.update_figure()
@@ -389,6 +552,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(float)
     def setMarkerSize(self, x):
+        """Set marker size.
+
+        Parameters
+        ----------
+        x : float
+            Marker size.
+        """
         self._marker_size = x
         self._line.set_ms(x)
         self.update_figure()
@@ -400,6 +570,18 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(int)
     def setLineID(self, i):
+        """Set line id, which is used to discriminate one from another, the
+        first drawn line is of index 0, next one is 1, and so on.
+
+        Parameters
+        ----------
+        i : int
+            Line index number.
+
+        See Also
+        --------
+        add_curve
+        """
         lines = self.get_all_curves()
         if i < lines.__len__():
             self._line_id = i
@@ -419,6 +601,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(bool)
     def setFigureAutoScale(self, f):
+        """Set xy limits as autoscale or not.
+
+        Parameters
+        ----------
+        f : bool
+            Toggle for the autoscale.
+        """
         self._fig_auto_scale = f
         if f:
             self.axes.autoscale()
@@ -433,6 +622,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot('QString')
     def setFigureTitle(self, s):
+        """Set figure title.
+
+        Parameters
+        ----------
+        s : str
+            Title for the figure.
+        """
         self._fig_title = s
         self.axes.set_title(s)
         self.update_figure()
@@ -444,6 +640,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot('QString')
     def setFigureXlabel(self, s):
+        """Set xlabel string.
+
+        Parameters
+        ----------
+        s : str
+            String for xlabel.
+        """
         self._fig_xlabel = s
         self.axes.set_xlabel(s)
         self.update_figure()
@@ -455,6 +658,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot('QString')
     def setFigureYlabel(self, s):
+        """Set ylabel string.
+
+        Parameters
+        ----------
+        s : str
+            String for ylabel.
+        """
         self._fig_ylabel = s
         self.axes.set_ylabel(s)
         self.update_figure()
@@ -463,7 +673,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(QVariant)
     def setXData(self, x):
-        """set x data for figure."""
+        """Set x data for the current curve, signal type should be ``QVariant``.
+        
+        Parameters
+        ----------
+        x : list or array
+            Array of x data.
+        """
         self._x_data = x
         self._line.set_xdata(x)
         self.update_figure()
@@ -473,7 +689,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(QVariant)
     def setYData(self, x):
-        """set y data for figure."""
+        """Set y data for the current curve, signal type should be ``QVariant``.
+        
+        Parameters
+        ----------
+        x : list or array
+            Array of y data.
+        """
         self._y_data = x
         self._line.set_ydata(x)
         self.update_figure()
@@ -486,6 +708,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(float)
     def setXLimitMin(self, x=None):
+        """Set minimum of xlimit.
+
+        Parameters
+        ----------
+        x : float
+            Minimum of xlimit.
+        """
         if x is None:
             x, _ = self._get_default_xlim()
         self._xlim_min = x
@@ -501,6 +730,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(float)
     def setXLimitMax(self, x=None):
+        """Set maximum of xlimit.
+
+        Parameters
+        ----------
+        x : float
+            Maximum of xlimit.
+        """
         if x is None:
             _, x = self._get_default_xlim()
         self._xlim_max = x
@@ -516,6 +752,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(float)
     def setYLimitMin(self, y=None):
+        """Set minimum of ylimit.
+
+        Parameters
+        ----------
+        y : float
+            Minimum of ylimit.
+        """
         if y is None:
             y, _ = self._get_default_ylim()
         self._ylim_min = y
@@ -531,6 +774,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     @pyqtSlot(float)
     def setYLimitMax(self, y=None):
+        """Set maximum of ylimit.
+
+        Parameters
+        ----------
+        y : float
+            Maximum of ylimit.
+        """
         if y is None:
             _, y = self._get_default_ylim()
         self._ylim_max = y
