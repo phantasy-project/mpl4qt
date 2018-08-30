@@ -59,8 +59,18 @@ class BasePlotWidget(FigureCanvas):
         self.adjustSize()
         self.set_context_menu()
 
+        # track (x,y)
+        self.init_xy_pos_annot()
+        self.figure.canvas.mpl_connect('motion_notify_event', self.on_motion)
+
     def post_style_figure(self):
         self.set_figure_color()
+
+    def init_xy_pos_annot(self):
+        pass
+
+    def on_motion(self):
+        pass
 
     def init_figure(self):
         raise NotImplementedError

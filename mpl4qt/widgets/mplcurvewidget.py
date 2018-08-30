@@ -147,7 +147,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
     @pyqtSlot(bool)
     def setFigureMTicksToggle(self, f):
         """Toggle for the minor ticks.
-        
+
         Parameters
         ----------
         f : bool
@@ -233,7 +233,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
     @pyqtSlot(QColor)
     def setFigureGridColor(self, c, **kws):
         """Set color for the grid line.
-        
+
         Parameters
         ----------
         c : QColor
@@ -674,7 +674,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
     @pyqtSlot(QVariant)
     def setXData(self, x):
         """Set x data for the current curve, signal type should be ``QVariant``.
-        
+
         Parameters
         ----------
         x : list or array
@@ -690,7 +690,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
     @pyqtSlot(QVariant)
     def setYData(self, x):
         """Set y data for the current curve, signal type should be ``QVariant``.
-        
+
         Parameters
         ----------
         x : list or array
@@ -845,6 +845,34 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def update_legend(self):
         # update legend if on
         self.setLegendToggle(self._legend_toggle)
+
+    def init_xy_pos_annot(self):
+        # (x, y) pos label
+        self.xy_pos_annot = self.axes.annotate("",
+                                xy=(0,0),
+                                xytext=(0,0),
+                                xycoords="data",
+                                textcoords="offset pixels",
+                                bbox=dict(boxstyle="round", fc="w"),
+                            )
+        self.xy_pos_annot.get_bbox_patch().set_alpha(0.5)
+        self.xy_pos_annot.set_visible(False)
+
+    def on_motion(self, event):
+        vis = self.xy_pos_annot.get_visible()
+        if event.inaxes is not None:
+            x, y = event.x, event.y
+            x_pos, y_pos = event.xdata, event.ydata
+            text = "({0:<.4f}, {1:<.4f})".format(x_pos, y_pos)
+
+            self.xy_pos_annot.xy = (x_pos, y_pos)
+            self.xy_pos_annot.xytext = (x, y)
+            self.xy_pos_annot.set_text(text)
+            self.xy_pos_annot.set_visible(True)
+        else:
+            if vis:
+                self.xy_pos_annot.set_visible(False)
+        self.update_figure()
 
 
 if __name__ == "__main__":
