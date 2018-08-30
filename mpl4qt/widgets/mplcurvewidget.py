@@ -201,7 +201,10 @@ class MatplotlibCurveWidget(BasePlotWidget):
         if f:
             self._legend_box = self.axes.legend(loc=self._legend_location)
         else:
-            self._legend_box.set_visible(False)
+            try:
+                self._legend_box.set_visible(False)
+            except AttributeError:
+                pass
         self.update_figure()
 
     figureLegendToggle = pyqtProperty(bool, getLegendToggle, setLegendToggle)
