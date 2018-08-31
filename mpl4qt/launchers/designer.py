@@ -12,14 +12,18 @@ curdir = os.path.dirname(__file__)
 
 def main():
     env = QProcessEnvironment.systemEnvironment()
-    plugin_path = os.path.abspath(os.path.join(curdir, '../plugins'))
+    plugin_path = os.path.abspath(os.path.join(curdir, '..', 'plugins'))
     env.insert('PYQTDESIGNERPATH', plugin_path)
 
     designer = QProcess()
     designer.setProcessEnvironment(env)
     designer_bin = QLibraryInfo.location(QLibraryInfo.BinariesPath)
 
-    designer.start('{}/designer'.format(designer_bin))
+    designer.start(os.path.join(designer_bin, 'designer'))
     designer.waitForFinished(-1)
 
     sys.exit(designer.exitCode())
+
+
+if __name__ == '__main__':
+    main()
