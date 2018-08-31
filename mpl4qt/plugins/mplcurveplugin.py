@@ -54,7 +54,7 @@ class MatplotlibCurveWidgetPlugin(QPyDesignerCustomWidgetPlugin):
         return "MatplotlibCurveWidget"
 
     def group(self):
-        return "FRIB Collection"
+        return "DataViz Widgets"
 
     def icon(self):
         return QIcon(_logo_pixmap)
