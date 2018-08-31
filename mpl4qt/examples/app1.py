@@ -33,11 +33,16 @@ class RandomCurveWidget(Ui_Form, QWidget):
         self.yDataChanged.emit(y)
 
 
-if __name__ == '__main__':
+def main():
     import sys
     from PyQt5.QtWidgets import QApplication
 
     app = QApplication(sys.argv)
     w = RandomCurveWidget()
+    w.setWindowTitle("MatplotlibCurveWidget Example App")
     w.show()
     sys.exit(app.exec_())
+
+
+if __name__ == '__main__':
+    main()
