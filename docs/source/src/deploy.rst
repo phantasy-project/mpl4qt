@@ -83,3 +83,12 @@ Qt/PyQt versions could be checked by:
   from PyQt5.QtCore import QT_VERSION_STR, PYQT_VERSION_STR
 
   print(QT_VERSION_STR, PYQT_VERSION_STR)
+
+Simple Demo App
+^^^^^^^^^^^^^^^
+
+A simple application created with ``mpl4qt`` package could be running by:
+
+.. code-block:: python
+
+    python -m mpl4qt.examples.app1 -c "app1.main()"
