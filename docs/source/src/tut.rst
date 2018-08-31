@@ -33,7 +33,7 @@ terminal to launch designer:
     :width: 800px
 
 As one can see, in the *Widget Box* column, a new category so-called
-*FRIB Collection* is shown, inside which there is one widget called
+*DataViz Widgets* is shown, inside which there is one widget called
 *MatplotlibCurveWidget*, which is ready to be dragged&dropped.
 
 .. warning::
