@@ -1,0 +1,6 @@
+1.2.0
+  * Updated documentation
+  * Run example app by "python -m mpl4qt.examples.app1 -c "app1.main()"
+  * Standard data plotting widget for Qt-designer
+  * Lots of Qt signals/slots to use
+  * Support multiple curves
