@@ -16,7 +16,7 @@ Start Qt5-designer
 
 ``designer`` is a user-friendly GUI application to help the developer to build
 UI painlessly, in a WYSIWYG way. The created UI file from ``designer`` is
-structured xml file, which could be parsed by Qt libraries to show the UI in
+structured XML file, which could be parsed by Qt libraries to show the UI in
 the Qt applications, however, it is designed for both C++ and Python, so if
 you're working on the PyQt application, another command named ``pyuic5`` could
 be used to convert the UI file into Python module, which could be imported by
@@ -32,7 +32,7 @@ terminal to launch designer:
     :align: center
     :width: 800px
 
-As one can see, in the *Widget Box* column, a new category so-called
+As one can see, in the *Widget Box* column, a new category of so-called
 *DataViz Widgets* is shown, inside which there is one widget called
 *MatplotlibCurveWidget*, which is ready to be dragged&dropped.
 
@@ -47,7 +47,7 @@ Random X-Y Curve Plotter
 ------------------------
 
 **What does this application do?** This app will make the most of
-*MatplotlibCurveWidget*, to show how the figure properties could be controled
+*MatplotlibCurveWidget*, to show how the figure properties could be controlled
 interactively, and how the curve could be updated.
 
 Create a New Application
@@ -69,8 +69,8 @@ Place Widgets
 
 All the widgets in the *Widget Box* column could be dragged and dropped to
 the form space to serve with different purposes, e.g. the *Label* usually
-is used to provide static indication. So we can place a title with *Label*:
-drag the *Label* icon from *Widget Box* to the form workspace, double click
+is used to provide the static indication. So we can place a title with *Label*:
+drag the *Label* icon from *Widget Box* to the form workspace, double-click
 to name it as *Random X-Y Curve Plotter*, and in the *Property Editor* column,
 simply check out some items to make it look better, e.g. set *Point Size* as
 20, check *Bold*, just as the following image shows:
@@ -79,7 +79,7 @@ simply check out some items to make it look better, e.g. set *Point Size* as
     :align: center
     :width: 800px
 
-Next, place the *MatplotlibCurveWidget* into the workspace by the same way,
+Next, place the *MatplotlibCurveWidget* into the workspace in the same way,
 and one button for random curve generation, change the button text to *Update*.
 
 After that, you'll get something like this:
@@ -102,7 +102,7 @@ Before moving forward, let's first take a look at what does *MatplotlibCurveWidg
 to run.
 
 Save this project by clicking *Save icon* in the toolbar or *CTRL + S*, locate
-and name it as *ui_app1.ui*, checkout to the location where the ui file is,
+and name it as *ui_app1.ui*, check out to the location where the ui file is,
 in the terminal, run the following command to convert ui file to Python module:
 
 .. code-block:: python
@@ -117,11 +117,11 @@ You'll get a new Python file generated from ui file, simply run with
     :width: 500px
 
 The *MatplotlibCurveWidget* is designed with the ability to change the
-figure properties via context menu, by right clicking in the figure,
-choose *Config* item will guide you to a pop up dialog, close it by hitting
-*ESC* or clicking *Close* in the windows titlebar.
+figure properties via the context menu, by right-clicking in the figure,
+choose *Config* item will guide you to a popup dialog, close it by hitting
+*ESC* or clicking *Close* in the windows title bar.
 
-Here is the list of available options could be controled via *Config* menu,
+Here is the list of available options could be controlled via *Config* menu,
 just name as a few: line color, line style, line width, marker size, marker
 style, marker color, labels, as well as fonts, grid, layout, etc.
 
@@ -175,7 +175,7 @@ be used to update the y data of the curve, generally, connecting with
 a PyQt signal to this slot will make this happen. However, before writing
 some code to the generated Python module, one thing should keep in mind,
 that is usually the updating will not be applied directly to that Python file
-inplace, but by extending it, here is how to accomplish:
+in place, but by extending it, here is how to accomplish:
 
 Create a new file named as, for instance, ``app1.py``, and inherit the class
 which renders the UI, then extend within the new class:
@@ -187,12 +187,12 @@ which renders the UI, then extend within the new class:
 One can note how the signal and slot mechanism works:
 
 1. Define your PyQt signal;
-2. Connect the signal to specific slot;
+2. Connect the signal to the specific slot;
 3. Emit the signal when needed.
 
 In this example, the signal named ``yDataChanged`` is created with data type
 of ``QVariant``, then connected with ``setYData`` slot of 
-*matplotlibcurveWidget*; next the ``clicked`` signal is connected with the
+*matplotlibcurveWidget*; next, the ``clicked`` signal is connected with the
 defined slot ``update_ydata``, in which new y data is generated and emitted.
 
 Run this app by ``python3 app1.py``, and click ``Update`` button to see the

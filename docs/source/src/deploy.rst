@@ -3,18 +3,18 @@ Deployment
 ==========
 
 Here're three ways to deploy ``mpl4qt`` to the operating system, although
-these approaches are only tested on Linux, hopefully, still work on Windows
-and MacOS.
+these approaches are only tested on Linux, hopefully, still work (not tested)
+on Windows and Mac OS.
 
 .. _deploy_pre:
 
 Prerequisites
 -------------
 
-Required pacakges: ``Qt5-designer``, ``pyuic5``, ``numpy``, ``matplotlib``.
+Required packages: ``Qt5-designer``, ``pyuic5``, ``numpy``, ``matplotlib``.
 
 Normally, all of the Python dependencies will be installed automatically.
-Recently, there is one issue regarding to starting up Qt designer,
+Recently, there is one issue regarding starting up Qt designer,
 see `here <https://github.com/mu-editor/mu/issues/575>`_,
 so it is recommended to use the PyQt5 coming with the OS distribution,
 e.g. if you're running Ubuntu/Debian/Linux Mint,
@@ -38,7 +38,7 @@ Install ``mpl4qt``:
 
   pip install mpl4qt
 
-Or upgrade from earlier version by (use ``--no-deps`` if only updating ``mpl4qt``):
+Or upgrade from an earlier version by (use ``--no-deps`` if only updating ``mpl4qt``):
 
 .. code-block:: bash
 
@@ -47,13 +47,13 @@ Or upgrade from earlier version by (use ``--no-deps`` if only updating ``mpl4qt`
 Install from Source
 -------------------
 
-Clone the source from github:
+Clone the source from Github:
 
 .. code-block:: bash
 
   git clone https://github.com/archman/python-mpl4qt.git
 
-Then checkout to master branch (normally you're already there), and install
+Then check out to master branch (normally you're already there), and install
 into your system by:
 
 .. code-block:: bash
@@ -66,7 +66,7 @@ After Installation
 What could be reached out?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 * Command: ``run_designer`` to start Qt5-designer with matplotlib widgets integration.
-* Python package named ``mpl4qt`` to be ready for using in any Python script.
+* Python package named ``mpl4qt`` to be ready for use in any Python script.
 
 Development Environment
 ^^^^^^^^^^^^^^^^^^^^^^^
