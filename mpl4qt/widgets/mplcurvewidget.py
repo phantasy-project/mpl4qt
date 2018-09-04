@@ -869,7 +869,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
             text = "({0:<.4f}, {1:<.4f})".format(x_pos, y_pos)
 
             self.xy_pos_annot.xy = (x_pos, y_pos)
-            self.xy_pos_annot.xytext = (x, y)
+            self.xy_pos_annot.xyann = (x_pos, y_pos)
             self.xy_pos_annot.set_text(text)
             self.xy_pos_annot.set_visible(True)
         else:
