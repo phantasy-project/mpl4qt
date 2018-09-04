@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from ui_app1 import Ui_Form
+from .ui_app1 import Ui_Form
 
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import pyqtSignal, pyqtSlot
@@ -33,7 +33,7 @@ class RandomCurveWidget(Ui_Form, QWidget):
         self.yDataChanged.emit(y)
 
 
-def main():
+def run():
     import sys
     from PyQt5.QtWidgets import QApplication
 
@@ -45,4 +45,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    run()
