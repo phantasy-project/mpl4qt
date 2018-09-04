@@ -190,6 +190,9 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.figMkfColorChanged[QColor].connect(self.parent.setMkFaceColor)
         self.mk_facecolor_btn.clicked.connect(self.set_mfc)
 
+        # sizer
+        self.adjustSize()
+
     def post_init_ui(self):
         self.set_bgcolor_label(self.parent.getFigureBgColor())
         self.set_ticks_color_label(self.parent.getFigureXYticksColor())
