@@ -91,4 +91,4 @@ A simple application created with ``mpl4qt`` package could be running by:
 
 .. code-block:: python
 
-    python -m mpl4qt.examples.app1 -c "app1.main()"
+    python -m mpl4qt.examples.app1 -c "app1.run()"
