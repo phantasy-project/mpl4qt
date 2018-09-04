@@ -1,3 +1,6 @@
+1.2.3
+  * Update config panel UI.
+  
 1.2.2
   * Update HTML doc.
   * Use 'xyann' instead of 'xytext' (deprecated).
