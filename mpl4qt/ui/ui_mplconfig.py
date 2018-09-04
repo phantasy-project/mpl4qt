@@ -12,13 +12,15 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(939, 312)
+        Dialog.resize(999, 310)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(Dialog.sizePolicy().hasHeightForWidth())
         Dialog.setSizePolicy(sizePolicy)
+        Dialog.setMinimumSize(QtCore.QSize(999, 310))
+        Dialog.setMaximumSize(QtCore.QSize(999, 310))
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout(Dialog)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.config_tabWidget = QtWidgets.QTabWidget(Dialog)
@@ -341,6 +343,8 @@ class Ui_Dialog(object):
                                             QtWidgets.QSizePolicy.Expanding,
                                             QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem1, 3, 4, 1, 1)
+        self.label_24.raise_()
+        self.legend_loc_cbb.raise_()
         self.fig_title_lineEdit.raise_()
         self.title_font_btn.raise_()
         self.xy_label_font_btn.raise_()
