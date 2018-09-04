@@ -1,3 +1,9 @@
+1.2.2
+  * Update HTML doc.
+  * Use 'xyann' instead of 'xytext' (deprecated).
+  * Make config dialog size fixed.
+  * Enforce using 'Qt5Agg', applies for earlier matplotlib (e.g. 1.4.2).
+
 1.2.1
   * Add HTML documentation
 
