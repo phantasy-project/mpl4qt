@@ -32,12 +32,17 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QMenu
 from PyQt5.QtWidgets import QAction
 from PyQt5.QtWidgets import QDialog
+from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtGui import QFont
 
 import numpy as np
+from collections import OrderedDict
 
 from mpl4qt.widgets.mplbasewidget import BasePlotWidget
 from mpl4qt.widgets.mplconfig import MatplotlibConfigPanel
+from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
+from mpl4qt.widgets.utils import mplcolor2hex
 
 
 class MatplotlibCurveWidget(BasePlotWidget):
@@ -590,14 +595,86 @@ class MatplotlibCurveWidget(BasePlotWidget):
             self._line_id = i
             self._line = lines[i]
 
-    def get_line_config(self):
+    def get_line_config(self, line=None):
         """Get line config: ls, lw, c, marker, ms, mew, mec, mfc, label
         """
+        line = self._line if line is None else line
         return {
-            p: getattr(self._line, 'get_' + p)()
+            p: getattr(line, 'get_' + p)()
             for p in ('ls', 'lw', 'c', 'ms', 'mew', 'mec', 'mfc', 'marker',
                       'label')
         }
+
+    def get_mpl_settings(self):
+        """Return all the settings for the current figure.
+        """
+        s = MatplotlibCurveWidgetSettings()
+        s.update(s.default_settings())
+
+        # figure
+        s['figure']['title'].update({
+            'value': self.getFigureTitle(),
+            'font': self.getFigureTitleFont().toString()
+        })
+        s['figure']['labels'].update({
+            'xlabel': self.getFigureXlabel(),
+            'ylabel': self.getFigureYlabel(),
+            'font': self.getFigureXYlabelFont().toString()
+        })
+        s['figure']['xy_range'].update({
+            'auto_scale': self.getFigureAutoScale(),
+            'xmin': self.getXLimitMin(),
+            'xmax': self.getXLimitMax(),
+            'ymin': self.getYLimitMin(),
+            'ymax': self.getYLimitMax(),
+        })
+        s['figure']['legend'].update({
+            'show': self.getLegendToggle()==True,
+            'location': self.getLegendLocation()
+        })
+        # curve
+        curve_settings = []
+        for line_id, line in enumerate(self.get_all_curves()):
+            config = self.get_line_config(line)
+            curve_setting = OrderedDict()
+            curve_setting.update({
+                'line': {
+                    'style': config['ls'],
+                    'color': mplcolor2hex(config['c']),
+                    'width': config['lw'],
+                },
+                'marker': {
+                    'style': config['marker'],
+                    'edgecolor': mplcolor2hex(config['mec']),
+                    'facecolor': mplcolor2hex(config['mfc']),
+                    'size': config['ms'],
+                    'width': config['mew'],
+                },
+                'label': config['label'],
+                'line_id': line_id,
+                })
+            curve_settings.append(curve_setting)
+        s.update({'curve': curve_settings})
+        # style
+        s['style']['figsize'].update({
+            'width': self.getFigureWidth(),
+            'height': self.getFigureHeight(),
+            'dpi': self.getFigureDpi(),
+        })
+        s['style']['background'].update({
+            'color': self.getFigureBgColor().name(),
+        })
+        s['style']['ticks'].update({
+            'mticks_on': self.getFigureMTicksToggle()==True,
+            'font': self.getFigureXYticksFont().toString(),
+            'color': self.getFigureXYticksColor().name(),
+        })
+        s['style']['layout'].update({
+            'tight_on': self.getTightLayoutToggle()==True,
+            'grid_on': self.getFigureGridToggle()==True,
+            'grid_color': self.getFigureGridColor().name(),
+        })
+        return s
 
     def getFigureAutoScale(self):
         return self._fig_auto_scale
@@ -824,12 +901,18 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def contextMenuEvent(self, e):
         menu = QMenu(self)
         config_action = QAction("Config", menu)
+        export_action = QAction("Export", menu)
+        import_action = QAction("Import", menu)
         reset_action = QAction("Reset", menu)
         menu.addAction(config_action)
+        menu.addAction(export_action)
+        menu.addAction(import_action)
         menu.addSeparator()
         menu.addAction(reset_action)
 
         config_action.triggered.connect(self.on_config)
+        export_action.triggered.connect(self.on_export_config)
+        import_action.triggered.connect(self.on_import_config)
         reset_action.triggered.connect(self.on_reset)
 
         menu.exec_(self.mapToGlobal(e.pos()))
@@ -841,6 +924,26 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def on_config(self):
         config_panel = MatplotlibConfigPanel(self)
         r = config_panel.exec_()
+
+    def on_export_config(self):
+        outfile, _ = QFileDialog.getSaveFileName(self,
+                "Save Settings",
+                "./mpl_settings.json",
+                "JSON Files (*.json)")
+        try:
+            s = self.get_mpl_settings()
+            s.write(outfile)
+        except:
+            QMessageBox.warning(self, "Warning",
+                    "Cannot export settings to {}".format(outfile),
+                    QMessageBox.Ok)
+        else:
+            QMessageBox.information(self, "Information",
+                    "Successfully export settings to {}".format(outfile),
+                    QMessageBox.Ok)
+
+    def on_import_config(self):
+        pass
 
     def on_reset(self):
         print("Reset action triggered")
