@@ -248,6 +248,10 @@ class MatplotlibCurveWidgetSettings(OrderedDict):
         return s
 
 
+# default mpl figure settings
+DEFAULT_MPL_SETTINGS = MatplotlibCurveWidgetSettings.default_settings()
+
+
 if __name__ == '__main__':
     s = MatplotlibCurveWidgetSettings()
     s.update(s.default_settings())
