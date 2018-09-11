@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import matplotlib.colors as colors
+from collections import OrderedDict
+import json
+from copy import deepcopy
 
 try:
     basestring
@@ -93,6 +96,40 @@ LINE_STY_DICT = {
     'None': 'None',
 }
 
+# default values for mpl settings
+DEFAULT_TITLE = "title sample"
+DEFAULT_TITLE_FONT = "DejaVu Sans,14,-1,5,50,0,0,0,0,0"
+DEFAULT_XLABEL = "xlabel sample"
+DEFAULT_YLABEL = "ylabel sample"
+DEFAULT_LABELS_FONT = "Sans Serif,12,-1,5,50,0,0,0,0,0"
+DEFAULT_AUTOSCALE = False
+DEFAULT_XMIN = 0
+DEFAULT_XMAX = 1
+DEFAULT_YMIN = 0
+DEFAULT_YMAX = 1
+DEFAULT_LEGEND_SHOW = False
+DEFAULT_LEGEND_LOC = 0
+DEFAULT_LINE_ID = 0
+DEFAULT_LINE_STYLE = "-"
+DEFAULT_LINE_COLOR = "#FF0000"
+DEFAULT_LINE_WIDTH = 1.5
+DEFAULT_MK_STYLE = 'o'
+DEFAULT_MEC = "#FF0000"
+DEFAULT_MFC = "#FF0000"
+DEFAULT_MK_SIZE = 6.0
+DEFAULT_MK_WIDTH = 1.0
+DEFAULT_LINE_LABEL = "line1"
+DEFAULT_FIG_WIDTH = 4
+DEFAULT_FIG_HEIGHT = 3
+DEFAULT_FIG_DPI = 100
+DEFAULT_BKGD_COLOR = "#EDECEB"
+DEFAULT_MTICKS_ON = False
+DEFAULT_MTICKS_FONT = DEFAULT_LABELS_FONT
+DEFAULT_MTICKS_COLOR = "#000000"
+DEFAULT_LAYOUT_TIGHT_ON = False
+DEFAULT_LAYOUT_GRID_ON = False
+DEFAULT_LAYOUT_GRID_COLOR = "#808080"
+
 
 def mplcolor2hex(c):
     """Convert matplotlib colors into hex string format.
@@ -101,12 +138,12 @@ def mplcolor2hex(c):
     ----------
     c : str or tuple
         Color string or RGB tuple.
-    
+
     Returns
     -------
     r : str
         Hex string for color.
-    
+
     Examples
     --------
     >>> color_to_hex('r')
@@ -129,3 +166,89 @@ def mplcolor2hex(c):
             except:
                 clr = colors.cnames[c]
     return clr.upper()
+
+
+class MatplotlibCurveWidgetSettings(OrderedDict):
+    def __init__(self, path=None):
+        if isinstance(path, basestring):
+            with open(path, "r") as fp:
+                self.read(fp)
+
+    def read(self, fp):
+        """Read settings from file-like object into JSON format.
+        """
+        self.update(json.load(fp, object_pairs_hook=OrderedDict))
+
+    def __deepcopy__(self, memo):
+        s = MatplotlibCurveWidgetSettings()
+        s.update(deepcopy(list(self.items()), memo))
+        return s
+
+    def write(self, path=None):
+        """Write settings into a JSON file, if path is not defined
+        """
+        path = 'mplsettings.json' if path is None else path
+        with open(path, 'w') as fp:
+            json.dump(self, fp, indent=2, sort_keys=True)
+
+    @staticmethod
+    def default_settings():
+        """Default settings.
+        """
+        s = OrderedDict()
+
+        # figure tab
+        sfig = OrderedDict()
+        sfig.update({'title': {'value': DEFAULT_TITLE, 'font': DEFAULT_TITLE_FONT}})
+        sfig.update({'labels': {'xlabel': DEFAULT_XLABEL, 'ylabel': DEFAULT_YLABEL,
+                                'font': DEFAULT_LABELS_FONT}})
+        sfig.update({'xy_range': {'auto_scale': DEFAULT_AUTOSCALE,
+                                  'xmin': DEFAULT_XMIN, 'xmax': DEFAULT_XMAX,
+                                  'ymin': DEFAULT_YMIN, 'ymax': DEFAULT_YMAX}})
+        sfig.update({'legend': {'show': DEFAULT_LEGEND_SHOW,
+                                'location': DEFAULT_LEGEND_LOC}})
+        s.update({'figure': sfig})
+
+        # curve tab (single curve)
+        scurve = OrderedDict()
+        scurve.update({'line': {'style': DEFAULT_LINE_STYLE,
+                                'color': DEFAULT_LINE_COLOR,
+                                'width': DEFAULT_LINE_WIDTH}})
+        scurve.update({'marker': {'style': DEFAULT_MK_STYLE,
+                                  'edgecolor': DEFAULT_MEC,
+                                  'facecolor': DEFAULT_MFC,
+                                  'size': DEFAULT_MK_SIZE,
+                                  'width': DEFAULT_MK_WIDTH}})
+        scurve.update({'label': DEFAULT_LINE_LABEL})
+        scurve.update({'line_id': DEFAULT_LINE_ID})
+
+        s.update({'curve': [scurve]})
+
+        # style tab
+        sstyle = OrderedDict()
+        sstyle.update({'figsize': {
+            'width': DEFAULT_FIG_WIDTH,
+            'height': DEFAULT_FIG_HEIGHT,
+            'dpi': DEFAULT_FIG_DPI}})
+        sstyle.update({'background': {
+            'color': DEFAULT_BKGD_COLOR}})
+        sstyle.update({'ticks': {
+            'mticks_on': DEFAULT_MTICKS_ON,
+            'font': DEFAULT_MTICKS_FONT,
+            'color': DEFAULT_MTICKS_COLOR,
+            }})
+        sstyle.update({'layout': {
+            'tight_on': DEFAULT_LAYOUT_TIGHT_ON,
+            'grid_on': DEFAULT_LAYOUT_GRID_ON,
+            'grid_color': DEFAULT_LAYOUT_GRID_COLOR,
+            }})
+
+        s.update({'style': sstyle})
+
+        return s
+
+
+if __name__ == '__main__':
+    s = MatplotlibCurveWidgetSettings()
+    s.update(s.default_settings())
+    s.write()
