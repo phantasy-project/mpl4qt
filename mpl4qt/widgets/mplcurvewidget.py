@@ -43,6 +43,7 @@ from mpl4qt.widgets.mplbasewidget import BasePlotWidget
 from mpl4qt.widgets.mplconfig import MatplotlibConfigPanel
 from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
 from mpl4qt.widgets.utils import mplcolor2hex
+from mpl4qt.widgets.utils import DEFAULT_MPL_SETTINGS
 
 
 class MatplotlibCurveWidget(BasePlotWidget):
@@ -913,7 +914,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         config_action.triggered.connect(self.on_config)
         export_action.triggered.connect(self.on_export_config)
         import_action.triggered.connect(self.on_import_config)
-        reset_action.triggered.connect(self.on_reset)
+        reset_action.triggered.connect(self.on_reset_config)
 
         menu.exec_(self.mapToGlobal(e.pos()))
 
@@ -926,27 +927,105 @@ class MatplotlibCurveWidget(BasePlotWidget):
         r = config_panel.exec_()
 
     def on_export_config(self):
-        outfile, _ = QFileDialog.getSaveFileName(self,
+        filepath, _ = QFileDialog.getSaveFileName(self,
                 "Save Settings",
                 "./mpl_settings.json",
                 "JSON Files (*.json)")
+        if not filepath:
+            return
         try:
             s = self.get_mpl_settings()
-            s.write(outfile)
+            s.write(filepath)
         except:
             QMessageBox.warning(self, "Warning",
-                    "Cannot export settings to {}".format(outfile),
+                    "Cannot export settings to {}".format(filepath),
                     QMessageBox.Ok)
         else:
             QMessageBox.information(self, "Information",
-                    "Successfully export settings to {}".format(outfile),
+                    "Successfully export settings to {}".format(filepath),
                     QMessageBox.Ok)
 
     def on_import_config(self):
-        pass
+        filepath, _ = QFileDialog.getOpenFileName(self,
+                "Open Settings",
+                "./mpl_settings.json",
+                "JSON Files (*.json)")
+        if not filepath:
+            return
+        try:
+            s = MatplotlibCurveWidgetSettings(filepath)
+            self.apply_mpl_settings(s)
+        except:
+            QMessageBox.warning(self, "Warning",
+                    "Cannot import&apply settings with {}".format(filepath),
+                    QMessageBox.Ok)
+        else:
+            QMessageBox.information(self, "Information",
+                    "Successfully import&apply settings with {}".format(filepath),
+                    QMessageBox.Ok)
 
-    def on_reset(self):
-        print("Reset action triggered")
+    def on_reset_config(self):
+        # apply default settings
+        self.apply_mpl_settings()
+
+    def apply_mpl_settings(self, settings=None):
+        """Apply mpl settings to the mplcurvewidget, if *settings* is not
+        defined, apply the default mpl settings.
+
+        See Also
+        --------
+        MatplotlibCurveWidgetSettings
+        """
+        settings = DEFAULT_MPL_SETTINGS if settings is None else settings
+
+        # curve
+        scurve = settings['curve']
+        for config in scurve:
+            self.setLineID(config['line_id'])
+            self.setLineLabel(config['label'])
+            self.setLineColor(QColor(config['line']['color']))
+            self.setLineStyle(config['line']['style'])
+            self.setLineWidth(config['line']['width'])
+            self.setMarkerStyle(config['marker']['style'])
+            self.setMarkerSize(config['marker']['size'])
+            self.setMarkerThickness(config['marker']['width'])
+            self.setMkEdgeColor(QColor(config['marker']['edgecolor']))
+            self.setMkFaceColor(QColor(config['marker']['facecolor']))
+
+        # style
+        sstyle = settings['style']
+        self.setFigureBgColor(QColor(sstyle['background']['color']))
+        #self.setFigureWidth(sstyle['figsize']['width'])
+        #self.setFigureHeight(sstyle['figsize']['height'])
+        #self.setFigureDpi(sstyle['figsize']['dpi'])
+        self.setFigureGridToggle(bool(sstyle['layout']['grid_on']))
+        self.setTightLayoutToggle(bool(sstyle['layout']['tight_on']))
+        self.setFigureGridColor(QColor(sstyle['layout']['grid_color']))
+        self.setFigureXYticksColor(QColor(sstyle['ticks']['color']))
+        self.setFigureMTicksToggle(bool(sstyle['ticks']['mticks_on']))
+        f = QFont()
+        f.fromString(sstyle['ticks']['font'])
+        self.setFigureXYticksFont(f)
+
+        # figure
+        sfig = settings['figure']
+        self.setFigureTitle(sfig['title']['value'])
+        f = QFont()
+        f.fromString(sfig['title']['font'])
+        self.setFigureTitleFont(f)
+        self.setFigureXlabel(sfig['labels']['xlabel'])
+        self.setFigureYlabel(sfig['labels']['ylabel'])
+        f = QFont()
+        f.fromString(sfig['labels']['font'])
+        self.setFigureXYlabelFont(f)
+        self.setLegendToggle(bool(sfig['legend']['show']))
+        self.setLegendLocation(sfig['legend']['location'])
+        self.setFigureAutoScale(bool(sfig['xy_range']['auto_scale']))
+        self.setXLimitMin(sfig['xy_range']['xmin'])
+        self.setXLimitMax(sfig['xy_range']['xmax'])
+        self.setYLimitMin(sfig['xy_range']['ymin'])
+        self.setYLimitMax(sfig['xy_range']['ymax'])
+
 
     def update_legend(self):
         # update legend if on
