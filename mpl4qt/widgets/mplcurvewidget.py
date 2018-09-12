@@ -48,6 +48,8 @@ from mpl4qt.widgets.utils import mplcolor2hex
 from mpl4qt.widgets.utils import DEFAULT_MPL_SETTINGS
 from mpl4qt.icons import config_icon
 from mpl4qt.icons import reset_icon
+from mpl4qt.icons import import_icon
+from mpl4qt.icons import export_icon
 
 
 class MatplotlibCurveWidget(BasePlotWidget):
@@ -910,8 +912,10 @@ class MatplotlibCurveWidget(BasePlotWidget):
         menu = QMenu(self)
         config_action = QAction(QIcon(QPixmap(config_icon)),
                                 "Config", menu)
-        export_action = QAction("Export", menu)
-        import_action = QAction("Import", menu)
+        export_action = QAction(QIcon(QPixmap(export_icon)),
+                                "Export", menu)
+        import_action = QAction(QIcon(QPixmap(import_icon)),
+                                "Import", menu)
         reset_action = QAction(QIcon(QPixmap(reset_icon)),
                               "Reset", menu)
         menu.addAction(config_action)
