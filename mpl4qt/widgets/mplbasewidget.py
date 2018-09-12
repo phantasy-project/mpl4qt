@@ -64,6 +64,12 @@ class BasePlotWidget(FigureCanvas):
         self.init_xy_pos_annot()
         self.figure.canvas.mpl_connect('motion_notify_event', self.on_motion)
 
+        # key press
+        self.figure.canvas.mpl_connect('key_press_event', self.on_key_press)
+
+        self.figure.canvas.setFocusPolicy(Qt.ClickFocus)
+        self.figure.canvas.setFocus()
+
     def post_style_figure(self):
         self.set_figure_color()
 
@@ -71,6 +77,9 @@ class BasePlotWidget(FigureCanvas):
         pass
 
     def on_motion(self):
+        pass
+
+    def on_key_press(self, e):
         pass
 
     def init_figure(self):
@@ -142,7 +151,7 @@ class BasePlotWidget(FigureCanvas):
 
     def set_context_menu(self, ):
         self.setContextMenuPolicy(Qt.DefaultContextMenu)
-
+    
 
 def _set_font(obj, font):
     obj.set_size(font.pointSizeF())
