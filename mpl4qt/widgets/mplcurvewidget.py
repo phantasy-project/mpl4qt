@@ -965,6 +965,9 @@ class MatplotlibCurveWidget(BasePlotWidget):
                 "JSON Files (*.json)")
         if not filepath:
             return
+        self._import_settings(filepath)
+
+    def _import_mpl_settings(self, filepath):
         try:
             s = MatplotlibCurveWidgetSettings(filepath)
             self.apply_mpl_settings(s)
@@ -1098,6 +1101,16 @@ class MatplotlibCurveWidget(BasePlotWidget):
             self.force_update()
             self.update_figure()
             self.resize_figure()
+
+    def dragEnterEvent(self, e):
+        if e.mimeData().hasUrls():
+            e.accept()
+        else:
+            e.ignore()
+
+    def dropEvent(self, e):
+        path = e.mimeData().urls()[0].toLocalFile()
+        self._import_mpl_settings(path)
 
 
 if __name__ == "__main__":

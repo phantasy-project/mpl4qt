@@ -70,6 +70,9 @@ class BasePlotWidget(FigureCanvas):
         self.figure.canvas.setFocusPolicy(Qt.ClickFocus)
         self.figure.canvas.setFocus()
 
+        # dnd
+        self.setAcceptDrops(True)
+
     def post_style_figure(self):
         self.set_figure_color()
 
@@ -80,6 +83,12 @@ class BasePlotWidget(FigureCanvas):
         pass
 
     def on_key_press(self, e):
+        pass
+
+    def dragEnterEvent(self, e):
+        pass
+
+    def dropEvent(self, e):
         pass
 
     def init_figure(self):
@@ -151,7 +160,7 @@ class BasePlotWidget(FigureCanvas):
 
     def set_context_menu(self, ):
         self.setContextMenuPolicy(Qt.DefaultContextMenu)
-    
+
 
 def _set_font(obj, font):
     obj.set_size(font.pointSizeF())
