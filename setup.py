@@ -41,6 +41,9 @@ setup(
         'gui_scripts': [
             'run_designer=mpl4qt.launchers.designer:main',
         ],
+        'console_scripts': [
+            'mplcurve_default_settings=mpl4qt.widgets.utils:main'
+        ],
     },
     classifiers=[
         'Programming Language :: Python :: 2.7',

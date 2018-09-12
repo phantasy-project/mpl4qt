@@ -97,12 +97,12 @@ LINE_STY_DICT = {
 }
 
 # default values for mpl settings
-DEFAULT_TITLE = "title sample"
-DEFAULT_TITLE_FONT = "DejaVu Sans,14,-1,5,50,0,0,0,0,0"
-DEFAULT_XLABEL = "xlabel sample"
-DEFAULT_YLABEL = "ylabel sample"
-DEFAULT_LABELS_FONT = "Sans Serif,12,-1,5,50,0,0,0,0,0"
-DEFAULT_AUTOSCALE = False
+DEFAULT_TITLE = "<title sample>"
+DEFAULT_TITLE_FONT = "DejaVu Sans,16,-1,5,50,0,0,0,0,0"
+DEFAULT_XLABEL = "<xlabel sample>"
+DEFAULT_YLABEL = "<ylabel sample>"
+DEFAULT_LABELS_FONT = "Sans Serif,14,-1,5,50,0,0,0,0,0"
+DEFAULT_AUTOSCALE = True
 DEFAULT_XMIN = 0
 DEFAULT_XMAX = 1
 DEFAULT_YMIN = 0
@@ -110,22 +110,22 @@ DEFAULT_YMAX = 1
 DEFAULT_LEGEND_SHOW = False
 DEFAULT_LEGEND_LOC = 0
 DEFAULT_LINE_ID = 0
-DEFAULT_LINE_STYLE = "-"
+DEFAULT_LINE_STYLE = "--"
 DEFAULT_LINE_COLOR = "#FF0000"
-DEFAULT_LINE_WIDTH = 1.5
+DEFAULT_LINE_WIDTH = 1.0
 DEFAULT_MK_STYLE = 'o'
-DEFAULT_MEC = "#FF0000"
-DEFAULT_MFC = "#FF0000"
+DEFAULT_MEC = "#0055FF"
+DEFAULT_MFC = "#FFFFFF"
 DEFAULT_MK_SIZE = 6.0
 DEFAULT_MK_WIDTH = 1.0
 DEFAULT_LINE_LABEL = "line1"
 DEFAULT_FIG_WIDTH = 4
 DEFAULT_FIG_HEIGHT = 3
-DEFAULT_FIG_DPI = 100
+DEFAULT_FIG_DPI = 120
 DEFAULT_BKGD_COLOR = "#EDECEB"
 DEFAULT_MTICKS_ON = False
-DEFAULT_MTICKS_FONT = DEFAULT_LABELS_FONT
-DEFAULT_MTICKS_COLOR = "#000000"
+DEFAULT_MTICKS_FONT = "Sans Serif,10,-1,5,50,0,0,0,0,0"
+DEFAULT_MTICKS_COLOR = "#AA00FF"
 DEFAULT_LAYOUT_TIGHT_ON = False
 DEFAULT_LAYOUT_GRID_ON = False
 DEFAULT_LAYOUT_GRID_COLOR = "#808080"
@@ -187,7 +187,7 @@ class MatplotlibCurveWidgetSettings(OrderedDict):
     def write(self, path=None):
         """Write settings into a JSON file, if path is not defined
         """
-        path = 'mplsettings.json' if path is None else path
+        path = 'mplcurve_default_settings.json' if path is None else path
         with open(path, 'w') as fp:
             json.dump(self, fp, indent=2, sort_keys=True)
 
@@ -252,7 +252,34 @@ class MatplotlibCurveWidgetSettings(OrderedDict):
 DEFAULT_MPL_SETTINGS = MatplotlibCurveWidgetSettings.default_settings()
 
 
-if __name__ == '__main__':
+def main():
+    import argparse
+    import sys
+    import os
+
+    parser = argparse.ArgumentParser(description=
+            "Generate default JSON settings for MatplotlibCurveWidget",
+            formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument('--path', dest='filepath', nargs='?',
+            help='path of the JSON settings file')
+    parser.epilog = \
+"""
+Examples:
+> {0} --path mplsettings.json
+> {0}
+""".format(os.path.basename(sys.argv[0]))
+    
+    args = parser.parse_args(sys.argv[1:])
+    if args.filepath is None:
+        path = "mplcurve_default_settings.json"
+    else:
+        path = args.filepath
+
     s = MatplotlibCurveWidgetSettings()
     s.update(s.default_settings())
-    s.write()
+    s.write(path)
+    print("Generated JSON settings into {}.".format(path))
+    
+
+if __name__ == '__main__':
+    main()
