@@ -26,6 +26,7 @@ from PyQt5.QtGui import QPalette
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFontDatabase
+from PyQt5.QtGui import QResizeEvent
 
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -78,6 +79,11 @@ class BasePlotWidget(FigureCanvas):
     def update_figure(self):
         self.figure.canvas.draw_idle()
         self.update()
+
+    def resize_figure(self):
+        """Must be triggered for set fig size.
+        """
+        self.resizeEvent(QResizeEvent(self.size(), self.size()))
 
     def set_figure_color(self, color=None):
         if color is None:
