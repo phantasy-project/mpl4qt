@@ -27,6 +27,8 @@ from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtCore import QSize
 from PyQt5.QtCore import QVariant
 from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QMenu
@@ -44,6 +46,7 @@ from mpl4qt.widgets.mplconfig import MatplotlibConfigPanel
 from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
 from mpl4qt.widgets.utils import mplcolor2hex
 from mpl4qt.widgets.utils import DEFAULT_MPL_SETTINGS
+from mpl4qt.icons import config_icon
 
 
 class MatplotlibCurveWidget(BasePlotWidget):
@@ -904,7 +907,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     def contextMenuEvent(self, e):
         menu = QMenu(self)
-        config_action = QAction("Config", menu)
+        config_action = QAction(QIcon(QPixmap(config_icon)),
+                                "Config", menu)
         export_action = QAction("Export", menu)
         import_action = QAction("Import", menu)
         reset_action = QAction("Reset", menu)
