@@ -1039,6 +1039,11 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.setYLimitMin(sfig['xy_range']['ymin'])
         self.setYLimitMax(sfig['xy_range']['ymax'])
 
+    def force_update(self):
+        """Force update widget."""
+        self.update_legend()
+        self.update_figure()
+        self.resize_figure()
 
     def update_legend(self):
         # update legend if on
@@ -1071,6 +1076,28 @@ class MatplotlibCurveWidget(BasePlotWidget):
             if vis:
                 self.xy_pos_annot.set_visible(False)
         self.update_figure()
+
+    def on_key_press(self, e):
+        if e.key == 'g':
+            # turn on/off grid
+            self.setFigureGridToggle(not self.getFigureGridToggle())
+        elif e.key == 'a':
+            # turn on/off autoscale
+            self.setFigureAutoScale(not self.getFigureAutoScale())
+        elif e.key == 'm':
+            # turn on/off mticks
+            self.setFigureMTicksToggle(not self.getFigureMTicksToggle())
+        elif e.key == 't':
+            # turn on/off tightlayout
+            self.setTightLayoutToggle(not self.getTightLayoutToggle())
+        elif e.key == 'l':
+            # turn on/off legend
+            self.setLegendToggle(not self.getLegendToggle())
+        elif e.key == 'r':
+            # force refresh
+            self.force_update()
+            self.update_figure()
+            self.resize_figure()
 
 
 if __name__ == "__main__":
