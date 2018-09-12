@@ -275,6 +275,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         """
         self._fig_width = max(w, 2)
         self.figure.set_size_inches([self._fig_width, self._fig_height])
+        self.resize_figure()
         self.update_figure()
 
     figureWidth = pyqtProperty(int, getFigureWidth, setFigureWidth)
@@ -293,6 +294,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         """
         self._fig_height = max(h, 2)
         self.figure.set_size_inches([self._fig_width, self._fig_height])
+        self.resize_figure()
         self.update_figure()
 
     figureHeight = pyqtProperty(int, getFigureHeight, setFigureHeight)
@@ -311,6 +313,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         """
         self._fig_dpi = min(1000, max(d, 50))
         self.figure.set_dpi(d)
+        self.resize_figure()
         self.update_figure()
 
     figureDPI = pyqtProperty(int, getFigureDpi, setFigureDpi)
@@ -995,9 +998,9 @@ class MatplotlibCurveWidget(BasePlotWidget):
         # style
         sstyle = settings['style']
         self.setFigureBgColor(QColor(sstyle['background']['color']))
-        #self.setFigureWidth(sstyle['figsize']['width'])
-        #self.setFigureHeight(sstyle['figsize']['height'])
-        #self.setFigureDpi(sstyle['figsize']['dpi'])
+        self.setFigureWidth(sstyle['figsize']['width'])
+        self.setFigureHeight(sstyle['figsize']['height'])
+        self.setFigureDpi(sstyle['figsize']['dpi'])
         self.setFigureGridToggle(bool(sstyle['layout']['grid_on']))
         self.setTightLayoutToggle(bool(sstyle['layout']['tight_on']))
         self.setFigureGridColor(QColor(sstyle['layout']['grid_color']))
