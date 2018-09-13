@@ -26,9 +26,13 @@ from PyQt5.QtCore import pyqtProperty
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtCore import QSize
 from PyQt5.QtCore import QVariant
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QIcon
 from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPainter
+from PyQt5.QtGui import QPen
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QMenu
@@ -36,7 +40,6 @@ from PyQt5.QtWidgets import QAction
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtGui import QFont
 
 import numpy as np
 from collections import OrderedDict
@@ -1125,11 +1128,23 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
 
 class KbdHelpDialog(QDialog, Ui_Dialog):
+    """Dialog for '?' key short.
+    """
     def __init__(self, parent=None):
         super(KbdHelpDialog, self).__init__(parent)
 
+        # UI
         self.setupUi(self)
+        self.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground)
         self.adjustSize()
+
+    def paintEvent(self, e):
+        painter = QPainter(self)
+        painter.setOpacity(0.75)
+        painter.setBrush(Qt.white)
+        painter.setPen(QPen(Qt.white))
+        painter.drawRect(self.rect())
 
 
 if __name__ == "__main__":
