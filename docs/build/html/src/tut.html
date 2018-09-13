@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting Started &mdash; mpl4qt 1.2.3 documentation</title>
+  <title>Getting Started &mdash; mpl4qt 1.3.0 documentation</title>
   
 
   
@@ -26,9 +26,10 @@
 
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Slots" href="api.html" />
+    <link rel="next" title="Keyborard Shortcuts" href="keyshort.html" />
     <link rel="prev" title="Deployment" href="deploy.html" /> 
 
   
@@ -58,7 +59,7 @@
             
             
               <div class="version">
-                1.2.3
+                1.3.0
               </div>
             
           
@@ -100,10 +101,11 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="keyshort.html">Keyborard Shortcuts</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API</span></p>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api.html">Slots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev.html">Slots</a></li>
 </ul>
 
             
@@ -207,7 +209,8 @@ interactively, and how the curve could be updated.</p>
 <div class="section" id="create-a-new-application">
 <h3>Create a New Application<a class="headerlink" href="#create-a-new-application" title="Permalink to this headline">¶</a></h3>
 <p>In the designer, click the <em>New icon</em> in the toolbar or menu
-<em>File</em> <span class="raw-html">&rarr;</span> <em>New</em> or <em>CTRL + N</em> to create a new project for the
+<span class="raw-html"><kbd>File</kbd></span> <span class="raw-html">&rarr;</span> <span class="raw-html"><kbd>New</kbd></span>
+or <span class="raw-html"><kbd>Ctrl</kbd></span> + <span class="raw-html"><kbd>N</kbd></span> to create a new project for the
 new application:</p>
 <a class="reference internal image-reference" href="../_images/app1_01.png"><img alt="../_images/app1_01.png" class="align-center" src="../_images/app1_01.png" style="width: 800px;" /></a>
 <p>One can choose <em>Screen Size</em>, but leave it as Default size is OK, the size
@@ -236,7 +239,8 @@ and one button for random curve generation, change the button text to <em>Update
 <h3>Inspect MatplotlibCurveWidget<a class="headerlink" href="#inspect-matplotlibcurvewidget" title="Permalink to this headline">¶</a></h3>
 <p>Before moving forward, let’s first take a look at what does <em>MatplotlibCurveWidget</em> provide, a good way to know is to run this app. Yes, the app is just ready
 to run.</p>
-<p>Save this project by clicking <em>Save icon</em> in the toolbar or <em>CTRL + S</em>, locate
+<p>Save this project by clicking <em>Save icon</em> in the toolbar or
+<span class="raw-html"><kbd>Ctrl</kbd></span> + <span class="raw-html"><kbd>S</kbd></span>, locate
 and name it as <em>ui_app1.ui</em>, check out to the location where the ui file is,
 in the terminal, run the following command to convert ui file to Python module:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pyuic5</span> <span class="n">ui_app1</span><span class="o">.</span><span class="n">ui</span> <span class="o">-</span><span class="n">o</span> <span class="n">ui_app1</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">x</span>
@@ -271,13 +275,14 @@ of <em>doubleSpinBox</em> to <em>setLineWidth(double)</em> slot of <em>matplotli
 <h3>Implement Additional Features<a class="headerlink" href="#implement-additional-features" title="Permalink to this headline">¶</a></h3>
 <p><em>MatplotlibCurveWidget</em> features a lot of functionality that could be
 implemented via Qt’s signal and slot mechanism <a class="footnote-reference" href="#f1" id="id2">[1]</a>.
-Some of them could be achieved in <em>designer</em>, but some are not, see <a class="reference internal" href="api.html#api-slots"><span class="std std-ref">Slots</span></a>.
+Some of them could be achieved in <em>designer</em>, but some are not,
+see <a class="reference internal" href="dev.html#dev-slots"><span class="std std-ref">Slots</span></a>.
 One of the additional
 fundamental ones is to update the curve, e.g. the <em>Update</em> should be
 used as the trigger for curve updating, every clicking, here, the curve
 would be updated with a new sine curve with random noise.</p>
 <p>The slot
-<a class="reference internal" href="api.html#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYData" title="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYData"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setYData()</span></code></a> could
+<a class="reference internal" href="dev.html#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYData" title="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYData"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setYData()</span></code></a> could
 be used to update the y data of the curve, generally, connecting with
 a PyQt signal to this slot will make this happen. However, before writing
 some code to the generated Python module, one thing should keep in mind,
@@ -405,7 +410,7 @@ updating curve, and change the figure property when needed, e.g. check
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="api.html" class="btn btn-neutral float-right" title="Slots" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="keyshort.html" class="btn btn-neutral float-right" title="Keyborard Shortcuts" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="deploy.html" class="btn btn-neutral" title="Deployment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -439,7 +444,7 @@ updating curve, and change the figure property when needed, e.g. check
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.2.3',
+            VERSION:'1.3.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
