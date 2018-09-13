@@ -1,4 +1,4 @@
-.. _api_slots:
+.. _dev_slots:
 
 =====
 Slots
