@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Deployment &mdash; mpl4qt 1.0.0 documentation</title>
+  <title>Deployment &mdash; mpl4qt 1.3.0 documentation</title>
   
 
   
@@ -26,6 +26,7 @@
 
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Getting Started" href="tut.html" />
@@ -58,7 +59,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.3.0
               </div>
             
           
@@ -91,6 +92,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#after-installation">After Installation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#what-could-be-reached-out">What could be reached out?</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#development-environment">Development Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#simple-demo-app">Simple Demo App</a></li>
 </ul>
 </li>
 </ul>
@@ -99,10 +101,11 @@
 <p class="caption"><span class="caption-text">Getting Started</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tut.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="keyshort.html">Keyborard Shortcuts</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API</span></p>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api.html">Slots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev.html">Slots</a></li>
 </ul>
 
             
@@ -170,13 +173,13 @@
   <div class="section" id="deployment">
 <h1>Deployment<a class="headerlink" href="#deployment" title="Permalink to this headline">¶</a></h1>
 <p>Here’re three ways to deploy <code class="docutils literal notranslate"><span class="pre">mpl4qt</span></code> to the operating system, although
-these approaches are only tested on Linux, hopefully, still work on Windows
-and MacOS.</p>
+these approaches are only tested on Linux, hopefully, still work (not tested)
+on Windows and Mac OS.</p>
 <div class="section" id="prerequisites">
 <span id="deploy-pre"></span><h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
-<p>Required pacakges: <code class="docutils literal notranslate"><span class="pre">Qt5-designer</span></code>, <code class="docutils literal notranslate"><span class="pre">pyuic5</span></code>, <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>.</p>
+<p>Required packages: <code class="docutils literal notranslate"><span class="pre">Qt5-designer</span></code>, <code class="docutils literal notranslate"><span class="pre">pyuic5</span></code>, <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>.</p>
 <p>Normally, all of the Python dependencies will be installed automatically.
-Recently, there is one issue regarding to starting up Qt designer,
+Recently, there is one issue regarding starting up Qt designer,
 see <a class="reference external" href="https://github.com/mu-editor/mu/issues/575">here</a>,
 so it is recommended to use the PyQt5 coming with the OS distribution,
 e.g. if you’re running Ubuntu/Debian/Linux Mint,
@@ -194,18 +197,18 @@ sudo apt-get install python3-pyqt5 qttools5-dev-tools pyqt5-dev-tools
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install mpl4qt
 </pre></div>
 </div>
-<p>Or upgrade from earlier version by (use <code class="docutils literal notranslate"><span class="pre">--no-deps</span></code> if only updating <code class="docutils literal notranslate"><span class="pre">mpl4qt</span></code>):</p>
+<p>Or upgrade from an earlier version by (use <code class="docutils literal notranslate"><span class="pre">--no-deps</span></code> if only updating <code class="docutils literal notranslate"><span class="pre">mpl4qt</span></code>):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install mpl4qt --upgrade --no-deps
 </pre></div>
 </div>
 </div>
 <div class="section" id="install-from-source">
 <h2>Install from Source<a class="headerlink" href="#install-from-source" title="Permalink to this headline">¶</a></h2>
-<p>Clone the source from github:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/archman/python-mpl4qt.git
+<p>Clone the source from Github:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/archman/mpl4qt.git
 </pre></div>
 </div>
-<p>Then checkout to master branch (normally you’re already there), and install
+<p>Then check out to master branch (normally you’re already there), and install
 into your system by:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 setup.py install
 </pre></div>
@@ -216,8 +219,11 @@ into your system by:</p>
 <div class="section" id="what-could-be-reached-out">
 <h3>What could be reached out?<a class="headerlink" href="#what-could-be-reached-out" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Command: <code class="docutils literal notranslate"><span class="pre">run_designer</span></code> to start Qt5-designer with matplotlib widgets integration.</li>
-<li>Python package named <code class="docutils literal notranslate"><span class="pre">mpl4qt</span></code> to be ready for using in any Python script.</li>
+<li>Command: <code class="docutils literal notranslate"><span class="pre">run_designer</span></code> to start Qt5-designer with matplotlib widgets
+integration.</li>
+<li>Command: <code class="docutils literal notranslate"><span class="pre">mplcurve_default_settings</span></code> to generate the JSON file for
+the default configuration of <code class="xref py py-class docutils literal notranslate"><span class="pre">MatplotlibCurveWidget</span></code>.</li>
+<li>Python package named <code class="docutils literal notranslate"><span class="pre">mpl4qt</span></code> to be ready for use in any Python script.</li>
 </ul>
 </div>
 <div class="section" id="development-environment">
@@ -233,6 +239,13 @@ into your system by:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">QT_VERSION_STR</span><span class="p">,</span> <span class="n">PYQT_VERSION_STR</span>
 
 <span class="k">print</span><span class="p">(</span><span class="n">QT_VERSION_STR</span><span class="p">,</span> <span class="n">PYQT_VERSION_STR</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="simple-demo-app">
+<h3>Simple Demo App<a class="headerlink" href="#simple-demo-app" title="Permalink to this headline">¶</a></h3>
+<p>A simple application created with <code class="docutils literal notranslate"><span class="pre">mpl4qt</span></code> package could be running by:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">mpl4qt</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">app1</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;app1.run()&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -281,7 +294,7 @@ into your system by:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.0.0',
+            VERSION:'1.3.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

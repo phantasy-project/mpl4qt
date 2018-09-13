@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting Started &mdash; mpl4qt 1.0.0 documentation</title>
+  <title>Getting Started &mdash; mpl4qt 1.3.0 documentation</title>
   
 
   
@@ -26,9 +26,10 @@
 
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Slots" href="api.html" />
+    <link rel="next" title="Keyborard Shortcuts" href="keyshort.html" />
     <link rel="prev" title="Deployment" href="deploy.html" /> 
 
   
@@ -58,7 +59,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.3.0
               </div>
             
           
@@ -100,10 +101,11 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="keyshort.html">Keyborard Shortcuts</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API</span></p>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api.html">Slots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev.html">Slots</a></li>
 </ul>
 
             
@@ -180,7 +182,7 @@ applications:</p>
 <h2>Start Qt5-designer<a class="headerlink" href="#start-qt5-designer" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">designer</span></code> is a user-friendly GUI application to help the developer to build
 UI painlessly, in a WYSIWYG way. The created UI file from <code class="docutils literal notranslate"><span class="pre">designer</span></code> is
-structured xml file, which could be parsed by Qt libraries to show the UI in
+structured XML file, which could be parsed by Qt libraries to show the UI in
 the Qt applications, however, it is designed for both C++ and Python, so if
 you’re working on the PyQt application, another command named <code class="docutils literal notranslate"><span class="pre">pyuic5</span></code> could
 be used to convert the UI file into Python module, which could be imported by
@@ -191,8 +193,8 @@ different PyQt versions would be applied between development and runtime.</p>
 <p>After installing <code class="docutils literal notranslate"><span class="pre">mpl4qt</span></code>, simply type <code class="docutils literal notranslate"><span class="pre">run_designer</span></code> in the Linux
 terminal to launch designer:</p>
 <a class="reference internal image-reference" href="../_images/designer_startup.png"><img alt="../_images/designer_startup.png" class="align-center" src="../_images/designer_startup.png" style="width: 800px;" /></a>
-<p>As one can see, in the <em>Widget Box</em> column, a new category so-called
-<em>FRIB Collection</em> is shown, inside which there is one widget called
+<p>As one can see, in the <em>Widget Box</em> column, a new category of so-called
+<em>DataViz Widgets</em> is shown, inside which there is one widget called
 <em>MatplotlibCurveWidget</em>, which is ready to be dragged&amp;dropped.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
@@ -202,12 +204,13 @@ terminal to launch designer:</p>
 <div class="section" id="random-x-y-curve-plotter">
 <span id="id1"></span><h2>Random X-Y Curve Plotter<a class="headerlink" href="#random-x-y-curve-plotter" title="Permalink to this headline">¶</a></h2>
 <p><strong>What does this application do?</strong> This app will make the most of
-<em>MatplotlibCurveWidget</em>, to show how the figure properties could be controled
+<em>MatplotlibCurveWidget</em>, to show how the figure properties could be controlled
 interactively, and how the curve could be updated.</p>
 <div class="section" id="create-a-new-application">
 <h3>Create a New Application<a class="headerlink" href="#create-a-new-application" title="Permalink to this headline">¶</a></h3>
 <p>In the designer, click the <em>New icon</em> in the toolbar or menu
-<em>File</em> <span class="raw-html">&rarr;</span> <em>New</em> or <em>CTRL + N</em> to create a new project for the
+<span class="raw-html"><kbd>File</kbd></span> <span class="raw-html">&rarr;</span> <span class="raw-html"><kbd>New</kbd></span>
+or <span class="raw-html"><kbd>Ctrl</kbd></span> + <span class="raw-html"><kbd>N</kbd></span> to create a new project for the
 new application:</p>
 <a class="reference internal image-reference" href="../_images/app1_01.png"><img alt="../_images/app1_01.png" class="align-center" src="../_images/app1_01.png" style="width: 800px;" /></a>
 <p>One can choose <em>Screen Size</em>, but leave it as Default size is OK, the size
@@ -218,13 +221,13 @@ workspace. Adjust the form size by dragging the form border.</p>
 <h3>Place Widgets<a class="headerlink" href="#place-widgets" title="Permalink to this headline">¶</a></h3>
 <p>All the widgets in the <em>Widget Box</em> column could be dragged and dropped to
 the form space to serve with different purposes, e.g. the <em>Label</em> usually
-is used to provide static indication. So we can place a title with <em>Label</em>:
-drag the <em>Label</em> icon from <em>Widget Box</em> to the form workspace, double click
+is used to provide the static indication. So we can place a title with <em>Label</em>:
+drag the <em>Label</em> icon from <em>Widget Box</em> to the form workspace, double-click
 to name it as <em>Random X-Y Curve Plotter</em>, and in the <em>Property Editor</em> column,
 simply check out some items to make it look better, e.g. set <em>Point Size</em> as
 20, check <em>Bold</em>, just as the following image shows:</p>
 <a class="reference internal image-reference" href="../_images/app1_02.png"><img alt="../_images/app1_02.png" class="align-center" src="../_images/app1_02.png" style="width: 800px;" /></a>
-<p>Next, place the <em>MatplotlibCurveWidget</em> into the workspace by the same way,
+<p>Next, place the <em>MatplotlibCurveWidget</em> into the workspace in the same way,
 and one button for random curve generation, change the button text to <em>Update</em>.</p>
 <p>After that, you’ll get something like this:</p>
 <a class="reference internal image-reference" href="../_images/app1_03.png"><img alt="../_images/app1_03.png" class="align-center" src="../_images/app1_03.png" style="width: 800px;" /></a>
@@ -236,8 +239,9 @@ and one button for random curve generation, change the button text to <em>Update
 <h3>Inspect MatplotlibCurveWidget<a class="headerlink" href="#inspect-matplotlibcurvewidget" title="Permalink to this headline">¶</a></h3>
 <p>Before moving forward, let’s first take a look at what does <em>MatplotlibCurveWidget</em> provide, a good way to know is to run this app. Yes, the app is just ready
 to run.</p>
-<p>Save this project by clicking <em>Save icon</em> in the toolbar or <em>CTRL + S</em>, locate
-and name it as <em>ui_app1.ui</em>, checkout to the location where the ui file is,
+<p>Save this project by clicking <em>Save icon</em> in the toolbar or
+<span class="raw-html"><kbd>Ctrl</kbd></span> + <span class="raw-html"><kbd>S</kbd></span>, locate
+and name it as <em>ui_app1.ui</em>, check out to the location where the ui file is,
 in the terminal, run the following command to convert ui file to Python module:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pyuic5</span> <span class="n">ui_app1</span><span class="o">.</span><span class="n">ui</span> <span class="o">-</span><span class="n">o</span> <span class="n">ui_app1</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">x</span>
 </pre></div>
@@ -246,10 +250,10 @@ in the terminal, run the following command to convert ui file to Python module:<
 <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">ui_app1.py</span></code>, a window will pop up:</p>
 <a class="reference internal image-reference" href="../_images/app1_04.png"><img alt="../_images/app1_04.png" class="align-center" src="../_images/app1_04.png" style="width: 500px;" /></a>
 <p>The <em>MatplotlibCurveWidget</em> is designed with the ability to change the
-figure properties via context menu, by right clicking in the figure,
-choose <em>Config</em> item will guide you to a pop up dialog, close it by hitting
-<em>ESC</em> or clicking <em>Close</em> in the windows titlebar.</p>
-<p>Here is the list of available options could be controled via <em>Config</em> menu,
+figure properties via the context menu, by right-clicking in the figure,
+choose <em>Config</em> item will guide you to a popup dialog, close it by hitting
+<em>ESC</em> or clicking <em>Close</em> in the windows title bar.</p>
+<p>Here is the list of available options could be controlled via <em>Config</em> menu,
 just name as a few: line color, line style, line width, marker size, marker
 style, marker color, labels, as well as fonts, grid, layout, etc.</p>
 <a class="reference internal image-reference" href="../_images/config01.png"><img alt="../_images/config01.png" class="align-center" src="../_images/config01.png" style="width: 400px;" /></a>
@@ -271,18 +275,19 @@ of <em>doubleSpinBox</em> to <em>setLineWidth(double)</em> slot of <em>matplotli
 <h3>Implement Additional Features<a class="headerlink" href="#implement-additional-features" title="Permalink to this headline">¶</a></h3>
 <p><em>MatplotlibCurveWidget</em> features a lot of functionality that could be
 implemented via Qt’s signal and slot mechanism <a class="footnote-reference" href="#f1" id="id2">[1]</a>.
-Some of them could be achieved in <em>designer</em>, but some are not, see <a class="reference internal" href="api.html#api-slots"><span class="std std-ref">Slots</span></a>.
+Some of them could be achieved in <em>designer</em>, but some are not,
+see <a class="reference internal" href="dev.html#dev-slots"><span class="std std-ref">Slots</span></a>.
 One of the additional
 fundamental ones is to update the curve, e.g. the <em>Update</em> should be
 used as the trigger for curve updating, every clicking, here, the curve
 would be updated with a new sine curve with random noise.</p>
 <p>The slot
-<a class="reference internal" href="api.html#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYData" title="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYData"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setYData()</span></code></a> could
+<a class="reference internal" href="dev.html#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYData" title="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYData"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setYData()</span></code></a> could
 be used to update the y data of the curve, generally, connecting with
 a PyQt signal to this slot will make this happen. However, before writing
 some code to the generated Python module, one thing should keep in mind,
 that is usually the updating will not be applied directly to that Python file
-inplace, but by extending it, here is how to accomplish:</p>
+in place, but by extending it, here is how to accomplish:</p>
 <p>Create a new file named as, for instance, <code class="docutils literal notranslate"><span class="pre">app1.py</span></code>, and inherit the class
 which renders the UI, then extend within the new class:</p>
 <div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -375,12 +380,12 @@ which renders the UI, then extend within the new class:</p>
 <p>One can note how the signal and slot mechanism works:</p>
 <ol class="arabic simple">
 <li>Define your PyQt signal;</li>
-<li>Connect the signal to specific slot;</li>
+<li>Connect the signal to the specific slot;</li>
 <li>Emit the signal when needed.</li>
 </ol>
 <p>In this example, the signal named <code class="docutils literal notranslate"><span class="pre">yDataChanged</span></code> is created with data type
 of <code class="docutils literal notranslate"><span class="pre">QVariant</span></code>, then connected with <code class="docutils literal notranslate"><span class="pre">setYData</span></code> slot of
-<em>matplotlibcurveWidget</em>; next the <code class="docutils literal notranslate"><span class="pre">clicked</span></code> signal is connected with the
+<em>matplotlibcurveWidget</em>; next, the <code class="docutils literal notranslate"><span class="pre">clicked</span></code> signal is connected with the
 defined slot <code class="docutils literal notranslate"><span class="pre">update_ydata</span></code>, in which new y data is generated and emitted.</p>
 <p>Run this app by <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">app1.py</span></code>, and click <code class="docutils literal notranslate"><span class="pre">Update</span></code> button to see the
 updating curve, and change the figure property when needed, e.g. check
@@ -405,7 +410,7 @@ updating curve, and change the figure property when needed, e.g. check
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="api.html" class="btn btn-neutral float-right" title="Slots" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="keyshort.html" class="btn btn-neutral float-right" title="Keyborard Shortcuts" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="deploy.html" class="btn btn-neutral" title="Deployment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -439,7 +444,7 @@ updating curve, and change the figure property when needed, e.g. check
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.0.0',
+            VERSION:'1.3.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

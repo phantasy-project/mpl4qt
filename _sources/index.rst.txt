@@ -23,12 +23,13 @@ Python 3.x.
     :caption: Getting Started
     
     src/tut
+    src/keyshort
 
 .. toctree::
     :maxdepth: 2
-    :caption: API
+    :caption: Development
 
-    src/api
+    src/dev
 
 
 Indices and tables
