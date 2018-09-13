@@ -39,7 +39,7 @@ As one can see, in the *Widget Box* column, a new category of so-called
 .. warning::
 
     If the following error message happens: *qtcore.so: undefined symbol: pyslice_adjustindices*, could be resolved by uninstalling pyqt5 package by ``pip uninstall pyqt5``, and installing the OS distributed one, see :ref:`Install mpl4qt <deploy_pre>`.
-    
+
 
 .. _Random X-Y curve plotter:
 
@@ -53,7 +53,8 @@ interactively, and how the curve could be updated.
 Create a New Application
 ^^^^^^^^^^^^^^^^^^^^^^^^
 In the designer, click the *New icon* in the toolbar or menu
-*File* :raw-html:`&rarr;` *New* or *CTRL + N* to create a new project for the
+:raw-html:`<kbd>File</kbd>` :raw-html:`&rarr;` :raw-html:`<kbd>New</kbd>`
+or :raw-html:`<kbd>Ctrl</kbd>` + :raw-html:`<kbd>N</kbd>` to create a new project for the
 new application:
 
 .. image:: ../images/app1_01.png
@@ -101,12 +102,13 @@ Inspect MatplotlibCurveWidget
 Before moving forward, let's first take a look at what does *MatplotlibCurveWidget* provide, a good way to know is to run this app. Yes, the app is just ready
 to run.
 
-Save this project by clicking *Save icon* in the toolbar or *CTRL + S*, locate
+Save this project by clicking *Save icon* in the toolbar or
+:raw-html:`<kbd>Ctrl</kbd>` + :raw-html:`<kbd>S</kbd>`, locate
 and name it as *ui_app1.ui*, check out to the location where the ui file is,
 in the terminal, run the following command to convert ui file to Python module:
 
 .. code-block:: python
-    
+
     pyuic5 ui_app1.ui -o ui_app1.py -x
 
 You'll get a new Python file generated from ui file, simply run with
@@ -162,8 +164,9 @@ Implement Additional Features
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 *MatplotlibCurveWidget* features a lot of functionality that could be
-implemented via Qt's signal and slot mechanism [#f1]_. 
-Some of them could be achieved in *designer*, but some are not, see :ref:`api_slots`.
+implemented via Qt's signal and slot mechanism [#f1]_.
+Some of them could be achieved in *designer*, but some are not,
+see :ref:`dev_slots`.
 One of the additional
 fundamental ones is to update the curve, e.g. the *Update* should be
 used as the trigger for curve updating, every clicking, here, the curve
@@ -191,7 +194,7 @@ One can note how the signal and slot mechanism works:
 3. Emit the signal when needed.
 
 In this example, the signal named ``yDataChanged`` is created with data type
-of ``QVariant``, then connected with ``setYData`` slot of 
+of ``QVariant``, then connected with ``setYData`` slot of
 *matplotlibcurveWidget*; next, the ``clicked`` signal is connected with the
 defined slot ``update_ydata``, in which new y data is generated and emitted.
 
@@ -205,7 +208,7 @@ updating curve, and change the figure property when needed, e.g. check
 
 
 .. only:: html
-    
+
     .. rubric:: Footnotes
 
 .. [#f1] http://doc.qt.io/qt-5/signalsandslots.html
