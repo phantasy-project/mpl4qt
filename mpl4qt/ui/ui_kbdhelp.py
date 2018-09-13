@@ -15,12 +15,13 @@ class Ui_Dialog(object):
         Dialog.resize(408, 352)
         self.gridLayout = QtWidgets.QGridLayout(Dialog)
         self.gridLayout.setContentsMargins(20, 20, 20, 20)
-        self.gridLayout.setSpacing(8)
+        self.gridLayout.setHorizontalSpacing(30)
+        self.gridLayout.setVerticalSpacing(8)
         self.gridLayout.setObjectName("gridLayout")
         self.label_7 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
             self.label_7.sizePolicy().hasHeightForWidth())
@@ -35,18 +36,31 @@ class Ui_Dialog(object):
             "    border: 1px solid gray;\n"
             "    margin:0 0.1em;\n"
             "    line-height: 1.4;\n"
-            "    font-weight: bold;\n"
             "}")
         self.label_7.setAlignment(QtCore.Qt.AlignCenter)
         self.label_7.setObjectName("label_7")
         self.gridLayout.addWidget(self.label_7, 8, 0, 1, 1)
         self.label_14 = QtWidgets.QLabel(Dialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_14.sizePolicy().hasHeightForWidth())
+        self.label_14.setSizePolicy(sizePolicy)
         self.label_14.setStyleSheet("QLabel {\n"
                                     "    font-style: italic;\n"
                                     "}")
         self.label_14.setObjectName("label_14")
         self.gridLayout.addWidget(self.label_14, 8, 1, 1, 1)
         self.label_16 = QtWidgets.QLabel(Dialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_16.sizePolicy().hasHeightForWidth())
+        self.label_16.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
@@ -54,9 +68,9 @@ class Ui_Dialog(object):
         self.label_16.setObjectName("label_16")
         self.gridLayout.addWidget(self.label_16, 0, 1, 1, 1)
         self.label = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
             self.label.sizePolicy().hasHeightForWidth())
@@ -71,33 +85,53 @@ class Ui_Dialog(object):
             "    border: 1px solid gray;\n"
             "    margin:0 0.1em;\n"
             "    line-height: 1.4;\n"
-            "    font-weight: bold;\n"
             "}")
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.gridLayout.addWidget(self.label, 2, 0, 1, 1)
         self.label_11 = QtWidgets.QLabel(Dialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_11.sizePolicy().hasHeightForWidth())
+        self.label_11.setSizePolicy(sizePolicy)
         self.label_11.setStyleSheet("QLabel {\n"
                                     "    font-style: italic;\n"
                                     "}")
         self.label_11.setObjectName("label_11")
         self.gridLayout.addWidget(self.label_11, 5, 1, 1, 1)
         self.label_12 = QtWidgets.QLabel(Dialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_12.sizePolicy().hasHeightForWidth())
+        self.label_12.setSizePolicy(sizePolicy)
         self.label_12.setStyleSheet("QLabel {\n"
                                     "    font-style: italic;\n"
                                     "}")
         self.label_12.setObjectName("label_12")
         self.gridLayout.addWidget(self.label_12, 6, 1, 1, 1)
         self.label_13 = QtWidgets.QLabel(Dialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_13.sizePolicy().hasHeightForWidth())
+        self.label_13.setSizePolicy(sizePolicy)
         self.label_13.setStyleSheet("QLabel {\n"
                                     "    font-style: italic;\n"
                                     "}")
         self.label_13.setObjectName("label_13")
         self.gridLayout.addWidget(self.label_13, 7, 1, 1, 1)
         self.label_5 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
             self.label_5.sizePolicy().hasHeightForWidth())
@@ -112,7 +146,6 @@ class Ui_Dialog(object):
             "    border: 1px solid gray;\n"
             "    margin:0 0.1em;\n"
             "    line-height: 1.4;\n"
-            "    font-weight: bold;\n"
             "}")
         self.label_5.setAlignment(QtCore.Qt.AlignCenter)
         self.label_5.setObjectName("label_5")
@@ -130,9 +163,9 @@ class Ui_Dialog(object):
         self.line_2.setObjectName("line_2")
         self.gridLayout.addWidget(self.line_2, 1, 1, 1, 1)
         self.label_6 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
             self.label_6.sizePolicy().hasHeightForWidth())
@@ -147,21 +180,27 @@ class Ui_Dialog(object):
             "    border: 1px solid gray;\n"
             "    margin:0 0.1em;\n"
             "    line-height: 1.4;\n"
-            "    font-weight: bold;\n"
             "}")
         self.label_6.setAlignment(QtCore.Qt.AlignCenter)
         self.label_6.setObjectName("label_6")
         self.gridLayout.addWidget(self.label_6, 7, 0, 1, 1)
         self.label_8 = QtWidgets.QLabel(Dialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_8.sizePolicy().hasHeightForWidth())
+        self.label_8.setSizePolicy(sizePolicy)
         self.label_8.setStyleSheet("QLabel {\n"
                                    "    font-style: italic;\n"
                                    "}")
         self.label_8.setObjectName("label_8")
         self.gridLayout.addWidget(self.label_8, 2, 1, 1, 1)
         self.label_4 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
             self.label_4.sizePolicy().hasHeightForWidth())
@@ -176,27 +215,40 @@ class Ui_Dialog(object):
             "    border: 1px solid gray;\n"
             "    margin:0 0.1em;\n"
             "    line-height: 1.4;\n"
-            "    font-weight: bold;\n"
             "}")
         self.label_4.setAlignment(QtCore.Qt.AlignCenter)
         self.label_4.setObjectName("label_4")
         self.gridLayout.addWidget(self.label_4, 4, 0, 1, 1)
         self.label_10 = QtWidgets.QLabel(Dialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_10.sizePolicy().hasHeightForWidth())
+        self.label_10.setSizePolicy(sizePolicy)
         self.label_10.setStyleSheet("QLabel {\n"
                                     "    font-style: italic;\n"
                                     "}")
         self.label_10.setObjectName("label_10")
         self.gridLayout.addWidget(self.label_10, 4, 1, 1, 1)
         self.label_9 = QtWidgets.QLabel(Dialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_9.sizePolicy().hasHeightForWidth())
+        self.label_9.setSizePolicy(sizePolicy)
         self.label_9.setStyleSheet("QLabel {\n"
                                    "    font-style: italic;\n"
                                    "}")
         self.label_9.setObjectName("label_9")
         self.gridLayout.addWidget(self.label_9, 3, 1, 1, 1)
         self.label_3 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
             self.label_3.sizePolicy().hasHeightForWidth())
@@ -211,15 +263,14 @@ class Ui_Dialog(object):
             "    border: 1px solid gray;\n"
             "    margin:0 0.1em;\n"
             "    line-height: 1.4;\n"
-            "    font-weight: bold;\n"
             "}")
         self.label_3.setAlignment(QtCore.Qt.AlignCenter)
         self.label_3.setObjectName("label_3")
         self.gridLayout.addWidget(self.label_3, 5, 0, 1, 1)
         self.label_2 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
             self.label_2.sizePolicy().hasHeightForWidth())
@@ -234,7 +285,6 @@ class Ui_Dialog(object):
             "    border: 1px solid gray;\n"
             "    margin:0 0.1em;\n"
             "    line-height: 1.4;\n"
-            "    font-weight: bold;\n"
             "}")
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
