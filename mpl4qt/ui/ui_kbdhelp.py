@@ -48,11 +48,12 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.label_14.sizePolicy().hasHeightForWidth())
         self.label_14.setSizePolicy(sizePolicy)
-        self.label_14.setStyleSheet("QLabel {\n"
-                                    "    font-style: italic;\n"
-                                    "}")
+        font = QtGui.QFont()
+        font.setItalic(True)
+        self.label_14.setFont(font)
+        self.label_14.setStyleSheet("")
         self.label_14.setObjectName("label_14")
-        self.gridLayout.addWidget(self.label_14, 8, 1, 1, 1)
+        self.gridLayout.addWidget(self.label_14, 8, 2, 1, 1)
         self.label_16 = QtWidgets.QLabel(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
@@ -66,7 +67,7 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.label_16.setFont(font)
         self.label_16.setObjectName("label_16")
-        self.gridLayout.addWidget(self.label_16, 0, 1, 1, 1)
+        self.gridLayout.addWidget(self.label_16, 0, 2, 1, 1)
         self.label = QtWidgets.QLabel(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
@@ -97,11 +98,12 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.label_11.sizePolicy().hasHeightForWidth())
         self.label_11.setSizePolicy(sizePolicy)
-        self.label_11.setStyleSheet("QLabel {\n"
-                                    "    font-style: italic;\n"
-                                    "}")
+        font = QtGui.QFont()
+        font.setItalic(True)
+        self.label_11.setFont(font)
+        self.label_11.setStyleSheet("")
         self.label_11.setObjectName("label_11")
-        self.gridLayout.addWidget(self.label_11, 5, 1, 1, 1)
+        self.gridLayout.addWidget(self.label_11, 5, 2, 1, 1)
         self.label_12 = QtWidgets.QLabel(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
@@ -110,11 +112,12 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.label_12.sizePolicy().hasHeightForWidth())
         self.label_12.setSizePolicy(sizePolicy)
-        self.label_12.setStyleSheet("QLabel {\n"
-                                    "    font-style: italic;\n"
-                                    "}")
+        font = QtGui.QFont()
+        font.setItalic(True)
+        self.label_12.setFont(font)
+        self.label_12.setStyleSheet("")
         self.label_12.setObjectName("label_12")
-        self.gridLayout.addWidget(self.label_12, 6, 1, 1, 1)
+        self.gridLayout.addWidget(self.label_12, 6, 2, 1, 1)
         self.label_13 = QtWidgets.QLabel(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
@@ -123,11 +126,12 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.label_13.sizePolicy().hasHeightForWidth())
         self.label_13.setSizePolicy(sizePolicy)
-        self.label_13.setStyleSheet("QLabel {\n"
-                                    "    font-style: italic;\n"
-                                    "}")
+        font = QtGui.QFont()
+        font.setItalic(True)
+        self.label_13.setFont(font)
+        self.label_13.setStyleSheet("")
         self.label_13.setObjectName("label_13")
-        self.gridLayout.addWidget(self.label_13, 7, 1, 1, 1)
+        self.gridLayout.addWidget(self.label_13, 7, 2, 1, 1)
         self.label_5 = QtWidgets.QLabel(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
@@ -161,7 +165,7 @@ class Ui_Dialog(object):
         self.line_2.setFrameShape(QtWidgets.QFrame.HLine)
         self.line_2.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_2.setObjectName("line_2")
-        self.gridLayout.addWidget(self.line_2, 1, 1, 1, 1)
+        self.gridLayout.addWidget(self.line_2, 1, 2, 1, 1)
         self.label_6 = QtWidgets.QLabel(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
@@ -192,11 +196,12 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.label_8.sizePolicy().hasHeightForWidth())
         self.label_8.setSizePolicy(sizePolicy)
-        self.label_8.setStyleSheet("QLabel {\n"
-                                   "    font-style: italic;\n"
-                                   "}")
+        font = QtGui.QFont()
+        font.setItalic(True)
+        self.label_8.setFont(font)
+        self.label_8.setStyleSheet("")
         self.label_8.setObjectName("label_8")
-        self.gridLayout.addWidget(self.label_8, 2, 1, 1, 1)
+        self.gridLayout.addWidget(self.label_8, 2, 2, 1, 1)
         self.label_4 = QtWidgets.QLabel(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
@@ -227,11 +232,12 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.label_10.sizePolicy().hasHeightForWidth())
         self.label_10.setSizePolicy(sizePolicy)
-        self.label_10.setStyleSheet("QLabel {\n"
-                                    "    font-style: italic;\n"
-                                    "}")
+        font = QtGui.QFont()
+        font.setItalic(True)
+        self.label_10.setFont(font)
+        self.label_10.setStyleSheet("")
         self.label_10.setObjectName("label_10")
-        self.gridLayout.addWidget(self.label_10, 4, 1, 1, 1)
+        self.gridLayout.addWidget(self.label_10, 4, 2, 1, 1)
         self.label_9 = QtWidgets.QLabel(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
@@ -240,11 +246,24 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.label_9.sizePolicy().hasHeightForWidth())
         self.label_9.setSizePolicy(sizePolicy)
-        self.label_9.setStyleSheet("QLabel {\n"
-                                   "    font-style: italic;\n"
-                                   "}")
+        font = QtGui.QFont()
+        font.setItalic(True)
+        self.label_9.setFont(font)
+        self.label_9.setStyleSheet("")
         self.label_9.setObjectName("label_9")
-        self.gridLayout.addWidget(self.label_9, 3, 1, 1, 1)
+        self.gridLayout.addWidget(self.label_9, 3, 2, 1, 1)
+        self.line = QtWidgets.QFrame(Dialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.line.sizePolicy().hasHeightForWidth())
+        self.line.setSizePolicy(sizePolicy)
+        self.line.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line.setObjectName("line")
+        self.gridLayout.addWidget(self.line, 1, 0, 1, 1)
         self.label_3 = QtWidgets.QLabel(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
@@ -289,18 +308,6 @@ class Ui_Dialog(object):
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.gridLayout.addWidget(self.label_2, 3, 0, 1, 1)
-        self.line = QtWidgets.QFrame(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.line.sizePolicy().hasHeightForWidth())
-        self.line.setSizePolicy(sizePolicy)
-        self.line.setFrameShape(QtWidgets.QFrame.HLine)
-        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line.setObjectName("line")
-        self.gridLayout.addWidget(self.line, 1, 0, 1, 1)
         self.label_15 = QtWidgets.QLabel(Dialog)
         font = QtGui.QFont()
         font.setBold(True)
@@ -310,6 +317,26 @@ class Ui_Dialog(object):
                                    | QtCore.Qt.AlignVCenter)
         self.label_15.setObjectName("label_15")
         self.gridLayout.addWidget(self.label_15, 0, 0, 1, 1)
+        self.label_17 = QtWidgets.QLabel(Dialog)
+        self.label_17.setStyleSheet(
+            "QLabel {\n"
+            "    padding:0.1em 0.5em;\n"
+            "    font-family:Arial,Helvetica,sans-serif;\n"
+            "    background-color:#F7F7F7;\n"
+            "    color:#333;    \n"
+            "    border-radius:3px;\n"
+            "    border: 1px solid gray;\n"
+            "    margin:0 0.1em;\n"
+            "    line-height: 1.4;\n"
+            "}")
+        self.label_17.setObjectName("label_17")
+        self.gridLayout.addWidget(self.label_17, 9, 0, 1, 1)
+        self.label_18 = QtWidgets.QLabel(Dialog)
+        font = QtGui.QFont()
+        font.setItalic(True)
+        self.label_18.setFont(font)
+        self.label_18.setObjectName("label_18")
+        self.gridLayout.addWidget(self.label_18, 9, 2, 1, 1)
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -318,7 +345,7 @@ class Ui_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
         self.label_7.setText(_translate("Dialog", "?"))
-        self.label_14.setText(_translate("Dialog", "Show help message box"))
+        self.label_14.setText(_translate("Dialog", "Show this message box"))
         self.label_16.setText(_translate("Dialog", "Function"))
         self.label.setText(_translate("Dialog", "g"))
         self.label_11.setText(_translate("Dialog", "Turn on/off legend"))
@@ -333,6 +360,8 @@ class Ui_Dialog(object):
         self.label_3.setText(_translate("Dialog", "a"))
         self.label_2.setText(_translate("Dialog", "m"))
         self.label_15.setText(_translate("Dialog", "Key"))
+        self.label_17.setText(_translate("Dialog", "Esc"))
+        self.label_18.setText(_translate("Dialog", "Exit this message box"))
 
 
 if __name__ == "__main__":
