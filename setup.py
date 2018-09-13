@@ -18,7 +18,7 @@ app_platform = ["Linux"]
 app_author = "Tong Zhang"
 app_author_email = "zhangt@frib.msu.edu"
 app_license = read_license()
-app_url = "https://archman.github.io/python-mpl4qt/"
+app_url = "https://archman.github.io/mpl4qt/"
 app_keywords = "widgets Qt designer PyQt matplotlib"
 installrequires = [
     'matplotlib',

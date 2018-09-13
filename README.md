@@ -1,1 +1,1 @@
-# python-mpl4qt
+# mpl4qt
