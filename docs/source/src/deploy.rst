@@ -51,7 +51,7 @@ Clone the source from Github:
 
 .. code-block:: bash
 
-  git clone https://github.com/archman/python-mpl4qt.git
+  git clone https://github.com/archman/mpl4qt.git
 
 Then check out to master branch (normally you're already there), and install
 into your system by:
@@ -65,7 +65,10 @@ After Installation
 
 What could be reached out?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
-* Command: ``run_designer`` to start Qt5-designer with matplotlib widgets integration.
+* Command: ``run_designer`` to start Qt5-designer with matplotlib widgets
+  integration.
+* Command: ``mplcurve_default_settings`` to generate the JSON file for
+  the default configuration of :class:`~mpl4qt.widgets.MatplotlibCurveWidget`.
 * Python package named ``mpl4qt`` to be ready for use in any Python script.
 
 Development Environment
