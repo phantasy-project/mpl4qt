@@ -50,6 +50,7 @@ from mpl4qt.icons import config_icon
 from mpl4qt.icons import reset_icon
 from mpl4qt.icons import import_icon
 from mpl4qt.icons import export_icon
+from mpl4qt.ui.ui_kbdhelp import Ui_Dialog
 
 
 class MatplotlibCurveWidget(BasePlotWidget):
@@ -1101,6 +1102,9 @@ class MatplotlibCurveWidget(BasePlotWidget):
             self.force_update()
             self.update_figure()
             self.resize_figure()
+        elif e.key == '?':
+            # help msgbox
+            self.kbd_help()
 
     def dragEnterEvent(self, e):
         if e.mimeData().hasUrls():
@@ -1111,6 +1115,21 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def dropEvent(self, e):
         path = e.mimeData().urls()[0].toLocalFile()
         self._import_mpl_settings(path)
+
+    def kbd_help(self,):
+        """Help message box for keyboard shortcuts.
+        """
+        w = KbdHelpDialog(self)
+        w.setWindowTitle("Keyboard Shortcuts Help")
+        w.exec_()
+
+
+class KbdHelpDialog(QDialog, Ui_Dialog):
+    def __init__(self, parent=None):
+        super(KbdHelpDialog, self).__init__(parent)
+
+        self.setupUi(self)
+        self.adjustSize()
 
 
 if __name__ == "__main__":
