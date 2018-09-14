@@ -170,6 +170,7 @@ def mplcolor2hex(c):
 
 class MatplotlibCurveWidgetSettings(OrderedDict):
     def __init__(self, path=None):
+        super(MatplotlibCurveWidgetSettings, self).__init__()
         if isinstance(path, basestring):
             with open(path, "r") as fp:
                 self.read(fp)
