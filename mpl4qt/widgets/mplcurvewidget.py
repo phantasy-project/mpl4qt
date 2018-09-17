@@ -91,6 +91,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.setYLimitMax()
         # line_id
         self._line_id = 0
+        self._line_visible = True
         self._lines = self.get_all_curves()  # all lines
         self._line_ids = range(self._lines.__len__())
         self._line = self._lines[0]  # current selected line
@@ -587,6 +588,24 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     figureMarkerSize = pyqtProperty(float, getMarkerSize, setMarkerSize)
 
+    def getLineVisible(self):
+        return self._line_visible
+
+    @pyqtSlot(bool)
+    def setLineVisible(self, f):
+        """Set line visible or not.
+
+        Parameters
+        ----------
+        f : bool
+            Line visible (True) or not (False).
+        """
+        self._line_visible = f
+        self._line.set_visible(f)
+        self.update_figure()
+
+    figureLineVisible = pyqtProperty(bool, getLineVisible, setLineVisible)
+
     def getLineID(self):
         return self._line_id
 
@@ -610,13 +629,14 @@ class MatplotlibCurveWidget(BasePlotWidget):
             self._line = lines[i]
 
     def get_line_config(self, line=None):
-        """Get line config: ls, lw, c, marker, ms, mew, mec, mfc, label
+        """Get line config for *ls*, *lw*, *c*, *marker*, *ms*, *mew*,
+        *mec*, *mfc*, *label*, *visible*.
         """
         line = self._line if line is None else line
         return {
             p: getattr(line, 'get_' + p)()
             for p in ('ls', 'lw', 'c', 'ms', 'mew', 'mec', 'mfc', 'marker',
-                      'label')
+                      'label', 'visible')
         }
 
     def get_mpl_settings(self):
@@ -969,7 +989,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
                 "JSON Files (*.json)")
         if not filepath:
             return
-        self._import_settings(filepath)
+        self._import_mpl_settings(filepath)
 
     def _import_mpl_settings(self, filepath):
         try:
