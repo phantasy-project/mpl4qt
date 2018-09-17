@@ -60,6 +60,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     # line
     figLineColorChanged = pyqtSignal(QColor)
     figLineWidthChanged = pyqtSignal(float)
+    figLineVisibleChanged = pyqtSignal(bool)
 
     # marker
     figMkeColorChanged = pyqtSignal(QColor)
@@ -103,6 +104,8 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.xmax_lineEdit.textChanged.connect(self.set_xlimit_max)
         self.ymin_lineEdit.textChanged.connect(self.set_ylimit_min)
         self.ymax_lineEdit.textChanged.connect(self.set_ylimit_max)
+        # line visible
+        self.line_hide_chkbox.stateChanged.connect(self.set_line_visible)
 
         # link to main mpl widget
         self.bgcolorChanged[QColor].connect(self.set_bgcolor_label)
@@ -117,6 +120,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.figXmaxLimitChanged[float].connect(self.parent.setXLimitMax)
         self.figYminLimitChanged[float].connect(self.parent.setYLimitMin)
         self.figYmaxLimitChanged[float].connect(self.parent.setYLimitMax)
+        self.figLineVisibleChanged[bool].connect(self.parent.setLineVisible)
 
         ## xy label
         self.figXYlabelFontChanged[QFont].connect(
@@ -222,6 +226,8 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         # legend on/off
         self.legend_on_chkbox.setChecked(self.parent.getLegendToggle())
         self.legend_loc_cbb.setCurrentIndex(self.parent.getLegendLocation())
+        # line visible
+        self.line_hide_chkbox.setChecked(not self.parent.getLineVisible())
 
     def set_xylimits(self, xlim=None, ylim=None):
         """Set xy limits.
@@ -260,6 +266,8 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.mk_width_lineEdit.setText('{}'.format(config['mew']))
         # line label
         self.line_label_lineEdit.setText('{}'.format(config['label']))
+        # line visible
+        self.line_hide_chkbox.setChecked(not config['visible'])
 
     @pyqtSlot('QString')
     def set_line_width(self, s):
@@ -457,6 +465,10 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     @pyqtSlot(int)
     def set_fig_tightlayout(self, state):
         self.figTightLayoutChanged.emit(state == Qt.Checked)
+
+    @pyqtSlot(int)
+    def set_line_visible(self, state):
+        self.figLineVisibleChanged.emit(state==Qt.Unchecked)
 
     @pyqtSlot(QColor)
     def set_bgcolor_label(self, color):
