@@ -358,17 +358,10 @@ class Ui_Dialog(object):
         self.horizontalLayout_14.addWidget(self.legend_loc_cbb)
         self.formLayout_2.setLayout(3, QtWidgets.QFormLayout.FieldRole,
                                     self.horizontalLayout_14)
-        self.label_24.raise_()
-        self.legend_loc_cbb.raise_()
-        self.fig_title_lineEdit.raise_()
-        self.title_font_btn.raise_()
-        self.xy_label_font_btn.raise_()
         self.label_10.raise_()
         self.label.raise_()
         self.label_13.raise_()
-        self.autoScale_chkbox.raise_()
         self.label_25.raise_()
-        self.legend_on_chkbox.raise_()
         self.config_tabWidget.addTab(self.figure_tab, "")
         self.curve_tab = QtWidgets.QWidget()
         self.curve_tab.setObjectName("curve_tab")
@@ -606,6 +599,9 @@ class Ui_Dialog(object):
         self.line_id_cbb.setSizePolicy(sizePolicy)
         self.line_id_cbb.setObjectName("line_id_cbb")
         self.gridLayout.addWidget(self.line_id_cbb, 0, 1, 1, 3)
+        self.line_hide_chkbox = QtWidgets.QCheckBox(self.curve_tab)
+        self.line_hide_chkbox.setObjectName("line_hide_chkbox")
+        self.gridLayout.addWidget(self.line_hide_chkbox, 0, 8, 1, 1)
         self.config_tabWidget.addTab(self.curve_tab, "")
         self.style_tab = QtWidgets.QWidget()
         self.style_tab.setObjectName("style_tab")
@@ -877,6 +873,7 @@ class Ui_Dialog(object):
         self.label_9.setText(_translate("Dialog", "Width"))
         self.line_id_cbb.setToolTip(
             _translate("Dialog", "Select line to configure"))
+        self.line_hide_chkbox.setText(_translate("Dialog", "Hide"))
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.curve_tab),
             _translate("Dialog", "Curve"))
