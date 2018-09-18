@@ -54,6 +54,7 @@ from mpl4qt.icons import config_icon
 from mpl4qt.icons import reset_icon
 from mpl4qt.icons import import_icon
 from mpl4qt.icons import export_icon
+from mpl4qt.icons import tools_icon
 from mpl4qt.ui.ui_kbdhelp import Ui_Dialog
 
 
@@ -945,9 +946,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
                                 "Import", menu)
         reset_action = QAction(QIcon(QPixmap(reset_icon)),
                               "Reset", menu)
-        tb_action = self._handlers.setdefault('show_tools_action', QAction("Show Tools", menu))
-        #tb_action = QAction("Show Tools", menu)
-        #tb_action.setCheckable(True)
+        tb_action = self._handlers.setdefault('show_tools_action',
+                QAction(QIcon(QPixmap(tools_icon)), "Show Tools", menu))
         menu.addAction(config_action)
         menu.addAction(export_action)
         menu.addAction(import_action)

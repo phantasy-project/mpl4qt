@@ -8,3 +8,4 @@ from ._zoom import icon as zoom_tool_icon
 from ._exit import icon as exit_tool_icon
 #from ._pan import icon as pan_tool_icon
 from ._save import icon as save_tool_icon
+from ._tools import icon as tools_icon
