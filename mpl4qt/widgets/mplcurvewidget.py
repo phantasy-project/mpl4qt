@@ -46,6 +46,7 @@ from collections import OrderedDict
 
 from mpl4qt.widgets.mplbasewidget import BasePlotWidget
 from mpl4qt.widgets.mplconfig import MatplotlibConfigPanel
+from mpl4qt.widgets.mpltoolbar import ToolbarDialog
 from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
 from mpl4qt.widgets.utils import mplcolor2hex
 from mpl4qt.widgets.utils import DEFAULT_MPL_SETTINGS
@@ -150,9 +151,11 @@ class MatplotlibCurveWidget(BasePlotWidget):
         """
         self._fig_tight_layout = f
         if f:
-            self.figure.set_tight_layout({'pad': 0.1})
+            #self.figure.set_tight_layout({'pad': 0.1})
+            self.figure.subplots_adjust(left=0.05, right=0.98, top=0.98, bottom=0.06)
         else:
-            self.figure.set_tight_layout({'pad': 1.2})
+            #self.figure.set_tight_layout({'pad': 1.2})
+            self.figure.subplots_adjust(left=0.125, right=0.9, top=0.9, bottom=0.10)
         self.update_figure()
 
     figureTightLayout = pyqtProperty(bool, getTightLayoutToggle,
@@ -942,9 +945,14 @@ class MatplotlibCurveWidget(BasePlotWidget):
                                 "Import", menu)
         reset_action = QAction(QIcon(QPixmap(reset_icon)),
                               "Reset", menu)
+        tb_action = self._handlers.setdefault('show_tools_action', QAction("Show Tools", menu))
+        #tb_action = QAction("Show Tools", menu)
+        #tb_action.setCheckable(True)
         menu.addAction(config_action)
         menu.addAction(export_action)
         menu.addAction(import_action)
+        menu.addSeparator()
+        menu.addAction(tb_action)
         menu.addSeparator()
         menu.addAction(reset_action)
 
@@ -952,12 +960,21 @@ class MatplotlibCurveWidget(BasePlotWidget):
         export_action.triggered.connect(self.on_export_config)
         import_action.triggered.connect(self.on_import_config)
         reset_action.triggered.connect(self.on_reset_config)
+        tb_action.triggered.connect(self.show_mpl_tools)
 
         menu.exec_(self.mapToGlobal(e.pos()))
 
         #menu.move(e.globalPos())
         #menu.show()
         #menu.activateWindow()
+
+    def show_mpl_tools(self, e):
+        if 'w_mpl_tools' in self._handlers:
+            w = self._handlers['w_mpl_tools']
+            w.show_dialog()
+        else:
+            w = ToolbarDialog(self.figure.canvas, self)
+            self._handlers['w_mpl_tools'] = w
 
     def on_config(self):
         config_panel = MatplotlibConfigPanel(self)
