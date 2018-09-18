@@ -34,8 +34,6 @@ import matplotlib as mpl
 
 import numpy as np
 
-from mpl4qt.widgets.mpltoolbar import NavigationToolbar
-
 MPL_VERSION = mpl.__version__
 
 
@@ -72,6 +70,9 @@ class BasePlotWidget(FigureCanvas):
 
         # dnd
         self.setAcceptDrops(True)
+
+        # window/widget/dialog handlers
+        self._handlers = {}
 
     def post_style_figure(self):
         self.set_figure_color()
