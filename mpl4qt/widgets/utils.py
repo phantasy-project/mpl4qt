@@ -155,7 +155,7 @@ def mplcolor2hex(c):
     >>> color_to_hex((1.0, 0.0, 0.0, 1.0))
     '#FF0000'
     """
-    if isinstance(c, tuple):
+    if isinstance(c, (tuple, list)):
         clr = colors.rgb2hex(c)
     elif isinstance(c, basestring):
         if c.startswith('#'):
