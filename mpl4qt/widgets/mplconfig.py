@@ -81,6 +81,13 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.setupUi(self)
         self.setWindowTitle("Figure Configurations")
 
+        # hide eb_tab or not
+        self.config_tabWidget.setTabEnabled(
+            self.config_tabWidget.indexOf(self.eb_tab), False)
+        # set the style sheet
+        self.setStyleSheet(
+            "QTabBar::tab::disabled {width: 0; height: 0; margin: 0; padding: 0; border: none;} ")
+
         self.figWidth_lineEdit.setValidator(QIntValidator(2, 20, self))
         self.figHeight_lineEdit.setValidator(QIntValidator(2, 20, self))
         self.figDpi_lineEdit.setValidator(QIntValidator(50, 500, self))
@@ -487,6 +494,200 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
             "  background-color: %s;\n" % color.name() +
             "  border-radius: 5px;\n"
             "}")
+
+
+class MatplotlibConfigErrorbarPanel(MatplotlibConfigPanel):
+    # eb line id
+    figEbLineIDChanged = pyqtSignal(int)
+
+    # eb line
+    figEbLineColorChanged = pyqtSignal(QColor)
+    figEbLineWidthChanged = pyqtSignal(float)
+    figEbLineVisibleChanged = pyqtSignal(bool)
+
+    # eb marker
+    figEbMkeColorChanged = pyqtSignal(QColor)
+    figEbMkfColorChanged = pyqtSignal(QColor)
+    figXEbMkStyleChanged = pyqtSignal('QString')
+    figYEbMkStyleChanged = pyqtSignal('QString')
+    figEbMkSizeChanged = pyqtSignal(float)
+    figEbMkWidthChanged = pyqtSignal(float)
+
+    def __init__(self, parent=None):
+        super(MatplotlibConfigErrorbarPanel, self).__init__(parent)
+
+        # hide eb_tab or not
+        self.config_tabWidget.setTabEnabled(
+            self.config_tabWidget.indexOf(self.eb_tab), True)
+
+        # eb_tab
+        self.eb_line_id_cbb.currentIndexChanged[int].connect(
+            self.on_change_eb_line_id)
+
+        # events
+        self.figEbLineIDChanged[int].connect(self.parent.setEbLineID)
+
+        # eb line color
+        self.figEbLineColorChanged[QColor].connect(self.set_eb_line_color_btn)
+        self.figEbLineColorChanged[QColor].connect(self.parent.setEbLineColor)
+        self.eb_line_color_btn.clicked.connect(self.set_eb_line_color)
+
+        # line width
+        self.eb_line_width_lineEdit.textChanged.connect(self.set_eb_line_width)
+        self.figEbLineWidthChanged[float].connect(self.parent.setEbLineWidth)
+
+        # eb line style
+        self.eb_line_style_cbb.currentTextChanged['QString'].connect(
+            self.parent.setEbLineStyle)
+
+        # post UI
+        ## BEGIN eb_line_id_cbb
+        self.eb_line_id_cbb.clear()
+        self.eb_line_id_cbb.addItems(
+            [str(i) for i, l in enumerate(self.parent.get_all_eb_curves())])
+        current_eb_line_id = self.parent.get_all_eb_curves().index(self.parent._eb_line)
+        self.eb_line_id_cbb.setCurrentIndex(current_eb_line_id)
+        ## END eb_line_id_cbb
+
+        # eb_line_style_cbb
+        self.eb_line_style_cbb.currentTextChanged['QString'].connect(
+            self.parent.setEbLineStyle)
+
+        self.eb_line_width_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
+
+        # cap mk style (x)
+        self.xeb_mk_style_cbb.clear()
+        self.xeb_mk_style_cbb.addItems(MK_CODE)
+        self.figXEbMkStyleChanged['QString'].connect(self.parent.setXEbMarkerStyle)
+        self.xeb_mk_style_cbb.currentIndexChanged[int].connect(
+            self.set_xeb_marker_style)
+
+
+        # cap mk style (y)
+        self.yeb_mk_style_cbb.clear()
+        self.yeb_mk_style_cbb.addItems(MK_CODE)
+        self.figYEbMkStyleChanged['QString'].connect(self.parent.setYEbMarkerStyle)
+        self.yeb_mk_style_cbb.currentIndexChanged[int].connect(
+            self.set_yeb_marker_style)
+
+        ## cap marker: mec
+        self.figEbMkeColorChanged[QColor].connect(self.set_eb_mec_btn)
+        self.figEbMkeColorChanged[QColor].connect(self.parent.setEbMkEdgeColor)
+        self.eb_mk_edgecolor_btn.clicked.connect(self.set_eb_mec)
+        ## cap marker: mfc
+        self.figEbMkfColorChanged[QColor].connect(self.set_eb_mfc_btn)
+        self.figEbMkfColorChanged[QColor].connect(self.parent.setEbMkFaceColor)
+        self.eb_mk_facecolor_btn.clicked.connect(self.set_eb_mfc)
+        # cap marker size
+        self.eb_mk_size_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
+        self.eb_mk_width_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
+        self.eb_mk_size_lineEdit.textChanged.connect(self.set_eb_marker_size)
+        self.figEbMkSizeChanged[float].connect(self.parent.setEbMarkerSize)
+        # cap marker thickness
+        self.eb_mk_width_lineEdit.textChanged.connect(self.set_eb_marker_thickness)
+        self.figEbMkWidthChanged[float].connect(self.parent.setEbMarkerThickness)
+
+        # eb line visibility
+        self.eb_line_hide_chkbox.stateChanged.connect(self.set_eb_line_visible)
+        self.figEbLineVisibleChanged[bool].connect(self.parent.setEbLineVisible)
+
+        # set current eb line id
+        self.on_change_eb_line_id(current_eb_line_id)
+
+    @pyqtSlot(int)
+    def set_eb_line_visible(self, state):
+        self.figEbLineVisibleChanged.emit(state==Qt.Unchecked)
+
+    @pyqtSlot('QString')
+    def set_eb_line_width(self, s):
+        if s == '': return
+        w = max(float(s), 0.05)
+        self.figEbLineWidthChanged.emit(w)
+
+    @pyqtSlot('QString')
+    def set_eb_marker_size(self, s):
+        if s == '': return
+        w = max(float(s), 1.0)
+        self.figEbMkSizeChanged.emit(w)
+
+    @pyqtSlot('QString')
+    def set_eb_marker_thickness(self, s):
+        if s == '': return
+        w = max(float(s), 0.1)
+        self.figEbMkWidthChanged.emit(w)
+
+    @pyqtSlot()
+    def set_eb_mec(self):
+        color = QColorDialog.getColor()
+        if color.isValid():
+            self.figEbMkeColorChanged.emit(color)
+
+    @pyqtSlot(QColor)
+    def set_eb_mec_btn(self, color):
+        self._set_btn_color(self.eb_mk_edgecolor_btn, color)
+
+    @pyqtSlot()
+    def set_eb_mfc(self):
+        color = QColorDialog.getColor()
+        if color.isValid():
+            self.figEbMkfColorChanged.emit(color)
+
+    @pyqtSlot(QColor)
+    def set_eb_mfc_btn(self, color):
+        self._set_btn_color(self.eb_mk_facecolor_btn, color)
+
+    @pyqtSlot(int)
+    def set_xeb_marker_style(self, i):
+        self.figXEbMkStyleChanged.emit(MK_SYMBOL[i])
+
+    @pyqtSlot(int)
+    def set_yeb_marker_style(self, i):
+        self.figYEbMkStyleChanged.emit(MK_SYMBOL[i])
+
+    @pyqtSlot(int)
+    def on_change_eb_line_id(self, i):
+        self.figEbLineIDChanged.emit(i)
+        self._set_eb_line_config_panel(self.parent.get_eb_line_config())
+
+    def _set_eb_line_config_panel(self, config):
+        """Update line config for eb.
+        """
+        (xeb_left, xeb_right), xeb_line = config.get('xerr')
+        (yeb_top, yeb_bottom), yeb_line = config.get('yerr')
+
+        # xeb marker style
+        self.xeb_mk_style_cbb.setCurrentIndex(MK_SYMBOL.index(xeb_left['marker']))
+        # yeb marker style
+        self.yeb_mk_style_cbb.setCurrentIndex(MK_SYMBOL.index(yeb_top['marker']))
+        # eb marker color
+        self.set_eb_mec_btn(QColor(mplcolor2hex(yeb_top['mec'])))
+        self.set_eb_mfc_btn(QColor(mplcolor2hex(yeb_top['mfc'])))
+        # cap marker size
+        self.eb_mk_size_lineEdit.setText('{}'.format(yeb_top['ms']))
+        # cap mew
+        self.eb_mk_width_lineEdit.setText('{}'.format(yeb_top['mew']))
+
+        # eb line color
+        print(yeb_line)
+        self.set_eb_line_color_btn(QColor(mplcolor2hex(yeb_line['color'])))
+        # eb line width
+        self.eb_line_width_lineEdit.setText('{}'.format(yeb_line['lw']))
+        # eb line style can set, but does not sync to config panel
+        #self.eb_line_style_cbb.setCurrentText(
+        #        LINE_STY_DICT[str(config['line']['linestyle'])])
+
+        # eb line visibility
+        self.eb_line_hide_chkbox.setChecked(not yeb_line['visible'])
+
+    @pyqtSlot()
+    def set_eb_line_color(self):
+        color = QColorDialog.getColor()
+        if color.isValid():
+            self.figEbLineColorChanged.emit(color)
+
+    @pyqtSlot(QColor)
+    def set_eb_line_color_btn(self, color):
+        self._set_btn_color(self.eb_line_color_btn, color)
 
 
 if __name__ == '__main__':
