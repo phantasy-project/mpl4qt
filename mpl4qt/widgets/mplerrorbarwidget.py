@@ -60,11 +60,23 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
         self.avg_ms = 5
         self.avg_marker = 's'
 
+        # initial config
+        self._eb_line_color = QColor(self.eb_markercolor)
+        self._eb_line_width = self.avg_lw
+        self._eb_line_style = self.avg_ls
+        self._xeb_marker_style = '|'
+        self._yeb_marker_style = '-'
+        self._eb_mfc = QColor(self.avg_mfc)
+        self._eb_mec = QColor(self.avg_mec)
+        self._eb_marker_size = self.avg_ms
+        self._eb_mew = self.eb_mew
+        self._eb_line_visible = True
+
     def init_figure(self):
-        x = np.linspace(-4, 4, 100)
+        x = np.linspace(-4, 4, 50)
         y = np.sin(10 * x) / x
         xerr = np.std((np.random.random(100) - 0.5)/500 + 1)
-        yerr = np.std((np.random.random(100) - 0.5)/5 + 1)
+        yerr = np.std((np.random.random(100) - 0.5)/1 + 1)
 
         self._x_data = x
         self._y_data = y
