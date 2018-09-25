@@ -668,7 +668,6 @@ class MatplotlibConfigErrorbarPanel(MatplotlibConfigPanel):
         self.eb_mk_width_lineEdit.setText('{}'.format(yeb_top['mew']))
 
         # eb line color
-        print(yeb_line)
         self.set_eb_line_color_btn(QColor(mplcolor2hex(yeb_line['color'])))
         # eb line width
         self.eb_line_width_lineEdit.setText('{}'.format(yeb_line['lw']))
