@@ -368,9 +368,23 @@ class Ui_Dialog(object):
         self.curve_tab.setObjectName("curve_tab")
         self.gridLayout = QtWidgets.QGridLayout(self.curve_tab)
         self.gridLayout.setObjectName("gridLayout")
+        self.line_width_lineEdit = QtWidgets.QLineEdit(self.curve_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.line_width_lineEdit.sizePolicy().hasHeightForWidth())
+        self.line_width_lineEdit.setSizePolicy(sizePolicy)
+        self.line_width_lineEdit.setObjectName("line_width_lineEdit")
+        self.gridLayout.addWidget(self.line_width_lineEdit, 1, 11, 1, 1)
+        spacerItem = QtWidgets.QSpacerItem(20, 40,
+                                           QtWidgets.QSizePolicy.Minimum,
+                                           QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout.addItem(spacerItem, 4, 0, 1, 1)
         self.line_label_lineEdit = QtWidgets.QLineEdit(self.curve_tab)
         self.line_label_lineEdit.setObjectName("line_label_lineEdit")
-        self.gridLayout.addWidget(self.line_label_lineEdit, 3, 1, 1, 10)
+        self.gridLayout.addWidget(self.line_label_lineEdit, 3, 1, 1, 11)
         self.label_2 = QtWidgets.QLabel(self.curve_tab)
         font = QtGui.QFont()
         font.setBold(True)
@@ -392,16 +406,6 @@ class Ui_Dialog(object):
         self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
         self.gridLayout.addWidget(self.label_3, 1, 0, 1, 1)
-        self.line_width_lineEdit = QtWidgets.QLineEdit(self.curve_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.line_width_lineEdit.sizePolicy().hasHeightForWidth())
-        self.line_width_lineEdit.setSizePolicy(sizePolicy)
-        self.line_width_lineEdit.setObjectName("line_width_lineEdit")
-        self.gridLayout.addWidget(self.line_width_lineEdit, 1, 10, 1, 1)
         self.label_8 = QtWidgets.QLabel(self.curve_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Fixed)
@@ -432,30 +436,9 @@ class Ui_Dialog(object):
         self.label_5.setSizePolicy(sizePolicy)
         self.label_5.setObjectName("label_5")
         self.gridLayout.addWidget(self.label_5, 1, 4, 1, 1)
-        self.line_color_btn = QtWidgets.QPushButton(self.curve_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.line_color_btn.sizePolicy().hasHeightForWidth())
-        self.line_color_btn.setSizePolicy(sizePolicy)
-        self.line_color_btn.setStyleSheet(" QPushButton {\n"
-                                          "    margin: 1px;\n"
-                                          "    border-color: rgb(0, 85, 0);\n"
-                                          "    border-style: outset;\n"
-                                          "    border-radius: 3px;\n"
-                                          "    border-width: 1px;\n"
-                                          "    color: black;\n"
-                                          "    background-color: gray;\n"
-                                          "}\n"
-                                          "QPushButton:pressed {\n"
-                                          "    background-color: white;\n"
-                                          "}")
-        self.line_color_btn.setText("")
-        self.line_color_btn.setAutoDefault(False)
-        self.line_color_btn.setObjectName("line_color_btn")
-        self.gridLayout.addWidget(self.line_color_btn, 1, 5, 1, 1)
+        self.mk_style_cbb = QtWidgets.QComboBox(self.curve_tab)
+        self.mk_style_cbb.setObjectName("mk_style_cbb")
+        self.gridLayout.addWidget(self.mk_style_cbb, 2, 2, 1, 2)
         self.label_19 = QtWidgets.QLabel(self.curve_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Fixed)
@@ -466,9 +449,6 @@ class Ui_Dialog(object):
         self.label_19.setSizePolicy(sizePolicy)
         self.label_19.setObjectName("label_19")
         self.gridLayout.addWidget(self.label_19, 2, 1, 1, 1)
-        self.mk_style_cbb = QtWidgets.QComboBox(self.curve_tab)
-        self.mk_style_cbb.setObjectName("mk_style_cbb")
-        self.gridLayout.addWidget(self.mk_style_cbb, 2, 2, 1, 2)
         self.label_21 = QtWidgets.QLabel(self.curve_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Fixed)
@@ -503,7 +483,77 @@ class Ui_Dialog(object):
         self.mk_edgecolor_btn.setText("")
         self.mk_edgecolor_btn.setAutoDefault(False)
         self.mk_edgecolor_btn.setObjectName("mk_edgecolor_btn")
-        self.gridLayout.addWidget(self.mk_edgecolor_btn, 2, 5, 1, 1)
+        self.gridLayout.addWidget(self.mk_edgecolor_btn, 2, 6, 1, 1)
+        self.mk_size_lineEdit = QtWidgets.QLineEdit(self.curve_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.mk_size_lineEdit.sizePolicy().hasHeightForWidth())
+        self.mk_size_lineEdit.setSizePolicy(sizePolicy)
+        self.mk_size_lineEdit.setObjectName("mk_size_lineEdit")
+        self.gridLayout.addWidget(self.mk_size_lineEdit, 2, 9, 1, 1)
+        self.label_20 = QtWidgets.QLabel(self.curve_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_20.sizePolicy().hasHeightForWidth())
+        self.label_20.setSizePolicy(sizePolicy)
+        self.label_20.setObjectName("label_20")
+        self.gridLayout.addWidget(self.label_20, 2, 8, 1, 1)
+        self.mk_width_lineEdit = QtWidgets.QLineEdit(self.curve_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.mk_width_lineEdit.sizePolicy().hasHeightForWidth())
+        self.mk_width_lineEdit.setSizePolicy(sizePolicy)
+        self.mk_width_lineEdit.setObjectName("mk_width_lineEdit")
+        self.gridLayout.addWidget(self.mk_width_lineEdit, 2, 11, 1, 1)
+        self.label_22 = QtWidgets.QLabel(self.curve_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_22.sizePolicy().hasHeightForWidth())
+        self.label_22.setSizePolicy(sizePolicy)
+        self.label_22.setObjectName("label_22")
+        self.gridLayout.addWidget(self.label_22, 2, 10, 1, 1)
+        self.line_id_cbb = QtWidgets.QComboBox(self.curve_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.line_id_cbb.sizePolicy().hasHeightForWidth())
+        self.line_id_cbb.setSizePolicy(sizePolicy)
+        self.line_id_cbb.setObjectName("line_id_cbb")
+        self.gridLayout.addWidget(self.line_id_cbb, 0, 1, 1, 3)
+        self.label_23 = QtWidgets.QLabel(self.curve_tab)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_23.setFont(font)
+        self.label_23.setObjectName("label_23")
+        self.gridLayout.addWidget(self.label_23, 3, 0, 1, 1)
+        self.label_9 = QtWidgets.QLabel(self.curve_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_9.sizePolicy().hasHeightForWidth())
+        self.label_9.setSizePolicy(sizePolicy)
+        self.label_9.setObjectName("label_9")
+        self.gridLayout.addWidget(self.label_9, 1, 10, 1, 1)
+        self.line_hide_chkbox = QtWidgets.QCheckBox(self.curve_tab)
+        self.line_hide_chkbox.setObjectName("line_hide_chkbox")
+        self.gridLayout.addWidget(self.line_hide_chkbox, 0, 9, 1, 1)
         self.mk_facecolor_btn = QtWidgets.QPushButton(self.curve_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
@@ -528,86 +578,46 @@ class Ui_Dialog(object):
         self.mk_facecolor_btn.setText("")
         self.mk_facecolor_btn.setAutoDefault(False)
         self.mk_facecolor_btn.setObjectName("mk_facecolor_btn")
-        self.gridLayout.addWidget(self.mk_facecolor_btn, 2, 6, 1, 1)
-        self.label_20 = QtWidgets.QLabel(self.curve_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_20.sizePolicy().hasHeightForWidth())
-        self.label_20.setSizePolicy(sizePolicy)
-        self.label_20.setObjectName("label_20")
-        self.gridLayout.addWidget(self.label_20, 2, 7, 1, 1)
-        self.mk_size_lineEdit = QtWidgets.QLineEdit(self.curve_tab)
+        self.gridLayout.addWidget(self.mk_facecolor_btn, 2, 5, 1, 1)
+        self.line_color_btn = QtWidgets.QPushButton(self.curve_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.mk_size_lineEdit.sizePolicy().hasHeightForWidth())
-        self.mk_size_lineEdit.setSizePolicy(sizePolicy)
-        self.mk_size_lineEdit.setObjectName("mk_size_lineEdit")
-        self.gridLayout.addWidget(self.mk_size_lineEdit, 2, 8, 1, 1)
-        self.label_22 = QtWidgets.QLabel(self.curve_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_22.sizePolicy().hasHeightForWidth())
-        self.label_22.setSizePolicy(sizePolicy)
-        self.label_22.setObjectName("label_22")
-        self.gridLayout.addWidget(self.label_22, 2, 9, 1, 1)
-        self.mk_width_lineEdit = QtWidgets.QLineEdit(self.curve_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.mk_width_lineEdit.sizePolicy().hasHeightForWidth())
-        self.mk_width_lineEdit.setSizePolicy(sizePolicy)
-        self.mk_width_lineEdit.setObjectName("mk_width_lineEdit")
-        self.gridLayout.addWidget(self.mk_width_lineEdit, 2, 10, 1, 1)
-        self.label_23 = QtWidgets.QLabel(self.curve_tab)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_23.setFont(font)
-        self.label_23.setObjectName("label_23")
-        self.gridLayout.addWidget(self.label_23, 3, 0, 1, 1)
-        self.label_9 = QtWidgets.QLabel(self.curve_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_9.sizePolicy().hasHeightForWidth())
-        self.label_9.setSizePolicy(sizePolicy)
-        self.label_9.setObjectName("label_9")
-        self.gridLayout.addWidget(self.label_9, 1, 9, 1, 1)
-        spacerItem = QtWidgets.QSpacerItem(20, 40,
-                                           QtWidgets.QSizePolicy.Minimum,
-                                           QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout.addItem(spacerItem, 4, 0, 1, 1)
-        self.line_id_cbb = QtWidgets.QComboBox(self.curve_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.line_id_cbb.sizePolicy().hasHeightForWidth())
-        self.line_id_cbb.setSizePolicy(sizePolicy)
-        self.line_id_cbb.setObjectName("line_id_cbb")
-        self.gridLayout.addWidget(self.line_id_cbb, 0, 1, 1, 3)
-        self.line_hide_chkbox = QtWidgets.QCheckBox(self.curve_tab)
-        self.line_hide_chkbox.setObjectName("line_hide_chkbox")
-        self.gridLayout.addWidget(self.line_hide_chkbox, 0, 8, 1, 1)
+            self.line_color_btn.sizePolicy().hasHeightForWidth())
+        self.line_color_btn.setSizePolicy(sizePolicy)
+        self.line_color_btn.setStyleSheet(" QPushButton {\n"
+                                          "    margin: 1px;\n"
+                                          "    border-color: rgb(0, 85, 0);\n"
+                                          "    border-style: outset;\n"
+                                          "    border-radius: 3px;\n"
+                                          "    border-width: 1px;\n"
+                                          "    color: black;\n"
+                                          "    background-color: gray;\n"
+                                          "}\n"
+                                          "QPushButton:pressed {\n"
+                                          "    background-color: white;\n"
+                                          "}")
+        self.line_color_btn.setText("")
+        self.line_color_btn.setAutoDefault(False)
+        self.line_color_btn.setObjectName("line_color_btn")
+        self.gridLayout.addWidget(self.line_color_btn, 1, 5, 1, 1)
         self.config_tabWidget.addTab(self.curve_tab, "")
         self.eb_tab = QtWidgets.QWidget()
         self.eb_tab.setObjectName("eb_tab")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.eb_tab)
         self.gridLayout_2.setObjectName("gridLayout_2")
+        self.label_32 = QtWidgets.QLabel(self.eb_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_32.sizePolicy().hasHeightForWidth())
+        self.label_32.setSizePolicy(sizePolicy)
+        self.label_32.setObjectName("label_32")
+        self.gridLayout_2.addWidget(self.label_32, 2, 8, 1, 1)
         self.eb_line_width_lineEdit = QtWidgets.QLineEdit(self.eb_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
@@ -617,7 +627,7 @@ class Ui_Dialog(object):
             self.eb_line_width_lineEdit.sizePolicy().hasHeightForWidth())
         self.eb_line_width_lineEdit.setSizePolicy(sizePolicy)
         self.eb_line_width_lineEdit.setObjectName("eb_line_width_lineEdit")
-        self.gridLayout_2.addWidget(self.eb_line_width_lineEdit, 1, 10, 1, 1)
+        self.gridLayout_2.addWidget(self.eb_line_width_lineEdit, 1, 11, 1, 1)
         self.yeb_mk_style_cbb = QtWidgets.QComboBox(self.eb_tab)
         self.yeb_mk_style_cbb.setObjectName("yeb_mk_style_cbb")
         self.gridLayout_2.addWidget(self.yeb_mk_style_cbb, 2, 2, 1, 1)
@@ -678,31 +688,6 @@ class Ui_Dialog(object):
         self.label_29.setSizePolicy(sizePolicy)
         self.label_29.setObjectName("label_29")
         self.gridLayout_2.addWidget(self.label_29, 1, 4, 1, 1)
-        self.eb_line_color_btn = QtWidgets.QPushButton(self.eb_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.eb_line_color_btn.sizePolicy().hasHeightForWidth())
-        self.eb_line_color_btn.setSizePolicy(sizePolicy)
-        self.eb_line_color_btn.setStyleSheet(
-            " QPushButton {\n"
-            "    margin: 1px;\n"
-            "    border-color: rgb(0, 85, 0);\n"
-            "    border-style: outset;\n"
-            "    border-radius: 3px;\n"
-            "    border-width: 1px;\n"
-            "    color: black;\n"
-            "    background-color: gray;\n"
-            "}\n"
-            "QPushButton:pressed {\n"
-            "    background-color: white;\n"
-            "}")
-        self.eb_line_color_btn.setText("")
-        self.eb_line_color_btn.setAutoDefault(False)
-        self.eb_line_color_btn.setObjectName("eb_line_color_btn")
-        self.gridLayout_2.addWidget(self.eb_line_color_btn, 1, 5, 1, 1)
         self.label_34 = QtWidgets.QLabel(self.eb_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Fixed)
@@ -712,7 +697,7 @@ class Ui_Dialog(object):
             self.label_34.sizePolicy().hasHeightForWidth())
         self.label_34.setSizePolicy(sizePolicy)
         self.label_34.setObjectName("label_34")
-        self.gridLayout_2.addWidget(self.label_34, 1, 9, 1, 1)
+        self.gridLayout_2.addWidget(self.label_34, 1, 10, 1, 1)
         self.label_28 = QtWidgets.QLabel(self.eb_tab)
         font = QtGui.QFont()
         font.setBold(True)
@@ -754,7 +739,54 @@ class Ui_Dialog(object):
         self.eb_mk_edgecolor_btn.setText("")
         self.eb_mk_edgecolor_btn.setAutoDefault(False)
         self.eb_mk_edgecolor_btn.setObjectName("eb_mk_edgecolor_btn")
-        self.gridLayout_2.addWidget(self.eb_mk_edgecolor_btn, 2, 5, 1, 1)
+        self.gridLayout_2.addWidget(self.eb_mk_edgecolor_btn, 2, 6, 1, 1)
+        self.eb_mk_size_lineEdit = QtWidgets.QLineEdit(self.eb_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.eb_mk_size_lineEdit.sizePolicy().hasHeightForWidth())
+        self.eb_mk_size_lineEdit.setSizePolicy(sizePolicy)
+        self.eb_mk_size_lineEdit.setObjectName("eb_mk_size_lineEdit")
+        self.gridLayout_2.addWidget(self.eb_mk_size_lineEdit, 2, 9, 1, 1)
+        self.eb_mk_width_lineEdit = QtWidgets.QLineEdit(self.eb_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.eb_mk_width_lineEdit.sizePolicy().hasHeightForWidth())
+        self.eb_mk_width_lineEdit.setSizePolicy(sizePolicy)
+        self.eb_mk_width_lineEdit.setObjectName("eb_mk_width_lineEdit")
+        self.gridLayout_2.addWidget(self.eb_mk_width_lineEdit, 2, 11, 1, 1)
+        self.label_31 = QtWidgets.QLabel(self.eb_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_31.sizePolicy().hasHeightForWidth())
+        self.label_31.setSizePolicy(sizePolicy)
+        self.label_31.setObjectName("label_31")
+        self.gridLayout_2.addWidget(self.label_31, 2, 10, 1, 1)
+        self.eb_line_hide_chkbox = QtWidgets.QCheckBox(self.eb_tab)
+        self.eb_line_hide_chkbox.setObjectName("eb_line_hide_chkbox")
+        self.gridLayout_2.addWidget(self.eb_line_hide_chkbox, 0, 9, 1, 1)
+        self.label_33 = QtWidgets.QLabel(self.eb_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_33.sizePolicy().hasHeightForWidth())
+        self.label_33.setSizePolicy(sizePolicy)
+        self.label_33.setObjectName("label_33")
+        self.gridLayout_2.addWidget(self.label_33, 2, 1, 1, 1)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 40,
+                                            QtWidgets.QSizePolicy.Minimum,
+                                            QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_2.addItem(spacerItem1, 4, 2, 1, 1)
         self.eb_mk_facecolor_btn = QtWidgets.QPushButton(self.eb_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
@@ -779,64 +811,32 @@ class Ui_Dialog(object):
         self.eb_mk_facecolor_btn.setText("")
         self.eb_mk_facecolor_btn.setAutoDefault(False)
         self.eb_mk_facecolor_btn.setObjectName("eb_mk_facecolor_btn")
-        self.gridLayout_2.addWidget(self.eb_mk_facecolor_btn, 2, 6, 1, 1)
-        self.eb_mk_size_lineEdit = QtWidgets.QLineEdit(self.eb_tab)
+        self.gridLayout_2.addWidget(self.eb_mk_facecolor_btn, 2, 5, 1, 1)
+        self.eb_line_color_btn = QtWidgets.QPushButton(self.eb_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.eb_mk_size_lineEdit.sizePolicy().hasHeightForWidth())
-        self.eb_mk_size_lineEdit.setSizePolicy(sizePolicy)
-        self.eb_mk_size_lineEdit.setObjectName("eb_mk_size_lineEdit")
-        self.gridLayout_2.addWidget(self.eb_mk_size_lineEdit, 2, 8, 1, 1)
-        self.label_32 = QtWidgets.QLabel(self.eb_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_32.sizePolicy().hasHeightForWidth())
-        self.label_32.setSizePolicy(sizePolicy)
-        self.label_32.setObjectName("label_32")
-        self.gridLayout_2.addWidget(self.label_32, 2, 7, 1, 1)
-        self.eb_mk_width_lineEdit = QtWidgets.QLineEdit(self.eb_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.eb_mk_width_lineEdit.sizePolicy().hasHeightForWidth())
-        self.eb_mk_width_lineEdit.setSizePolicy(sizePolicy)
-        self.eb_mk_width_lineEdit.setObjectName("eb_mk_width_lineEdit")
-        self.gridLayout_2.addWidget(self.eb_mk_width_lineEdit, 2, 10, 1, 1)
-        self.label_31 = QtWidgets.QLabel(self.eb_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_31.sizePolicy().hasHeightForWidth())
-        self.label_31.setSizePolicy(sizePolicy)
-        self.label_31.setObjectName("label_31")
-        self.gridLayout_2.addWidget(self.label_31, 2, 9, 1, 1)
-        self.eb_line_hide_chkbox = QtWidgets.QCheckBox(self.eb_tab)
-        self.eb_line_hide_chkbox.setObjectName("eb_line_hide_chkbox")
-        self.gridLayout_2.addWidget(self.eb_line_hide_chkbox, 0, 8, 1, 1)
-        self.label_33 = QtWidgets.QLabel(self.eb_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_33.sizePolicy().hasHeightForWidth())
-        self.label_33.setSizePolicy(sizePolicy)
-        self.label_33.setObjectName("label_33")
-        self.gridLayout_2.addWidget(self.label_33, 2, 1, 1, 1)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 40,
-                                            QtWidgets.QSizePolicy.Minimum,
-                                            QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_2.addItem(spacerItem1, 4, 2, 1, 1)
+            self.eb_line_color_btn.sizePolicy().hasHeightForWidth())
+        self.eb_line_color_btn.setSizePolicy(sizePolicy)
+        self.eb_line_color_btn.setStyleSheet(
+            " QPushButton {\n"
+            "    margin: 1px;\n"
+            "    border-color: rgb(0, 85, 0);\n"
+            "    border-style: outset;\n"
+            "    border-radius: 3px;\n"
+            "    border-width: 1px;\n"
+            "    color: black;\n"
+            "    background-color: gray;\n"
+            "}\n"
+            "QPushButton:pressed {\n"
+            "    background-color: white;\n"
+            "}")
+        self.eb_line_color_btn.setText("")
+        self.eb_line_color_btn.setAutoDefault(False)
+        self.eb_line_color_btn.setObjectName("eb_line_color_btn")
+        self.gridLayout_2.addWidget(self.eb_line_color_btn, 1, 5, 1, 1)
         self.config_tabWidget.addTab(self.eb_tab, "")
         self.style_tab = QtWidgets.QWidget()
         self.style_tab.setObjectName("style_tab")
@@ -1101,17 +1101,18 @@ class Ui_Dialog(object):
         self.label_19.setText(_translate("Dialog", "Style"))
         self.label_21.setText(_translate("Dialog", "Color"))
         self.mk_edgecolor_btn.setToolTip(_translate("Dialog", "Edge Color"))
-        self.mk_facecolor_btn.setToolTip(_translate("Dialog", "Face Color"))
         self.label_20.setText(_translate("Dialog", "Size"))
         self.label_22.setText(_translate("Dialog", "Width"))
-        self.label_23.setText(_translate("Dialog", "Label"))
-        self.label_9.setText(_translate("Dialog", "Width"))
         self.line_id_cbb.setToolTip(
             _translate("Dialog", "Select line to configure"))
+        self.label_23.setText(_translate("Dialog", "Label"))
+        self.label_9.setText(_translate("Dialog", "Width"))
         self.line_hide_chkbox.setText(_translate("Dialog", "Hide"))
+        self.mk_facecolor_btn.setToolTip(_translate("Dialog", "Face Color"))
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.curve_tab),
             _translate("Dialog", "Curve"))
+        self.label_32.setText(_translate("Dialog", "Size"))
         self.yeb_mk_style_cbb.setToolTip(
             _translate(
                 "Dialog",
@@ -1137,11 +1138,10 @@ class Ui_Dialog(object):
         self.label_28.setText(_translate("Dialog", "Cap"))
         self.label_35.setText(_translate("Dialog", "Color"))
         self.eb_mk_edgecolor_btn.setToolTip(_translate("Dialog", "Edge Color"))
-        self.eb_mk_facecolor_btn.setToolTip(_translate("Dialog", "Face Color"))
-        self.label_32.setText(_translate("Dialog", "Size"))
         self.label_31.setText(_translate("Dialog", "Width"))
         self.eb_line_hide_chkbox.setText(_translate("Dialog", "Hide"))
         self.label_33.setText(_translate("Dialog", "Style"))
+        self.eb_mk_facecolor_btn.setToolTip(_translate("Dialog", "Face Color"))
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.eb_tab),
             _translate("Dialog", "Errorbar"))
