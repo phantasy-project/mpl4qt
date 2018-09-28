@@ -40,7 +40,8 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
 
         # regular lines (avg lines)
         self._lines = []
-        # eb lines + mks, each item: {'xerr':(mk, line), 'yerr': (mk, line)}
+        # eb lines + mks, each item:
+        # {'xerr':([mk: left, right], line), 'yerr': ([mk: top, bottom], line)}
         self._eb_lines = []
 
         super(MatplotlibErrorbarWidget, self).__init__(parent)
@@ -106,9 +107,39 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
             'yerr': (self._ebmks[2:4], self._eblines[1])
         })
 
-#    def add_curve(self):
-#        # append avg line and err lines (dict)
-#        pass
+        # set current line
+        self.setEbLineID(0)
+
+    def add_curve(self, x_data=None, y_data=None, xerr_data=None, yerr_data=None, **kws):
+        """Add one curve with errorbar to figure, accepts all ``pyplot.errorbar``
+        keyword arguments.
+
+        Parameters
+        ----------
+        x_data : list or array
+            Array of x data, which is the average in x.
+        y_data : list or array
+            Array of y data, which is the average in y.
+        xerr_data : list or array
+            Error array in x.
+        yerr_data : list or array
+            Error array in y.
+        """
+        # Add new line(avg) + errorbar
+        # append avg line and err lines (dict)
+        x = np.nan if x_data is None else x_data
+        y = np.nan if y_data is None else y_data
+        xerr = np.nan if xerr_data is None else xerr_data
+        yerr = np.nan if yerr_data is None else yerr_data
+        avgline, ebmks, eblines = self.axes.errorbar(
+                x, y, xerr=xerr, yerr=yerr, **kws)
+        self._lines.append(avgline)
+        self._eb_lines.append({
+            'xerr': (ebmks[0:2], eblines[0]),
+            'yerr': (ebmks[2:4], eblines[1])
+        })
+        self.update_legend()
+        self.update_figure()
 
     def on_config(self):
         config_panel = MatplotlibConfigErrorbarPanel(self)
@@ -384,6 +415,69 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
         self.update_figure()
 
     figureEbLineVisible = pyqtProperty(bool, getEbLineVisible, setEbLineVisible)
+
+    def update_curve(self, x_data=None, y_data=None, xerr_data=None, yerr_data=None):
+        """Update curve with errorbar, with given data.
+
+        Parameters
+        ----------
+        x_data : list or array
+            Array of x data, which is the average in x.
+        y_data : list or array
+            Array of y data, which is the average in y.
+        xerr_data : list or array
+            Error array in x.
+        yerr_data : list or array
+            Error array in y.
+        """
+        adjust_errorbar(self._line, self._eb_line, x_data, y_data, xerr_data, yerr_data)
+        self.update_figure()
+
+
+def adjust_errorbar(line_obj, ebline_obj, x, y, xerr, yerr):
+    """Update curve with errorbars.
+
+    Parameters
+    ----------
+    line_obj : Line2D object
+        Present average line.
+    ebline_obj : dict
+        Keys: 'xerr' and 'yerr', values: (mk-top, mk-bottom), bar
+    x : array
+        New x data for `line_obj`.
+    y : array:
+        New y data for `line_obj`.
+    xerr : array
+        New error for x data.
+    yerr : array
+        New error for y data.
+    """
+    l = line_obj
+    (xerr_right, xerr_left), xbar = ebline_obj['xerr']
+    (yerr_top, yerr_bottom), ybar = ebline_obj['yerr']
+
+    l.set_data(x, y)
+
+    x_base, y_base = x, y
+    xerr_left_val, xerr_right_val = x_base - xerr, x_base + xerr
+    yerr_bottom_val, yerr_top_val = y_base - yerr, y_base + yerr
+
+    xerr_left.set_data(xerr_left_val, y_base)
+    xerr_right.set_data(xerr_right_val, y_base)
+
+    yerr_bottom.set_data(x_base, yerr_bottom_val)
+    yerr_top.set_data(x_base, yerr_top_val)
+
+    new_segments_x = [
+        np.array([[xt, y], [xb, y]])
+        for xt, xb, y in zip(xerr_right_val, xerr_left_val, y_base)
+    ]
+    new_segments_y = [
+        np.array([[x, yt], [x, yb]])
+        for x, yt, yb in zip(x_base, yerr_top_val, yerr_bottom_val)
+    ]
+    xbar.set_segments(new_segments_x)
+    ybar.set_segments(new_segments_y)
 
 
 if __name__ == "__main__":
