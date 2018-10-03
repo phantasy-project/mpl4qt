@@ -418,23 +418,23 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
 
     @pyqtSlot()
     def set_xy_label_font(self):
-        font, ok = QFontDialog(self.parent.getFigureXYlabelFont()).getFont()
+        cfont = self.parent.getFigureXYlabelFont()
+        font, ok = select_font(self, cfont)
         if ok:
             self.figXYlabelFontChanged.emit(font)
 
     @pyqtSlot()
     def set_xy_ticks_font(self):
-        font, ok = QFontDialog.getFont()
+        cfont = self.parent.getFigureXYticksFont()
+        font, ok = select_font(self, cfont)
         if ok:
             self.xy_ticks_sample_lbl.setFont(font)
             self.figXYticksFontChanged.emit(font)
 
     @pyqtSlot()
     def set_title_font(self):
-        current_font = self.parent.getFigureTitleFont()
-        d = QFontDialog()
-        d.setCurrentFont(current_font)  # does not work
-        font, ok = d.getFont()
+        cfont = self.parent.getFigureTitleFont()
+        font, ok = select_font(self, cfont)
         if ok:
             self.figTitleFontChanged.emit(font)
 
@@ -687,6 +687,24 @@ class MatplotlibConfigErrorbarPanel(MatplotlibConfigPanel):
     @pyqtSlot(QColor)
     def set_eb_line_color_btn(self, color):
         self._set_btn_color(self.eb_line_color_btn, color)
+
+
+def select_font(obj, current_font, options=None):
+    """Select font slot.
+
+    Parameters
+    ----------
+    obj :
+        Widget object, which is the parent of the font dialog.
+    current_font : QFont
+        Current font, which is the initial font of font dialog.
+    options :
+        QFont options, see QFontDialog.FontDialogOptions.
+    """
+    if options is None:
+        options = QFontDialog.FontDialogOptions(0)
+    font, ok = QFontDialog.getFont(current_font, obj, "", options)
+    return font, ok
 
 
 if __name__ == '__main__':
