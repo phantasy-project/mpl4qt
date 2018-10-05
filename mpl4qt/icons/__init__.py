@@ -3,6 +3,7 @@ from ._reset import icon as reset_icon
 from ._import import icon as import_icon
 from ._export import icon as export_icon
 from .mplcurvewidget_icon import icon as mplcurvewidget_icon
+from .mplbasewidget_icon import icon as mplbasewidget_icon
 from .mplerrorbarwidget_icon import icon as mplerrorbarwidget_icon
 from ._home import icon as home_tool_icon
 from ._zoom import icon as zoom_tool_icon
