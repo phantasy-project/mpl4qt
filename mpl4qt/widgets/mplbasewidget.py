@@ -80,7 +80,7 @@ class BasePlotWidget(FigureCanvas):
     def init_xy_pos_annot(self):
         pass
 
-    def on_motion(self):
+    def on_motion(self, e):
         pass
 
     def on_key_press(self, e):
@@ -163,6 +163,16 @@ class BasePlotWidget(FigureCanvas):
         self.setContextMenuPolicy(Qt.DefaultContextMenu)
 
 
+class MatplotlibBaseWidget(BasePlotWidget):
+    """MatplotlibBaseWidget(BasePlotWidget)
+    """
+    def __init__(self, parent=None):
+         super(MatplotlibBaseWidget, self).__init__(parent)
+
+    def init_figure(self):
+        pass
+
+
 def _set_font(obj, font):
     obj.set_size(font.pointSizeF())
     obj.set_family(font.family())
@@ -172,3 +182,13 @@ def _set_font(obj, font):
         obj.set_style('italic')
     else:
         obj.set_style('normal')
+
+
+if __name__ == '__main__':
+    from PyQt5.QtWidgets import QApplication
+
+    app = QApplication([])
+    window = MatplotlibBaseWidget()
+    window.show()
+
+    app.exec_()
