@@ -1,3 +1,10 @@
+2.1.0
+  * Fix issue, cannot locate current selected font.
+  * Fix issue, crashes of on_motion of MatplotlibBaseWidget.
+  * New DataViz widget, MatplotlibBaseWidget.
+  * MatplotlibErrorbarWidget, implement 'add_curve' and 'update_curve'.
+  * Update doc.
+  
 2.0.0
   * Update mplconfig with errorbar config tab.
   * Create a new widget called MatplotlibErrorbarWidget
