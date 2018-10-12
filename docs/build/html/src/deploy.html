@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Deployment &mdash; mpl4qt 2.0.0 documentation</title>
+  <title>Deployment &mdash; mpl4qt 2.1.0 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                2.0.0
+                2.1.0
               </div>
             
           
@@ -92,7 +92,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#after-installation">After Installation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#what-could-be-reached-out">What could be reached out?</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#development-environment">Development Environment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#simple-demo-app">Simple Demo App</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#simple-demo-apps">Simple Demo Apps</a></li>
 </ul>
 </li>
 </ul>
@@ -191,8 +191,8 @@ sudo apt-get install python3-pyqt5 qttools5-dev-tools pyqt5-dev-tools
 </div>
 <div class="section" id="install-via-pip">
 <h2>Install via PIP<a class="headerlink" href="#install-via-pip" title="Permalink to this headline">¶</a></h2>
-<p><strong>Q: How to install pip?</strong></p>
-<p><strong>A: See `this link &lt;https://pip.pypa.io/en/stable/installing/&gt;`_.</strong></p>
+<p>See <a class="reference external" href="https://pip.pypa.io/en/stable/installing/">this link</a> about installing
+<cite>pip</cite>.</p>
 <p>Install <code class="docutils literal notranslate"><span class="pre">mpl4qt</span></code>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install mpl4qt
 </pre></div>
@@ -223,6 +223,11 @@ into your system by:</p>
 integration.</li>
 <li>Command: <code class="docutils literal notranslate"><span class="pre">mplcurve_default_settings</span></code> to generate the JSON file for
 the default configuration of <code class="xref py py-class docutils literal notranslate"><span class="pre">MatplotlibCurveWidget</span></code>.</li>
+<li>List of widgets are available in Qt designer:<ul>
+<li><em>MatplotlibCurveWidget</em></li>
+<li><em>MatplotlibErrorbarWidget</em></li>
+</ul>
+</li>
 <li>Python package named <code class="docutils literal notranslate"><span class="pre">mpl4qt</span></code> to be ready for use in any Python script.</li>
 </ul>
 </div>
@@ -242,12 +247,15 @@ the default configuration of <code class="xref py py-class docutils literal notr
 </pre></div>
 </div>
 </div>
-<div class="section" id="simple-demo-app">
-<h3>Simple Demo App<a class="headerlink" href="#simple-demo-app" title="Permalink to this headline">¶</a></h3>
-<p>A simple application created with <code class="docutils literal notranslate"><span class="pre">mpl4qt</span></code> package could be running by:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">mpl4qt</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">app1</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;app1.run()&quot;</span>
+<div class="section" id="simple-demo-apps">
+<h3>Simple Demo Apps<a class="headerlink" href="#simple-demo-apps" title="Permalink to this headline">¶</a></h3>
+<p>Simple applications created with <code class="docutils literal notranslate"><span class="pre">mpl4qt</span></code> package could be running by:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">mpl4qt</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">app1</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">mpl4qt</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">app2</span>
 </pre></div>
 </div>
+<p>The former is built with <code class="xref py py-class docutils literal notranslate"><span class="pre">MatplotlibCurveWidget</span></code>
+and the latter is with <code class="xref py py-class docutils literal notranslate"><span class="pre">MatplotlibErrorbarWidget</span></code>.</p>
 </div>
 </div>
 </div>
@@ -294,7 +302,7 @@ the default configuration of <code class="xref py py-class docutils literal notr
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'2.0.0',
+            VERSION:'2.1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
