@@ -44,6 +44,16 @@ class MToolbar(QToolBar):
 
     def init_ui(self):
 
+        self.setStyleSheet("""
+                QToolBar {
+                    background-color: white;
+                    border-radius: 6px;
+                    border-bottom: 2px solid #8f8f91;
+                    border-top: 2px solid #8f8f91;
+                    spacing: 5px;
+                }
+                """)
+
         self.tb = tb = NavigationToolbar(self.canvas, self)
         tb.hide()
 
