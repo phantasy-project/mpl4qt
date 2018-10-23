@@ -75,6 +75,7 @@ class ToolbarDialog(QDialog):
 
         # lasso tool
         lasso_btn = QPushButton("", self)
+        self.lasso_btn = lasso_btn
         lasso_icon = QIcon(QPixmap(lasso_tool_icon))
         lasso_btn.setIcon(lasso_icon)
         lasso_btn.setCheckable(True)
@@ -93,7 +94,7 @@ class ToolbarDialog(QDialog):
         # events
         home_btn.clicked.connect(self.home)
         zoom_btn.toggled.connect(self.zoom)
-        lasso_btn.clicked.connect(self.lasso)
+        lasso_btn.toggled.connect(self.lasso)
         exit_btn.clicked.connect(self.close)
         save_btn.clicked.connect(self.save)
 
@@ -119,6 +120,7 @@ class ToolbarDialog(QDialog):
             self.selector = SelectFromPoints(ax, pts)
             self.selector.selectedIndicesReady.connect(self.show_selected_indices)
         else:
+            print("lasso tool is unchecked..")
             self.selector.disconnect()
             self.selector.selectedIndicesReady.disconnect()
 
@@ -127,6 +129,8 @@ class ToolbarDialog(QDialog):
         print(x)
 
     def closeEvent(self, e):
+        if self.lasso_btn.isChecked():
+            self.lasso_btn.setChecked(False)
         if self.zoom_btn.isChecked():
             self.zoom_btn.setChecked(False) # emit toggled
         self.close()
