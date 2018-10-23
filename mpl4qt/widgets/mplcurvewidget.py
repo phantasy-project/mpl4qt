@@ -46,7 +46,7 @@ from collections import OrderedDict
 
 from mpl4qt.widgets.mplbasewidget import BasePlotWidget
 from mpl4qt.widgets.mplconfig import MatplotlibConfigPanel
-from mpl4qt.widgets.mpltoolbar import ToolbarDialog
+from mpl4qt.widgets.mpltoolbar import MToolbar
 from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
 from mpl4qt.widgets.utils import mplcolor2hex
 from mpl4qt.widgets.utils import DEFAULT_MPL_SETTINGS
@@ -971,9 +971,9 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def show_mpl_tools(self, e):
         if 'w_mpl_tools' in self._handlers:
             w = self._handlers['w_mpl_tools']
-            w.show_dialog()
+            w.show_toolbar()
         else:
-            w = ToolbarDialog(self.figure.canvas, self)
+            w = MToolbar(self.figure.canvas, self)
             self._handlers['w_mpl_tools'] = w
 
     def on_config(self):
@@ -1106,6 +1106,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.xy_pos_annot.set_visible(False)
 
     def on_motion(self, event):
+        return
         vis = self.xy_pos_annot.get_visible()
         if event.inaxes is not None:
             x, y = event.x, event.y
