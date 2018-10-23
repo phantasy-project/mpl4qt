@@ -9,9 +9,8 @@ from matplotlib.path import Path
 from matplotlib.widgets import LassoSelector
 import numpy as np
 
-from PyQt5.QtWidgets import QDialog, QPushButton
+from PyQt5.QtWidgets import QToolBar, QAction
 from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtWidgets import QHBoxLayout
 from PyQt5.QtCore import QPoint
 from PyQt5.QtCore import Qt, pyqtSlot, pyqtSignal, QVariant, QObject
 from mpl4qt.icons import exit_tool_icon
@@ -26,7 +25,7 @@ class NavigationToolbar(Toolbar):
         super(self.__class__, self).__init__(canvas, parent)
 
 
-class ToolbarDialog(QDialog):
+class ToolbarDialog(QToolBar):
 
     def __init__(self, canvas, parent=None):
         super(ToolbarDialog, self).__init__()
@@ -34,69 +33,57 @@ class ToolbarDialog(QDialog):
         self.canvas = canvas
 
         self.init_ui()
-        self.show_dialog()
+        self.show_toolbar()
 
-    def show_dialog(self):
-        self.adjustSize()
+    def show_toolbar(self):
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
+        self.setMovable(True)
+        self.setFloatable(True)
         self.show()
-        self.raise_()
         self.move(self.get_pos())
 
     def init_ui(self):
-        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
+
         self.tb = tb = NavigationToolbar(self.canvas, self)
         tb.hide()
 
-        # exit tool
-        exit_btn = QPushButton("", self)
-        exit_icon = QIcon(QPixmap(exit_tool_icon))
-        exit_btn.setIcon(exit_icon)
-        exit_btn.setToolTip("Exit this toolbar")
-
         # zoom tool
-        zoom_btn = QPushButton("", self)
-        zoom_icon = QIcon(QPixmap(zoom_tool_icon))
-        zoom_btn.setIcon(zoom_icon)
-        zoom_btn.setCheckable(True)
-        self.zoom_btn = zoom_btn
-        zoom_btn.setToolTip("Zoom into selected region")
+        zoom_act = QAction(QIcon(QPixmap(zoom_tool_icon)), "Zoom", self)
+        zoom_act.setCheckable(True)
+        self.zoom_act = zoom_act
+        zoom_act.setToolTip("Zoom into selected region")
 
         # home tool
-        home_btn = QPushButton("", self)
-        home_icon = QIcon(QPixmap(home_tool_icon))
-        home_btn.setIcon(home_icon)
-        home_btn.setToolTip("Reset to original")
+        home_act = QAction(QIcon(QPixmap(home_tool_icon)), "Home", self)
+        home_act.setToolTip("Reset to original")
 
         # save tool
-        save_btn = QPushButton("", self)
-        save_icon = QIcon(QPixmap(save_tool_icon))
-        save_btn.setIcon(save_icon)
-        save_btn.setToolTip("Save figure as file")
+        save_act = QAction(QIcon(QPixmap(save_tool_icon)), "Save", self)
+        save_act.setToolTip("Save figure as file")
 
         # lasso tool
-        lasso_btn = QPushButton("", self)
-        self.lasso_btn = lasso_btn
-        lasso_icon = QIcon(QPixmap(lasso_tool_icon))
-        lasso_btn.setIcon(lasso_icon)
-        lasso_btn.setCheckable(True)
-        lasso_btn.setToolTip("Select point(s) by lasso")
+        lasso_act = QAction(QIcon(QPixmap(lasso_tool_icon)), "Selector", self)
+        self.lasso_act = lasso_act
+        lasso_act.setCheckable(True)
+        lasso_act.setToolTip("Select point(s) by lasso")
 
-        # layout
-        hbox = QHBoxLayout()
-        hbox.addWidget(tb)
-        hbox.addWidget(home_btn)
-        hbox.addWidget(zoom_btn)
-        hbox.addWidget(lasso_btn)
-        hbox.addWidget(save_btn)
-        hbox.addWidget(exit_btn)
-        self.setLayout(hbox)
+        # exit tool
+        exit_act = QAction(QIcon(QPixmap(exit_tool_icon)), "Exit", self)
+        exit_act.setToolTip("Exit this toolbar")
+
+        self.addAction(home_act)
+        self.addAction(zoom_act)
+        self.addAction(lasso_act)
+        self.addAction(save_act)
+        self.addSeparator()
+        self.addAction(exit_act)
 
         # events
-        home_btn.clicked.connect(self.home)
-        zoom_btn.toggled.connect(self.zoom)
-        lasso_btn.toggled.connect(self.lasso)
-        exit_btn.clicked.connect(self.close)
-        save_btn.clicked.connect(self.save)
+        home_act.triggered.connect(self.home)
+        zoom_act.toggled.connect(self.zoom)
+        lasso_act.toggled.connect(self.lasso)
+        save_act.triggered.connect(self.save)
+        exit_act.triggered.connect(self.close)
 
     @pyqtSlot()
     def zoom(self):
@@ -120,19 +107,20 @@ class ToolbarDialog(QDialog):
             self.selector = SelectFromPoints(ax, pts)
             self.selector.selectedIndicesReady.connect(self.show_selected_indices)
         else:
-            print("lasso tool is unchecked..")
             self.selector.disconnect()
             self.selector.selectedIndicesReady.disconnect()
 
     @pyqtSlot(QVariant)
     def show_selected_indices(self, x):
+        """
+        """
         print(x)
 
     def closeEvent(self, e):
-        if self.lasso_btn.isChecked():
-            self.lasso_btn.setChecked(False)
-        if self.zoom_btn.isChecked():
-            self.zoom_btn.setChecked(False) # emit toggled
+        if self.lasso_act.isChecked():
+            self.lasso_act.setChecked(False)
+        if self.zoom_act.isChecked():
+            self.zoom_act.setChecked(False) # emit toggled
         self.close()
 
     def get_pos(self):
