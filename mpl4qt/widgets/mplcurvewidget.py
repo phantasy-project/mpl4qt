@@ -68,6 +68,9 @@ class MatplotlibCurveWidget(BasePlotWidget):
     # indices list of points selected by lasso tool
     selectedIndicesUpdated = pyqtSignal(QVariant)
 
+    # xy pos
+    xyposUpdated = pyqtSignal(float, float)
+
     def __init__(self, parent=None):
         self._fig_width = 4
         self._fig_height = 3
@@ -974,12 +977,11 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def show_mpl_tools(self, e):
         if 'w_mpl_tools' in self._handlers:
             w = self._handlers['w_mpl_tools']
-            w.show_toolbar()
         else:
             w = MToolbar(self.figure.canvas, self)
             self._handlers['w_mpl_tools'] = w
             w.selectedIndicesUpdated.connect(self.on_selected_indices)
-            #self.selectedIndicesUpdated.connect(w.selectedIndicesUpdated)
+        w.show_toolbar()
 
     @pyqtSlot(QVariant)
     def on_selected_indices(self, ind):
@@ -1115,6 +1117,9 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.xy_pos_annot.set_visible(False)
 
     def on_motion(self, event):
+        if event.inaxes is not None:
+            x_pos, y_pos = event.xdata, event.ydata
+            self.xyposUpdated.emit(x_pos, y_pos)
         return
         vis = self.xy_pos_annot.get_visible()
         if event.inaxes is not None:
