@@ -6,7 +6,7 @@ Signals
 
 *MatplotlibCurveWidget* provides the following PyQt signals:
 
-``selectedIndicesUpdated[list]``: Update with selected points indices from lasso selector tool.
+``selectedIndicesUpdated[list, array]``: Update with selected points indices and list of selected points from lasso selector tool.
 
 ``xyposUpdated[float, float]``: Update the current mouse position in the figure data coordinate, represented by two float numbers for x and y positions.
 
