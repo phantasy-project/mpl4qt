@@ -10,6 +10,7 @@ from matplotlib.widgets import LassoSelector
 import numpy as np
 
 from PyQt5.QtWidgets import QToolBar, QAction
+from PyQt5.QtWidgets import QWidget, QVBoxLayout
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import QPoint
 from PyQt5.QtCore import Qt, pyqtSlot, pyqtSignal, QVariant, QObject
@@ -25,8 +26,30 @@ class NavigationToolbar(Toolbar):
         super(self.__class__, self).__init__(canvas, parent)
 
 
-class MToolbar(QToolBar):
+class MToolbarWidget(QWidget):
+    def __init__(self, canvas, parent=None):
+        super(MToolbarWidget, self).__init__()
 
+        self.tb = MToolbar(canvas, parent)
+        layout = QVBoxLayout()
+        #layout.setMenuBar(self.tb)
+        layout.addWidget(self.tb)
+
+        self.setLayout(layout)
+
+    def show_widget(self):
+        #self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
+        self.setWindowFlags(Qt.WindowStaysOnTopHint)
+        self.move(self.tb.get_pos())
+        self.show()
+        self.raise_()
+
+
+class MToolbar(QToolBar):
+    
+    # indices list of points selected by lasso tool
+    selectedIndicesUpdated = pyqtSignal(QVariant)
+    
     def __init__(self, canvas, parent=None):
         super(MToolbar, self).__init__()
         self.parent = parent
@@ -37,10 +60,9 @@ class MToolbar(QToolBar):
 
     def show_toolbar(self):
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
-        self.setMovable(True)
-        self.setFloatable(True)
-        self.show()
         self.move(self.get_pos())
+        self.show()
+        self.raise_()
 
     def init_ui(self):
 
@@ -116,6 +138,7 @@ class MToolbar(QToolBar):
             ax = self.parent.axes
             self.selector = SelectFromPoints(ax, pts)
             self.selector.selectedIndicesReady.connect(self.show_selected_indices)
+            self.selector.selectedIndicesReady.connect(self.selectedIndicesUpdated)
         else:
             self.selector.disconnect()
             self.selector.selectedIndicesReady.disconnect()
