@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 from PyQt5.QtCore import pyqtProperty
 from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import QSize
 from PyQt5.QtCore import QVariant
 from PyQt5.QtCore import Qt
@@ -64,6 +65,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
     Provides a custom widget to draw curves with matplotlib, with properties
     and slots that can be used to customize its appearance.
     """
+    # indices list of points selected by lasso tool
+    selectedIndicesUpdated = pyqtSignal(QVariant)
 
     def __init__(self, parent=None):
         self._fig_width = 4
@@ -975,6 +978,12 @@ class MatplotlibCurveWidget(BasePlotWidget):
         else:
             w = MToolbar(self.figure.canvas, self)
             self._handlers['w_mpl_tools'] = w
+            w.selectedIndicesUpdated.connect(self.on_selected_indices)
+            #self.selectedIndicesUpdated.connect(w.selectedIndicesUpdated)
+
+    @pyqtSlot(QVariant)
+    def on_selected_indices(self, ind):
+        self.selectedIndicesUpdated.emit(ind)
 
     def on_config(self):
         config_panel = MatplotlibConfigPanel(self)

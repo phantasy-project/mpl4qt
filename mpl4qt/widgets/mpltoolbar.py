@@ -137,17 +137,16 @@ class MToolbar(QToolBar):
             pts = np.vstack([_x, _y]).T
             ax = self.parent.axes
             self.selector = SelectFromPoints(ax, pts)
-            self.selector.selectedIndicesReady.connect(self.show_selected_indices)
-            self.selector.selectedIndicesReady.connect(self.selectedIndicesUpdated)
+            self.selector.selectedIndicesReady.connect(self.update_selected_indices)
         else:
             self.selector.disconnect()
             self.selector.selectedIndicesReady.disconnect()
 
     @pyqtSlot(QVariant)
-    def show_selected_indices(self, x):
+    def update_selected_indices(self, ind):
+        """Emit selected indice list.
         """
-        """
-        print(x)
+        self.selectedIndicesUpdated.emit(ind)
 
     def closeEvent(self, e):
         if self.lasso_act.isChecked():
