@@ -49,7 +49,7 @@ class MToolbarWidget(QWidget):
 class MToolbar(QToolBar):
 
     # indices list of points selected by lasso tool
-    selectedIndicesUpdated = pyqtSignal(QVariant)
+    selectedIndicesUpdated = pyqtSignal(QVariant, QVariant)
 
     def __init__(self, canvas, parent=None):
         super(MToolbar, self).__init__()
@@ -173,11 +173,11 @@ class MToolbar(QToolBar):
             self.selector.disconnect()
             self.selector.selectedIndicesReady.disconnect()
 
-    @pyqtSlot(QVariant)
-    def update_selected_indices(self, ind):
-        """Emit selected indice list.
+    @pyqtSlot(QVariant, QVariant)
+    def update_selected_indices(self, ind, pts):
+        """Emit selected indice list and points.
         """
-        self.selectedIndicesUpdated.emit(ind)
+        self.selectedIndicesUpdated.emit(ind, pts)
 
     def closeEvent(self, e):
         if self.lasso_act.isChecked():
@@ -209,7 +209,10 @@ class MToolbar(QToolBar):
 class SelectFromPoints(QObject):
     """Select indices from points using `LassoSelector`.
     """
-    selectedIndicesReady = pyqtSignal(QVariant)
+    # selected points indices list and points list
+    # ind: index of orginal xy points array,
+    # pts: selected points
+    selectedIndicesReady = pyqtSignal(QVariant, QVariant)
     def __init__(self, ax, points, alpha_other=0.3, radius=0):
         super(SelectFromPoints, self).__init__()
         self.canvas = ax.figure.canvas
@@ -224,7 +227,7 @@ class SelectFromPoints(QObject):
         ind = np.nonzero(
                 path.contains_points(self.points, radius=self.radius))[0]
         self.canvas.draw_idle()
-        self.selectedIndicesReady.emit(ind)
+        self.selectedIndicesReady.emit(ind, self.points[ind])
 
     def disconnect(self):
         self.lasso.disconnect_events()
