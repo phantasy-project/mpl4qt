@@ -1,3 +1,13 @@
+.. dev_signals:
+
+=======
+Signals
+=======
+
+*MatplotlibCurveWidget* provides the following PyQt signals:
+
+``selectedIndicesUpdated[list]``: update with selected points indices from lasso selector tool.
+
 .. _dev_slots:
 
 =====
