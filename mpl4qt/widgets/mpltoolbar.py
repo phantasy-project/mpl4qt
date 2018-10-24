@@ -105,10 +105,10 @@ class MToolbar(QToolBar):
         exit_act = QAction(QIcon(QPixmap(exit_tool_icon)), "Exit", self)
         exit_act.setToolTip("Exit toolbar")
 
-        # repos to orignal pos (toolbar) tool
+        # repos to center (toolbar) tool
         repos_act = QAction(QIcon(QPixmap(repos_tool_icon)), "Repos", self)
         repos_act.setToolTip(
-            "Move toolbar to orginal location, drag&move to otherwhere")
+            "Reposition toolbar wrt figure widget, drag & move to otherwhere")
 
         # pos display tool
         self.pos_lbl = QLabel(self)
