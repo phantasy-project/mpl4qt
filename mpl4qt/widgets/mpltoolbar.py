@@ -19,6 +19,7 @@ from mpl4qt.icons import home_tool_icon
 from mpl4qt.icons import zoom_tool_icon
 from mpl4qt.icons import save_tool_icon
 from mpl4qt.icons import lasso_tool_icon
+from mpl4qt.icons import repos_tool_icon
 
 
 class NavigationToolbar(Toolbar):
@@ -73,6 +74,7 @@ class MToolbar(QToolBar):
                     border-bottom: 2px solid #8f8f91;
                     border-top: 2px solid #8f8f91;
                     spacing: 5px;
+                    padding: 10px;
                 }
                 """)
 
@@ -101,7 +103,12 @@ class MToolbar(QToolBar):
 
         # exit tool
         exit_act = QAction(QIcon(QPixmap(exit_tool_icon)), "Exit", self)
-        exit_act.setToolTip("Exit this toolbar")
+        exit_act.setToolTip("Exit toolbar")
+
+        # repos to orignal pos (toolbar) tool
+        repos_act = QAction(QIcon(QPixmap(repos_tool_icon)), "Repos", self)
+        repos_act.setToolTip(
+            "Move toolbar to orginal location, drag&move to otherwhere")
 
         # pos display tool
         self.pos_lbl = QLabel(self)
@@ -120,6 +127,7 @@ class MToolbar(QToolBar):
         self.addAction(save_act)
         self.addWidget(self.pos_lbl)
         self.addSeparator()
+        self.addAction(repos_act)
         self.addAction(exit_act)
 
         # events
@@ -127,7 +135,12 @@ class MToolbar(QToolBar):
         zoom_act.toggled.connect(self.zoom)
         lasso_act.toggled.connect(self.lasso)
         save_act.triggered.connect(self.save)
+        repos_act.triggered.connect(self.repos_toolbar)
         exit_act.triggered.connect(self.close)
+
+    @pyqtSlot()
+    def repos_toolbar(self):
+        self.move(self.get_pos())
 
     @pyqtSlot(float, float)
     def on_update_xypos(self, x, y):
@@ -181,6 +194,16 @@ class MToolbar(QToolBar):
                 self.parent.geometry().width() - self.geometry().width())
         y = self.parent.geometry().y()
         return self.parent.mapToGlobal(QPoint(x, y))
+
+    def mousePressEvent(self, e):
+        self.pos_x = e.x()
+        self.pos_y = e.y()
+
+    def mouseMoveEvent(self, e):
+        try:
+            self.move(e.globalX() - self.pos_x, e.globalY() - self.pos_y)
+        except:
+            pass
 
 
 class SelectFromPoints(QObject):
