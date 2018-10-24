@@ -9,7 +9,7 @@ from matplotlib.path import Path
 from matplotlib.widgets import LassoSelector
 import numpy as np
 
-from PyQt5.QtWidgets import QToolBar, QAction
+from PyQt5.QtWidgets import QToolBar, QAction, QLabel
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import QPoint
@@ -46,20 +46,20 @@ class MToolbarWidget(QWidget):
 
 
 class MToolbar(QToolBar):
-    
+
     # indices list of points selected by lasso tool
     selectedIndicesUpdated = pyqtSignal(QVariant)
-    
+
     def __init__(self, canvas, parent=None):
         super(MToolbar, self).__init__()
         self.parent = parent
         self.canvas = canvas
 
         self.init_ui()
-        self.show_toolbar()
+        # window flags
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
 
     def show_toolbar(self):
-        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         self.move(self.get_pos())
         self.show()
         self.raise_()
@@ -103,10 +103,22 @@ class MToolbar(QToolBar):
         exit_act = QAction(QIcon(QPixmap(exit_tool_icon)), "Exit", self)
         exit_act.setToolTip("Exit this toolbar")
 
+        # pos display tool
+        self.pos_lbl = QLabel(self)
+        self.pos_lbl.setToolTip("Pointed (x, y) coordinate")
+        self.pos_lbl.setStyleSheet("""
+            QLabel {
+                font-family: monospace;
+                color: black;
+            }
+            """)
+        self.parent.xyposUpdated.connect(self.on_update_xypos)
+
         self.addAction(home_act)
         self.addAction(zoom_act)
         self.addAction(lasso_act)
         self.addAction(save_act)
+        self.addWidget(self.pos_lbl)
         self.addSeparator()
         self.addAction(exit_act)
 
@@ -116,6 +128,12 @@ class MToolbar(QToolBar):
         lasso_act.toggled.connect(self.lasso)
         save_act.triggered.connect(self.save)
         exit_act.triggered.connect(self.close)
+
+    @pyqtSlot(float, float)
+    def on_update_xypos(self, x, y):
+        self.pos_lbl.setText(
+            "<html><sup>(x, y)</sup>({0:<.4f}, {1:<.4f})</html>".format(x, y))
+        self.adjustSize()
 
     @pyqtSlot()
     def zoom(self):
