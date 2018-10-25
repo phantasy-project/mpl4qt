@@ -81,8 +81,10 @@ class BasePlotWidget(FigureCanvas):
         self._handlers = {}
 
         # hvlines
-        self._hline = None
-        self._vline = None
+        self._hline = None        # h-ruler
+        self._vline = None        # v-ruler
+        self._cpoint = None       # cross-point of h,v rulers
+        self._cpoint_text = None  # coord annote of cross-point
 
     def connect_button_press_event(self):
         """Connect 'button_press_event'
