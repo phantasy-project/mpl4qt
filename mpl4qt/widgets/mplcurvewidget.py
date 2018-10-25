@@ -1123,7 +1123,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
                     alpha=0.8, color='b', ls='--')
             self._hline.set_label('H-Ruler')
             self._lines.append(self._hline)
-            # color
         else:
             self._hline.set_ydata([y0, y0])
 
@@ -1132,9 +1131,26 @@ class MatplotlibCurveWidget(BasePlotWidget):
                     alpha=0.8, color='b', ls='--')
             self._vline.set_label('V-Ruler')
             self._lines.append(self._vline)
-            # color
         else:
             self._vline.set_xdata([x0, x0])
+
+        if self._cpoint is None:
+            self._cpoint, = self.axes.plot([x0], [y0], 'o',
+                                           mec='b', mfc='b')
+            self._cpoint.set_label('Cross-Point')
+            self._lines.append(self._cpoint)
+            text = '{0:g}, {1:g}'.format(x0, y0)
+            self._cpoint_text = self.axes.annotate(
+                    text, xy=(x0, y0), xytext=(15, 15),
+                    xycoords="data", textcoords="offset pixels",
+                    bbox=dict(boxstyle="round", fc='w'))
+            self._cpoint_text.get_bbox_patch().set_alpha(0.5)
+        else:
+            self._cpoint.set_data([x0], [y0])
+            self._cpoint_text.xy = (x0, y0)
+            text = '{0:g}, {1:g}'.format(x0, y0)
+            self._cpoint_text.set_text(text)
+
         self.update_figure()
 
     def on_key_press(self, e):
