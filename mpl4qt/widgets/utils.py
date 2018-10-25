@@ -96,6 +96,16 @@ LINE_STY_DICT = {
     'None': 'None',
 }
 
+# axis scale mapping
+SCALE_STY_DICT = OrderedDict([
+    ('Linear Scale', 'linear'),
+    ('Log Transform', 'log'),
+    ('Symmetrical Log Transform', 'symlog'),
+    #('Logistic Transform', 'logit'),
+])
+SCALE_STY_KEYS = [k for k in SCALE_STY_DICT]
+SCALE_STY_VALS = [v for v in SCALE_STY_DICT.values()]
+
 # default values for mpl settings
 DEFAULT_TITLE = "<title sample>"
 DEFAULT_TITLE_FONT = "DejaVu Sans,16,-1,5,50,0,0,0,0,0"
@@ -269,7 +279,7 @@ Examples:
 > {0} --path mplsettings.json
 > {0}
 """.format(os.path.basename(sys.argv[0]))
-    
+
     args = parser.parse_args(sys.argv[1:])
     if args.filepath is None:
         path = "mplcurve_default_settings.json"
@@ -280,7 +290,7 @@ Examples:
     s.update(s.default_settings())
     s.write(path)
     print("Generated JSON settings into {}.".format(path))
-    
+
 
 if __name__ == '__main__':
     main()
