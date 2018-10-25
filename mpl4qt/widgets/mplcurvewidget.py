@@ -79,6 +79,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._fig_dpi = 120
         self._fig_tight_layout = False
         self._fig_auto_scale = False
+        self._fig_xscale = 'linear'
+        self._fig_yscale = 'linear'
         self._fig_mticks_toggle = False
         self._fig_grid_toggle = False
         self._legend_toggle = False
@@ -180,13 +182,29 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def setFigureMTicksToggle(self, f):
         """Toggle for the minor ticks.
 
+        Note
+        ----
+        Before toggle on, be sure the axis scale is linear.
+
         Parameters
         ----------
         f : bool
             Minor ticks on/off toggle.
         """
         self._fig_mticks_toggle = f
+
+        xscale = self.getFigureXScale()
+        yscale = self.getFigureYScale()
+        if xscale != 'linear':
+            self.setFigureXScale('linear')
+        if yscale != 'linear':
+            self.setFigureYScale('linear')
         self.toggle_mticks(f)
+        if xscale != 'linear':
+            self.setFigureXScale(xscale)
+        if yscale != 'linear':
+            self.setFigureYScale(yscale)
+
         self.update_figure()
 
     figureMTicksToggle = pyqtProperty(bool, getFigureMTicksToggle,
@@ -443,6 +461,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
         return self._line_alpha
 
     def setLineAlpha(self, x):
+        """Set line opacity, range from 0 to 1.0.
+
+        Parameters
+        ----------
+        x : float
+            Alpha value, 0 to 1.0 (defalut).
+        """
         self._line_alpha = x
         self._line.set_alpha(x)
         self.update_figure()
@@ -756,6 +781,42 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     figureAutoScale = pyqtProperty(bool, getFigureAutoScale,
                                    setFigureAutoScale)
+
+    def getFigureXScale(self):
+        return self._fig_xscale
+
+    @pyqtSlot('QString')
+    def setFigureXScale(self, s):
+        """Set x-axis scale.
+
+        Parameters
+        ----------
+        s : str
+            Scale type, 'linear', 'log', 'symlog', 'logit', etc.
+        """
+        self._fig_xscale = s
+        self.axes.set_xscale(s)
+        self.update_figure()
+
+    figureXScale = pyqtProperty('QString', getFigureXScale, setFigureXScale)
+
+    def getFigureYScale(self):
+        return self._fig_yscale
+
+    @pyqtSlot('QString')
+    def setFigureYScale(self, s):
+        """Set y-axis scale.
+
+        Parameters
+        ----------
+        s : str
+            Scale type, 'linear', 'log', 'symlog', 'logit', etc.
+        """
+        self._fig_yscale = s
+        self.axes.set_yscale(s)
+        self.update_figure()
+
+    figureYScale = pyqtProperty('QString', getFigureYScale, setFigureYScale)
 
     def getFigureTitle(self):
         return self._fig_title
