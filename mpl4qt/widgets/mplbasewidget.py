@@ -31,6 +31,8 @@ from PyQt5.QtGui import QResizeEvent
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib as mpl
+from matplotlib.ticker import AutoMinorLocator
+from matplotlib.ticker import NullLocator
 
 import numpy as np
 
@@ -150,9 +152,11 @@ class BasePlotWidget(FigureCanvas):
 
     def toggle_mticks(self, f):
         if f:
-            self.axes.minorticks_on()
+            self.axes.xaxis.set_minor_locator(AutoMinorLocator())
+            self.axes.yaxis.set_minor_locator(AutoMinorLocator())
         else:
-            self.axes.minorticks_off()
+            self.axes.xaxis.set_minor_locator(NullLocator())
+            self.axes.yaxis.set_minor_locator(NullLocator())
 
     def toggle_grid(self,
                     toggle_checked=False,
