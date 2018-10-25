@@ -59,11 +59,17 @@ class BasePlotWidget(FigureCanvas):
         self.set_context_menu()
 
         # track (x,y)
-        self.init_xy_pos_annot()
         self.figure.canvas.mpl_connect('motion_notify_event', self.on_motion)
 
         # key press
         self.figure.canvas.mpl_connect('key_press_event', self.on_key_press)
+
+        # pick
+        self.figure.canvas.mpl_connect('pick_event', self.on_pick)
+
+        # button
+        #self.figure.canvas.mpl_connect('button_press_event', self.on_press)
+        self.figure.canvas.mpl_connect('button_release_event', self.on_release)
 
         self.figure.canvas.setFocusPolicy(Qt.ClickFocus)
         self.figure.canvas.setFocus()
@@ -74,16 +80,36 @@ class BasePlotWidget(FigureCanvas):
         # window/widget/dialog handlers
         self._handlers = {}
 
+        # hvlines
+        self._hline = None
+        self._vline = None
+
+    def connect_button_press_event(self):
+        """Connect 'button_press_event'
+        """
+        self.btn_cid = self.figure.canvas.mpl_connect('button_press_event', self.on_press)
+
+    def disconnect_button_press_event(self):
+        """Disconnect 'button_press_event'
+        """
+        self.figure.canvas.mpl_disconnect(self.btn_cid)
+
     def post_style_figure(self):
         self.set_figure_color()
-
-    def init_xy_pos_annot(self):
-        pass
 
     def on_motion(self, e):
         pass
 
     def on_key_press(self, e):
+        pass
+
+    def on_pick(self, e):
+        pass
+
+    def on_press(self, e):
+        pass
+
+    def on_release(self, e):
         pass
 
     def dragEnterEvent(self, e):
