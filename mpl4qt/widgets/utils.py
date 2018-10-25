@@ -141,6 +141,13 @@ DEFAULT_LAYOUT_GRID_ON = False
 DEFAULT_LAYOUT_GRID_COLOR = "#808080"
 
 
+def cycle_list_next(vlist, current_val):
+    """Return the next element of *current_val* from *vlist*, if
+    approaching the list boundary, starts from begining.
+    """
+    return vlist[(vlist.index(current_val) + 1) % len(vlist)]
+
+
 def mplcolor2hex(c):
     """Convert matplotlib colors into hex string format.
 
