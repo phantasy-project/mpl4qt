@@ -107,7 +107,8 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
             'yerr': (self._ebmks[2:4], self._eblines[1])
         })
 
-        # set current line
+        # set current avg line and eb line
+        self.setLineID(0)
         self.setEbLineID(0)
 
     def add_curve(self, x_data=None, y_data=None, xerr_data=None, yerr_data=None, **kws):
