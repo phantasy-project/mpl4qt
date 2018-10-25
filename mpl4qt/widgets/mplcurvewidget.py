@@ -1138,6 +1138,24 @@ class MatplotlibCurveWidget(BasePlotWidget):
                 self.xy_pos_annot.set_visible(False)
         self.update_figure()
 
+    def on_press(self, e):
+        if e.inaxes is not None:
+            self.draw_hvlines(e.xdata, e.ydata)
+
+    def draw_hvlines(self, x0, y0):
+        if self._hline is None:
+            self._hline = self.axes.axhline(y0, ls='--')
+            # color
+        else:
+            self._hline.set_ydata([y0, y0])
+
+        if self._vline is None:
+            self._vline = self.axes.axvline(x0, ls='--')
+            # color
+        else:
+            self._vline.set_xdata([x0, x0])
+        self.update_figure()
+
     def on_key_press(self, e):
         if e.key == 'g':
             # turn on/off grid
