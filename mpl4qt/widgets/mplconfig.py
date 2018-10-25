@@ -18,6 +18,8 @@ from .utils import mplcolor2hex
 from .utils import MK_CODE
 from .utils import MK_SYMBOL
 from .utils import LINE_STY_DICT
+from .utils import SCALE_STY_KEYS
+from .utils import SCALE_STY_VALS
 
 
 class MatplotlibConfigPanel(QDialog, Ui_Dialog):
@@ -211,6 +213,12 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.figMkfColorChanged[QColor].connect(self.parent.setMkFaceColor)
         self.mk_facecolor_btn.clicked.connect(self.set_mfc)
 
+        # axis scale
+        self.xaxis_scale_cbb.currentIndexChanged.connect(
+                lambda i: self.parent.setFigureXScale(SCALE_STY_VALS[i]))
+        self.yaxis_scale_cbb.currentIndexChanged.connect(
+                lambda i: self.parent.setFigureYScale(SCALE_STY_VALS[i]))
+
         # sizer
         self.adjustSize()
 
@@ -245,6 +253,15 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.legend_loc_cbb.setCurrentIndex(self.parent.getLegendLocation())
         # line visible
         self.line_hide_chkbox.setChecked(not self.parent.getLineVisible())
+        # axis scale
+        self.xaxis_scale_cbb.clear()
+        self.xaxis_scale_cbb.addItems(SCALE_STY_KEYS)
+        self.xaxis_scale_cbb.setCurrentIndex(
+                SCALE_STY_VALS.index(self.parent.getFigureXScale()))
+        self.yaxis_scale_cbb.clear()
+        self.yaxis_scale_cbb.addItems(SCALE_STY_KEYS)
+        self.yaxis_scale_cbb.setCurrentIndex(
+                SCALE_STY_VALS.index(self.parent.getFigureYScale()))
 
     def set_xylimits(self, xlim=None, ylim=None):
         """Set xy limits.
