@@ -72,6 +72,9 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     # legend
     figLegendToggleChanged = pyqtSignal(bool)
 
+    # color opacity
+    figLineAlphaChanged = pyqtSignal(float)
+
     def __init__(self, parent=None):
         super(MatplotlibConfigPanel, self).__init__()
         self.parent = parent
@@ -113,6 +116,10 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.ymax_lineEdit.textChanged.connect(self.set_ylimit_max)
         # line visible
         self.line_hide_chkbox.stateChanged.connect(self.set_line_visible)
+        # opacity
+        self.opacity_val_slider.valueChanged.connect(
+                lambda i: self.opacity_val_lbl.setText('{}%'.format(i)))
+        self.opacity_val_slider.valueChanged.connect(self.set_line_opacity)
 
         # link to main mpl widget
         self.bgcolorChanged[QColor].connect(self.set_bgcolor_label)
@@ -128,6 +135,9 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.figYminLimitChanged[float].connect(self.parent.setYLimitMin)
         self.figYmaxLimitChanged[float].connect(self.parent.setYLimitMax)
         self.figLineVisibleChanged[bool].connect(self.parent.setLineVisible)
+
+        # line opacity
+        self.figLineAlphaChanged[float].connect(self.parent.setLineAlpha)
 
         ## xy label
         self.figXYlabelFontChanged[QFont].connect(
@@ -275,6 +285,14 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.line_label_lineEdit.setText('{}'.format(config['label']))
         # line visible
         self.line_hide_chkbox.setChecked(not config['visible'])
+        # opacity: alpha = opacity / 100
+        alpha = config['alpha']
+        opacity = 100 if alpha is None else alpha*100
+        self.opacity_val_slider.setValue(opacity)
+
+    @pyqtSlot(int)
+    def set_line_opacity(self, i):
+        self.figLineAlphaChanged.emit(i/100.0)
 
     @pyqtSlot('QString')
     def set_line_width(self, s):
