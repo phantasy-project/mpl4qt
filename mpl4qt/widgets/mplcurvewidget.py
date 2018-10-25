@@ -102,9 +102,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         # line_id
         self._line_id = 0
         self._line_visible = True
-        self._lines = self.get_all_curves()  # all lines
         self._line_ids = range(self._lines.__len__())
-        self._line = self._lines[0]  # current selected line
         self._line_color = QColor('red')
         self._line_width = 1.5
         self._mec, self._mfc = QColor('red'), QColor('red')
@@ -126,21 +124,25 @@ class MatplotlibCurveWidget(BasePlotWidget):
             Array of y data.
         """
         if x_data is None or y_data is None:
-            self.axes.plot([], [], **kws)
+            l, = self.axes.plot([], [], **kws)
         else:
-            self.axes.plot(x_data, y_data, **kws)
+            l, = self.axes.plot(x_data, y_data, **kws)
+        self._lines.append(l)
         self.update_legend()
         self.update_figure()
 
     def get_all_curves(self):
         """Return all curves."""
-        return self.axes.lines
+        return self._lines
 
     def init_figure(self):
         # initial xy data and line
         self._x_data = x = np.linspace(-4, 4, 100)
         self._y_data = y = np.sin(10 * x) / x
         self._lines = self.axes.plot(x, y, 'r-')
+
+        # set current line
+        self.setLineID(0)
 
     def sizeHint(self):
         return QSize(1.1 * self._fig_width * self._fig_dpi,
@@ -1106,37 +1108,10 @@ class MatplotlibCurveWidget(BasePlotWidget):
         # update legend if on
         self.setLegendToggle(self._legend_toggle)
 
-    def init_xy_pos_annot(self):
-        # (x, y) pos label
-        self.xy_pos_annot = self.axes.annotate("",
-                                xy=(0,0),
-                                xytext=(0,0),
-                                xycoords="data",
-                                textcoords="offset pixels",
-                                bbox=dict(boxstyle="round", fc="w"),
-                            )
-        self.xy_pos_annot.get_bbox_patch().set_alpha(0.5)
-        self.xy_pos_annot.set_visible(False)
-
     def on_motion(self, event):
         if event.inaxes is not None:
             x_pos, y_pos = event.xdata, event.ydata
             self.xyposUpdated.emit(x_pos, y_pos)
-        return
-        vis = self.xy_pos_annot.get_visible()
-        if event.inaxes is not None:
-            x, y = event.x, event.y
-            x_pos, y_pos = event.xdata, event.ydata
-            text = "({0:<.4f}, {1:<.4f})".format(x_pos, y_pos)
-
-            self.xy_pos_annot.xy = (x_pos, y_pos)
-            self.xy_pos_annot.xyann = (x_pos, y_pos)
-            self.xy_pos_annot.set_text(text)
-            self.xy_pos_annot.set_visible(True)
-        else:
-            if vis:
-                self.xy_pos_annot.set_visible(False)
-        self.update_figure()
 
     def on_press(self, e):
         if e.inaxes is not None:
