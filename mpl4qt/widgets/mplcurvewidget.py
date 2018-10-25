@@ -1119,13 +1119,19 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     def draw_hvlines(self, x0, y0):
         if self._hline is None:
-            self._hline = self.axes.axhline(y0, ls='--')
+            self._hline = self.axes.axhline(y0,
+                    alpha=0.8, color='b', ls='--')
+            self._hline.set_label('H-Ruler')
+            self._lines.append(self._hline)
             # color
         else:
             self._hline.set_ydata([y0, y0])
 
         if self._vline is None:
-            self._vline = self.axes.axvline(x0, ls='--')
+            self._vline = self.axes.axvline(x0,
+                    alpha=0.8, color='b', ls='--')
+            self._vline.set_label('V-Ruler')
+            self._lines.append(self._vline)
             # color
         else:
             self._vline.set_xdata([x0, x0])
