@@ -51,6 +51,8 @@ from mpl4qt.widgets.mpltoolbar import MToolbar
 from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
 from mpl4qt.widgets.utils import mplcolor2hex
 from mpl4qt.widgets.utils import DEFAULT_MPL_SETTINGS
+from mpl4qt.widgets.utils import SCALE_STY_VALS
+from mpl4qt.widgets.utils import cycle_list_next
 from mpl4qt.icons import config_icon
 from mpl4qt.icons import reset_icon
 from mpl4qt.icons import import_icon
@@ -1247,6 +1249,10 @@ class MatplotlibCurveWidget(BasePlotWidget):
             self.force_update()
             self.update_figure()
             self.resize_figure()
+        elif e.key == 's':
+            # circulate y-axis scale type
+            self.setFigureYScale(
+                cycle_list_next(SCALE_STY_VALS, self.getFigureYScale()))
         elif e.key == '?':
             # help msgbox
             self.kbd_help()
