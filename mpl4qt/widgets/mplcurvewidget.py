@@ -104,6 +104,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._line_visible = True
         self._line_ids = range(self._lines.__len__())
         self._line_color = QColor('red')
+        self._line_alpha = 1.0
         self._line_width = 1.5
         self._mec, self._mfc = QColor('red'), QColor('red')
         self._mew = 1.0
@@ -438,6 +439,16 @@ class MatplotlibCurveWidget(BasePlotWidget):
     figureXYticksColor = pyqtProperty(QColor, getFigureXYticksColor,
                                       setFigureXYticksColor)
 
+    def getLineAlpha(self):
+        return self._line_alpha
+
+    def setLineAlpha(self, x):
+        self._line_alpha = x
+        self._line.set_alpha(x)
+        self.update_figure()
+
+    figureLineAlpha = pyqtProperty(float, getLineAlpha, setLineAlpha)
+
     def getLineColor(self):
         return self._line_color
 
@@ -644,14 +655,15 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     def get_line_config(self, line=None):
         """Get line config for *ls*, *lw*, *c*, *marker*, *ms*, *mew*,
-        *mec*, *mfc*, *label*, *visible*.
+        *mec*, *mfc*, *label*, *visible*, *alpha*.
         """
         line = self._line if line is None else line
-        return {
+        lconf = {
             p: getattr(line, 'get_' + p)()
             for p in ('ls', 'lw', 'c', 'ms', 'mew', 'mec', 'mfc', 'marker',
-                      'label', 'visible')
+                      'label', 'visible', 'alpha')
         }
+        return lconf
 
     def get_mpl_settings(self):
         """Return all the settings for the current figure.
