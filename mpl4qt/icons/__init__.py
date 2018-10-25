@@ -12,4 +12,5 @@ from ._exit import icon as exit_tool_icon
 from ._save import icon as save_tool_icon
 from ._lasso import icon as lasso_tool_icon
 from ._repos import icon as repos_tool_icon
+from ._cross import icon as cross_tool_icon
 from ._tools import icon as tools_icon
