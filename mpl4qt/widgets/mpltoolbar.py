@@ -48,6 +48,15 @@ class MToolbarWidget(QWidget):
 
 
 class MToolbar(QToolBar):
+    """Toolbar for mpl widgets.
+
+    Parameters
+    ----------
+    canvas :
+        Canvas for drawing.
+    parent :
+        Mpl figure widget.
+    """
 
     # indices list of points selected by lasso tool
     selectedIndicesUpdated = pyqtSignal(QVariant, QVariant)
@@ -100,12 +109,12 @@ class MToolbar(QToolBar):
         lasso_act = QAction(QIcon(QPixmap(lasso_tool_icon)), "Selector", self)
         self.lasso_act = lasso_act
         lasso_act.setCheckable(True)
-        lasso_act.setToolTip("Select point(s) by lasso")
+        lasso_act.setToolTip("Select point(s) by lassoing")
 
         # cross ruler tool
         cross_act = QAction(QIcon(QPixmap(cross_tool_icon)), "Cross ruler", self)
         cross_act.setCheckable(True)
-        cross_act.setToolTip("Ruler")
+        cross_act.setToolTip("Cross ruler for locating coordinate")
 
         # exit tool
         exit_act = QAction(QIcon(QPixmap(exit_tool_icon)), "Exit", self)
@@ -148,6 +157,7 @@ class MToolbar(QToolBar):
 
     @pyqtSlot()
     def cross_ruler(self):
+        # parent widget defines how to draw cross ruler.
         if self.sender().isChecked():
             self.parent.connect_button_press_event()
         else:
