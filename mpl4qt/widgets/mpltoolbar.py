@@ -20,6 +20,7 @@ from mpl4qt.icons import zoom_tool_icon
 from mpl4qt.icons import save_tool_icon
 from mpl4qt.icons import lasso_tool_icon
 from mpl4qt.icons import repos_tool_icon
+from mpl4qt.icons import cross_tool_icon
 
 
 class NavigationToolbar(Toolbar):
@@ -101,6 +102,11 @@ class MToolbar(QToolBar):
         lasso_act.setCheckable(True)
         lasso_act.setToolTip("Select point(s) by lasso")
 
+        # cross ruler tool
+        cross_act = QAction(QIcon(QPixmap(cross_tool_icon)), "Cross ruler", self)
+        cross_act.setCheckable(True)
+        cross_act.setToolTip("Ruler")
+
         # exit tool
         exit_act = QAction(QIcon(QPixmap(exit_tool_icon)), "Exit", self)
         exit_act.setToolTip("Exit toolbar")
@@ -124,6 +130,7 @@ class MToolbar(QToolBar):
         self.addAction(home_act)
         self.addAction(zoom_act)
         self.addAction(lasso_act)
+        self.addAction(cross_act)
         self.addAction(save_act)
         self.addWidget(self.pos_lbl)
         self.addSeparator()
@@ -134,9 +141,17 @@ class MToolbar(QToolBar):
         home_act.triggered.connect(self.home)
         zoom_act.toggled.connect(self.zoom)
         lasso_act.toggled.connect(self.lasso)
+        cross_act.toggled.connect(self.cross_ruler)
         save_act.triggered.connect(self.save)
         repos_act.triggered.connect(self.repos_toolbar)
         exit_act.triggered.connect(self.close)
+
+    @pyqtSlot()
+    def cross_ruler(self):
+        if self.sender().isChecked():
+            self.parent.connect_button_press_event()
+        else:
+            self.parent.disconnect_button_press_event()
 
     @pyqtSlot()
     def repos_toolbar(self):
