@@ -4,6 +4,7 @@ import matplotlib.colors as colors
 from collections import OrderedDict
 import json
 from copy import deepcopy
+import re
 
 try:
     basestring
@@ -139,6 +140,27 @@ DEFAULT_MTICKS_COLOR = "#AA00FF"
 DEFAULT_LAYOUT_TIGHT_ON = False
 DEFAULT_LAYOUT_GRID_ON = False
 DEFAULT_LAYOUT_GRID_COLOR = "#808080"
+
+def pyformat_from_cformat(s, math_text=False):
+    """Convert string format specifier from C style to Python style,
+    which could be used by `str.format()` function.
+    """
+    islog = False
+    r = re.match('(.*)%(.*)', s)
+    if r is None:
+        return None, None
+    prefix, specifier = r.group(1), r.group(2)
+    if 'n' in specifier: # log scale
+        islog = True
+        if prefix != '':
+            fmt = prefix + '{{{:' + 'd' + '}}}'
+        else:
+            fmt = '{:' + 'd' + '}'
+    else:
+        fmt = prefix + '{:' + specifier + '}'
+    if math_text:
+        fmt = '${}$'.format(fmt)
+    return fmt, islog
 
 
 def cycle_list_next(vlist, current_val):
