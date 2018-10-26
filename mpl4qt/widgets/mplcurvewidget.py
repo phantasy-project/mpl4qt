@@ -1108,9 +1108,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.selectedIndicesUpdated.emit(ind, pts)
 
     def on_config(self):
-        config_panel = self._handlers.setdefault('mplconfig',
-                MatplotlibConfigPanel(self))
-        config_panel.show()
+        config_panel = MatplotlibConfigPanel(self)
+        config_panel.exec_()
 
     def on_export_config(self):
         filepath, _ = QFileDialog.getSaveFileName(self,

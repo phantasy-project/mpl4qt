@@ -144,7 +144,7 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
 
     def on_config(self):
         config_panel = MatplotlibConfigErrorbarPanel(self)
-        r = config_panel.exec_()
+        config_panel.exec_()
 
     def get_all_curves(self):
         return self._lines
