@@ -175,12 +175,18 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         # tick formatter
         self.xtick_formatter_cbb.currentTextChanged['QString'].connect(self.on_tickformatter_changed)
         self.ytick_formatter_cbb.currentTextChanged['QString'].connect(self.on_tickformatter_changed)
-        self.xtick_funcformatter_lineEdit.returnPressed.connect(self.on_set_funcformatter)
-        self.ytick_funcformatter_lineEdit.returnPressed.connect(self.on_set_funcformatter)
+        self.xtick_funcformatter_lineEdit.returnPressed.connect(
+                lambda: self.on_set_funcformatter(self.xtick_funcformatter_lineEdit.text(),
+                                                  set_xticks=True))
+        self.ytick_funcformatter_lineEdit.returnPressed.connect(
+                lambda: self.on_set_funcformatter(self.ytick_funcformatter_lineEdit.text(),
+                                                  set_yticks=True))
         self.figXTickFormatChanged['QString', QVariant].connect(
                 self.parent.setXTickFormat)
         self.figYTickFormatChanged['QString', QVariant].connect(
                 self.parent.setYTickFormat)
+        # enable math text or not
+        self.enable_mathtext_chkbox.toggled.connect(self.on_set_funcformatter)
 
         # grid
         self.figGridChanged[bool].connect(lambda x: self.parent.setFigureGridToggle(x, mticks=self.mticks_chkbox.isChecked()))
@@ -289,10 +295,12 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.ytick_formatter_cbb.setCurrentText('Auto')
 
     @pyqtSlot()
-    def on_set_funcformatter(self):
-        obj = self.sender()
-        fmt = obj.text()
-        pyfmt, islog = pyformat_from_cformat(fmt)
+    def on_set_funcformatter(self, text, set_xticks=False, set_yticks=False):
+        """*text* is the current input string in x or y
+        tick_funcformatter_lineEdit. If *set_xticks* is True, set xtick
+        formatter, the same applies to *set_yticks*.
+        """
+        pyfmt, islog = pyformat_from_cformat(text)
         if pyfmt is None:
             return
         if islog:
@@ -305,12 +313,13 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
                     return ''
         else:
             f = lambda v, _: pyfmt.format(v)
+
         formatter = FuncFormatter(f)
-        if obj.objectName() == 'xtick_funcformatter_lineEdit':
+        if set_xticks:
             self.figXTickFormatChanged.emit(
                     self.xtick_formatter_cbb.currentText(),
                     formatter)
-        else:
+        if set_yticks:
             self.figYTickFormatChanged.emit(
                     self.ytick_formatter_cbb.currentText(),
                     formatter)
@@ -329,8 +338,14 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         elif s == 'Custom':
             if oname == 'xtick_formatter_cbb':
                 self.xtick_funcformatter_lineEdit.setEnabled(True)
+                text = self.xtick_funcformatter_lineEdit.text()
+                if text:
+                    self.on_set_funcformatter(text, set_xticks=True)
             elif oname == 'ytick_formatter_cbb':
                 self.ytick_funcformatter_lineEdit.setEnabled(True)
+                text = self.ytick_funcformatter_lineEdit.text()
+                if text:
+                    self.on_set_funcformatter(text, set_yticks=True)
 
     def set_xylimits(self, xlim=None, ylim=None):
         """Set xy limits.
