@@ -98,6 +98,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._fig_xylabel_font = self.sys_label_font
         self._fig_xyticks_font = self.sys_label_font
         self._fig_title_font = self.sys_title_font
+        self._fig_xtick_formatter_type = 'Auto'
+        self._fig_xtick_formatter = None  # placeholder only
         # x,y limits
         self.setXLimitMin()
         self.setXLimitMax()
@@ -401,6 +403,45 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     figureXYticksFont = pyqtProperty(QFont, getFigureXYticksFont,
                                      setFigureXYticksFont)
+
+    def getXTickFormat(self):
+        return self._fig_xtick_formatter_type, self._fig_xtick_formatter
+
+    @pyqtSlot('QString', QVariant)
+    def setXTickFormat(self, ftype, formatter):
+        """Set x-axis ticks formatter.
+
+        Parameters
+        ----------
+        ftype : str
+            Type of formatter, 'Auto' or 'Custom'.
+        formatter :
+            FuncFormatter object.
+        """
+        self._fig_xtick_formatter_type = ftype
+        self._fig_xtick_formatter = formatter
+        self.axes.xaxis.set_major_formatter(formatter)
+        self.update_figure()
+
+    def getYTickFormat(self):
+        return self._fig_ytick_formatter_type, self._fig_ytick_formatter
+
+    @pyqtSlot('QString', QVariant)
+    def setYTickFormat(self, ftype, formatter):
+        """Set y-axis ticks formatter.
+
+        Parameters
+        ----------
+        ftype : str
+            Type of formatter, 'Auto' or 'Custom'.
+        formatter :
+            FuncFormatter object.
+        """
+        self._fig_ytick_formatter_type = ftype
+        self._fig_ytick_formatter = formatter
+        self.axes.yaxis.set_major_formatter(formatter)
+        self.update_figure()
+
 
     def getFigureTitleFont(self):
         return self._fig_title_font
@@ -1067,8 +1108,9 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.selectedIndicesUpdated.emit(ind, pts)
 
     def on_config(self):
-        config_panel = MatplotlibConfigPanel(self)
-        r = config_panel.exec_()
+        config_panel = self._handlers.setdefault('mplconfig',
+                MatplotlibConfigPanel(self))
+        config_panel.show()
 
     def on_export_config(self):
         filepath, _ = QFileDialog.getSaveFileName(self,
