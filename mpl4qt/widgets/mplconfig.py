@@ -2,12 +2,16 @@
 # -*- coding: utf-8 -*-
 """Configuration widget for matplotlib.
 """
+from math import log10
+
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtWidgets import QColorDialog
 from PyQt5.QtWidgets import QFontDialog
+from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QVariant
 from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QFont
 from PyQt5.QtGui import QIntValidator
@@ -20,6 +24,10 @@ from .utils import MK_SYMBOL
 from .utils import LINE_STY_DICT
 from .utils import SCALE_STY_KEYS
 from .utils import SCALE_STY_VALS
+from .utils import pyformat_from_cformat
+from matplotlib.ticker import FuncFormatter
+
+AUTOFORMATTER = FuncFormatter(lambda v,_:'{:g}'.format(v))
 
 
 class MatplotlibConfigPanel(QDialog, Ui_Dialog):
@@ -45,6 +53,9 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     figXYticksFontChanged = pyqtSignal(QFont)
     figXYticksColorChanged = pyqtSignal(QColor)
     figMTicksChanged = pyqtSignal(bool)
+    # tick format, 'Auto/Custom', formatter
+    figXTickFormatChanged = pyqtSignal('QString', QVariant)
+    figYTickFormatChanged = pyqtSignal('QString', QVariant)
 
     # grid
     figGridChanged = pyqtSignal(bool)
@@ -161,6 +172,16 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.mticks_chkbox.stateChanged.connect(self.set_fig_mticks)
         self.figMTicksChanged[bool].connect(self.parent.setFigureMTicksToggle)
 
+        # tick formatter
+        self.xtick_formatter_cbb.currentTextChanged['QString'].connect(self.on_tickformatter_changed)
+        self.ytick_formatter_cbb.currentTextChanged['QString'].connect(self.on_tickformatter_changed)
+        self.xtick_funcformatter_lineEdit.returnPressed.connect(self.on_set_funcformatter)
+        self.ytick_funcformatter_lineEdit.returnPressed.connect(self.on_set_funcformatter)
+        self.figXTickFormatChanged['QString', QVariant].connect(
+                self.parent.setXTickFormat)
+        self.figYTickFormatChanged['QString', QVariant].connect(
+                self.parent.setYTickFormat)
+
         # grid
         self.figGridChanged[bool].connect(lambda x: self.parent.setFigureGridToggle(x, mticks=self.mticks_chkbox.isChecked()))
         self.figGridColorChanged[QColor].connect(lambda x: self.parent.setFigureGridColor(x, mticks=self.mticks_chkbox.isChecked(), toggle_checked=self.gridon_chkbox.isChecked()))
@@ -262,6 +283,54 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.yaxis_scale_cbb.addItems(SCALE_STY_KEYS)
         self.yaxis_scale_cbb.setCurrentIndex(
                 SCALE_STY_VALS.index(self.parent.getFigureYScale()))
+
+        # tick formatter
+        self.xtick_formatter_cbb.setCurrentText('Auto')
+        self.ytick_formatter_cbb.setCurrentText('Auto')
+
+    @pyqtSlot()
+    def on_set_funcformatter(self):
+        obj = self.sender()
+        fmt = obj.text()
+        pyfmt, islog = pyformat_from_cformat(fmt)
+        if pyfmt is None:
+            return
+        if islog:
+            def f(v, l):
+                try:
+                    return pyfmt.format(int(log10(v)))
+                except:
+                    # toggle autoscale,
+                    # change axis-scale to log
+                    return ''
+        else:
+            f = lambda v, _: pyfmt.format(v)
+        formatter = FuncFormatter(f)
+        if obj.objectName() == 'xtick_funcformatter_lineEdit':
+            self.figXTickFormatChanged.emit(
+                    self.xtick_formatter_cbb.currentText(),
+                    formatter)
+        else:
+            self.figYTickFormatChanged.emit(
+                    self.ytick_formatter_cbb.currentText(),
+                    formatter)
+
+    @pyqtSlot('QString')
+    def on_tickformatter_changed(self, s):
+        obj = self.sender()
+        oname = obj.objectName()
+        if s == 'Auto':
+            if oname == 'xtick_formatter_cbb':
+                self.xtick_funcformatter_lineEdit.setEnabled(False)
+                self.figXTickFormatChanged.emit('Auto', AUTOFORMATTER)
+            elif oname == 'ytick_formatter_cbb':
+                self.ytick_funcformatter_lineEdit.setEnabled(False)
+                self.figYTickFormatChanged.emit('Auto', AUTOFORMATTER)
+        elif s == 'Custom':
+            if oname == 'xtick_formatter_cbb':
+                self.xtick_funcformatter_lineEdit.setEnabled(True)
+            elif oname == 'ytick_formatter_cbb':
+                self.ytick_funcformatter_lineEdit.setEnabled(True)
 
     def set_xylimits(self, xlim=None, ylim=None):
         """Set xy limits.
