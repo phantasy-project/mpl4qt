@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import matplotlib.colors as colors
+from matplotlib.ticker import FuncFormatter
 from collections import OrderedDict
 import json
 from copy import deepcopy
 import re
+from math import log10
 
 try:
     basestring
@@ -141,6 +143,11 @@ DEFAULT_LAYOUT_TIGHT_ON = False
 DEFAULT_LAYOUT_GRID_ON = False
 DEFAULT_LAYOUT_GRID_COLOR = "#808080"
 
+
+AUTOFORMATTER = FuncFormatter(lambda v,_:'{:g}'.format(v))
+AUTOFORMATTER_MATHTEXT = FuncFormatter(lambda v,_:'${:g}$'.format(v))
+
+
 def pyformat_from_cformat(s, math_text=False):
     """Convert string format specifier from C style to Python style,
     which could be used by `str.format()` function.
@@ -161,6 +168,26 @@ def pyformat_from_cformat(s, math_text=False):
     if math_text:
         fmt = '${}$'.format(fmt)
     return fmt, islog
+
+
+def generate_formatter(cfmt, math_text=False):
+    """Return function formatter from c string format *cfmt*,
+    if *math_text* is True, support latex math display.
+    """
+    pyfmt, islog = pyformat_from_cformat(cfmt, math_text=math_text)
+    if pyfmt is None:
+        return None
+    if islog:
+        def f(v, l):
+            try:
+                return pyfmt.format(int(log10(v)))
+            except:
+                # toggle autoscale,
+                # change axis-scale to log
+                return ''
+    else:
+        f = lambda v, _: pyfmt.format(v)
+    return FuncFormatter(f)
 
 
 def cycle_list_next(vlist, current_val):
