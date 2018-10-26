@@ -1230,7 +1230,7 @@ class Ui_Dialog(object):
         self.horizontalLayout_4.addWidget(self.config_tabWidget)
 
         self.retranslateUi(Dialog)
-        self.config_tabWidget.setCurrentIndex(3)
+        self.config_tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
@@ -1372,13 +1372,32 @@ class Ui_Dialog(object):
         self.ticks_color_label.setText(_translate("Dialog", "#FFFFFF"))
         self.ticks_color_btn.setText(_translate("Dialog", "Pick Color"))
         self.label_37.setText(_translate("Dialog", "Tick Format"))
+        self.enable_mathtext_chkbox.setToolTip(
+            _translate(
+                "Dialog",
+                "<html><head/><body><p>Show ticks as math style</p></body></html>"
+            ))
         self.enable_mathtext_chkbox.setText(_translate("Dialog", "Math Text"))
         self.label_38.setText(_translate("Dialog", "X"))
         self.xtick_formatter_cbb.setItemText(0, _translate("Dialog", "Auto"))
         self.xtick_formatter_cbb.setItemText(1, _translate("Dialog", "Custom"))
+        self.xtick_funcformatter_lineEdit.setToolTip(
+            _translate(
+                "Dialog",
+                "<html><head/><body><p>Input c string format specifier, e.g. %1d, %.2f, %.2e, 10^%n, etc.</p></body></html>"
+            ))
+        self.xtick_funcformatter_lineEdit.setPlaceholderText(
+            _translate("Dialog", "%.2f"))
         self.label_39.setText(_translate("Dialog", "Y"))
         self.ytick_formatter_cbb.setItemText(0, _translate("Dialog", "Auto"))
         self.ytick_formatter_cbb.setItemText(1, _translate("Dialog", "Custom"))
+        self.ytick_funcformatter_lineEdit.setToolTip(
+            _translate(
+                "Dialog",
+                "<html><head/><body><p>Input c string format specifier, e.g. %1d, %.2f, %.3e, 10^%n, etc.</p></body></html>"
+            ))
+        self.ytick_funcformatter_lineEdit.setPlaceholderText(
+            _translate("Dialog", "%.2f"))
         self.label_6.setText(_translate("Dialog", "Layout"))
         self.tightLayout_chkbox.setText(_translate("Dialog", "Tight"))
         self.gridon_chkbox.setText(_translate("Dialog", "Grid On"))
