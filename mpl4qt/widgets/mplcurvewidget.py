@@ -53,6 +53,9 @@ from mpl4qt.widgets.utils import mplcolor2hex
 from mpl4qt.widgets.utils import DEFAULT_MPL_SETTINGS
 from mpl4qt.widgets.utils import SCALE_STY_VALS
 from mpl4qt.widgets.utils import cycle_list_next
+from mpl4qt.widgets.utils import AUTOFORMATTER_MATHTEXT
+from mpl4qt.widgets.utils import AUTOFORMATTER
+from mpl4qt.widgets.utils import generate_formatter
 from mpl4qt.icons import config_icon
 from mpl4qt.icons import reset_icon
 from mpl4qt.icons import import_icon
@@ -100,6 +103,11 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._fig_title_font = self.sys_title_font
         self._fig_xtick_formatter_type = 'Auto'
         self._fig_xtick_formatter = None  # placeholder only
+        self._fig_xtick_cfmt = '' # c string format for FuncFormatter
+        self._fig_ytick_formatter_type = 'Auto'
+        self._fig_ytick_formatter = None  # placeholder only
+        self._fig_ytick_cfmt = '' # c string format for FuncFormatter
+        self._fig_ticks_enable_mathtext = False # use math text or not
         # x,y limits
         self.setXLimitMin()
         self.setXLimitMax()
@@ -404,44 +412,87 @@ class MatplotlibCurveWidget(BasePlotWidget):
     figureXYticksFont = pyqtProperty(QFont, getFigureXYticksFont,
                                      setFigureXYticksFont)
 
-    def getXTickFormat(self):
-        return self._fig_xtick_formatter_type, self._fig_xtick_formatter
+    @pyqtSlot('QString', 'QString')
+    def setXTickFormat(self, ftype, cfmt):
+        if ftype == 'Auto':
+            self._setXTickAutoFormat(ftype)
+        elif ftype == 'Custom':
+            self._setXTickCustomFormat(ftype, cfmt)
 
-    @pyqtSlot('QString', QVariant)
-    def setXTickFormat(self, ftype, formatter):
-        """Set x-axis ticks formatter.
+    def _setXTickAutoFormat(self, ftype):
+        """Set x-axis ticks formatter with Auto style.
 
         Parameters
         ----------
         ftype : str
-            Type of formatter, 'Auto' or 'Custom'.
-        formatter :
-            FuncFormatter object.
+            Type of formatter, 'Auto'.
         """
         self._fig_xtick_formatter_type = ftype
+        if self._fig_ticks_enable_mathtext:
+            formatter = AUTOFORMATTER_MATHTEXT
+        else:
+            formatter = AUTOFORMATTER
         self._fig_xtick_formatter = formatter
         self.axes.xaxis.set_major_formatter(formatter)
         self.update_figure()
 
-    def getYTickFormat(self):
-        return self._fig_ytick_formatter_type, self._fig_ytick_formatter
-
-    @pyqtSlot('QString', QVariant)
-    def setYTickFormat(self, ftype, formatter):
-        """Set y-axis ticks formatter.
+    def _setXTickCustomFormat(self, ftype, cfmt):
+        """Set x-axis ticks formatter with custom style.
 
         Parameters
         ----------
         ftype : str
-            Type of formatter, 'Auto' or 'Custom'.
-        formatter :
-            FuncFormatter object.
+            Type of formatter, 'Custom'.
+        cfmt : str
+            C style string specifier.
+        """
+        self._fig_xtick_formatter_type = ftype
+        self._fig_xtick_cfmt = cfmt
+        formatter = generate_formatter(cfmt, math_text=self._fig_ticks_enable_mathtext)
+        self._fig_xtick_formatter = formatter
+        self.axes.xaxis.set_major_formatter(formatter)
+        self.update_figure()
+
+    @pyqtSlot('QString', 'QString')
+    def setYTickFormat(self, ftype, cfmt):
+        if ftype == 'Auto':
+            self._setYTickAutoFormat(ftype)
+        elif ftype == 'Custom':
+            self._setYTickCustomFormat(ftype, cfmt)
+
+    def _setYTickAutoFormat(self, ftype):
+        """Set y-axis ticks formatter with Auto style.
+
+        Parameters
+        ----------
+        ftype : str
+            Type of formatter, 'Auto'.
         """
         self._fig_ytick_formatter_type = ftype
+        if self._fig_ticks_enable_mathtext:
+            formatter = AUTOFORMATTER_MATHTEXT
+        else:
+            formatter = AUTOFORMATTER
         self._fig_ytick_formatter = formatter
         self.axes.yaxis.set_major_formatter(formatter)
         self.update_figure()
 
+    def _setYTickCustomFormat(self, ftype, cfmt):
+        """Set y-axis ticks formatter with custom style.
+
+        Parameters
+        ----------
+        ftype : str
+            Type of formatter, 'Custom'.
+        cfmt : str
+            C style string specifier.
+        """
+        self._fig_ytick_formatter_type = ftype
+        self._fig_ytick_cfmt = cfmt
+        formatter = generate_formatter(cfmt, math_text=self._fig_ticks_enable_mathtext)
+        self._fig_ytick_formatter = formatter
+        self.axes.yaxis.set_major_formatter(formatter)
+        self.update_figure()
 
     def getFigureTitleFont(self):
         return self._fig_title_font

@@ -51,8 +51,8 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     figXYticksColorChanged = pyqtSignal(QColor)
     figMTicksChanged = pyqtSignal(bool)
     # tick format, 'Auto/Custom', formatter
-    figXTickFormatChanged = pyqtSignal('QString', QVariant)
-    figYTickFormatChanged = pyqtSignal('QString', QVariant)
+    figXTickFormatChanged = pyqtSignal('QString', 'QString')
+    figYTickFormatChanged = pyqtSignal('QString', 'QString')
 
     # grid
     figGridChanged = pyqtSignal(bool)
@@ -178,13 +178,10 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.ytick_funcformatter_lineEdit.returnPressed.connect(
                 lambda: self.on_set_funcformatter(self.ytick_funcformatter_lineEdit.text(),
                                                   set_yticks=True))
-        self.figXTickFormatChanged['QString', QVariant].connect(
-                self.parent.setXTickFormat)
-        self.figYTickFormatChanged['QString', QVariant].connect(
-                self.parent.setYTickFormat)
+        self.figXTickFormatChanged['QString', 'QString'].connect(self.parent.setXTickFormat)
+        self.figYTickFormatChanged['QString', 'QString'].connect(self.parent.setYTickFormat)
         # enable math text or not
-        self.enable_mathtext_chkbox.toggled.connect(
-                self.on_set_funcformatter_with_mathtext)
+        self.enable_mathtext_chkbox.toggled.connect(self.on_enable_ticks_mathtext)
 
         # grid
         self.figGridChanged[bool].connect(lambda x: self.parent.setFigureGridToggle(x, mticks=self.mticks_chkbox.isChecked()))
@@ -288,9 +285,21 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.yaxis_scale_cbb.setCurrentIndex(
                 SCALE_STY_VALS.index(self.parent.getFigureYScale()))
 
+        self.__set_cfmt()
         # tick formatter
-        self.xtick_formatter_cbb.setCurrentText('Auto')
-        self.ytick_formatter_cbb.setCurrentText('Auto')
+        self.xtick_formatter_cbb.setCurrentText(self.parent._fig_xtick_formatter_type)
+        self.ytick_formatter_cbb.setCurrentText(self.parent._fig_ytick_formatter_type)
+        # apply math text to ticks indicator
+        self.enable_mathtext_chkbox.setChecked(self.parent._fig_ticks_enable_mathtext)
+
+    def __set_cfmt(self):
+        # set cfmt for ticks custom formatter
+        x_cfmt = self.parent._fig_xtick_cfmt
+        y_cfmt = self.parent._fig_ytick_cfmt
+        if x_cfmt != '':
+            self.xtick_funcformatter_lineEdit.setText(x_cfmt)
+        if y_cfmt != '':
+            self.ytick_funcformatter_lineEdit.setText(y_cfmt)
 
     @pyqtSlot()
     def on_set_funcformatter(self, text, set_xticks=False, set_yticks=False):
@@ -298,82 +307,47 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         tick_funcformatter_lineEdit. If *set_xticks* is True, set xtick
         formatter, the same applies to *set_yticks*.
         """
-        math_text_is_enabled = self.enable_mathtext_chkbox.isChecked()
-        if math_text_is_enabled:
-            self.on_set_funcformatter_with_mathtext(True)
-        else:
-            formatter = generate_formatter(text)
-            if set_xticks:
-                self.figXTickFormatChanged.emit(
-                        self.xtick_formatter_cbb.currentText(),
-                        formatter)
-            if set_yticks:
-                self.figYTickFormatChanged.emit(
-                        self.ytick_formatter_cbb.currentText(),
-                        formatter)
+        if text == '':
+            QMessageBox.warning(self, "", "Empty input is not valid.", QMessageBox.Ok)
+            self.sender().setText("%g")
+            return
+        if set_xticks:
+            self.parent._fig_xtick_cfmt = text
+            self.figXTickFormatChanged.emit('Custom', text)
+        if set_yticks:
+            self.parent._fig_ytick_cfmt = text
+            self.figYTickFormatChanged.emit('Custom', text)
 
     @pyqtSlot(bool)
-    def on_set_funcformatter_with_mathtext(self, ischecked):
-        if ischecked:  # enable_mathtext_chkbox is checked
-            if self.xtick_funcformatter_lineEdit.isEnabled():
-                text = self.xtick_funcformatter_lineEdit.text()
-                formatter = generate_formatter(text, math_text=True)
-                self.figXTickFormatChanged.emit(
-                        self.xtick_formatter_cbb.currentText(),
-                        formatter)
-            else:
-                self.figXTickFormatChanged.emit('Auto', AUTOFORMATTER_MATHTEXT)
-
-            if self.ytick_funcformatter_lineEdit.isEnabled():
-                text = self.ytick_funcformatter_lineEdit.text()
-                formatter = generate_formatter(text, math_text=True)
-                self.figYTickFormatChanged.emit(
-                        self.ytick_formatter_cbb.currentText(),
-                        formatter)
-            else:
-                self.figYTickFormatChanged.emit('Auto', AUTOFORMATTER_MATHTEXT)
-        else:
-            if self.xtick_funcformatter_lineEdit.isEnabled():
-                text = self.xtick_funcformatter_lineEdit.text()
-                self.on_set_funcformatter(text, set_xticks=True)
-            else:
-                self.figXTickFormatChanged.emit('Auto', AUTOFORMATTER)
-
-            if self.ytick_funcformatter_lineEdit.isEnabled():
-                text = self.ytick_funcformatter_lineEdit.text()
-                self.on_set_funcformatter(text, set_yticks=True)
-            else:
-                self.figYTickFormatChanged.emit('Auto', AUTOFORMATTER)
+    def on_enable_ticks_mathtext(self, ischecked):
+        self.parent._fig_ticks_enable_mathtext = ischecked
+        self.figXTickFormatChanged.emit(
+                self.parent._fig_xtick_formatter_type,
+                self.parent._fig_xtick_cfmt)
+        self.figYTickFormatChanged.emit(
+                self.parent._fig_ytick_formatter_type,
+                self.parent._fig_ytick_cfmt)
 
     @pyqtSlot('QString')
     def on_tickformatter_changed(self, s):
         obj = self.sender()
         oname = obj.objectName()
-        math_text_is_enabled = self.enable_mathtext_chkbox.isChecked()
         if s == 'Auto':
             if oname == 'xtick_formatter_cbb':
                 self.xtick_funcformatter_lineEdit.setEnabled(False)
-                if math_text_is_enabled:
-                    self.figXTickFormatChanged.emit('Auto', AUTOFORMATTER_MATHTEXT)
-                else:
-                    self.figXTickFormatChanged.emit('Auto', AUTOFORMATTER)
+                self.figXTickFormatChanged.emit(s, '')
             elif oname == 'ytick_formatter_cbb':
                 self.ytick_funcformatter_lineEdit.setEnabled(False)
-                if math_text_is_enabled:
-                    self.figYTickFormatChanged.emit('Auto', AUTOFORMATTER_MATHTEXT)
-                else:
-                    self.figYTickFormatChanged.emit('Auto', AUTOFORMATTER)
+                self.figYTickFormatChanged.emit(s, '')
         elif s == 'Custom':
             if oname == 'xtick_formatter_cbb':
                 self.xtick_funcformatter_lineEdit.setEnabled(True)
                 text = self.xtick_funcformatter_lineEdit.text()
-                if text:
-                    self.on_set_funcformatter(text, set_xticks=True)
+                self.figXTickFormatChanged.emit(s, text)
             elif oname == 'ytick_formatter_cbb':
                 self.ytick_funcformatter_lineEdit.setEnabled(True)
                 text = self.ytick_funcformatter_lineEdit.text()
-                if text:
-                    self.on_set_funcformatter(text, set_yticks=True)
+                self.figYTickFormatChanged.emit(s, text)
 
     def set_xylimits(self, xlim=None, ylim=None):
         """Set xy limits.
