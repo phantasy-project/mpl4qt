@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_mplconfig.ui'
 #
-# Created by: PyQt5 UI code generator 5.5.1
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(971, 373)
+        Dialog.resize(902, 353)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -83,7 +83,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.title_font_btn.sizePolicy().hasHeightForWidth())
         self.title_font_btn.setSizePolicy(sizePolicy)
-        self.title_font_btn.setAutoDefault(False)
+        self.title_font_btn.setAutoDefault(True)
         self.title_font_btn.setObjectName("title_font_btn")
         self.horizontalLayout_12.addWidget(self.title_font_btn)
         self.formLayout_2.setLayout(0, QtWidgets.QFormLayout.FieldRole,
@@ -168,7 +168,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.xy_label_font_btn.sizePolicy().hasHeightForWidth())
         self.xy_label_font_btn.setSizePolicy(sizePolicy)
-        self.xy_label_font_btn.setAutoDefault(False)
+        self.xy_label_font_btn.setAutoDefault(True)
         self.xy_label_font_btn.setObjectName("xy_label_font_btn")
         self.horizontalLayout_11.addWidget(self.xy_label_font_btn)
         self.formLayout_2.setLayout(1, QtWidgets.QFormLayout.FieldRole,
@@ -511,7 +511,7 @@ class Ui_Dialog(object):
             "    background-color: white;\n"
             "}")
         self.mk_edgecolor_btn.setText("")
-        self.mk_edgecolor_btn.setAutoDefault(False)
+        self.mk_edgecolor_btn.setAutoDefault(True)
         self.mk_edgecolor_btn.setObjectName("mk_edgecolor_btn")
         self.gridLayout.addWidget(self.mk_edgecolor_btn, 2, 6, 1, 1)
         self.mk_size_lineEdit = QtWidgets.QLineEdit(self.curve_tab)
@@ -596,7 +596,7 @@ class Ui_Dialog(object):
             "    background-color: white;\n"
             "}")
         self.mk_facecolor_btn.setText("")
-        self.mk_facecolor_btn.setAutoDefault(False)
+        self.mk_facecolor_btn.setAutoDefault(True)
         self.mk_facecolor_btn.setObjectName("mk_facecolor_btn")
         self.gridLayout.addWidget(self.mk_facecolor_btn, 2, 5, 1, 1)
         self.line_color_btn = QtWidgets.QPushButton(self.curve_tab)
@@ -620,7 +620,7 @@ class Ui_Dialog(object):
                                           "    background-color: white;\n"
                                           "}")
         self.line_color_btn.setText("")
-        self.line_color_btn.setAutoDefault(False)
+        self.line_color_btn.setAutoDefault(True)
         self.line_color_btn.setObjectName("line_color_btn")
         self.gridLayout.addWidget(self.line_color_btn, 1, 5, 1, 1)
         self.line_width_lineEdit = QtWidgets.QLineEdit(self.curve_tab)
@@ -875,7 +875,7 @@ class Ui_Dialog(object):
             "    background-color: white;\n"
             "}")
         self.eb_mk_edgecolor_btn.setText("")
-        self.eb_mk_edgecolor_btn.setAutoDefault(False)
+        self.eb_mk_edgecolor_btn.setAutoDefault(True)
         self.eb_mk_edgecolor_btn.setObjectName("eb_mk_edgecolor_btn")
         self.gridLayout_2.addWidget(self.eb_mk_edgecolor_btn, 2, 6, 1, 1)
         self.eb_mk_size_lineEdit = QtWidgets.QLineEdit(self.eb_tab)
@@ -947,7 +947,7 @@ class Ui_Dialog(object):
             "    background-color: white;\n"
             "}")
         self.eb_mk_facecolor_btn.setText("")
-        self.eb_mk_facecolor_btn.setAutoDefault(False)
+        self.eb_mk_facecolor_btn.setAutoDefault(True)
         self.eb_mk_facecolor_btn.setObjectName("eb_mk_facecolor_btn")
         self.gridLayout_2.addWidget(self.eb_mk_facecolor_btn, 2, 5, 1, 1)
         self.eb_line_color_btn = QtWidgets.QPushButton(self.eb_tab)
@@ -972,7 +972,7 @@ class Ui_Dialog(object):
             "    background-color: white;\n"
             "}")
         self.eb_line_color_btn.setText("")
-        self.eb_line_color_btn.setAutoDefault(False)
+        self.eb_line_color_btn.setAutoDefault(True)
         self.eb_line_color_btn.setObjectName("eb_line_color_btn")
         self.gridLayout_2.addWidget(self.eb_line_color_btn, 1, 5, 1, 1)
         self.config_tabWidget.addTab(self.eb_tab, "")
@@ -1066,7 +1066,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.bkgd_color_btn.sizePolicy().hasHeightForWidth())
         self.bkgd_color_btn.setSizePolicy(sizePolicy)
-        self.bkgd_color_btn.setAutoDefault(False)
+        self.bkgd_color_btn.setAutoDefault(True)
         self.bkgd_color_btn.setObjectName("bkgd_color_btn")
         self.horizontalLayout_6.addWidget(self.bkgd_color_btn)
         self.formLayout_3.setLayout(1, QtWidgets.QFormLayout.FieldRole,
@@ -1105,7 +1105,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.xy_ticks_font_btn.sizePolicy().hasHeightForWidth())
         self.xy_ticks_font_btn.setSizePolicy(sizePolicy)
-        self.xy_ticks_font_btn.setAutoDefault(False)
+        self.xy_ticks_font_btn.setAutoDefault(True)
         self.xy_ticks_font_btn.setObjectName("xy_ticks_font_btn")
         self.horizontalLayout_7.addWidget(self.xy_ticks_font_btn)
         self.ticks_color_label = QtWidgets.QLabel(self.style_tab)
@@ -1119,7 +1119,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.ticks_color_btn.sizePolicy().hasHeightForWidth())
         self.ticks_color_btn.setSizePolicy(sizePolicy)
-        self.ticks_color_btn.setAutoDefault(False)
+        self.ticks_color_btn.setAutoDefault(True)
         self.ticks_color_btn.setObjectName("ticks_color_btn")
         self.horizontalLayout_7.addWidget(self.ticks_color_btn)
         self.formLayout_3.setLayout(2, QtWidgets.QFormLayout.FieldRole,
@@ -1152,6 +1152,7 @@ class Ui_Dialog(object):
         self.horizontalLayout_9.addWidget(self.xtick_formatter_cbb)
         self.xtick_funcformatter_lineEdit = QtWidgets.QLineEdit(self.style_tab)
         self.xtick_funcformatter_lineEdit.setEnabled(False)
+        self.xtick_funcformatter_lineEdit.setPlaceholderText("")
         self.xtick_funcformatter_lineEdit.setObjectName(
             "xtick_funcformatter_lineEdit")
         self.horizontalLayout_9.addWidget(self.xtick_funcformatter_lineEdit)
@@ -1165,6 +1166,7 @@ class Ui_Dialog(object):
         self.horizontalLayout_9.addWidget(self.ytick_formatter_cbb)
         self.ytick_funcformatter_lineEdit = QtWidgets.QLineEdit(self.style_tab)
         self.ytick_funcformatter_lineEdit.setEnabled(False)
+        self.ytick_funcformatter_lineEdit.setPlaceholderText("")
         self.ytick_funcformatter_lineEdit.setObjectName(
             "ytick_funcformatter_lineEdit")
         self.horizontalLayout_9.addWidget(self.ytick_funcformatter_lineEdit)
@@ -1221,7 +1223,7 @@ class Ui_Dialog(object):
                                           "    background-color: white;\n"
                                           "}")
         self.grid_color_btn.setText("")
-        self.grid_color_btn.setAutoDefault(False)
+        self.grid_color_btn.setAutoDefault(True)
         self.grid_color_btn.setObjectName("grid_color_btn")
         self.horizontalLayout_8.addWidget(self.grid_color_btn)
         self.formLayout_3.setLayout(4, QtWidgets.QFormLayout.FieldRole,
@@ -1232,6 +1234,63 @@ class Ui_Dialog(object):
         self.retranslateUi(Dialog)
         self.config_tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
+        Dialog.setTabOrder(self.config_tabWidget, self.fig_title_lineEdit)
+        Dialog.setTabOrder(self.fig_title_lineEdit, self.title_font_btn)
+        Dialog.setTabOrder(self.title_font_btn, self.fig_xlabel_lineEdit)
+        Dialog.setTabOrder(self.fig_xlabel_lineEdit, self.fig_ylabel_lineEdit)
+        Dialog.setTabOrder(self.fig_ylabel_lineEdit, self.xy_label_font_btn)
+        Dialog.setTabOrder(self.xy_label_font_btn, self.autoScale_chkbox)
+        Dialog.setTabOrder(self.autoScale_chkbox, self.xmin_lineEdit)
+        Dialog.setTabOrder(self.xmin_lineEdit, self.xmax_lineEdit)
+        Dialog.setTabOrder(self.xmax_lineEdit, self.ymin_lineEdit)
+        Dialog.setTabOrder(self.ymin_lineEdit, self.ymax_lineEdit)
+        Dialog.setTabOrder(self.ymax_lineEdit, self.legend_on_chkbox)
+        Dialog.setTabOrder(self.legend_on_chkbox, self.legend_loc_cbb)
+        Dialog.setTabOrder(self.legend_loc_cbb, self.xaxis_scale_cbb)
+        Dialog.setTabOrder(self.xaxis_scale_cbb, self.yaxis_scale_cbb)
+        Dialog.setTabOrder(self.yaxis_scale_cbb, self.line_id_cbb)
+        Dialog.setTabOrder(self.line_id_cbb, self.line_hide_chkbox)
+        Dialog.setTabOrder(self.line_hide_chkbox, self.line_style_cbb)
+        Dialog.setTabOrder(self.line_style_cbb, self.line_color_btn)
+        Dialog.setTabOrder(self.line_color_btn, self.line_width_lineEdit)
+        Dialog.setTabOrder(self.line_width_lineEdit, self.mk_style_cbb)
+        Dialog.setTabOrder(self.mk_style_cbb, self.mk_facecolor_btn)
+        Dialog.setTabOrder(self.mk_facecolor_btn, self.mk_edgecolor_btn)
+        Dialog.setTabOrder(self.mk_edgecolor_btn, self.mk_size_lineEdit)
+        Dialog.setTabOrder(self.mk_size_lineEdit, self.mk_width_lineEdit)
+        Dialog.setTabOrder(self.mk_width_lineEdit, self.opacity_val_slider)
+        Dialog.setTabOrder(self.opacity_val_slider, self.line_label_lineEdit)
+        Dialog.setTabOrder(self.line_label_lineEdit, self.eb_line_id_cbb)
+        Dialog.setTabOrder(self.eb_line_id_cbb, self.eb_line_hide_chkbox)
+        Dialog.setTabOrder(self.eb_line_hide_chkbox, self.eb_line_style_cbb)
+        Dialog.setTabOrder(self.eb_line_style_cbb, self.eb_line_color_btn)
+        Dialog.setTabOrder(self.eb_line_color_btn, self.eb_line_width_lineEdit)
+        Dialog.setTabOrder(self.eb_line_width_lineEdit, self.yeb_mk_style_cbb)
+        Dialog.setTabOrder(self.yeb_mk_style_cbb, self.eb_mk_facecolor_btn)
+        Dialog.setTabOrder(self.eb_mk_facecolor_btn, self.eb_mk_edgecolor_btn)
+        Dialog.setTabOrder(self.eb_mk_edgecolor_btn, self.eb_mk_size_lineEdit)
+        Dialog.setTabOrder(self.eb_mk_size_lineEdit, self.eb_mk_width_lineEdit)
+        Dialog.setTabOrder(self.eb_mk_width_lineEdit, self.xeb_mk_style_cbb)
+        Dialog.setTabOrder(self.xeb_mk_style_cbb, self.figWidth_lineEdit)
+        Dialog.setTabOrder(self.figWidth_lineEdit, self.figHeight_lineEdit)
+        Dialog.setTabOrder(self.figHeight_lineEdit, self.figDpi_lineEdit)
+        Dialog.setTabOrder(self.figDpi_lineEdit, self.bkgd_color_btn)
+        Dialog.setTabOrder(self.bkgd_color_btn, self.mticks_chkbox)
+        Dialog.setTabOrder(self.mticks_chkbox, self.xy_ticks_font_btn)
+        Dialog.setTabOrder(self.xy_ticks_font_btn, self.ticks_color_btn)
+        Dialog.setTabOrder(self.ticks_color_btn, self.enable_mathtext_chkbox)
+        Dialog.setTabOrder(self.enable_mathtext_chkbox,
+                           self.xtick_formatter_cbb)
+        Dialog.setTabOrder(self.xtick_formatter_cbb,
+                           self.xtick_funcformatter_lineEdit)
+        Dialog.setTabOrder(self.xtick_funcformatter_lineEdit,
+                           self.ytick_formatter_cbb)
+        Dialog.setTabOrder(self.ytick_formatter_cbb,
+                           self.ytick_funcformatter_lineEdit)
+        Dialog.setTabOrder(self.ytick_funcformatter_lineEdit,
+                           self.tightLayout_chkbox)
+        Dialog.setTabOrder(self.tightLayout_chkbox, self.gridon_chkbox)
+        Dialog.setTabOrder(self.gridon_chkbox, self.grid_color_btn)
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -1277,9 +1336,8 @@ class Ui_Dialog(object):
                                          _translate("Dialog", "Log Transform"))
         self.xaxis_scale_cbb.setItemText(
             2, _translate("Dialog", "Symmetrical Log Transform"))
-        self.xaxis_scale_cbb.setItemText(3,
-                                         _translate("Dialog",
-                                                    "Logistic Transform"))
+        self.xaxis_scale_cbb.setItemText(
+            3, _translate("Dialog", "Logistic Transform"))
         self.label_41.setText(_translate("Dialog", "Y"))
         self.yaxis_scale_cbb.setItemText(0, _translate("Dialog",
                                                        "Linear Scale"))
@@ -1287,9 +1345,8 @@ class Ui_Dialog(object):
                                          _translate("Dialog", "Log Transform"))
         self.yaxis_scale_cbb.setItemText(
             2, _translate("Dialog", "Symmetrical Log Transform"))
-        self.yaxis_scale_cbb.setItemText(3,
-                                         _translate("Dialog",
-                                                    "Logistic Transform"))
+        self.yaxis_scale_cbb.setItemText(
+            3, _translate("Dialog", "Logistic Transform"))
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.figure_tab),
             _translate("Dialog", "Figure"))
@@ -1386,8 +1443,7 @@ class Ui_Dialog(object):
                 "Dialog",
                 "<html><head/><body><p>Input c string format specifier, e.g. %1d, %.2f, %.2e, 10^%n, etc.</p></body></html>"
             ))
-        self.xtick_funcformatter_lineEdit.setPlaceholderText(
-            _translate("Dialog", "%.2f"))
+        self.xtick_funcformatter_lineEdit.setText(_translate("Dialog", "%g"))
         self.label_39.setText(_translate("Dialog", "Y"))
         self.ytick_formatter_cbb.setItemText(0, _translate("Dialog", "Auto"))
         self.ytick_formatter_cbb.setItemText(1, _translate("Dialog", "Custom"))
@@ -1396,8 +1452,7 @@ class Ui_Dialog(object):
                 "Dialog",
                 "<html><head/><body><p>Input c string format specifier, e.g. %1d, %.2f, %.3e, 10^%n, etc.</p></body></html>"
             ))
-        self.ytick_funcformatter_lineEdit.setPlaceholderText(
-            _translate("Dialog", "%.2f"))
+        self.ytick_funcformatter_lineEdit.setText(_translate("Dialog", "%g"))
         self.label_6.setText(_translate("Dialog", "Layout"))
         self.tightLayout_chkbox.setText(_translate("Dialog", "Tight"))
         self.gridon_chkbox.setText(_translate("Dialog", "Grid On"))
