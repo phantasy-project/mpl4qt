@@ -1,3 +1,16 @@
+2.2.0
+  * Implement mpltoolbar (MToolbar) with QToolbar.
+  * New tools, lasso-selector, cross-ruler, reposition, xy coords display.
+  * Implement xy coords tracking as a tool of MToolbar.
+  * MToolbar supports drag and move feature.
+  * New control options for axis scale, color opacity, ticks formatter.
+  * New signal 'selectedIndicesUpdated[list]' for lasso-selector.
+  * New signal 'xyposUpdated[float, float] for xy coords tracking.
+  * New keyboard shortcut, 's' for axis scale circulating.
+  * Fix the help message of keyboard shortcuts.
+  * Fix other bugs.
+  * Update HTML doc.
+
 2.1.0
   * Fix issue, cannot locate current selected font.
   * Fix issue, crashes of on_motion of MatplotlibBaseWidget.
