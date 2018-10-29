@@ -1282,6 +1282,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     def on_press(self, e):
         if e.inaxes is not None:
+            self.set_visible_hvlines(True)
             self.draw_hvlines(e.xdata, e.ydata)
 
     def draw_hvlines(self, x0, y0):
@@ -1318,6 +1319,14 @@ class MatplotlibCurveWidget(BasePlotWidget):
             text = '{0:g}, {1:g}'.format(x0, y0)
             self._cpoint_text.set_text(text)
 
+        self.update_figure()
+
+    def set_visible_hvlines(self, flag=True):
+        """Set hvlines visible (*flag* is True) or invisible (*flag* is False).
+        """
+        for o in (self._hline, self._vline, self._cpoint, self._cpoint_text):
+            if o is not None:
+                o.set_visible(flag)
         self.update_figure()
 
     def on_key_press(self, e):
