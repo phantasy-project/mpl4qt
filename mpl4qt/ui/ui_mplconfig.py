@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_mplconfig.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.5.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(902, 353)
+        Dialog.resize(989, 373)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -83,7 +83,8 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.title_font_btn.sizePolicy().hasHeightForWidth())
         self.title_font_btn.setSizePolicy(sizePolicy)
-        self.title_font_btn.setAutoDefault(True)
+        self.title_font_btn.setAutoDefault(False)
+        self.title_font_btn.setDefault(False)
         self.title_font_btn.setObjectName("title_font_btn")
         self.horizontalLayout_12.addWidget(self.title_font_btn)
         self.formLayout_2.setLayout(0, QtWidgets.QFormLayout.FieldRole,
@@ -168,7 +169,8 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.xy_label_font_btn.sizePolicy().hasHeightForWidth())
         self.xy_label_font_btn.setSizePolicy(sizePolicy)
-        self.xy_label_font_btn.setAutoDefault(True)
+        self.xy_label_font_btn.setAutoDefault(False)
+        self.xy_label_font_btn.setDefault(False)
         self.xy_label_font_btn.setObjectName("xy_label_font_btn")
         self.horizontalLayout_11.addWidget(self.xy_label_font_btn)
         self.formLayout_2.setLayout(1, QtWidgets.QFormLayout.FieldRole,
@@ -517,7 +519,7 @@ class Ui_Dialog(object):
             "    background-color: white;\n"
             "}")
         self.mk_edgecolor_btn.setText("")
-        self.mk_edgecolor_btn.setAutoDefault(True)
+        self.mk_edgecolor_btn.setAutoDefault(False)
         self.mk_edgecolor_btn.setObjectName("mk_edgecolor_btn")
         self.gridLayout.addWidget(self.mk_edgecolor_btn, 2, 6, 1, 1)
         self.mk_size_lineEdit = QtWidgets.QLineEdit(self.curve_tab)
@@ -602,7 +604,7 @@ class Ui_Dialog(object):
             "    background-color: white;\n"
             "}")
         self.mk_facecolor_btn.setText("")
-        self.mk_facecolor_btn.setAutoDefault(True)
+        self.mk_facecolor_btn.setAutoDefault(False)
         self.mk_facecolor_btn.setObjectName("mk_facecolor_btn")
         self.gridLayout.addWidget(self.mk_facecolor_btn, 2, 5, 1, 1)
         self.line_color_btn = QtWidgets.QPushButton(self.curve_tab)
@@ -626,7 +628,7 @@ class Ui_Dialog(object):
                                           "    background-color: white;\n"
                                           "}")
         self.line_color_btn.setText("")
-        self.line_color_btn.setAutoDefault(True)
+        self.line_color_btn.setAutoDefault(False)
         self.line_color_btn.setObjectName("line_color_btn")
         self.gridLayout.addWidget(self.line_color_btn, 1, 5, 1, 1)
         self.line_width_lineEdit = QtWidgets.QLineEdit(self.curve_tab)
@@ -881,7 +883,7 @@ class Ui_Dialog(object):
             "    background-color: white;\n"
             "}")
         self.eb_mk_edgecolor_btn.setText("")
-        self.eb_mk_edgecolor_btn.setAutoDefault(True)
+        self.eb_mk_edgecolor_btn.setAutoDefault(False)
         self.eb_mk_edgecolor_btn.setObjectName("eb_mk_edgecolor_btn")
         self.gridLayout_2.addWidget(self.eb_mk_edgecolor_btn, 2, 6, 1, 1)
         self.eb_mk_size_lineEdit = QtWidgets.QLineEdit(self.eb_tab)
@@ -953,7 +955,7 @@ class Ui_Dialog(object):
             "    background-color: white;\n"
             "}")
         self.eb_mk_facecolor_btn.setText("")
-        self.eb_mk_facecolor_btn.setAutoDefault(True)
+        self.eb_mk_facecolor_btn.setAutoDefault(False)
         self.eb_mk_facecolor_btn.setObjectName("eb_mk_facecolor_btn")
         self.gridLayout_2.addWidget(self.eb_mk_facecolor_btn, 2, 5, 1, 1)
         self.eb_line_color_btn = QtWidgets.QPushButton(self.eb_tab)
@@ -978,7 +980,7 @@ class Ui_Dialog(object):
             "    background-color: white;\n"
             "}")
         self.eb_line_color_btn.setText("")
-        self.eb_line_color_btn.setAutoDefault(True)
+        self.eb_line_color_btn.setAutoDefault(False)
         self.eb_line_color_btn.setObjectName("eb_line_color_btn")
         self.gridLayout_2.addWidget(self.eb_line_color_btn, 1, 5, 1, 1)
         self.config_tabWidget.addTab(self.eb_tab, "")
@@ -1072,7 +1074,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.bkgd_color_btn.sizePolicy().hasHeightForWidth())
         self.bkgd_color_btn.setSizePolicy(sizePolicy)
-        self.bkgd_color_btn.setAutoDefault(True)
+        self.bkgd_color_btn.setAutoDefault(False)
         self.bkgd_color_btn.setObjectName("bkgd_color_btn")
         self.horizontalLayout_6.addWidget(self.bkgd_color_btn)
         self.formLayout_3.setLayout(1, QtWidgets.QFormLayout.FieldRole,
@@ -1111,7 +1113,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.xy_ticks_font_btn.sizePolicy().hasHeightForWidth())
         self.xy_ticks_font_btn.setSizePolicy(sizePolicy)
-        self.xy_ticks_font_btn.setAutoDefault(True)
+        self.xy_ticks_font_btn.setAutoDefault(False)
         self.xy_ticks_font_btn.setObjectName("xy_ticks_font_btn")
         self.horizontalLayout_7.addWidget(self.xy_ticks_font_btn)
         self.ticks_color_label = QtWidgets.QLabel(self.style_tab)
@@ -1125,7 +1127,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.ticks_color_btn.sizePolicy().hasHeightForWidth())
         self.ticks_color_btn.setSizePolicy(sizePolicy)
-        self.ticks_color_btn.setAutoDefault(True)
+        self.ticks_color_btn.setAutoDefault(False)
         self.ticks_color_btn.setObjectName("ticks_color_btn")
         self.horizontalLayout_7.addWidget(self.ticks_color_btn)
         self.formLayout_3.setLayout(2, QtWidgets.QFormLayout.FieldRole,
@@ -1236,7 +1238,7 @@ class Ui_Dialog(object):
                                           "    background-color: white;\n"
                                           "}")
         self.grid_color_btn.setText("")
-        self.grid_color_btn.setAutoDefault(True)
+        self.grid_color_btn.setAutoDefault(False)
         self.grid_color_btn.setObjectName("grid_color_btn")
         self.horizontalLayout_8.addWidget(self.grid_color_btn)
         self.formLayout_3.setLayout(4, QtWidgets.QFormLayout.FieldRole,
@@ -1349,8 +1351,9 @@ class Ui_Dialog(object):
                                          _translate("Dialog", "Log Transform"))
         self.xaxis_scale_cbb.setItemText(
             2, _translate("Dialog", "Symmetrical Log Transform"))
-        self.xaxis_scale_cbb.setItemText(
-            3, _translate("Dialog", "Logistic Transform"))
+        self.xaxis_scale_cbb.setItemText(3,
+                                         _translate("Dialog",
+                                                    "Logistic Transform"))
         self.label_41.setText(_translate("Dialog", "Y"))
         self.yaxis_scale_cbb.setItemText(0, _translate("Dialog",
                                                        "Linear Scale"))
@@ -1358,8 +1361,9 @@ class Ui_Dialog(object):
                                          _translate("Dialog", "Log Transform"))
         self.yaxis_scale_cbb.setItemText(
             2, _translate("Dialog", "Symmetrical Log Transform"))
-        self.yaxis_scale_cbb.setItemText(
-            3, _translate("Dialog", "Logistic Transform"))
+        self.yaxis_scale_cbb.setItemText(3,
+                                         _translate("Dialog",
+                                                    "Logistic Transform"))
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.figure_tab),
             _translate("Dialog", "Figure"))
