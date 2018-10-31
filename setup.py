@@ -8,7 +8,7 @@ def readme():
         return f.read()
 
 def read_license():
-    with open('LICENSE') as f:
+    with open('LICENSE', 'r') as f:
         return f.read()
 
 app_name = "mpl4qt"
