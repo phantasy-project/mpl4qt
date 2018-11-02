@@ -1,3 +1,8 @@
+2.2.1
+  * Set all buttons autodefault/default false.
+  * Show/hide cross-ruler.
+  * Fix minor bugs.
+
 2.2.0
   * Implement mpltoolbar (MToolbar) with QToolbar.
   * New tools, lasso-selector, cross-ruler, reposition, xy coords display.
@@ -17,7 +22,7 @@
   * New DataViz widget, MatplotlibBaseWidget.
   * MatplotlibErrorbarWidget, implement 'add_curve' and 'update_curve'.
   * Update doc.
-  
+
 2.0.0
   * Update mplconfig with errorbar config tab.
   * Create a new widget called MatplotlibErrorbarWidget
