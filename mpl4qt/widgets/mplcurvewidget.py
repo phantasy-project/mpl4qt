@@ -31,14 +31,11 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QIcon
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtGui import QPainter
-from PyQt5.QtGui import QPen
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QMenu
 from PyQt5.QtWidgets import QAction
-from PyQt5.QtWidgets import QDialog
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtWidgets import QMessageBox
 
@@ -48,6 +45,7 @@ from collections import OrderedDict
 from mpl4qt.widgets.mplbasewidget import BasePlotWidget
 from mpl4qt.widgets.mplconfig import MatplotlibConfigPanel
 from mpl4qt.widgets.mpltoolbar import MToolbar
+from mpl4qt.widgets.kbdhelpdialog import KbdHelpDialog
 from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
 from mpl4qt.widgets.utils import mplcolor2hex
 from mpl4qt.widgets.utils import DEFAULT_MPL_SETTINGS
@@ -61,7 +59,6 @@ from mpl4qt.icons import reset_icon
 from mpl4qt.icons import import_icon
 from mpl4qt.icons import export_icon
 from mpl4qt.icons import tools_icon
-from mpl4qt.ui.ui_kbdhelp import Ui_Dialog
 
 
 class MatplotlibCurveWidget(BasePlotWidget):
@@ -1374,26 +1371,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
         w = KbdHelpDialog(self)
         w.setWindowTitle("Keyboard Shortcuts Help")
         w.exec_()
-
-
-class KbdHelpDialog(QDialog, Ui_Dialog):
-    """Dialog for '?' key short.
-    """
-    def __init__(self, parent=None):
-        super(KbdHelpDialog, self).__init__(parent)
-
-        # UI
-        self.setupUi(self)
-        self.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)
-        self.setAttribute(Qt.WA_TranslucentBackground)
-        self.adjustSize()
-
-    def paintEvent(self, e):
-        painter = QPainter(self)
-        painter.setOpacity(0.75)
-        painter.setBrush(Qt.white)
-        painter.setPen(QPen(Qt.white))
-        painter.drawRect(self.rect())
 
 
 if __name__ == "__main__":
