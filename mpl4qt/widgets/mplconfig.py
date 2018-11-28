@@ -820,6 +820,23 @@ class MatplotlibConfigErrorbarPanel(MatplotlibConfigPanel):
         self._set_btn_color(self.eb_line_color_btn, color)
 
 
+class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
+    def __init__(self, parent=None):
+        super(MatplotlibConfigImagePanel, self).__init__(parent)
+
+        self._pre_setup()
+
+    def _pre_setup(self):
+        """disable controls that do not work with image panel.
+        """
+        # axis scale
+        self.xaxis_scale_cbb.currentIndexChanged.disconnect()
+        self.yaxis_scale_cbb.currentIndexChanged.disconnect()
+        self.xaxis_scale_cbb.setEnabled(False)
+        self.yaxis_scale_cbb.setEnabled(False)
+
+
+
 def select_font(obj, current_font, options=None):
     """Select font slot.
 
