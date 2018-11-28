@@ -196,13 +196,13 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.legend_loc_cbb.currentIndexChanged[int].connect(
             self.parent.setLegendLocation)
 
-        # post UI update
-        self.post_init_ui()
-
         # line id, put after post_init_ui, elliminate cb initialization disturb
         self.figLineIDChanged[int].connect(self.parent.setLineID)
         self.line_id_cbb.currentIndexChanged[int].connect(
             self.on_change_line_id)
+
+        # post UI update
+        self.post_init_ui()
 
         # line color
         self.figLineColorChanged[QColor].connect(self.set_line_color_btn)
@@ -263,34 +263,44 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         # marker style
         self.mk_style_cbb.clear()
         self.mk_style_cbb.addItems(MK_CODE)
-        # line id combo
-        self.line_id_cbb.clear()
-        self.line_id_cbb.addItems(
-            [str(i) for i, l in enumerate(self.parent.get_all_curves())])
-        current_line_id = self.parent.get_all_curves().index(self.parent._line)
-        self.line_id_cbb.setCurrentIndex(current_line_id)
-        self.on_change_line_id(current_line_id)
-        # legend on/off
-        self.legend_on_chkbox.setChecked(self.parent.getLegendToggle())
-        self.legend_loc_cbb.setCurrentIndex(self.parent.getLegendLocation())
-        # line visible
-        self.line_hide_chkbox.setChecked(not self.parent.getLineVisible())
-        # axis scale
-        self.xaxis_scale_cbb.clear()
-        self.xaxis_scale_cbb.addItems(SCALE_STY_KEYS)
-        self.xaxis_scale_cbb.setCurrentIndex(
-                SCALE_STY_VALS.index(self.parent.getFigureXScale()))
-        self.yaxis_scale_cbb.clear()
-        self.yaxis_scale_cbb.addItems(SCALE_STY_KEYS)
-        self.yaxis_scale_cbb.setCurrentIndex(
-                SCALE_STY_VALS.index(self.parent.getFigureYScale()))
 
-        self.__set_cfmt()
-        # tick formatter
-        self.xtick_formatter_cbb.setCurrentText(self.parent._fig_xtick_formatter_type)
-        self.ytick_formatter_cbb.setCurrentText(self.parent._fig_ytick_formatter_type)
-        # apply math text to ticks indicator
-        self.enable_mathtext_chkbox.setChecked(self.parent._fig_ticks_enable_mathtext)
+        # line id combo
+        if self.parent.get_all_curves() == []:
+            self.config_tabWidget.setTabEnabled(
+                self.config_tabWidget.indexOf(self.curve_tab), False)
+        else:
+            self.line_id_cbb.clear()
+            self.line_id_cbb.addItems(
+                [str(i) for i, l in enumerate(self.parent.get_all_curves())])
+            try:
+                current_line_id = self.parent.get_all_curves().index(self.parent._line)
+            except AttributeError:  # no _line attribute
+                current_line_id = 0
+            self.line_id_cbb.setCurrentIndex(current_line_id)
+            self.on_change_line_id(current_line_id)
+
+            # legend on/off
+            self.legend_on_chkbox.setChecked(self.parent.getLegendToggle())
+            self.legend_loc_cbb.setCurrentIndex(self.parent.getLegendLocation())
+            # line visible
+            self.line_hide_chkbox.setChecked(not self.parent.getLineVisible())
+
+            # axis scale
+            self.xaxis_scale_cbb.clear()
+            self.xaxis_scale_cbb.addItems(SCALE_STY_KEYS)
+            self.xaxis_scale_cbb.setCurrentIndex(
+                    SCALE_STY_VALS.index(self.parent.getFigureXScale()))
+            self.yaxis_scale_cbb.clear()
+            self.yaxis_scale_cbb.addItems(SCALE_STY_KEYS)
+            self.yaxis_scale_cbb.setCurrentIndex(
+                    SCALE_STY_VALS.index(self.parent.getFigureYScale()))
+
+            self.__set_cfmt()
+            # tick formatter
+            self.xtick_formatter_cbb.setCurrentText(self.parent._fig_xtick_formatter_type)
+            self.ytick_formatter_cbb.setCurrentText(self.parent._fig_ytick_formatter_type)
+            # apply math text to ticks indicator
+            self.enable_mathtext_chkbox.setChecked(self.parent._fig_ticks_enable_mathtext)
 
     def __set_cfmt(self):
         # set cfmt for ticks custom formatter
