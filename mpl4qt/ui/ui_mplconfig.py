@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_mplconfig.ui'
 #
-# Created by: PyQt5 UI code generator 5.5.1
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(989, 373)
+        Dialog.resize(893, 340)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -22,10 +22,8 @@ class Ui_Dialog(object):
         Dialog.setMinimumSize(QtCore.QSize(0, 0))
         Dialog.setSizeGripEnabled(False)
         Dialog.setModal(False)
-        self.horizontalLayout_4 = QtWidgets.QHBoxLayout(Dialog)
-        self.horizontalLayout_4.setSizeConstraint(
-            QtWidgets.QLayout.SetMinimumSize)
-        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.gridLayout_3 = QtWidgets.QGridLayout(Dialog)
+        self.gridLayout_3.setObjectName("gridLayout_3")
         self.config_tabWidget = QtWidgets.QTabWidget(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
@@ -984,6 +982,124 @@ class Ui_Dialog(object):
         self.eb_line_color_btn.setObjectName("eb_line_color_btn")
         self.gridLayout_2.addWidget(self.eb_line_color_btn, 1, 5, 1, 1)
         self.config_tabWidget.addTab(self.eb_tab, "")
+        self.image_tab = QtWidgets.QWidget()
+        self.image_tab.setObjectName("image_tab")
+        self.formLayout = QtWidgets.QFormLayout(self.image_tab)
+        self.formLayout.setObjectName("formLayout")
+        self.label_43 = QtWidgets.QLabel(self.image_tab)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_43.setFont(font)
+        self.label_43.setObjectName("label_43")
+        self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole,
+                                  self.label_43)
+        self.horizontalLayout_16 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_16.setObjectName("horizontalLayout_16")
+        self.cmap_class_cbb = QtWidgets.QComboBox(self.image_tab)
+        self.cmap_class_cbb.setObjectName("cmap_class_cbb")
+        self.horizontalLayout_16.addWidget(self.cmap_class_cbb)
+        self.horizontalLayout_15 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_15.setObjectName("horizontalLayout_15")
+        self.cmap_cbb = QtWidgets.QComboBox(self.image_tab)
+        self.cmap_cbb.setObjectName("cmap_cbb")
+        self.horizontalLayout_15.addWidget(self.cmap_cbb)
+        self.add_to_fav_btn = QtWidgets.QToolButton(self.image_tab)
+        icon = QtGui.QIcon()
+        icon.addPixmap(
+            QtGui.QPixmap(":/icons/add.png"), QtGui.QIcon.Normal,
+            QtGui.QIcon.Off)
+        self.add_to_fav_btn.setIcon(icon)
+        self.add_to_fav_btn.setObjectName("add_to_fav_btn")
+        self.horizontalLayout_15.addWidget(self.add_to_fav_btn)
+        self.del_from_fav_btn = QtWidgets.QToolButton(self.image_tab)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(
+            QtGui.QPixmap(":/icons/del.png"), QtGui.QIcon.Normal,
+            QtGui.QIcon.Off)
+        self.del_from_fav_btn.setIcon(icon1)
+        self.del_from_fav_btn.setObjectName("del_from_fav_btn")
+        self.horizontalLayout_15.addWidget(self.del_from_fav_btn)
+        self.horizontalLayout_16.addLayout(self.horizontalLayout_15)
+        self.reverse_chkbox = QtWidgets.QCheckBox(self.image_tab)
+        self.reverse_chkbox.setObjectName("reverse_chkbox")
+        self.horizontalLayout_16.addWidget(self.reverse_chkbox)
+        self.cm_image = MatplotlibCMapWidget(self.image_tab)
+        self.cm_image.setObjectName("cm_image")
+        self.horizontalLayout_16.addWidget(self.cm_image)
+        self.formLayout.setLayout(0, QtWidgets.QFormLayout.FieldRole,
+                                  self.horizontalLayout_16)
+        self.label_44 = QtWidgets.QLabel(self.image_tab)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_44.setFont(font)
+        self.label_44.setObjectName("label_44")
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole,
+                                  self.label_44)
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.label_45 = QtWidgets.QLabel(self.image_tab)
+        self.label_45.setObjectName("label_45")
+        self.horizontalLayout_4.addWidget(self.label_45)
+        self.horizontalSlider = QtWidgets.QSlider(self.image_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.horizontalSlider.sizePolicy().hasHeightForWidth())
+        self.horizontalSlider.setSizePolicy(sizePolicy)
+        self.horizontalSlider.setOrientation(QtCore.Qt.Horizontal)
+        self.horizontalSlider.setObjectName("horizontalSlider")
+        self.horizontalLayout_4.addWidget(self.horizontalSlider)
+        self.label_46 = QtWidgets.QLabel(self.image_tab)
+        self.label_46.setObjectName("label_46")
+        self.horizontalLayout_4.addWidget(self.label_46)
+        self.horizontalSlider_2 = QtWidgets.QSlider(self.image_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.horizontalSlider_2.sizePolicy().hasHeightForWidth())
+        self.horizontalSlider_2.setSizePolicy(sizePolicy)
+        self.horizontalSlider_2.setOrientation(QtCore.Qt.Horizontal)
+        self.horizontalSlider_2.setObjectName("horizontalSlider_2")
+        self.horizontalLayout_4.addWidget(self.horizontalSlider_2)
+        self.label_47 = QtWidgets.QLabel(self.image_tab)
+        self.label_47.setObjectName("label_47")
+        self.horizontalLayout_4.addWidget(self.label_47)
+        self.lineEdit = QtWidgets.QLineEdit(self.image_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.lineEdit.sizePolicy().hasHeightForWidth())
+        self.lineEdit.setSizePolicy(sizePolicy)
+        self.lineEdit.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft
+                                   | QtCore.Qt.AlignVCenter)
+        self.lineEdit.setObjectName("lineEdit")
+        self.horizontalLayout_4.addWidget(self.lineEdit)
+        self.lineEdit_2 = QtWidgets.QLineEdit(self.image_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.lineEdit_2.sizePolicy().hasHeightForWidth())
+        self.lineEdit_2.setSizePolicy(sizePolicy)
+        self.lineEdit_2.setObjectName("lineEdit_2")
+        self.horizontalLayout_4.addWidget(self.lineEdit_2)
+        self.formLayout.setLayout(1, QtWidgets.QFormLayout.FieldRole,
+                                  self.horizontalLayout_4)
+        spacerItem2 = QtWidgets.QSpacerItem(20, 40,
+                                            QtWidgets.QSizePolicy.Minimum,
+                                            QtWidgets.QSizePolicy.Expanding)
+        self.formLayout.setItem(2, QtWidgets.QFormLayout.LabelRole,
+                                spacerItem2)
+        self.config_tabWidget.addTab(self.image_tab, "")
         self.style_tab = QtWidgets.QWidget()
         self.style_tab.setObjectName("style_tab")
         self.formLayout_3 = QtWidgets.QFormLayout(self.style_tab)
@@ -1244,12 +1360,11 @@ class Ui_Dialog(object):
         self.formLayout_3.setLayout(4, QtWidgets.QFormLayout.FieldRole,
                                     self.horizontalLayout_8)
         self.config_tabWidget.addTab(self.style_tab, "")
-        self.horizontalLayout_4.addWidget(self.config_tabWidget)
+        self.gridLayout_3.addWidget(self.config_tabWidget, 0, 0, 1, 1)
 
         self.retranslateUi(Dialog)
         self.config_tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
-        Dialog.setTabOrder(self.config_tabWidget, self.fig_title_lineEdit)
         Dialog.setTabOrder(self.fig_title_lineEdit, self.title_font_btn)
         Dialog.setTabOrder(self.title_font_btn, self.fig_xlabel_lineEdit)
         Dialog.setTabOrder(self.fig_xlabel_lineEdit, self.fig_ylabel_lineEdit)
@@ -1351,9 +1466,8 @@ class Ui_Dialog(object):
                                          _translate("Dialog", "Log Transform"))
         self.xaxis_scale_cbb.setItemText(
             2, _translate("Dialog", "Symmetrical Log Transform"))
-        self.xaxis_scale_cbb.setItemText(3,
-                                         _translate("Dialog",
-                                                    "Logistic Transform"))
+        self.xaxis_scale_cbb.setItemText(
+            3, _translate("Dialog", "Logistic Transform"))
         self.label_41.setText(_translate("Dialog", "Y"))
         self.yaxis_scale_cbb.setItemText(0, _translate("Dialog",
                                                        "Linear Scale"))
@@ -1361,9 +1475,8 @@ class Ui_Dialog(object):
                                          _translate("Dialog", "Log Transform"))
         self.yaxis_scale_cbb.setItemText(
             2, _translate("Dialog", "Symmetrical Log Transform"))
-        self.yaxis_scale_cbb.setItemText(3,
-                                         _translate("Dialog",
-                                                    "Logistic Transform"))
+        self.yaxis_scale_cbb.setItemText(
+            3, _translate("Dialog", "Logistic Transform"))
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.figure_tab),
             _translate("Dialog", "Figure"))
@@ -1426,6 +1539,17 @@ class Ui_Dialog(object):
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.eb_tab),
             _translate("Dialog", "Errorbar"))
+        self.label_43.setText(_translate("Dialog", "Color Map"))
+        self.add_to_fav_btn.setText(_translate("Dialog", "..."))
+        self.del_from_fav_btn.setText(_translate("Dialog", "..."))
+        self.reverse_chkbox.setText(_translate("Dialog", "Reverse"))
+        self.label_44.setText(_translate("Dialog", "Color Range"))
+        self.label_45.setText(_translate("Dialog", "Min"))
+        self.label_46.setText(_translate("Dialog", "Max"))
+        self.label_47.setText(_translate("Dialog", "Range"))
+        self.config_tabWidget.setTabText(
+            self.config_tabWidget.indexOf(self.image_tab),
+            _translate("Dialog", "Image"))
         self.label_16.setText(_translate("Dialog", "Figure Size"))
         self.label_12.setText(_translate("Dialog", "Width"))
         self.figWidth_lineEdit.setText(_translate("Dialog", "4"))
@@ -1477,6 +1601,9 @@ class Ui_Dialog(object):
             self.config_tabWidget.indexOf(self.style_tab),
             _translate("Dialog", "Style"))
 
+
+from mpl4qt.widgets.mplbasewidget import MatplotlibCMapWidget
+from . import resources_rc
 
 if __name__ == "__main__":
     import sys
