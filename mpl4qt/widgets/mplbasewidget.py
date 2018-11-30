@@ -205,6 +205,20 @@ class MatplotlibBaseWidget(BasePlotWidget):
         pass
 
 
+class MatplotlibCMapWidget(BasePlotWidget):
+    def __init__(self, parent=None):
+        super(MatplotlibCMapWidget, self).__init__(parent, height=0.2)
+        self.figure.set_tight_layout(True)
+        self.figure.subplots_adjust(
+                top=0.9999, bottom=0.0001, left=0.0001, right=0.9999)
+        self.axes.set_axis_off()
+
+    def init_figure(self):
+        gradient = np.linspace(0, 1, 256)
+        gradient = np.vstack((gradient, gradient))
+        self.im = self.axes.imshow(gradient, aspect='auto')
+
+
 def _set_font(obj, font):
     obj.set_size(font.pointSizeF())
     obj.set_family(font.family())
