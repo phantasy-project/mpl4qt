@@ -25,6 +25,7 @@ from .utils import SCALE_STY_VALS
 from .utils import generate_formatter
 from .utils import AUTOFORMATTER
 from .utils import AUTOFORMATTER_MATHTEXT
+from .utils import COLORMAPS_DICT
 
 
 class MatplotlibConfigPanel(QDialog, Ui_Dialog):
@@ -94,9 +95,10 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.setupUi(self)
         self.setWindowTitle("Figure Configurations")
 
-        # hide eb_tab or not
-        self.config_tabWidget.setTabEnabled(
-            self.config_tabWidget.indexOf(self.eb_tab), False)
+        # hide eb_tab and image_tab
+        for tab in (self.eb_tab, self.image_tab):
+            self.config_tabWidget.setTabEnabled(
+                self.config_tabWidget.indexOf(tab), False)
         # set the style sheet
         self.setStyleSheet(
             "QTabBar::tab::disabled {width: 0; height: 0; margin: 0; padding: 0; border: none;} ")
@@ -647,7 +649,7 @@ class MatplotlibConfigErrorbarPanel(MatplotlibConfigPanel):
     def __init__(self, parent=None):
         super(MatplotlibConfigErrorbarPanel, self).__init__(parent)
 
-        # hide eb_tab or not
+        # show eb_tab
         self.config_tabWidget.setTabEnabled(
             self.config_tabWidget.indexOf(self.eb_tab), True)
 
@@ -824,16 +826,33 @@ class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
     def __init__(self, parent=None):
         super(MatplotlibConfigImagePanel, self).__init__(parent)
 
-        self._pre_setup()
+        self._post_setup()
 
-    def _pre_setup(self):
-        """disable controls that do not work with image panel.
+    def _post_setup(self):
+        """enable/disable controls
         """
-        # axis scale
+        # show image_tab
+        self.config_tabWidget.setTabEnabled(
+            self.config_tabWidget.indexOf(self.image_tab), True)
+
+        # disable axis scale
         self.xaxis_scale_cbb.currentIndexChanged.disconnect()
         self.yaxis_scale_cbb.currentIndexChanged.disconnect()
         self.xaxis_scale_cbb.setEnabled(False)
         self.yaxis_scale_cbb.setEnabled(False)
+
+        # colormap cbb
+        self.cmap_class_cbb.currentTextChanged.connect(
+                self.on_cmap_class_changed)
+        self.cmap_class_cbb.clear()
+        self.cmap_class_cbb.addItems(COLORMAPS_DICT.keys())
+
+    @pyqtSlot('QString')
+    def on_cmap_class_changed(self, c):
+        """Colormap class is changed.
+        """
+        self.cmap_cbb.clear()
+        self.cmap_cbb.addItems(COLORMAPS_DICT.get(c))
 
 
 
