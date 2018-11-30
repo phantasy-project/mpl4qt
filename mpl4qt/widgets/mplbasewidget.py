@@ -213,10 +213,22 @@ class MatplotlibCMapWidget(BasePlotWidget):
                 top=0.9999, bottom=0.0001, left=0.0001, right=0.9999)
         self.axes.set_axis_off()
 
+        # reverse cmap flag, '' or '_r'
+        self._rcmap = ''
+
     def init_figure(self):
         gradient = np.linspace(0, 1, 256)
         gradient = np.vstack((gradient, gradient))
         self.im = self.axes.imshow(gradient, aspect='auto')
+
+    def set_cmap(self, c):
+        self._cmap = c
+        self.im.set_cmap(self._cmap + self._rcmap)
+        self.update_figure()
+
+    def set_reverse_cmap(self, f):
+        self._rcmap = '_r' if f else ''
+        self.set_cmap(self._cmap)
 
 
 def _set_font(obj, font):
