@@ -72,8 +72,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
     # for i,idx in enumerate(ind): idx, pts[i]
     selectedIndicesUpdated = pyqtSignal(QVariant, QVariant)
 
-    # xy pos
-    xyposUpdated = pyqtSignal(float, float)
+    # xy pos, x,y or x,y,z
+    xyposUpdated = pyqtSignal(list)
 
     def __init__(self, parent=None):
         self._fig_width = 4
@@ -1275,7 +1275,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def on_motion(self, event):
         if event.inaxes is not None:
             x_pos, y_pos = event.xdata, event.ydata
-            self.xyposUpdated.emit(x_pos, y_pos)
+            self.xyposUpdated.emit([x_pos, y_pos])
 
     def on_press(self, e):
         if e.inaxes is not None:
