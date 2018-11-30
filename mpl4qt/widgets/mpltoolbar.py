@@ -167,10 +167,17 @@ class MToolbar(QToolBar):
     def repos_toolbar(self):
         self.move(self.get_pos())
 
-    @pyqtSlot(float, float)
-    def on_update_xypos(self, x, y):
-        self.pos_lbl.setText(
-            "<html><sup>(x, y)</sup>({0:<.4f}, {1:<.4f})</html>".format(x, y))
+    @pyqtSlot(list)
+    def on_update_xypos(self, coord):
+        if len(coord) == 2:
+            x, y = coord
+            self.pos_lbl.setText(
+                "<html><sup>(x,y)</sup>({0:<.4f},{1:<.4f})</html>".format(x, y))
+        elif len(coord) == 3:
+            x, y, z = coord
+            self.pos_lbl.setText(
+                    "<html><sup>(x,y,z)</sup>({0:<.4f},{1:<.4f},{2:<.4g})</html>".format(x, y, z))
+
         self.adjustSize()
 
     @pyqtSlot()
