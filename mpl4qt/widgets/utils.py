@@ -148,6 +148,33 @@ AUTOFORMATTER = FuncFormatter(lambda v,_:'{:g}'.format(v))
 AUTOFORMATTER_MATHTEXT = FuncFormatter(lambda v,_:'${:g}$'.format(v))
 
 
+# colormaps
+COLORMAPS = [('Sequential-Uniform', [
+            'viridis', 'plasma', 'inferno', 'magma']),
+         ('Sequential-I', [
+            'Greys', 'Purples', 'Blues', 'Greens', 'Oranges', 'Reds',
+            'YlOrBr', 'YlOrRd', 'OrRd', 'PuRd', 'RdPu', 'BuPu',
+            'GnBu', 'PuBu', 'YlGnBu', 'PuBuGn', 'BuGn', 'YlGn']),
+         ('Sequential-II', [
+            'binary', 'gist_yarg', 'gist_gray', 'gray', 'bone', 'pink',
+            'spring', 'summer', 'autumn', 'winter', 'cool', 'Wistia',
+            'hot', 'afmhot', 'gist_heat', 'copper']),
+         ('Diverging', [
+            'PiYG', 'PRGn', 'BrBG', 'PuOr', 'RdGy', 'RdBu',
+            'RdYlBu', 'RdYlGn', 'Spectral', 'coolwarm', 'bwr', 'seismic']),
+         ('Qualitative', [
+            'Pastel1', 'Pastel2', 'Paired', 'Accent',
+            'Dark2', 'Set1', 'Set2', 'Set3',
+            'tab10', 'tab20', 'tab20b', 'tab20c']),
+         ('Miscellaneous', [
+            'flag', 'prism', 'ocean', 'gist_earth', 'terrain', 'gist_stern',
+            'gnuplot', 'gnuplot2', 'CMRmap', 'cubehelix', 'brg', 'hsv',
+            'gist_rainbow', 'rainbow', 'jet', 'nipy_spectral', 'gist_ncar'])]
+
+COLORMAPS_DICT = OrderedDict(COLORMAPS)
+
+
+
 def pyformat_from_cformat(s, math_text=False):
     """Convert string format specifier from C style to Python style,
     which could be used by `str.format()` function.
