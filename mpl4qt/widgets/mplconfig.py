@@ -842,18 +842,56 @@ class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
         self.yaxis_scale_cbb.setEnabled(False)
 
         # colormap cbb
+        self.cmap_cbb.currentTextChanged.connect(
+                self.on_cmap_changed)
         self.cmap_class_cbb.currentTextChanged.connect(
                 self.on_cmap_class_changed)
         self.cmap_class_cbb.clear()
         self.cmap_class_cbb.addItems(COLORMAPS_DICT.keys())
+        # reverse cmap chkbox
+        self.reverse_cmap_chkbox.toggled.connect(self.on_reverse_cmap)
+        self.reverse_cmap_chkbox.toggled.connect(self.parent.setReverseCMapToggle)
+
+        # sync current image config
+        self.set_image_config()
+
+        # connect signal/slot
+        # connect: cmap_cbb -> parent.setColorMap
+        self.cmap_cbb.currentTextChanged.connect(self.parent.setColorMap)
+
+    def set_image_config(self):
+        # colormap
+        cmap = self.parent.getColorMap()
+        rcmap = self.parent._rcmap
+        rcmap_toggle = self.parent.getReverseCMapToggle()
+
+        for k,v in COLORMAPS_DICT.items():
+            if cmap in v:
+                current_cmap_class = k
+
+        self.cmap_class_cbb.setCurrentText(current_cmap_class)
+        self.cmap_cbb.setCurrentText(cmap)
+
+        self.reverse_cmap_chkbox.setChecked(rcmap_toggle)
 
     @pyqtSlot('QString')
     def on_cmap_class_changed(self, c):
         """Colormap class is changed.
         """
+        self.cmap_cbb.currentTextChanged.disconnect(self.on_cmap_changed)
         self.cmap_cbb.clear()
+        self.cmap_cbb.currentTextChanged.connect(self.on_cmap_changed)
         self.cmap_cbb.addItems(COLORMAPS_DICT.get(c))
 
+    @pyqtSlot('QString')
+    def on_cmap_changed(self, c):
+        """Colormap is changed.
+        """
+        self.cm_image.set_cmap(c)
+
+    @pyqtSlot(bool)
+    def on_reverse_cmap(self, f):
+        self.cm_image.set_reverse_cmap(f)
 
 
 def select_font(obj, current_font, options=None):
