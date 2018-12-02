@@ -5,6 +5,8 @@ from ._export import icon as export_icon
 from .mplcurvewidget_icon import icon as mplcurvewidget_icon
 from .mplbasewidget_icon import icon as mplbasewidget_icon
 from .mplerrorbarwidget_icon import icon as mplerrorbarwidget_icon
+# to be replaced
+from .mplimagewidget_icon import icon as mplimagewidget_icon
 from ._home import icon as home_tool_icon
 from ._zoom import icon as zoom_tool_icon
 from ._exit import icon as exit_tool_icon
