@@ -57,7 +57,6 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
     @pyqtSlot('QString')
     def setColorMap(self, c):
         if c == '': return
-        print(c)
         self._cmap = c
         self.im.set_cmap(self._cmap + self._rcmap)
         self.update_figure()
@@ -78,6 +77,32 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
     reseverColorMap = pyqtProperty(bool, getReverseCMapToggle,
                                    setReverseCMapToggle)
 
+    def getColorRangeMin(self):
+        return self._cr_min
+
+    @pyqtSlot(float)
+    def setColorRangeMin(self, x):
+        """Min of color range
+        """
+        self._cr_min = x
+        self.im.set_clim(vmin=self._cr_min, vmax=self._cr_max)
+        self.update_figure()
+
+    colorRangeMin = pyqtProperty(float, getColorRangeMin, setColorRangeMin)
+
+    def getColorRangeMax(self):
+        return self._cr_max
+
+    @pyqtSlot(float)
+    def setColorRangeMax(self, x):
+        """Max of color range
+        """
+        self._cr_max = x
+        self.im.set_clim(vmin=self._cr_min, vmax=self._cr_max)
+        self.update_figure()
+
+    colorRangeMax = pyqtProperty(float, getColorRangeMax, setColorRangeMax)
+
     def get_all_curves(self):
         """Return all additional curves."""
         return self._lines
@@ -90,7 +115,11 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
         x, y = np.meshgrid(np.linspace(-3, 3, 100),
                            np.linspace(-3, 3, 100))
         z = fn_peaks(x, y)
-        im = self.axes.imshow(z, cmap=self._cmap)#, origin="lower left")
+        # color range
+        self._cr_min, self._cr_max = z.min(), z.max()
+        im = self.axes.imshow(z, cmap=self._cmap,
+                vmin=self._cr_min,
+                vmax=self._cr_max)#, origin="lower left")
 
         self.x, self.y, self.z = x, y, z
         self.im = im
