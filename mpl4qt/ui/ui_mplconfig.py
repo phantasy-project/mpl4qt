@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(893, 340)
+        Dialog.resize(881, 328)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -23,6 +23,7 @@ class Ui_Dialog(object):
         Dialog.setSizeGripEnabled(False)
         Dialog.setModal(False)
         self.gridLayout_3 = QtWidgets.QGridLayout(Dialog)
+        self.gridLayout_3.setContentsMargins(5, 5, 5, 5)
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.config_tabWidget = QtWidgets.QTabWidget(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
@@ -1085,8 +1086,51 @@ class Ui_Dialog(object):
         spacerItem2 = QtWidgets.QSpacerItem(20, 40,
                                             QtWidgets.QSizePolicy.Minimum,
                                             QtWidgets.QSizePolicy.Expanding)
-        self.formLayout.setItem(2, QtWidgets.QFormLayout.LabelRole,
+        self.formLayout.setItem(3, QtWidgets.QFormLayout.LabelRole,
                                 spacerItem2)
+        self.label_47 = QtWidgets.QLabel(self.image_tab)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_47.setFont(font)
+        self.label_47.setObjectName("label_47")
+        self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole,
+                                  self.label_47)
+        self.horizontalLayout_17 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_17.setObjectName("horizontalLayout_17")
+        self.show_colorbar_chkbox = QtWidgets.QCheckBox(self.image_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.show_colorbar_chkbox.sizePolicy().hasHeightForWidth())
+        self.show_colorbar_chkbox.setSizePolicy(sizePolicy)
+        self.show_colorbar_chkbox.setObjectName("show_colorbar_chkbox")
+        self.horizontalLayout_17.addWidget(self.show_colorbar_chkbox)
+        self.cb_orientation_lbl = QtWidgets.QLabel(self.image_tab)
+        self.cb_orientation_lbl.setEnabled(False)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.cb_orientation_lbl.sizePolicy().hasHeightForWidth())
+        self.cb_orientation_lbl.setSizePolicy(sizePolicy)
+        self.cb_orientation_lbl.setObjectName("cb_orientation_lbl")
+        self.horizontalLayout_17.addWidget(self.cb_orientation_lbl)
+        self.cb_orientation_cbb = QtWidgets.QComboBox(self.image_tab)
+        self.cb_orientation_cbb.setEnabled(False)
+        self.cb_orientation_cbb.setObjectName("cb_orientation_cbb")
+        self.cb_orientation_cbb.addItem("")
+        self.cb_orientation_cbb.addItem("")
+        self.horizontalLayout_17.addWidget(self.cb_orientation_cbb)
+        spacerItem3 = QtWidgets.QSpacerItem(40, 20,
+                                            QtWidgets.QSizePolicy.Expanding,
+                                            QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_17.addItem(spacerItem3)
+        self.formLayout.setLayout(2, QtWidgets.QFormLayout.FieldRole,
+                                  self.horizontalLayout_17)
         self.config_tabWidget.addTab(self.image_tab, "")
         self.style_tab = QtWidgets.QWidget()
         self.style_tab.setObjectName("style_tab")
@@ -1351,7 +1395,7 @@ class Ui_Dialog(object):
         self.gridLayout_3.addWidget(self.config_tabWidget, 0, 0, 1, 1)
 
         self.retranslateUi(Dialog)
-        self.config_tabWidget.setCurrentIndex(3)
+        self.config_tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
         Dialog.setTabOrder(self.fig_title_lineEdit, self.title_font_btn)
         Dialog.setTabOrder(self.title_font_btn, self.fig_xlabel_lineEdit)
@@ -1389,7 +1433,17 @@ class Ui_Dialog(object):
         Dialog.setTabOrder(self.eb_mk_edgecolor_btn, self.eb_mk_size_lineEdit)
         Dialog.setTabOrder(self.eb_mk_size_lineEdit, self.eb_mk_width_lineEdit)
         Dialog.setTabOrder(self.eb_mk_width_lineEdit, self.xeb_mk_style_cbb)
-        Dialog.setTabOrder(self.xeb_mk_style_cbb, self.figWidth_lineEdit)
+        Dialog.setTabOrder(self.xeb_mk_style_cbb, self.cmap_class_cbb)
+        Dialog.setTabOrder(self.cmap_class_cbb, self.cmap_cbb)
+        Dialog.setTabOrder(self.cmap_cbb, self.add_to_fav_btn)
+        Dialog.setTabOrder(self.add_to_fav_btn, self.del_from_fav_btn)
+        Dialog.setTabOrder(self.del_from_fav_btn, self.reverse_cmap_chkbox)
+        Dialog.setTabOrder(self.reverse_cmap_chkbox, self.cr_reset_tbtn)
+        Dialog.setTabOrder(self.cr_reset_tbtn, self.cr_min_dSpinBox)
+        Dialog.setTabOrder(self.cr_min_dSpinBox, self.cr_max_dSpinBox)
+        Dialog.setTabOrder(self.cr_max_dSpinBox, self.show_colorbar_chkbox)
+        Dialog.setTabOrder(self.show_colorbar_chkbox, self.cb_orientation_cbb)
+        Dialog.setTabOrder(self.cb_orientation_cbb, self.figWidth_lineEdit)
         Dialog.setTabOrder(self.figWidth_lineEdit, self.figHeight_lineEdit)
         Dialog.setTabOrder(self.figHeight_lineEdit, self.figDpi_lineEdit)
         Dialog.setTabOrder(self.figDpi_lineEdit, self.bkgd_color_btn)
@@ -1409,6 +1463,7 @@ class Ui_Dialog(object):
                            self.tightLayout_chkbox)
         Dialog.setTabOrder(self.tightLayout_chkbox, self.gridon_chkbox)
         Dialog.setTabOrder(self.gridon_chkbox, self.grid_color_btn)
+        Dialog.setTabOrder(self.grid_color_btn, self.config_tabWidget)
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -1539,6 +1594,13 @@ class Ui_Dialog(object):
         self.cr_reset_tbtn.setText(_translate("Dialog", "..."))
         self.label_45.setText(_translate("Dialog", "Min"))
         self.label_46.setText(_translate("Dialog", "Max"))
+        self.label_47.setText(_translate("Dialog", "Color Bar"))
+        self.show_colorbar_chkbox.setText(_translate("Dialog", "Show"))
+        self.cb_orientation_lbl.setText(_translate("Dialog", "Orientation"))
+        self.cb_orientation_cbb.setItemText(0, _translate(
+            "Dialog", "Vertical"))
+        self.cb_orientation_cbb.setItemText(1,
+                                            _translate("Dialog", "Horizontal"))
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.image_tab),
             _translate("Dialog", "Image"))
