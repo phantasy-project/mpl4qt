@@ -855,9 +855,21 @@ class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
         # sync current image config
         self.set_image_config()
 
-        # connect signal/slot
+        # connect signals/slots
         # connect: cmap_cbb -> parent.setColorMap
         self.cmap_cbb.currentTextChanged.connect(self.parent.setColorMap)
+        # color range spinboxes
+        self.cr_min_dSpinBox.valueChanged.connect(self.parent.setColorRangeMin)
+        self.cr_max_dSpinBox.valueChanged.connect(self.parent.setColorRangeMax)
+        self.cr_reset_tbtn.clicked.connect(self.reset_color_range)
+
+    @pyqtSlot()
+    def reset_color_range(self):
+        """Reset color range.
+        """
+        cr_min0, cr_max0 = self._color_range0
+        self.cr_min_dSpinBox.setValue(cr_min0)
+        self.cr_max_dSpinBox.setValue(cr_max0)
 
     def set_image_config(self):
         # colormap
@@ -873,6 +885,26 @@ class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
         self.cmap_cbb.setCurrentText(cmap)
 
         self.reverse_cmap_chkbox.setChecked(rcmap_toggle)
+
+        # color range
+        cr_min0 = self.parent.z.min()
+        cr_max0 = self.parent.z.max()
+        self._color_range0 = (cr_min0, cr_max0)
+        cr_min = cr_min0 - (cr_max0 - cr_min0) * 10.0
+        cr_max = cr_max0 + (cr_max0 - cr_min0) * 10.0
+        single_step = (cr_max - cr_min) / 100
+        a, b, c = int(cr_min*1000)/1000, int(cr_max*1000)/1000, \
+                  int(single_step*1000)/1000
+        self.cr_min_dSpinBox.setDecimals(3)
+        self.cr_max_dSpinBox.setDecimals(3)
+        self.cr_min_dSpinBox.setRange(a, b)
+        self.cr_max_dSpinBox.setRange(a, b)
+        self.cr_min_dSpinBox.setSingleStep(c)
+        self.cr_max_dSpinBox.setSingleStep(c)
+        # initial values
+        self.cr_min_dSpinBox.setValue(self.parent.getColorRangeMin())
+        self.cr_max_dSpinBox.setValue(self.parent.getColorRangeMax())
+
 
     @pyqtSlot('QString')
     def on_cmap_class_changed(self, c):
