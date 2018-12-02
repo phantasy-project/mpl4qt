@@ -40,7 +40,43 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
     """
 
     def __init__(self, parent=None):
+        # colormap
+        #self._cmap = "viridis"
+        self._cmap = "jet"
+
         super(MatplotlibImageWidget, self).__init__(parent)
+
+        # reverse colormap flag
+        self._rcmap_toggle = False
+        self.setReverseCMapToggle(self._rcmap_toggle)
+
+
+    def getColorMap(self):
+        return self._cmap
+
+    @pyqtSlot('QString')
+    def setColorMap(self, c):
+        if c == '': return
+        print(c)
+        self._cmap = c
+        self.im.set_cmap(self._cmap + self._rcmap)
+        self.update_figure()
+
+    colorMap = pyqtProperty('QString', getColorMap, setColorMap)
+
+    def getReverseCMapToggle(self):
+        return self._rcmap_toggle
+
+    @pyqtSlot(bool)
+    def setReverseCMapToggle(self, f):
+        """Input param: bool
+        """
+        self._rcmap_toggle = f
+        self._rcmap = '_r' if f else ''
+        self.setColorMap(self._cmap)
+
+    reseverColorMap = pyqtProperty(bool, getReverseCMapToggle,
+                                   setReverseCMapToggle)
 
     def get_all_curves(self):
         """Return all additional curves."""
@@ -54,9 +90,10 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
         x, y = np.meshgrid(np.linspace(-3, 3, 100),
                            np.linspace(-3, 3, 100))
         z = fn_peaks(x, y)
-        im = self.axes.imshow(z)#, origin="lower left")
+        im = self.axes.imshow(z, cmap=self._cmap)#, origin="lower left")
 
         self.x, self.y, self.z = x, y, z
+        self.im = im
 
         #
         self.figure.colorbar(im)
