@@ -41,15 +41,17 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
 
     def __init__(self, parent=None):
         # colormap
-        #self._cmap = "viridis"
-        self._cmap = "jet"
+        self._cmap = "jet" # "viridis"
+        # colorbar
+        self._cb_toggle = False
+        self.cb = None
+        self._cb_orientation = 'vertical'
 
         super(MatplotlibImageWidget, self).__init__(parent)
 
         # reverse colormap flag
         self._rcmap_toggle = False
         self.setReverseCMapToggle(self._rcmap_toggle)
-
 
     def getColorMap(self):
         return self._cmap
@@ -103,6 +105,40 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
 
     colorRangeMax = pyqtProperty(float, getColorRangeMax, setColorRangeMax)
 
+    def getColorBarToggle(self):
+        return self._cb_toggle
+
+    @pyqtSlot(bool)
+    def setColorBarToggle(self, f):
+        """Turn on/off colorbar.
+        """
+        self._cb_toggle = f
+        if f and self.cb is None:
+            self.cb = self.figure.colorbar(self.im,
+                                           orientation=self._cb_orientation,
+                                           aspect=20, shrink=0.95, pad=0.08,
+                                           fraction=0.05)
+        if not f:
+            self.cb.remove()
+            self.cb = None
+        self.update_figure()
+
+    colorBarToggle = pyqtProperty(bool, getColorBarToggle, setColorBarToggle)
+
+    def getColorBarOrientation(self):
+        return self._cb_orientation
+
+    @pyqtSlot('QString')
+    def setColorBarOrientation(self, s):
+        self._cb_orientation = s.lower()
+        if self.cb is not None:
+            self.setColorBarToggle(False)
+            self.setColorBarToggle(True)
+        self.update_figure()
+
+    colorBarOrientation = pyqtProperty('QString', getColorBarOrientation,
+                                       setColorBarOrientation)
+
     def get_all_curves(self):
         """Return all additional curves."""
         return self._lines
@@ -123,9 +159,6 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
 
         self.x, self.y, self.z = x, y, z
         self.im = im
-
-        #
-        self.figure.colorbar(im)
 
     @pyqtSlot(float)
     def setXLimitMin(self, x=None):
