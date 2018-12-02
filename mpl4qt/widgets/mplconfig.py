@@ -852,6 +852,12 @@ class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
         self.reverse_cmap_chkbox.toggled.connect(self.on_reverse_cmap)
         self.reverse_cmap_chkbox.toggled.connect(self.parent.setReverseCMapToggle)
 
+        # colorbar toggle
+        self.show_colorbar_chkbox.toggled.connect(self.parent.setColorBarToggle)
+        self.show_colorbar_chkbox.toggled.connect(self.cb_orientation_cbb.setEnabled)
+        self.show_colorbar_chkbox.toggled.connect(self.cb_orientation_lbl.setEnabled)
+        self.cb_orientation_cbb.currentTextChanged.connect(self.parent.setColorBarOrientation)
+
         # sync current image config
         self.set_image_config()
 
@@ -904,6 +910,11 @@ class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
         # initial values
         self.cr_min_dSpinBox.setValue(self.parent.getColorRangeMin())
         self.cr_max_dSpinBox.setValue(self.parent.getColorRangeMax())
+
+        # colorbar on/off
+        self.show_colorbar_chkbox.setChecked(self.parent.getColorBarToggle())
+        # colorbar orientation
+        self.cb_orientation_cbb.setCurrentText(self.parent.getColorBarOrientation())
 
 
     @pyqtSlot('QString')
