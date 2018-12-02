@@ -1021,9 +1021,9 @@ class Ui_Dialog(object):
         self.del_from_fav_btn.setObjectName("del_from_fav_btn")
         self.horizontalLayout_15.addWidget(self.del_from_fav_btn)
         self.horizontalLayout_16.addLayout(self.horizontalLayout_15)
-        self.reverse_chkbox = QtWidgets.QCheckBox(self.image_tab)
-        self.reverse_chkbox.setObjectName("reverse_chkbox")
-        self.horizontalLayout_16.addWidget(self.reverse_chkbox)
+        self.reverse_cmap_chkbox = QtWidgets.QCheckBox(self.image_tab)
+        self.reverse_cmap_chkbox.setObjectName("reverse_cmap_chkbox")
+        self.horizontalLayout_16.addWidget(self.reverse_cmap_chkbox)
         self.cm_image = MatplotlibCMapWidget(self.image_tab)
         self.cm_image.setObjectName("cm_image")
         self.horizontalLayout_16.addWidget(self.cm_image)
@@ -1039,59 +1039,47 @@ class Ui_Dialog(object):
                                   self.label_44)
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.cr_reset_tbtn = QtWidgets.QToolButton(self.image_tab)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(
+            QtGui.QPixmap(":/icons/reset_btn.png"), QtGui.QIcon.Normal,
+            QtGui.QIcon.Off)
+        self.cr_reset_tbtn.setIcon(icon2)
+        self.cr_reset_tbtn.setIconSize(QtCore.QSize(24, 24))
+        self.cr_reset_tbtn.setAutoRaise(True)
+        self.cr_reset_tbtn.setObjectName("cr_reset_tbtn")
+        self.horizontalLayout_4.addWidget(self.cr_reset_tbtn)
         self.label_45 = QtWidgets.QLabel(self.image_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_45.sizePolicy().hasHeightForWidth())
+        self.label_45.setSizePolicy(sizePolicy)
         self.label_45.setObjectName("label_45")
         self.horizontalLayout_4.addWidget(self.label_45)
-        self.horizontalSlider = QtWidgets.QSlider(self.image_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding,
-                                           QtWidgets.QSizePolicy.Fixed)
+        self.cr_min_dSpinBox = QtWidgets.QDoubleSpinBox(self.image_tab)
+        self.cr_min_dSpinBox.setButtonSymbols(
+            QtWidgets.QAbstractSpinBox.UpDownArrows)
+        self.cr_min_dSpinBox.setProperty("showGroupSeparator", False)
+        self.cr_min_dSpinBox.setDecimals(3)
+        self.cr_min_dSpinBox.setObjectName("cr_min_dSpinBox")
+        self.horizontalLayout_4.addWidget(self.cr_min_dSpinBox)
+        self.label_46 = QtWidgets.QLabel(self.image_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.horizontalSlider.sizePolicy().hasHeightForWidth())
-        self.horizontalSlider.setSizePolicy(sizePolicy)
-        self.horizontalSlider.setOrientation(QtCore.Qt.Horizontal)
-        self.horizontalSlider.setObjectName("horizontalSlider")
-        self.horizontalLayout_4.addWidget(self.horizontalSlider)
-        self.label_46 = QtWidgets.QLabel(self.image_tab)
+            self.label_46.sizePolicy().hasHeightForWidth())
+        self.label_46.setSizePolicy(sizePolicy)
         self.label_46.setObjectName("label_46")
         self.horizontalLayout_4.addWidget(self.label_46)
-        self.horizontalSlider_2 = QtWidgets.QSlider(self.image_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.horizontalSlider_2.sizePolicy().hasHeightForWidth())
-        self.horizontalSlider_2.setSizePolicy(sizePolicy)
-        self.horizontalSlider_2.setOrientation(QtCore.Qt.Horizontal)
-        self.horizontalSlider_2.setObjectName("horizontalSlider_2")
-        self.horizontalLayout_4.addWidget(self.horizontalSlider_2)
-        self.label_47 = QtWidgets.QLabel(self.image_tab)
-        self.label_47.setObjectName("label_47")
-        self.horizontalLayout_4.addWidget(self.label_47)
-        self.lineEdit = QtWidgets.QLineEdit(self.image_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.lineEdit.sizePolicy().hasHeightForWidth())
-        self.lineEdit.setSizePolicy(sizePolicy)
-        self.lineEdit.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft
-                                   | QtCore.Qt.AlignVCenter)
-        self.lineEdit.setObjectName("lineEdit")
-        self.horizontalLayout_4.addWidget(self.lineEdit)
-        self.lineEdit_2 = QtWidgets.QLineEdit(self.image_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.lineEdit_2.sizePolicy().hasHeightForWidth())
-        self.lineEdit_2.setSizePolicy(sizePolicy)
-        self.lineEdit_2.setObjectName("lineEdit_2")
-        self.horizontalLayout_4.addWidget(self.lineEdit_2)
+        self.cr_max_dSpinBox = QtWidgets.QDoubleSpinBox(self.image_tab)
+        self.cr_max_dSpinBox.setDecimals(3)
+        self.cr_max_dSpinBox.setObjectName("cr_max_dSpinBox")
+        self.horizontalLayout_4.addWidget(self.cr_max_dSpinBox)
         self.formLayout.setLayout(1, QtWidgets.QFormLayout.FieldRole,
                                   self.horizontalLayout_4)
         spacerItem2 = QtWidgets.QSpacerItem(20, 40,
@@ -1363,7 +1351,7 @@ class Ui_Dialog(object):
         self.gridLayout_3.addWidget(self.config_tabWidget, 0, 0, 1, 1)
 
         self.retranslateUi(Dialog)
-        self.config_tabWidget.setCurrentIndex(0)
+        self.config_tabWidget.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
         Dialog.setTabOrder(self.fig_title_lineEdit, self.title_font_btn)
         Dialog.setTabOrder(self.title_font_btn, self.fig_xlabel_lineEdit)
@@ -1542,11 +1530,15 @@ class Ui_Dialog(object):
         self.label_43.setText(_translate("Dialog", "Color Map"))
         self.add_to_fav_btn.setText(_translate("Dialog", "..."))
         self.del_from_fav_btn.setText(_translate("Dialog", "..."))
-        self.reverse_chkbox.setText(_translate("Dialog", "Reverse"))
+        self.reverse_cmap_chkbox.setText(_translate("Dialog", "Reverse"))
         self.label_44.setText(_translate("Dialog", "Color Range"))
+        self.cr_reset_tbtn.setToolTip(
+            _translate(
+                "Dialog",
+                "<html><head/><body><p>Reset color range</p></body></html>"))
+        self.cr_reset_tbtn.setText(_translate("Dialog", "..."))
         self.label_45.setText(_translate("Dialog", "Min"))
         self.label_46.setText(_translate("Dialog", "Max"))
-        self.label_47.setText(_translate("Dialog", "Range"))
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.image_tab),
             _translate("Dialog", "Image"))
