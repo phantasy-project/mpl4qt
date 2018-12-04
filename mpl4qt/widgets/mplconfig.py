@@ -898,7 +898,7 @@ class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
         self._color_range0 = (cr_min0, cr_max0)
         cr_min = cr_min0 - (cr_max0 - cr_min0) * 10.0
         cr_max = cr_max0 + (cr_max0 - cr_min0) * 10.0
-        single_step = (cr_max - cr_min) / 100
+        single_step = (cr_max0 - cr_min0) / 100
         a, b, c = int(cr_min*1000)/1000, int(cr_max*1000)/1000, \
                   int(single_step*1000)/1000
         self.cr_min_dSpinBox.setDecimals(3)
