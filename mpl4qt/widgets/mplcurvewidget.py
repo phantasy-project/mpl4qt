@@ -50,6 +50,7 @@ from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
 from mpl4qt.widgets.utils import mplcolor2hex
 from mpl4qt.widgets.utils import DEFAULT_MPL_SETTINGS
 from mpl4qt.widgets.utils import SCALE_STY_VALS
+from mpl4qt.widgets.utils import ALL_COLORMAPS
 from mpl4qt.widgets.utils import cycle_list_next
 from mpl4qt.widgets.utils import AUTOFORMATTER_MATHTEXT
 from mpl4qt.widgets.utils import AUTOFORMATTER
@@ -1333,7 +1334,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         if e.key == 'g':
             # turn on/off grid
             self.setFigureGridToggle(not self.getFigureGridToggle())
-        elif e.key == 'a':
+        elif e.key == 'a' and self.widget_type != 'image':
             # turn on/off autoscale
             self.setFigureAutoScale(not self.getFigureAutoScale())
         elif e.key == 'm':
@@ -1350,13 +1351,17 @@ class MatplotlibCurveWidget(BasePlotWidget):
             self.force_update()
             self.update_figure()
             self.resize_figure()
-        elif e.key == 's':
+        elif e.key == 's' and self.widget_type != 'image':
             # circulate y-axis scale type
             self.setFigureYScale(
                 cycle_list_next(SCALE_STY_VALS, self.getFigureYScale()))
         elif e.key == '?':
             # help msgbox
             self.kbd_help()
+        elif e.key == 'c' and self.widget_type == 'image':
+            # circulate image colormap
+            self.setColorMap(
+                cycle_list_next(ALL_COLORMAPS, self.getColorMap()))
 
     def dragEnterEvent(self, e):
         if e.mimeData().hasUrls():
