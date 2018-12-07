@@ -49,6 +49,9 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
 
         super(MatplotlibImageWidget, self).__init__(parent)
 
+        # widget type
+        self.widget_type = 'image'
+
         # reverse colormap flag
         self._rcmap_toggle = False
         self.setReverseCMapToggle(self._rcmap_toggle)

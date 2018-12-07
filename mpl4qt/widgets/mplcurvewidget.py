@@ -124,6 +124,9 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._marker_size = 6.0
         self._line_label = '_line0'
 
+        # widget type
+        self.widget_type = 'curve'
+
     def add_curve(self, x_data=None, y_data=None, **kws):
         """Add one curve to figure, accepts all ``pyplot.plot`` keyword
         arguments, see `matplotlib.pyplot.plot <https://matplotlib.org/api/_as_gen/matplotlib.pyplot.plot.html>`_.

@@ -46,6 +46,9 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
 
         super(MatplotlibErrorbarWidget, self).__init__(parent)
 
+        # widget type
+        self.widget_type = 'errorbar'
+
     def _init_config(self):
         self.eb_fmt = ''
         self.eb_markercolor = '#1E90FF'
