@@ -175,6 +175,10 @@ COLORMAPS = [
 
 COLORMAPS_DICT = OrderedDict(COLORMAPS)
 
+ALL_COLORMAPS = []
+for k, v in COLORMAPS:
+    ALL_COLORMAPS.extend(v)
+
 
 def pyformat_from_cformat(s, math_text=False):
     """Convert string format specifier from C style to Python style,
