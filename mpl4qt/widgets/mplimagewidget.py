@@ -47,6 +47,12 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
         self.cb = None
         self._cb_orientation = 'vertical'
 
+        # placeholders of xylim (not applicable)
+        self._xlim_min = 0
+        self._xlim_max = 1
+        self._ylim_min = 0
+        self._ylim_max = 1
+
         super(MatplotlibImageWidget, self).__init__(parent)
 
         # widget type
