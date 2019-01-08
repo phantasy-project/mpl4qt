@@ -172,11 +172,11 @@ class MToolbar(QToolBar):
         if len(coord) == 2:
             x, y = coord
             self.pos_lbl.setText(
-                "<html><sup>(x,y)</sup>({0:<.4f},{1:<.4f})</html>".format(x, y))
+                "<html><sup>(x,y)</sup>({0:<.4g},{1:<.4g})</html>".format(x, y))
         elif len(coord) == 3:
             x, y, z = coord
             self.pos_lbl.setText(
-                    "<html><sup>(x,y,z)</sup>({0:<.4f},{1:<.4f},{2:<.4g})</html>".format(x, y, z))
+                    "<html><sup>(x,y,z)</sup>({0:<.4g},{1:<.4g},{2:<.4g})</html>".format(x, y, z))
 
         self.adjustSize()
 
