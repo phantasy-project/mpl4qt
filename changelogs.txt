@@ -1,3 +1,7 @@
+2.3.0
+  * Create a new widget for image plot.
+  * Bug fixes.
+
 2.2.1
   * Set all buttons autodefault/default false.
   * Show/hide cross-ruler.
