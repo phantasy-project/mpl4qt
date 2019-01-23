@@ -434,6 +434,15 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
         yerr_data : list or array
             Error array in y.
         """
+        if isinstance(x_data, list):
+            x_data = np.asarray(x_data)
+        if isinstance(y_data, list):
+            y_data = np.asarray(y_data)
+        if isinstance(xerr_data, list):
+            xerr_data = np.asarray(xerr_data)
+        if isinstance(yerr_data, list):
+            yerr_data = np.asarray(yerr_data)
+
         self._x_data = x_data
         self._y_data = y_data
         adjust_errorbar(self._line, self._eb_line, x_data, y_data, xerr_data, yerr_data)
