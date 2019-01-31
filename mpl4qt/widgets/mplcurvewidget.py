@@ -76,6 +76,15 @@ class MatplotlibCurveWidget(BasePlotWidget):
     # xy pos, x,y or x,y,z
     xyposUpdated = pyqtSignal(list)
 
+    # grid
+    gridOnUpdated = pyqtSignal(bool)
+
+    # legend
+    legendOnUpdated = pyqtSignal(bool)
+
+    # autoscale
+    autoScaleOnUpdated = pyqtSignal(bool)
+
     def __init__(self, parent=None):
         self._fig_width = 4
         self._fig_height = 3
@@ -244,6 +253,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
                 for k, v in kws.items() if k not in ('toggle_checked', 'color')
             })
         self.update_figure()
+        #
+        self.gridOnUpdated.emit(f)
 
     figureGridToggle = pyqtProperty(bool, getFigureGridToggle,
                                     setFigureGridToggle)
@@ -269,6 +280,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
             except AttributeError:
                 pass
         self.update_figure()
+        #
+        self.legendOnUpdated.emit(f)
 
     figureLegendToggle = pyqtProperty(bool, getLegendToggle, setLegendToggle)
 
@@ -873,6 +886,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
             self.axes.autoscale()
             self.update_canvas()
             self.update_figure()
+        #
+        self.autoScaleOnUpdated.emit(f)
 
     figureAutoScale = pyqtProperty(bool, getFigureAutoScale,
                                    setFigureAutoScale)
