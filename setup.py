@@ -27,7 +27,7 @@ installrequires = [
 
 setup(
     name=app_name,
-    version="2.3.0",
+    version="2.3.1",
     description=app_description,
     long_description=app_long_description,
     author=app_author,
@@ -49,7 +49,7 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
-        'Topic :: Software Development :: Libraries :: Python Modules', 
+        'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     install_requires=installrequires,
 )
