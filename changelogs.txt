@@ -1,3 +1,8 @@
+2.3.1
+  * Update UI
+  * And new signals to mplcurvewidget
+  * Enforce ndarray data type for update_curve()
+
 2.3.0
   * Create a new widget for image plot.
   * Bug fixes.
