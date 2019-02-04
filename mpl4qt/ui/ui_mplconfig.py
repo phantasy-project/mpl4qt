@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(881, 328)
+        Dialog.resize(1048, 385)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -74,7 +74,7 @@ class Ui_Dialog(object):
         self.fig_title_lineEdit.setPlaceholderText("")
         self.fig_title_lineEdit.setObjectName("fig_title_lineEdit")
         self.horizontalLayout_12.addWidget(self.fig_title_lineEdit)
-        self.title_font_btn = QtWidgets.QPushButton(self.figure_tab)
+        self.title_font_btn = QtWidgets.QToolButton(self.figure_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -82,8 +82,13 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.title_font_btn.sizePolicy().hasHeightForWidth())
         self.title_font_btn.setSizePolicy(sizePolicy)
-        self.title_font_btn.setAutoDefault(False)
-        self.title_font_btn.setDefault(False)
+        icon = QtGui.QIcon()
+        icon.addPixmap(
+            QtGui.QPixmap(":/icons/choose-font.png"), QtGui.QIcon.Normal,
+            QtGui.QIcon.Off)
+        self.title_font_btn.setIcon(icon)
+        self.title_font_btn.setIconSize(QtCore.QSize(28, 28))
+        self.title_font_btn.setAutoRaise(True)
         self.title_font_btn.setObjectName("title_font_btn")
         self.horizontalLayout_12.addWidget(self.title_font_btn)
         self.formLayout_2.setLayout(0, QtWidgets.QFormLayout.FieldRole,
@@ -160,7 +165,7 @@ class Ui_Dialog(object):
         self.fig_ylabel_lineEdit.setObjectName("fig_ylabel_lineEdit")
         self.horizontalLayout_3.addWidget(self.fig_ylabel_lineEdit)
         self.horizontalLayout_11.addLayout(self.horizontalLayout_3)
-        self.xy_label_font_btn = QtWidgets.QPushButton(self.figure_tab)
+        self.xy_label_font_btn = QtWidgets.QToolButton(self.figure_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -168,8 +173,9 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.xy_label_font_btn.sizePolicy().hasHeightForWidth())
         self.xy_label_font_btn.setSizePolicy(sizePolicy)
-        self.xy_label_font_btn.setAutoDefault(False)
-        self.xy_label_font_btn.setDefault(False)
+        self.xy_label_font_btn.setIcon(icon)
+        self.xy_label_font_btn.setIconSize(QtCore.QSize(28, 28))
+        self.xy_label_font_btn.setAutoRaise(True)
         self.xy_label_font_btn.setObjectName("xy_label_font_btn")
         self.horizontalLayout_11.addWidget(self.xy_label_font_btn)
         self.formLayout_2.setLayout(1, QtWidgets.QFormLayout.FieldRole,
@@ -1006,19 +1012,23 @@ class Ui_Dialog(object):
         self.cmap_cbb.setObjectName("cmap_cbb")
         self.horizontalLayout_15.addWidget(self.cmap_cbb)
         self.add_to_fav_btn = QtWidgets.QToolButton(self.image_tab)
-        icon = QtGui.QIcon()
-        icon.addPixmap(
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(
             QtGui.QPixmap(":/icons/add.png"), QtGui.QIcon.Normal,
             QtGui.QIcon.Off)
-        self.add_to_fav_btn.setIcon(icon)
+        self.add_to_fav_btn.setIcon(icon1)
+        self.add_to_fav_btn.setIconSize(QtCore.QSize(24, 24))
+        self.add_to_fav_btn.setAutoRaise(True)
         self.add_to_fav_btn.setObjectName("add_to_fav_btn")
         self.horizontalLayout_15.addWidget(self.add_to_fav_btn)
         self.del_from_fav_btn = QtWidgets.QToolButton(self.image_tab)
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(
             QtGui.QPixmap(":/icons/del.png"), QtGui.QIcon.Normal,
             QtGui.QIcon.Off)
-        self.del_from_fav_btn.setIcon(icon1)
+        self.del_from_fav_btn.setIcon(icon2)
+        self.del_from_fav_btn.setIconSize(QtCore.QSize(24, 24))
+        self.del_from_fav_btn.setAutoRaise(True)
         self.del_from_fav_btn.setObjectName("del_from_fav_btn")
         self.horizontalLayout_15.addWidget(self.del_from_fav_btn)
         self.horizontalLayout_16.addLayout(self.horizontalLayout_15)
@@ -1041,11 +1051,11 @@ class Ui_Dialog(object):
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.cr_reset_tbtn = QtWidgets.QToolButton(self.image_tab)
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(
             QtGui.QPixmap(":/icons/reset_btn.png"), QtGui.QIcon.Normal,
             QtGui.QIcon.Off)
-        self.cr_reset_tbtn.setIcon(icon2)
+        self.cr_reset_tbtn.setIcon(icon3)
         self.cr_reset_tbtn.setIconSize(QtCore.QSize(24, 24))
         self.cr_reset_tbtn.setAutoRaise(True)
         self.cr_reset_tbtn.setObjectName("cr_reset_tbtn")
@@ -1214,7 +1224,7 @@ class Ui_Dialog(object):
         self.bkgd_color_label.setAlignment(QtCore.Qt.AlignCenter)
         self.bkgd_color_label.setObjectName("bkgd_color_label")
         self.horizontalLayout_6.addWidget(self.bkgd_color_label)
-        self.bkgd_color_btn = QtWidgets.QPushButton(self.style_tab)
+        self.bkgd_color_btn = QtWidgets.QToolButton(self.style_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -1222,7 +1232,13 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.bkgd_color_btn.sizePolicy().hasHeightForWidth())
         self.bkgd_color_btn.setSizePolicy(sizePolicy)
-        self.bkgd_color_btn.setAutoDefault(False)
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(
+            QtGui.QPixmap(":/icons/pick-color.png"), QtGui.QIcon.Normal,
+            QtGui.QIcon.Off)
+        self.bkgd_color_btn.setIcon(icon4)
+        self.bkgd_color_btn.setIconSize(QtCore.QSize(28, 28))
+        self.bkgd_color_btn.setAutoRaise(True)
         self.bkgd_color_btn.setObjectName("bkgd_color_btn")
         self.horizontalLayout_6.addWidget(self.bkgd_color_btn)
         self.formLayout_3.setLayout(1, QtWidgets.QFormLayout.FieldRole,
@@ -1253,7 +1269,7 @@ class Ui_Dialog(object):
         self.xy_ticks_sample_lbl.setAlignment(QtCore.Qt.AlignCenter)
         self.xy_ticks_sample_lbl.setObjectName("xy_ticks_sample_lbl")
         self.horizontalLayout_7.addWidget(self.xy_ticks_sample_lbl)
-        self.xy_ticks_font_btn = QtWidgets.QPushButton(self.style_tab)
+        self.xy_ticks_font_btn = QtWidgets.QToolButton(self.style_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -1261,13 +1277,15 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.xy_ticks_font_btn.sizePolicy().hasHeightForWidth())
         self.xy_ticks_font_btn.setSizePolicy(sizePolicy)
-        self.xy_ticks_font_btn.setAutoDefault(False)
+        self.xy_ticks_font_btn.setIcon(icon)
+        self.xy_ticks_font_btn.setIconSize(QtCore.QSize(28, 28))
+        self.xy_ticks_font_btn.setAutoRaise(True)
         self.xy_ticks_font_btn.setObjectName("xy_ticks_font_btn")
         self.horizontalLayout_7.addWidget(self.xy_ticks_font_btn)
         self.ticks_color_label = QtWidgets.QLabel(self.style_tab)
         self.ticks_color_label.setObjectName("ticks_color_label")
         self.horizontalLayout_7.addWidget(self.ticks_color_label)
-        self.ticks_color_btn = QtWidgets.QPushButton(self.style_tab)
+        self.ticks_color_btn = QtWidgets.QToolButton(self.style_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -1275,7 +1293,9 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.ticks_color_btn.sizePolicy().hasHeightForWidth())
         self.ticks_color_btn.setSizePolicy(sizePolicy)
-        self.ticks_color_btn.setAutoDefault(False)
+        self.ticks_color_btn.setIcon(icon4)
+        self.ticks_color_btn.setIconSize(QtCore.QSize(28, 28))
+        self.ticks_color_btn.setAutoRaise(True)
         self.ticks_color_btn.setObjectName("ticks_color_btn")
         self.horizontalLayout_7.addWidget(self.ticks_color_btn)
         self.formLayout_3.setLayout(2, QtWidgets.QFormLayout.FieldRole,
@@ -1395,7 +1415,7 @@ class Ui_Dialog(object):
         self.gridLayout_3.addWidget(self.config_tabWidget, 0, 0, 1, 1)
 
         self.retranslateUi(Dialog)
-        self.config_tabWidget.setCurrentIndex(0)
+        self.config_tabWidget.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
         Dialog.setTabOrder(self.fig_title_lineEdit, self.title_font_btn)
         Dialog.setTabOrder(self.title_font_btn, self.fig_xlabel_lineEdit)
@@ -1509,8 +1529,9 @@ class Ui_Dialog(object):
                                          _translate("Dialog", "Log Transform"))
         self.xaxis_scale_cbb.setItemText(
             2, _translate("Dialog", "Symmetrical Log Transform"))
-        self.xaxis_scale_cbb.setItemText(
-            3, _translate("Dialog", "Logistic Transform"))
+        self.xaxis_scale_cbb.setItemText(3,
+                                         _translate("Dialog",
+                                                    "Logistic Transform"))
         self.label_41.setText(_translate("Dialog", "Y"))
         self.yaxis_scale_cbb.setItemText(0, _translate("Dialog",
                                                        "Linear Scale"))
@@ -1518,8 +1539,9 @@ class Ui_Dialog(object):
                                          _translate("Dialog", "Log Transform"))
         self.yaxis_scale_cbb.setItemText(
             2, _translate("Dialog", "Symmetrical Log Transform"))
-        self.yaxis_scale_cbb.setItemText(
-            3, _translate("Dialog", "Logistic Transform"))
+        self.yaxis_scale_cbb.setItemText(3,
+                                         _translate("Dialog",
+                                                    "Logistic Transform"))
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.figure_tab),
             _translate("Dialog", "Figure"))
