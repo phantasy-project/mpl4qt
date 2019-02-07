@@ -1415,7 +1415,7 @@ class Ui_Dialog(object):
         self.gridLayout_3.addWidget(self.config_tabWidget, 0, 0, 1, 1)
 
         self.retranslateUi(Dialog)
-        self.config_tabWidget.setCurrentIndex(3)
+        self.config_tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
         Dialog.setTabOrder(self.fig_title_lineEdit, self.title_font_btn)
         Dialog.setTabOrder(self.title_font_btn, self.fig_xlabel_lineEdit)
