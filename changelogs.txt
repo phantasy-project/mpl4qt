@@ -1,3 +1,6 @@
+2.3.2
+  * Update UI
+
 2.3.1
   * Update UI
   * And new signals to mplcurvewidget
