@@ -164,7 +164,7 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
         self._cr_min, self._cr_max = z.min(), z.max()
         im = self.axes.imshow(z, cmap=self._cmap,
                 vmin=self._cr_min,
-                vmax=self._cr_max)#, origin="lower left")
+                vmax=self._cr_max, origin="lower left")
 
         self.x, self.y, self.z = x, y, z
         self.im = im
@@ -195,6 +195,17 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
             x_ind, y_ind = int(x_pos), int(y_pos)
             z_pos = self.z[y_ind][x_ind]
             self.xyposUpdated.emit([x_pos, y_pos, z_pos])
+
+    def update_image(self, zdata):
+        """Update image.
+        """
+        self.z = zdata
+        self.im.set_array(zdata)
+        xdim, ydim = self.z.shape
+        xy_extent = [0, ydim, 0, xdim]
+        self.im.set_extent(xy_extent)
+        self.update_figure()
+
 
 
 def fn_peaks(x, y):
