@@ -147,6 +147,11 @@ class MatplotlibCurveWidget(BasePlotWidget):
             Array of x data.
         y_data : list or array
             Array of y data.
+
+        Returns
+        -------
+        o : Line2D
+            The added line object.
         """
         if x_data is None or y_data is None:
             l, = self.axes.plot([], [], **kws)
@@ -155,6 +160,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._lines.append(l)
         self.update_legend()
         self.update_figure()
+        return l
 
     def get_all_curves(self):
         """Return all curves."""
