@@ -194,6 +194,10 @@ class BasePlotWidget(FigureCanvas):
     def set_context_menu(self, ):
         self.setContextMenuPolicy(Qt.DefaultContextMenu)
 
+    def clear_figure(self):
+        self.axes.clear()
+        self.update_figure()
+
 
 class MatplotlibBaseWidget(BasePlotWidget):
     """MatplotlibBaseWidget(BasePlotWidget)
