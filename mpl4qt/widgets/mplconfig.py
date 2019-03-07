@@ -96,7 +96,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.setWindowTitle("Figure Configurations")
 
         # hide eb_tab and image_tab
-        for tab in (self.eb_tab, self.image_tab):
+        for tab in (self.eb_tab, self.image_tab, self.barchart_tab):
             self.config_tabWidget.setTabEnabled(
                 self.config_tabWidget.indexOf(tab), False)
         # set the style sheet
@@ -935,6 +935,145 @@ class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
     @pyqtSlot(bool)
     def on_reverse_cmap(self, f):
         self.cm_image.set_reverse_cmap(f)
+
+
+class MatplotlibConfigBarPanel(MatplotlibConfigPanel):
+    # eb color
+    figEbLineColorChanged = pyqtSignal(QColor)
+    # eb alpha
+    figEbLineAlphaChanged = pyqtSignal(float)
+    # eb lw
+    figEbLineWidthChanged = pyqtSignal(float)
+    # bar color
+    figBarColorChanged = pyqtSignal(QColor)
+    # bar alpha
+    figBarAlphaChanged = pyqtSignal(float)
+    # bar width
+    figBarWidthChanged = pyqtSignal(float)
+
+    def __init__(self, parent=None):
+        super(MatplotlibConfigBarPanel, self).__init__(parent)
+        self._post_setup()
+
+    def _post_setup(self):
+        """enable/disable controls
+        """
+        # show barchart tab
+        self.config_tabWidget.setTabEnabled(
+                self.config_tabWidget.indexOf(self.barchart_tab), True)
+
+        self.ebline_width_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
+        self.bar_width_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
+
+        # events
+        # ebline color
+        self.figEbLineColorChanged[QColor].connect(self.set_ebline_color_btn)
+        self.figEbLineColorChanged[QColor].connect(self.parent.setEbLineColor)
+        self.ebline_color_btn.clicked.connect(self.set_ebline_color)
+
+        # ebline opacity
+        self.ebline_opacity_slider.valueChanged.connect(
+                lambda i: self.ebline_opacity_lbl.setText('{}%'.format(i)))
+        self.ebline_opacity_slider.valueChanged.connect(self.set_ebline_opacity)
+        self.figEbLineAlphaChanged[float].connect(self.parent.setEbLineAlpha)
+
+        # ebline linewidth
+        self.ebline_width_lineEdit.textChanged.connect(self.set_ebline_width)
+        self.figEbLineWidthChanged[float].connect(self.parent.setEbLineWidth)
+
+        # ebline linestyle
+        self.ebline_style_cbb.currentTextChanged['QString'].connect(
+            self.parent.setEbLineStyle)
+
+        # label
+        self.label_lineEdit.textChanged.connect(self.parent.setLabel)
+
+        # bar color
+        self.figBarColorChanged[QColor].connect(self.set_bar_color_btn)
+        self.figBarColorChanged[QColor].connect(self.parent.setBarColor)
+        self.bar_color_btn.clicked.connect(self.set_bar_color)
+
+        # bar opacity
+        self.bar_opacity_slider.valueChanged.connect(
+                lambda i: self.bar_opacity_lbl.setText('{}%'.format(i)))
+        self.bar_opacity_slider.valueChanged.connect(self.set_bar_opacity)
+        self.figBarAlphaChanged[float].connect(self.parent.setBarAlpha)
+
+        # bar width
+        self.bar_width_lineEdit.textChanged.connect(self.set_bar_width)
+        self.figBarWidthChanged[float].connect(self.parent.setBarWidth)
+
+        # set config
+        self._set_barchart_config_panel(self.parent.get_barchart_config())
+
+    @pyqtSlot('QString')
+    def set_ebline_width(self, s):
+        if s == '': return
+        w = max(float(s), 0.05)
+        self.figEbLineWidthChanged.emit(w)
+
+    @pyqtSlot('QString')
+    def set_bar_width(self, s):
+        if s == '': return
+        w = max(float(s), 0.05)
+        self.figBarWidthChanged.emit(w)
+
+    @pyqtSlot(int)
+    def set_ebline_opacity(self, i):
+        self.figEbLineAlphaChanged.emit(i/100.0)
+
+    @pyqtSlot(int)
+    def set_bar_opacity(self, i):
+        self.figBarAlphaChanged.emit(i/100.0)
+
+    @pyqtSlot()
+    def set_ebline_color(self):
+        color = QColorDialog.getColor()
+        if color.isValid():
+            self.figEbLineColorChanged.emit(color)
+
+    @pyqtSlot()
+    def set_bar_color(self):
+        color = QColorDialog.getColor()
+        if color.isValid():
+            self.figBarColorChanged.emit(color)
+
+    @pyqtSlot(QColor)
+    def set_ebline_color_btn(self, color):
+        self._set_btn_color(self.ebline_color_btn, color)
+
+    @pyqtSlot(QColor)
+    def set_bar_color_btn(self, color):
+        self._set_btn_color(self.bar_color_btn, color)
+
+    def _set_barchart_config_panel(self, config):
+        eb_color = mplcolor2hex(config.get('eb_color'))
+        eb_alpha = config.get('eb_alpha')
+        eb_lw = config.get('eb_lw')
+        eb_ls = config.get('eb_ls')
+        bar_color = mplcolor2hex(config.get('bar_color'))
+        bar_alpha = config.get('bar_alpha')
+        bar_width = config.get('bar_width')
+        label = config.get('label')
+        eb_opacity = 100 if eb_alpha is None else eb_alpha * 100
+        bar_opacity = 100 if bar_alpha is None else bar_alpha * 100
+
+        # eb color
+        self.figEbLineColorChanged.emit(QColor(eb_color))
+        # eb alpha
+        self.ebline_opacity_slider.setValue(eb_opacity)
+        # eb lw
+        self.ebline_width_lineEdit.setText('{}'.format(eb_lw))
+        # eb ls
+        self.ebline_style_cbb.setCurrentText(eb_ls)
+        # label
+        self.label_lineEdit.setText('{}'.format(label))
+        # bar color
+        self.figBarColorChanged.emit(QColor(bar_color))
+        # bar alpha
+        self.bar_opacity_slider.setValue(bar_opacity)
+        # bar width
+        self.bar_width_lineEdit.setText('{}'.format(bar_width))
 
 
 def select_font(obj, current_font, options=None):
