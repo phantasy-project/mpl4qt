@@ -1142,6 +1142,339 @@ class Ui_Dialog(object):
         self.formLayout.setLayout(2, QtWidgets.QFormLayout.FieldRole,
                                   self.horizontalLayout_17)
         self.config_tabWidget.addTab(self.image_tab, "")
+        self.barchart_tab = QtWidgets.QWidget()
+        self.barchart_tab.setObjectName("barchart_tab")
+        self.gridLayout_4 = QtWidgets.QGridLayout(self.barchart_tab)
+        self.gridLayout_4.setObjectName("gridLayout_4")
+        self.label_48 = QtWidgets.QLabel(self.barchart_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_48.sizePolicy().hasHeightForWidth())
+        self.label_48.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_48.setFont(font)
+        self.label_48.setObjectName("label_48")
+        self.gridLayout_4.addWidget(self.label_48, 0, 0, 1, 1)
+        self.label_50 = QtWidgets.QLabel(self.barchart_tab)
+        self.label_50.setObjectName("label_50")
+        self.gridLayout_4.addWidget(self.label_50, 2, 1, 1, 1)
+        self.label_54 = QtWidgets.QLabel(self.barchart_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_54.sizePolicy().hasHeightForWidth())
+        self.label_54.setSizePolicy(sizePolicy)
+        self.label_54.setObjectName("label_54")
+        self.gridLayout_4.addWidget(self.label_54, 1, 6, 1, 1)
+        self.ebline_width_lineEdit = QtWidgets.QLineEdit(self.barchart_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.ebline_width_lineEdit.sizePolicy().hasHeightForWidth())
+        self.ebline_width_lineEdit.setSizePolicy(sizePolicy)
+        self.ebline_width_lineEdit.setObjectName("ebline_width_lineEdit")
+        self.gridLayout_4.addWidget(self.ebline_width_lineEdit, 1, 7, 1, 1)
+        self.label_55 = QtWidgets.QLabel(self.barchart_tab)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_55.setFont(font)
+        self.label_55.setObjectName("label_55")
+        self.gridLayout_4.addWidget(self.label_55, 2, 0, 1, 1)
+        self.label_51 = QtWidgets.QLabel(self.barchart_tab)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_51.setFont(font)
+        self.label_51.setObjectName("label_51")
+        self.gridLayout_4.addWidget(self.label_51, 1, 0, 1, 1)
+        self.bar_color_btn = QtWidgets.QPushButton(self.barchart_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.bar_color_btn.sizePolicy().hasHeightForWidth())
+        self.bar_color_btn.setSizePolicy(sizePolicy)
+        self.bar_color_btn.setStyleSheet(" QPushButton {\n"
+                                         "    margin: 1px;\n"
+                                         "    border-color: rgb(0, 85, 0);\n"
+                                         "    border-style: outset;\n"
+                                         "    border-radius: 3px;\n"
+                                         "    border-width: 1px;\n"
+                                         "    color: black;\n"
+                                         "    background-color: gray;\n"
+                                         "}\n"
+                                         "QPushButton:pressed {\n"
+                                         "    background-color: white;\n"
+                                         "}")
+        self.bar_color_btn.setText("")
+        self.bar_color_btn.setAutoDefault(False)
+        self.bar_color_btn.setObjectName("bar_color_btn")
+        self.gridLayout_4.addWidget(self.bar_color_btn, 0, 2, 1, 1)
+        self.bar_opacity_lbl = QtWidgets.QLabel(self.barchart_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.bar_opacity_lbl.sizePolicy().hasHeightForWidth())
+        self.bar_opacity_lbl.setSizePolicy(sizePolicy)
+        self.bar_opacity_lbl.setAlignment(QtCore.Qt.AlignRight
+                                          | QtCore.Qt.AlignTrailing
+                                          | QtCore.Qt.AlignVCenter)
+        self.bar_opacity_lbl.setObjectName("bar_opacity_lbl")
+        self.gridLayout_4.addWidget(self.bar_opacity_lbl, 2, 6, 1, 1)
+        spacerItem4 = QtWidgets.QSpacerItem(40, 20,
+                                            QtWidgets.QSizePolicy.Expanding,
+                                            QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_4.addItem(spacerItem4, 1, 5, 1, 1)
+        self.ebline_opacity_slider = QtWidgets.QSlider(self.barchart_tab)
+        self.ebline_opacity_slider.setStyleSheet(
+            "QSlider::groove:horizontal {\n"
+            "border: 1px solid #bbb;\n"
+            "background: white;\n"
+            "height: 12px;\n"
+            "border-radius: 4px;\n"
+            "}\n"
+            "\n"
+            "QSlider::sub-page:horizontal {\n"
+            "background: qlineargradient(x1: 0, y1: 0,    x2: 0, y2: 1,\n"
+            "    stop: 0 #F57900, stop: 1 #FCAF3E);\n"
+            "background: qlineargradient(x1: 0, y1: 0.2, x2: 1, y2: 1,\n"
+            "    stop: 0 #FCAF3E, stop: 1 #F57900);\n"
+            "border: 1px solid #777;\n"
+            "height: 10px;\n"
+            "border-radius: 4px;\n"
+            "}\n"
+            "\n"
+            "QSlider::add-page:horizontal {\n"
+            "background: #fff;\n"
+            "border: 1px solid #777;\n"
+            "height: 10px;\n"
+            "border-radius: 4px;\n"
+            "}\n"
+            "\n"
+            "QSlider::handle:horizontal {\n"
+            "background: qlineargradient(x1:0, y1:0, x2:1, y2:1,\n"
+            "    stop:0 #eee, stop:1 #ccc);\n"
+            "border: 1px solid #777;\n"
+            "width: 15px;\n"
+            "margin-top: -2px;\n"
+            "margin-bottom: -2px;\n"
+            "border-radius: 4px;\n"
+            "}\n"
+            "\n"
+            "QSlider::handle:horizontal:hover {\n"
+            "background: qlineargradient(x1:0, y1:0, x2:1, y2:1,\n"
+            "    stop:0 #fff, stop:1 #ddd);\n"
+            "border: 1px solid #444;\n"
+            "border-radius: 4px;\n"
+            "}\n"
+            "\n"
+            "QSlider::sub-page:horizontal:disabled {\n"
+            "background: #bbb;\n"
+            "border-color: #999;\n"
+            "}\n"
+            "\n"
+            "QSlider::add-page:horizontal:disabled {\n"
+            "background: #eee;\n"
+            "border-color: #999;\n"
+            "}\n"
+            "\n"
+            "QSlider::handle:horizontal:disabled {\n"
+            "background: #eee;\n"
+            "border: 1px solid #aaa;\n"
+            "border-radius: 4px;\n"
+            "}")
+        self.ebline_opacity_slider.setMaximum(100)
+        self.ebline_opacity_slider.setProperty("value", 100)
+        self.ebline_opacity_slider.setOrientation(QtCore.Qt.Horizontal)
+        self.ebline_opacity_slider.setTickPosition(QtWidgets.QSlider.NoTicks)
+        self.ebline_opacity_slider.setObjectName("ebline_opacity_slider")
+        self.gridLayout_4.addWidget(self.ebline_opacity_slider, 3, 2, 1, 4)
+        self.ebline_opacity_lbl = QtWidgets.QLabel(self.barchart_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.ebline_opacity_lbl.sizePolicy().hasHeightForWidth())
+        self.ebline_opacity_lbl.setSizePolicy(sizePolicy)
+        self.ebline_opacity_lbl.setAlignment(QtCore.Qt.AlignRight
+                                             | QtCore.Qt.AlignTrailing
+                                             | QtCore.Qt.AlignVCenter)
+        self.ebline_opacity_lbl.setObjectName("ebline_opacity_lbl")
+        self.gridLayout_4.addWidget(self.ebline_opacity_lbl, 3, 6, 1, 1)
+        self.bar_opacity_slider = QtWidgets.QSlider(self.barchart_tab)
+        self.bar_opacity_slider.setStyleSheet(
+            "QSlider::groove:horizontal {\n"
+            "border: 1px solid #bbb;\n"
+            "background: white;\n"
+            "height: 12px;\n"
+            "border-radius: 4px;\n"
+            "}\n"
+            "\n"
+            "QSlider::sub-page:horizontal {\n"
+            "background: qlineargradient(x1: 0, y1: 0,    x2: 0, y2: 1,\n"
+            "    stop: 0 #F57900, stop: 1 #FCAF3E);\n"
+            "background: qlineargradient(x1: 0, y1: 0.2, x2: 1, y2: 1,\n"
+            "    stop: 0 #FCAF3E, stop: 1 #F57900);\n"
+            "border: 1px solid #777;\n"
+            "height: 10px;\n"
+            "border-radius: 4px;\n"
+            "}\n"
+            "\n"
+            "QSlider::add-page:horizontal {\n"
+            "background: #fff;\n"
+            "border: 1px solid #777;\n"
+            "height: 10px;\n"
+            "border-radius: 4px;\n"
+            "}\n"
+            "\n"
+            "QSlider::handle:horizontal {\n"
+            "background: qlineargradient(x1:0, y1:0, x2:1, y2:1,\n"
+            "    stop:0 #eee, stop:1 #ccc);\n"
+            "border: 1px solid #777;\n"
+            "width: 15px;\n"
+            "margin-top: -2px;\n"
+            "margin-bottom: -2px;\n"
+            "border-radius: 4px;\n"
+            "}\n"
+            "\n"
+            "QSlider::handle:horizontal:hover {\n"
+            "background: qlineargradient(x1:0, y1:0, x2:1, y2:1,\n"
+            "    stop:0 #fff, stop:1 #ddd);\n"
+            "border: 1px solid #444;\n"
+            "border-radius: 4px;\n"
+            "}\n"
+            "\n"
+            "QSlider::sub-page:horizontal:disabled {\n"
+            "background: #bbb;\n"
+            "border-color: #999;\n"
+            "}\n"
+            "\n"
+            "QSlider::add-page:horizontal:disabled {\n"
+            "background: #eee;\n"
+            "border-color: #999;\n"
+            "}\n"
+            "\n"
+            "QSlider::handle:horizontal:disabled {\n"
+            "background: #eee;\n"
+            "border: 1px solid #aaa;\n"
+            "border-radius: 4px;\n"
+            "}")
+        self.bar_opacity_slider.setMaximum(100)
+        self.bar_opacity_slider.setProperty("value", 100)
+        self.bar_opacity_slider.setOrientation(QtCore.Qt.Horizontal)
+        self.bar_opacity_slider.setTickPosition(QtWidgets.QSlider.NoTicks)
+        self.bar_opacity_slider.setObjectName("bar_opacity_slider")
+        self.gridLayout_4.addWidget(self.bar_opacity_slider, 2, 2, 1, 4)
+        self.label_52 = QtWidgets.QLabel(self.barchart_tab)
+        self.label_52.setObjectName("label_52")
+        self.gridLayout_4.addWidget(self.label_52, 1, 1, 1, 1)
+        self.label_53 = QtWidgets.QLabel(self.barchart_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_53.sizePolicy().hasHeightForWidth())
+        self.label_53.setSizePolicy(sizePolicy)
+        self.label_53.setObjectName("label_53")
+        self.gridLayout_4.addWidget(self.label_53, 1, 3, 1, 1)
+        self.ebline_style_cbb = QtWidgets.QComboBox(self.barchart_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.ebline_style_cbb.sizePolicy().hasHeightForWidth())
+        self.ebline_style_cbb.setSizePolicy(sizePolicy)
+        self.ebline_style_cbb.setSizeAdjustPolicy(
+            QtWidgets.QComboBox.AdjustToContentsOnFirstShow)
+        self.ebline_style_cbb.setObjectName("ebline_style_cbb")
+        self.ebline_style_cbb.addItem("")
+        self.ebline_style_cbb.addItem("")
+        self.ebline_style_cbb.addItem("")
+        self.ebline_style_cbb.addItem("")
+        self.ebline_style_cbb.addItem("")
+        self.gridLayout_4.addWidget(self.ebline_style_cbb, 1, 4, 1, 1)
+        self.label_56 = QtWidgets.QLabel(self.barchart_tab)
+        self.label_56.setObjectName("label_56")
+        self.gridLayout_4.addWidget(self.label_56, 3, 1, 1, 1)
+        self.ebline_color_btn = QtWidgets.QPushButton(self.barchart_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.ebline_color_btn.sizePolicy().hasHeightForWidth())
+        self.ebline_color_btn.setSizePolicy(sizePolicy)
+        self.ebline_color_btn.setStyleSheet(
+            " QPushButton {\n"
+            "    margin: 1px;\n"
+            "    border-color: rgb(0, 85, 0);\n"
+            "    border-style: outset;\n"
+            "    border-radius: 3px;\n"
+            "    border-width: 1px;\n"
+            "    color: black;\n"
+            "    background-color: gray;\n"
+            "}\n"
+            "QPushButton:pressed {\n"
+            "    background-color: white;\n"
+            "}")
+        self.ebline_color_btn.setText("")
+        self.ebline_color_btn.setAutoDefault(False)
+        self.ebline_color_btn.setObjectName("ebline_color_btn")
+        self.gridLayout_4.addWidget(self.ebline_color_btn, 1, 2, 1, 1)
+        self.label_49 = QtWidgets.QLabel(self.barchart_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_49.sizePolicy().hasHeightForWidth())
+        self.label_49.setSizePolicy(sizePolicy)
+        self.label_49.setObjectName("label_49")
+        self.gridLayout_4.addWidget(self.label_49, 0, 1, 1, 1)
+        spacerItem5 = QtWidgets.QSpacerItem(20, 40,
+                                            QtWidgets.QSizePolicy.Minimum,
+                                            QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_4.addItem(spacerItem5, 5, 2, 1, 1)
+        self.label_57 = QtWidgets.QLabel(self.barchart_tab)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_57.setFont(font)
+        self.label_57.setObjectName("label_57")
+        self.gridLayout_4.addWidget(self.label_57, 4, 0, 1, 1)
+        self.label_lineEdit = QtWidgets.QLineEdit(self.barchart_tab)
+        self.label_lineEdit.setObjectName("label_lineEdit")
+        self.gridLayout_4.addWidget(self.label_lineEdit, 4, 1, 1, 7)
+        self.label_58 = QtWidgets.QLabel(self.barchart_tab)
+        self.label_58.setObjectName("label_58")
+        self.gridLayout_4.addWidget(self.label_58, 0, 6, 1, 1)
+        self.bar_width_lineEdit = QtWidgets.QLineEdit(self.barchart_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.bar_width_lineEdit.sizePolicy().hasHeightForWidth())
+        self.bar_width_lineEdit.setSizePolicy(sizePolicy)
+        self.bar_width_lineEdit.setObjectName("bar_width_lineEdit")
+        self.gridLayout_4.addWidget(self.bar_width_lineEdit, 0, 7, 1, 1)
+        self.config_tabWidget.addTab(self.barchart_tab, "")
         self.style_tab = QtWidgets.QWidget()
         self.style_tab.setObjectName("style_tab")
         self.formLayout_3 = QtWidgets.QFormLayout(self.style_tab)
@@ -1626,6 +1959,27 @@ class Ui_Dialog(object):
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.image_tab),
             _translate("Dialog", "Image"))
+        self.label_48.setText(_translate("Dialog", "Bar"))
+        self.label_50.setText(_translate("Dialog", "Bar"))
+        self.label_54.setText(_translate("Dialog", "Width"))
+        self.label_55.setText(_translate("Dialog", "Opacity"))
+        self.label_51.setText(_translate("Dialog", "ErrorBar"))
+        self.bar_opacity_lbl.setText(_translate("Dialog", "100%"))
+        self.ebline_opacity_lbl.setText(_translate("Dialog", "100%"))
+        self.label_52.setText(_translate("Dialog", "Color"))
+        self.label_53.setText(_translate("Dialog", "Style"))
+        self.ebline_style_cbb.setItemText(0, _translate("Dialog", "solid"))
+        self.ebline_style_cbb.setItemText(1, _translate("Dialog", "dashed"))
+        self.ebline_style_cbb.setItemText(2, _translate("Dialog", "dashdot"))
+        self.ebline_style_cbb.setItemText(3, _translate("Dialog", "dotted"))
+        self.ebline_style_cbb.setItemText(4, _translate("Dialog", "None"))
+        self.label_56.setText(_translate("Dialog", "Errorbar"))
+        self.label_49.setText(_translate("Dialog", "Color"))
+        self.label_57.setText(_translate("Dialog", "Label"))
+        self.label_58.setText(_translate("Dialog", "Width"))
+        self.config_tabWidget.setTabText(
+            self.config_tabWidget.indexOf(self.barchart_tab),
+            _translate("Dialog", "BarChart"))
         self.label_16.setText(_translate("Dialog", "Figure Size"))
         self.label_12.setText(_translate("Dialog", "Width"))
         self.figWidth_lineEdit.setText(_translate("Dialog", "4"))
