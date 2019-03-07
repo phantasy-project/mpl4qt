@@ -244,13 +244,13 @@ def mplcolor2hex(c):
 
     Examples
     --------
-    >>> color_to_hex('r')
+    >>> mplcolor2hex('r')
     '#FF0000'
-    >>> color_to_hex('red')
+    >>> mplcolor2hex('red')
     '#FF0000'
-    >>> color_to_hex('#FF0000')
+    >>> mplcolor2hex('#FF0000')
     '#FF0000'
-    >>> color_to_hex((1.0, 0.0, 0.0, 1.0))
+    >>> mplcolor2hex((1.0, 0.0, 0.0, 1.0))
     '#FF0000'
     """
     if isinstance(c, (tuple, list)):
