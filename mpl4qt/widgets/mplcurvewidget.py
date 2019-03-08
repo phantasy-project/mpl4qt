@@ -115,6 +115,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._fig_ytick_formatter = None  # placeholder only
         self._fig_ytick_cfmt = '' # c string format for FuncFormatter
         self._fig_ticks_enable_mathtext = False # use math text or not
+        self._fig_xticks_angle = 0
+        self._fig_yticks_angle = 0
         # x,y limits
         self.setXLimitMin()
         self.setXLimitMax()
@@ -412,6 +414,44 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     figureXYlabelFont = pyqtProperty(QFont, getFigureXYlabelFont,
                                      setFigureXYlabelFont)
+
+    def getFigureXTicksAngle(self):
+        return self._fig_xticks_angle
+
+    @pyqtSlot(float)
+    def setFigureXTicksAngle(self, angle):
+        """Set rotation angle for the xtick labels.
+
+        Parameters
+        ----------
+        angle : float
+            Angle in degree to rotate.
+        """
+        self._fig_xticks_angle = angle
+        self.rotate_ticks(angle, 'x')
+        self.update_figure()
+
+    figureXTicksAngle = pyqtProperty(float, getFigureXTicksAngle,
+                                     setFigureXTicksAngle)
+
+    def getFigureYTicksAngle(self):
+        return self._fig_yticks_angle
+
+    @pyqtSlot(float)
+    def setFigureYTicksAngle(self, angle):
+        """Set rotation angle for the ytick labels.
+
+        Parameters
+        ----------
+        angle : float
+            Angle in degree to rotate.
+        """
+        self._fig_yticks_angle = angle
+        self.rotate_ticks(angle, 'y')
+        self.update_figure()
+
+    figureYTicksAngle = pyqtProperty(float, getFigureYTicksAngle,
+                                     setFigureYTicksAngle)
 
     def getFigureXYticksFont(self):
         return self._fig_xyticks_font
@@ -1400,6 +1440,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
         w = KbdHelpDialog(self)
         w.setWindowTitle("Keyboard Shortcuts Help")
         w.exec_()
+
+    def rotate_ticks(self, angle, axis):
+        """Rotate *axis* ticks by *angle* in degree.
+        """
+        lbls = getattr(self.axes, "get_{}ticklabels".format(axis))()
+        for o in lbls:
+            o.set_rotation(angle)
 
 
 if __name__ == "__main__":
