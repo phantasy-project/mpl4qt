@@ -1639,7 +1639,7 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.label_37.setFont(font)
         self.label_37.setObjectName("label_37")
-        self.formLayout_3.setWidget(3, QtWidgets.QFormLayout.LabelRole,
+        self.formLayout_3.setWidget(4, QtWidgets.QFormLayout.LabelRole,
                                     self.label_37)
         self.horizontalLayout_9 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_9.setObjectName("horizontalLayout_9")
@@ -1686,7 +1686,7 @@ class Ui_Dialog(object):
         self.ytick_funcformatter_lineEdit.setObjectName(
             "ytick_funcformatter_lineEdit")
         self.horizontalLayout_9.addWidget(self.ytick_funcformatter_lineEdit)
-        self.formLayout_3.setLayout(3, QtWidgets.QFormLayout.FieldRole,
+        self.formLayout_3.setLayout(4, QtWidgets.QFormLayout.FieldRole,
                                     self.horizontalLayout_9)
         self.label_6 = QtWidgets.QLabel(self.style_tab)
         font = QtGui.QFont()
@@ -1694,7 +1694,7 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.label_6.setFont(font)
         self.label_6.setObjectName("label_6")
-        self.formLayout_3.setWidget(4, QtWidgets.QFormLayout.LabelRole,
+        self.formLayout_3.setWidget(5, QtWidgets.QFormLayout.LabelRole,
                                     self.label_6)
         self.horizontalLayout_8 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
@@ -1742,8 +1742,49 @@ class Ui_Dialog(object):
         self.grid_color_btn.setAutoDefault(False)
         self.grid_color_btn.setObjectName("grid_color_btn")
         self.horizontalLayout_8.addWidget(self.grid_color_btn)
-        self.formLayout_3.setLayout(4, QtWidgets.QFormLayout.FieldRole,
+        self.formLayout_3.setLayout(5, QtWidgets.QFormLayout.FieldRole,
                                     self.horizontalLayout_8)
+        self.horizontalLayout_18 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_18.setContentsMargins(-1, 0, -1, -1)
+        self.horizontalLayout_18.setObjectName("horizontalLayout_18")
+        self.label_59 = QtWidgets.QLabel(self.style_tab)
+        self.label_59.setObjectName("label_59")
+        self.horizontalLayout_18.addWidget(self.label_59)
+        self.label_60 = QtWidgets.QLabel(self.style_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_60.sizePolicy().hasHeightForWidth())
+        self.label_60.setSizePolicy(sizePolicy)
+        self.label_60.setObjectName("label_60")
+        self.horizontalLayout_18.addWidget(self.label_60)
+        self.xticks_rotation_sbox = QtWidgets.QDoubleSpinBox(self.style_tab)
+        self.xticks_rotation_sbox.setDecimals(1)
+        self.xticks_rotation_sbox.setMinimum(0.0)
+        self.xticks_rotation_sbox.setMaximum(360.0)
+        self.xticks_rotation_sbox.setSingleStep(0.5)
+        self.xticks_rotation_sbox.setObjectName("xticks_rotation_sbox")
+        self.horizontalLayout_18.addWidget(self.xticks_rotation_sbox)
+        self.label_61 = QtWidgets.QLabel(self.style_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_61.sizePolicy().hasHeightForWidth())
+        self.label_61.setSizePolicy(sizePolicy)
+        self.label_61.setObjectName("label_61")
+        self.horizontalLayout_18.addWidget(self.label_61)
+        self.yticks_rotation_sbox = QtWidgets.QDoubleSpinBox(self.style_tab)
+        self.yticks_rotation_sbox.setDecimals(1)
+        self.yticks_rotation_sbox.setMaximum(360.0)
+        self.yticks_rotation_sbox.setSingleStep(0.5)
+        self.yticks_rotation_sbox.setObjectName("yticks_rotation_sbox")
+        self.horizontalLayout_18.addWidget(self.yticks_rotation_sbox)
+        self.formLayout_3.setLayout(3, QtWidgets.QFormLayout.FieldRole,
+                                    self.horizontalLayout_18)
         self.config_tabWidget.addTab(self.style_tab, "")
         self.gridLayout_3.addWidget(self.config_tabWidget, 0, 0, 1, 1)
 
@@ -2027,6 +2068,11 @@ class Ui_Dialog(object):
         self.label_6.setText(_translate("Dialog", "Layout"))
         self.tightLayout_chkbox.setText(_translate("Dialog", "Tight"))
         self.gridon_chkbox.setText(_translate("Dialog", "Grid On"))
+        self.label_59.setText(_translate("Dialog", "Rotation"))
+        self.label_60.setText(_translate("Dialog", "X"))
+        self.xticks_rotation_sbox.setSuffix(_translate("Dialog", " deg"))
+        self.label_61.setText(_translate("Dialog", "Y"))
+        self.yticks_rotation_sbox.setSuffix(_translate("Dialog", " deg"))
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.style_tab),
             _translate("Dialog", "Style"))
