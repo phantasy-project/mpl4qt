@@ -170,6 +170,9 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.figXYticksColorChanged[QColor].connect(self.set_ticks_color_label)
         self.mticks_chkbox.stateChanged.connect(self.set_fig_mticks)
         self.figMTicksChanged[bool].connect(self.parent.setFigureMTicksToggle)
+        # rot
+        self.xticks_rotation_sbox.valueChanged.connect(self.parent.setFigureXTicksAngle)
+        self.yticks_rotation_sbox.valueChanged.connect(self.parent.setFigureYTicksAngle)
 
         # tick formatter
         self.xtick_formatter_cbb.currentTextChanged['QString'].connect(self.on_tickformatter_changed)
@@ -182,6 +185,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
                                                   set_yticks=True))
         self.figXTickFormatChanged['QString', 'QString'].connect(self.parent.setXTickFormat)
         self.figYTickFormatChanged['QString', 'QString'].connect(self.parent.setYTickFormat)
+
         # enable math text or not
         self.enable_mathtext_chkbox.toggled.connect(self.on_enable_ticks_mathtext)
 
@@ -259,6 +263,8 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.fig_ylabel_lineEdit.setText(self.parent.getFigureYlabel())
         self.xy_ticks_sample_lbl.setFont(self.parent.getFigureXYticksFont())
         self.mticks_chkbox.setChecked(self.parent.getFigureMTicksToggle())
+        self.xticks_rotation_sbox.setValue(self.parent.getFigureXTicksAngle())
+        self.yticks_rotation_sbox.setValue(self.parent.getFigureYTicksAngle())
         self.gridon_chkbox.setChecked(self.parent.getFigureGridToggle())
         self.set_grid_color_btn(self.parent.getFigureGridColor())
         self.set_xylimits()
