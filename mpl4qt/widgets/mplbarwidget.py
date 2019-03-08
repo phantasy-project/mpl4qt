@@ -296,6 +296,12 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
                    self._bar_width)
         self.update_figure()
 
+    def reset_data(self, x, y, yerr):
+        """Reset data with *x*, *y* and *yerr*, only requires for barchar.
+        """
+        self.clear_figure()
+        self.init_figure(x, y, yerr)
+
 
 def adjust_bar(patches, eblines, x, y, yerr, bar_width):
     segs = eblines.get_segments()
