@@ -53,6 +53,8 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
         self._bar_color = QColor('blue')
         self._bar_alpha = 0.5
         self._label = "_barchart"
+        # annotations
+        self._all_annotes = None
 
     def init_figure(self, x=None, y=None, yerr=None):
         if x is None:
@@ -62,7 +64,7 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
 
         self._x_data = x
         self._y_data = y
-        self._yerr = yerr
+        self._yerr_data = yerr
         self._bars = self.axes.bar(x, y, self._bar_width,
                                    color=self._bar_color.getRgbF(),
                                    alpha=self._bar_alpha,
@@ -301,6 +303,30 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
         """
         self.clear_figure()
         self.init_figure(x, y, yerr)
+
+    def annotate_bar(self, **kws):
+        """Annotate with height value on top/bottom of bar.
+        """
+        all_annotes = []
+        ax = self.axes
+        fmt = kws.get('fmt', '{0:.2g}')
+        hw = self._bar_width / 2.0
+        eta = 2.0
+        for ix, iy, iyerr in zip(self._x_data, self._y_data, self._yerr_data):
+            if iy >=0:
+                tp_y = iy + iyerr * eta
+            else:
+                tp_y = iy - iyerr * eta
+            tp = (ix - hw, tp_y)
+            anote = ax.annotate(s=fmt.format(iy), xy=(ix, iy),
+                                xytext=tp)
+            all_annotes.append(anote)
+        self._all_annotes = all_annotes
+
+    def clear_annote(self):
+        if self._all_annotes is not None:
+            [o.remove() for o in self._all_annotes]
+
 
 
 def adjust_bar(patches, eblines, x, y, yerr, bar_width):
