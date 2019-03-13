@@ -209,6 +209,8 @@ class MToolbar(QToolBar):
     def update_selected_indices(self, ind, pts):
         """Emit selected indice list and points.
         """
+        if ind.size == 0:
+            return
         self.selectedIndicesUpdated.emit(ind, pts)
 
     def closeEvent(self, e):
