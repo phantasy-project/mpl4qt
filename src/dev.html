@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Slots &mdash; mpl4qt 1.3.0 documentation</title>
+  <title>Signals &mdash; mpl4qt 2.3.3 documentation</title>
   
 
   
@@ -17,34 +17,36 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="prev" title="Keyborard Shortcuts" href="keyshort.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -58,7 +60,7 @@
             
             
               <div class="version">
-                1.3.0
+                2.3.3
               </div>
             
           
@@ -93,7 +95,8 @@
 </ul>
 <p class="caption"><span class="caption-text">Development</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Slots</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#slots">Slots</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#category-i">Category I</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#category-ii">Category II</a></li>
 </ul>
@@ -143,7 +146,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Slots</li>
+      <li>Signals</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -162,7 +165,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="slots">
+  <div class="section" id="signals">
+<h1>Signals<a class="headerlink" href="#signals" title="Permalink to this headline">¶</a></h1>
+<p><em>MatplotlibCurveWidget</em> provides the following PyQt signals:</p>
+<p><code class="docutils literal notranslate"><span class="pre">selectedIndicesUpdated[list,</span> <span class="pre">array]</span></code>: Update with selected points indices and list of selected points from lasso selector tool.</p>
+<p><code class="docutils literal notranslate"><span class="pre">xyposUpdated[float,</span> <span class="pre">float]</span></code>: Update the current mouse position in the figure data coordinate, represented by two float numbers for x and y positions.</p>
+</div>
+<div class="section" id="slots">
 <span id="dev-slots"></span><h1>Slots<a class="headerlink" href="#slots" title="Permalink to this headline">¶</a></h1>
 <p><em>MatplotlibCurveWidget</em> provides the following PyQt slots:</p>
 <div class="section" id="category-i">
@@ -177,10 +186,16 @@ arguments, see <a class="reference external" href="https://matplotlib.org/api/_a
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>x_data</strong> (<em>list</em><em> or </em><em>array</em>) – Array of x data.</li>
 <li><strong>y_data</strong> (<em>list</em><em> or </em><em>array</em>) – Array of y data.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>o</strong> – The added line object.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Line2D</p>
 </td>
 </tr>
 </tbody>
@@ -256,6 +271,10 @@ first drawn line is of index 0, next one is 1, and so on.</p>
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureMTicksToggle">
 <code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setFigureMTicksToggle</code><span class="sig-paren">(</span><em>f</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureMTicksToggle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Toggle for the minor ticks.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Before toggle on, be sure the axis scale is linear.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -685,7 +704,7 @@ see <a class="reference external" href="https://matplotlib.org/api/_as_gen/matpl
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="keyshort.html" class="btn btn-neutral" title="Keyborard Shortcuts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="keyshort.html" class="btn btn-neutral float-left" title="Keyborard Shortcuts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -694,7 +713,7 @@ see <a class="reference external" href="https://matplotlib.org/api/_as_gen/matpl
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Tong Zhang.
+        &copy; Copyright 2018, Tong Zhang
 
     </p>
   </div>
@@ -711,32 +730,16 @@ see <a class="reference external" href="https://matplotlib.org/api/_as_gen/matpl
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'1.3.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

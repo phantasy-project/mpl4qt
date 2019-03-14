@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Keyborard Shortcuts &mdash; mpl4qt 1.3.0 documentation</title>
+  <title>Keyborard Shortcuts &mdash; mpl4qt 2.3.3 documentation</title>
   
 
   
@@ -17,35 +17,37 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Slots" href="dev.html" />
+    <link rel="next" title="Signals" href="dev.html" />
     <link rel="prev" title="Getting Started" href="tut.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -59,7 +61,7 @@
             
             
               <div class="version">
-                1.3.0
+                2.3.3
               </div>
             
           
@@ -94,7 +96,8 @@
 </ul>
 <p class="caption"><span class="caption-text">Development</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="dev.html">Slots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev.html#slots">Slots</a></li>
 </ul>
 
             
@@ -174,26 +177,32 @@ shotcuts are:</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><span class="raw-html"><kbd>g</kbd></span></td>
-<td>turn on/off grid</td>
+<tr class="row-even"><td><span class="raw-html"><kbd>a</kbd></span></td>
+<td>Turn on/off auto scale</td>
+</tr>
+<tr class="row-odd"><td><span class="raw-html"><kbd>g</kbd></span></td>
+<td>Turn on/off grid</td>
+</tr>
+<tr class="row-even"><td><span class="raw-html"><kbd>l</kbd></span></td>
+<td>Turn on/off legend</td>
 </tr>
 <tr class="row-odd"><td><span class="raw-html"><kbd>m</kbd></span></td>
-<td>turn on/off minor ticks</td>
+<td>Turn on/off minor ticks</td>
 </tr>
-<tr class="row-even"><td><span class="raw-html"><kbd>a</kbd></span></td>
-<td>turn on/off auto scale</td>
+<tr class="row-even"><td><span class="raw-html"><kbd>r</kbd></span></td>
+<td>Force refresh</td>
 </tr>
-<tr class="row-odd"><td><span class="raw-html"><kbd>l</kbd></span></td>
-<td>turn on/off legend</td>
+<tr class="row-odd"><td><span class="raw-html"><kbd>s</kbd></span></td>
+<td>Change y-axis scale</td>
 </tr>
 <tr class="row-even"><td><span class="raw-html"><kbd>t</kbd></span></td>
-<td>tight layout on/off</td>
+<td>Tight layout on/off</td>
 </tr>
-<tr class="row-odd"><td><span class="raw-html"><kbd>r</kbd></span></td>
-<td>force refresh</td>
+<tr class="row-odd"><td><span class="raw-html"><kbd>?</kbd></span></td>
+<td>Show this message box</td>
 </tr>
-<tr class="row-even"><td><span class="raw-html"><kbd>?</kbd></span></td>
-<td>show help message box</td>
+<tr class="row-even"><td><span class="raw-html"><kbd>Esc</kbd></span></td>
+<td>Exit this message box</td>
 </tr>
 </tbody>
 </table>
@@ -212,10 +221,10 @@ image shows:</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="dev.html" class="btn btn-neutral float-right" title="Slots" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="dev.html" class="btn btn-neutral float-right" title="Signals" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="tut.html" class="btn btn-neutral" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="tut.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -224,7 +233,7 @@ image shows:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Tong Zhang.
+        &copy; Copyright 2018, Tong Zhang
 
     </p>
   </div>
@@ -241,32 +250,16 @@ image shows:</p>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'1.3.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

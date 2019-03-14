@@ -28,9 +28,8 @@ just install the following packages:
 Install via PIP
 ---------------
 
-**Q: How to install pip?**
-
-**A: See `this link <https://pip.pypa.io/en/stable/installing/>`_.**
+See `this link <https://pip.pypa.io/en/stable/installing/>`_ about installing
+`pip`.
 
 Install ``mpl4qt``:
 
@@ -69,6 +68,11 @@ What could be reached out?
   integration.
 * Command: ``mplcurve_default_settings`` to generate the JSON file for
   the default configuration of :class:`~mpl4qt.widgets.MatplotlibCurveWidget`.
+* List of widgets are available in Qt designer:
+
+  - *MatplotlibCurveWidget*
+  - *MatplotlibErrorbarWidget*
+
 * Python package named ``mpl4qt`` to be ready for use in any Python script.
 
 Development Environment
@@ -87,11 +91,15 @@ Qt/PyQt versions could be checked by:
 
   print(QT_VERSION_STR, PYQT_VERSION_STR)
 
-Simple Demo App
-^^^^^^^^^^^^^^^
+Simple Demo Apps
+^^^^^^^^^^^^^^^^
 
-A simple application created with ``mpl4qt`` package could be running by:
+Simple applications created with ``mpl4qt`` package could be running by:
 
 .. code-block:: python
 
-    python -m mpl4qt.examples.app1 -c "app1.run()"
+    python -m mpl4qt.examples.app1
+    python -m mpl4qt.examples.app2
+
+The former is built with :class:`~mpl4qt.widgets.MatplotlibCurveWidget`
+and the latter is with :class:`~mpl4qt.widgets.MatplotlibErrorbarWidget`.
