@@ -1,0 +1,20 @@
+language: python
+
+dist: trusty
+
+python:
+    - 3.6
+
+install:
+    - cd ${TRAVIS_BUILD_DIR}
+    - pip install -r requirements-doc.txt
+
+script:
+    - cd ${TRAVIS_BUILD_DIR}/docs
+    - export PYTHONPATH=${TRAVIS_BUILD_DIR}
+    - make clean html
+    - cp -arv build/html build/html_new
+
+after_success:
+    - cd ${TRAVIS_BUILD_DIR}
+    - bash .ci/deploy_gh.sh
