@@ -6,11 +6,10 @@
 mpl4qt - Matplotlib Widget for PyQt5 and Qt5-designer
 =====================================================
 
-``mpl4qt`` is the name of Python package (Python 3.x), which featuring
-matplotlib plotting widgets, as well as Qt5-designer integration, that is
-it possible for the user to develop PyQt GUI application by drag&drop way if
-data visualization widgets are required. Currently, fully support PyQt5 and
-Python 3.x.
+``mpl4qt`` features matplotlib dataviz modules, as well as Qt designer
+widgets integration, which could help the users develop PyQt GUI
+applications by the way of drag & drop packed widgets into any containers.
+Currently, ``mpl4qt`` supports PyQt5 and Python 3.x.
 
 .. toctree::
     :maxdepth: 2
@@ -21,7 +20,7 @@ Python 3.x.
 .. toctree::
     :maxdepth: 2
     :caption: Getting Started
-    
+
     src/tut
     src/keyshort
 
