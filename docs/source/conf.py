@@ -54,7 +54,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'mpl4qt'
-copyright = u'2018, Tong Zhang'
+copyright = u'2018-2019, Tong Zhang <zhangt@frib.msu.edu>'
 author = u'Tong Zhang'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -102,6 +102,9 @@ html_theme = 'sphinx_rtd_theme'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+#html_last_updated_fmt = '%H:%M:%S %b %d, %Y'
+html_last_updated_fmt = ''
 
 def setup(app):
     app.add_stylesheet("css/custom.css")
