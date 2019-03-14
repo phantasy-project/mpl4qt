@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Deployment &mdash; mpl4qt 2.1.0 documentation</title>
+  <title>Deployment &mdash; mpl4qt 2.3.3 documentation</title>
   
 
   
@@ -17,13 +17,29 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'2.3.3',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -31,21 +47,16 @@
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Getting Started" href="tut.html" />
     <link rel="prev" title="mpl4qt - Matplotlib Widget for PyQt5 and Qt5-designer" href="../index.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -59,7 +70,7 @@
             
             
               <div class="version">
-                2.1.0
+                2.3.3
               </div>
             
           
@@ -173,19 +184,19 @@
             
   <div class="section" id="deployment">
 <h1>Deployment<a class="headerlink" href="#deployment" title="Permalink to this headline">¶</a></h1>
-<p>Here’re three ways to deploy <code class="docutils literal notranslate"><span class="pre">mpl4qt</span></code> to the operating system, although
+<p>Here’re three ways to deploy <code class="docutils literal"><span class="pre">mpl4qt</span></code> to the operating system, although
 these approaches are only tested on Linux, hopefully, still work (not tested)
 on Windows and Mac OS.</p>
 <div class="section" id="prerequisites">
 <span id="deploy-pre"></span><h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
-<p>Required packages: <code class="docutils literal notranslate"><span class="pre">Qt5-designer</span></code>, <code class="docutils literal notranslate"><span class="pre">pyuic5</span></code>, <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>.</p>
+<p>Required packages: <code class="docutils literal"><span class="pre">Qt5-designer</span></code>, <code class="docutils literal"><span class="pre">pyuic5</span></code>, <code class="docutils literal"><span class="pre">numpy</span></code>, <code class="docutils literal"><span class="pre">matplotlib</span></code>.</p>
 <p>Normally, all of the Python dependencies will be installed automatically.
 Recently, there is one issue regarding starting up Qt designer,
 see <a class="reference external" href="https://github.com/mu-editor/mu/issues/575">here</a>,
 so it is recommended to use the PyQt5 coming with the OS distribution,
 e.g. if you’re running Ubuntu/Debian/Linux Mint,
 just install the following packages:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get update
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo apt-get update
 sudo apt-get install python3-pyqt5 qttools5-dev-tools pyqt5-dev-tools
 </pre></div>
 </div>
@@ -194,24 +205,24 @@ sudo apt-get install python3-pyqt5 qttools5-dev-tools pyqt5-dev-tools
 <h2>Install via PIP<a class="headerlink" href="#install-via-pip" title="Permalink to this headline">¶</a></h2>
 <p>See <a class="reference external" href="https://pip.pypa.io/en/stable/installing/">this link</a> about installing
 <cite>pip</cite>.</p>
-<p>Install <code class="docutils literal notranslate"><span class="pre">mpl4qt</span></code>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install mpl4qt
+<p>Install <code class="docutils literal"><span class="pre">mpl4qt</span></code>:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install mpl4qt
 </pre></div>
 </div>
-<p>Or upgrade from an earlier version by (use <code class="docutils literal notranslate"><span class="pre">--no-deps</span></code> if only updating <code class="docutils literal notranslate"><span class="pre">mpl4qt</span></code>):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install mpl4qt --upgrade --no-deps
+<p>Or upgrade from an earlier version by (use <code class="docutils literal"><span class="pre">--no-deps</span></code> if only updating <code class="docutils literal"><span class="pre">mpl4qt</span></code>):</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install mpl4qt --upgrade --no-deps
 </pre></div>
 </div>
 </div>
 <div class="section" id="install-from-source">
 <h2>Install from Source<a class="headerlink" href="#install-from-source" title="Permalink to this headline">¶</a></h2>
 <p>Clone the source from Github:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/archman/mpl4qt.git
+<div class="highlight-bash"><div class="highlight"><pre><span></span>git clone https://github.com/archman/mpl4qt.git
 </pre></div>
 </div>
 <p>Then check out to master branch (normally you’re already there), and install
 into your system by:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 setup.py install
+<div class="highlight-bash"><div class="highlight"><pre><span></span>python3 setup.py install
 </pre></div>
 </div>
 </div>
@@ -220,16 +231,16 @@ into your system by:</p>
 <div class="section" id="what-could-be-reached-out">
 <h3>What could be reached out?<a class="headerlink" href="#what-could-be-reached-out" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Command: <code class="docutils literal notranslate"><span class="pre">run_designer</span></code> to start Qt5-designer with matplotlib widgets
+<li>Command: <code class="docutils literal"><span class="pre">run_designer</span></code> to start Qt5-designer with matplotlib widgets
 integration.</li>
-<li>Command: <code class="docutils literal notranslate"><span class="pre">mplcurve_default_settings</span></code> to generate the JSON file for
-the default configuration of <code class="xref py py-class docutils literal notranslate"><span class="pre">MatplotlibCurveWidget</span></code>.</li>
+<li>Command: <code class="docutils literal"><span class="pre">mplcurve_default_settings</span></code> to generate the JSON file for
+the default configuration of <code class="xref py py-class docutils literal"><span class="pre">MatplotlibCurveWidget</span></code>.</li>
 <li>List of widgets are available in Qt designer:<ul>
 <li><em>MatplotlibCurveWidget</em></li>
 <li><em>MatplotlibErrorbarWidget</em></li>
 </ul>
 </li>
-<li>Python package named <code class="docutils literal notranslate"><span class="pre">mpl4qt</span></code> to be ready for use in any Python script.</li>
+<li>Python package named <code class="docutils literal"><span class="pre">mpl4qt</span></code> to be ready for use in any Python script.</li>
 </ul>
 </div>
 <div class="section" id="development-environment">
@@ -242,7 +253,7 @@ the default configuration of <code class="xref py py-class docutils literal notr
 <li>PyQt: 5.5.1</li>
 </ul>
 <p>Qt/PyQt versions could be checked by:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">QT_VERSION_STR</span><span class="p">,</span> <span class="n">PYQT_VERSION_STR</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">QT_VERSION_STR</span><span class="p">,</span> <span class="n">PYQT_VERSION_STR</span>
 
 <span class="k">print</span><span class="p">(</span><span class="n">QT_VERSION_STR</span><span class="p">,</span> <span class="n">PYQT_VERSION_STR</span><span class="p">)</span>
 </pre></div>
@@ -250,13 +261,13 @@ the default configuration of <code class="xref py py-class docutils literal notr
 </div>
 <div class="section" id="simple-demo-apps">
 <h3>Simple Demo Apps<a class="headerlink" href="#simple-demo-apps" title="Permalink to this headline">¶</a></h3>
-<p>Simple applications created with <code class="docutils literal notranslate"><span class="pre">mpl4qt</span></code> package could be running by:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">mpl4qt</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">app1</span>
+<p>Simple applications created with <code class="docutils literal"><span class="pre">mpl4qt</span></code> package could be running by:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">mpl4qt</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">app1</span>
 <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">mpl4qt</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">app2</span>
 </pre></div>
 </div>
-<p>The former is built with <code class="xref py py-class docutils literal notranslate"><span class="pre">MatplotlibCurveWidget</span></code>
-and the latter is with <code class="xref py py-class docutils literal notranslate"><span class="pre">MatplotlibErrorbarWidget</span></code>.</p>
+<p>The former is built with <code class="xref py py-class docutils literal"><span class="pre">MatplotlibCurveWidget</span></code>
+and the latter is with <code class="xref py py-class docutils literal"><span class="pre">MatplotlibErrorbarWidget</span></code>.</p>
 </div>
 </div>
 </div>
@@ -272,7 +283,7 @@ and the latter is with <code class="xref py py-class docutils literal notranslat
         <a href="tut.html" class="btn btn-neutral float-right" title="Getting Started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../index.html" class="btn btn-neutral" title="mpl4qt - Matplotlib Widget for PyQt5 and Qt5-designer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../index.html" class="btn btn-neutral float-left" title="mpl4qt - Matplotlib Widget for PyQt5 and Qt5-designer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -281,7 +292,7 @@ and the latter is with <code class="xref py py-class docutils literal notranslat
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Tong Zhang.
+        &copy; Copyright 2018, Tong Zhang
 
     </p>
   </div>
@@ -298,32 +309,16 @@ and the latter is with <code class="xref py py-class docutils literal notranslat
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'2.1.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

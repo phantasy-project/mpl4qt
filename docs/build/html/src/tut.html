@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting Started &mdash; mpl4qt 2.1.0 documentation</title>
+  <title>Getting Started &mdash; mpl4qt 2.3.3 documentation</title>
   
 
   
@@ -17,13 +17,29 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'2.3.3',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -31,21 +47,16 @@
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Keyborard Shortcuts" href="keyshort.html" />
     <link rel="prev" title="Deployment" href="deploy.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -59,7 +70,7 @@
             
             
               <div class="version">
-                2.1.0
+                2.3.3
               </div>
             
           
@@ -174,24 +185,24 @@
   <div class="section" id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
 <p>In this section, general guidelines about developing PyQt application with
-<code class="docutils literal notranslate"><span class="pre">mpl4qt</span></code> will be addressed, starting the development with the following
+<code class="docutils literal"><span class="pre">mpl4qt</span></code> will be addressed, starting the development with the following
 applications:</p>
 <ul class="simple">
 <li><a class="reference internal" href="#random-x-y-curve-plotter"><span class="std std-ref">Random X-Y Curve Plotter</span></a></li>
 </ul>
 <div class="section" id="start-qt5-designer">
 <h2>Start Qt5-designer<a class="headerlink" href="#start-qt5-designer" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">designer</span></code> is a user-friendly GUI application to help the developer to build
-UI painlessly, in a WYSIWYG way. The created UI file from <code class="docutils literal notranslate"><span class="pre">designer</span></code> is
+<p><code class="docutils literal"><span class="pre">designer</span></code> is a user-friendly GUI application to help the developer to build
+UI painlessly, in a WYSIWYG way. The created UI file from <code class="docutils literal"><span class="pre">designer</span></code> is
 structured XML file, which could be parsed by Qt libraries to show the UI in
 the Qt applications, however, it is designed for both C++ and Python, so if
-you’re working on the PyQt application, another command named <code class="docutils literal notranslate"><span class="pre">pyuic5</span></code> could
+you’re working on the PyQt application, another command named <code class="docutils literal"><span class="pre">pyuic5</span></code> could
 be used to convert the UI file into Python module, which could be imported by
 your PyQt application. There is a way that at the runtime, the UI file could be
 loaded into to render the GUI, but it is recommended that always converting
 UI file to Python module before runtime, since there might be chances that
 different PyQt versions would be applied between development and runtime.</p>
-<p>After installing <code class="docutils literal notranslate"><span class="pre">mpl4qt</span></code>, simply type <code class="docutils literal notranslate"><span class="pre">run_designer</span></code> in the Linux
+<p>After installing <code class="docutils literal"><span class="pre">mpl4qt</span></code>, simply type <code class="docutils literal"><span class="pre">run_designer</span></code> in the Linux
 terminal to launch designer:</p>
 <a class="reference internal image-reference" href="../_images/designer_startup.png"><img alt="../_images/designer_startup.png" class="align-center" src="../_images/designer_startup.png" style="width: 800px;" /></a>
 <p>As one can see, in the <em>Widget Box</em> column, a new category of so-called
@@ -199,7 +210,7 @@ terminal to launch designer:</p>
 <em>MatplotlibCurveWidget</em>, which is ready to be dragged&amp;dropped.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">If the following error message happens: <em>qtcore.so: undefined symbol: pyslice_adjustindices</em>, could be resolved by uninstalling pyqt5 package by <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">uninstall</span> <span class="pre">pyqt5</span></code>, and installing the OS distributed one, see <a class="reference internal" href="deploy.html#deploy-pre"><span class="std std-ref">Install mpl4qt</span></a>.</p>
+<p class="last">If the following error message happens: <em>qtcore.so: undefined symbol: pyslice_adjustindices</em>, could be resolved by uninstalling pyqt5 package by <code class="docutils literal"><span class="pre">pip</span> <span class="pre">uninstall</span> <span class="pre">pyqt5</span></code>, and installing the OS distributed one, see <a class="reference internal" href="deploy.html#deploy-pre"><span class="std std-ref">Install mpl4qt</span></a>.</p>
 </div>
 </div>
 <div class="section" id="random-x-y-curve-plotter">
@@ -244,11 +255,11 @@ to run.</p>
 <span class="raw-html"><kbd>Ctrl</kbd></span> + <span class="raw-html"><kbd>S</kbd></span>, locate
 and name it as <em>ui_app1.ui</em>, check out to the location where the ui file is,
 in the terminal, run the following command to convert ui file to Python module:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pyuic5</span> <span class="n">ui_app1</span><span class="o">.</span><span class="n">ui</span> <span class="o">-</span><span class="n">o</span> <span class="n">ui_app1</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">x</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">pyuic5</span> <span class="n">ui_app1</span><span class="o">.</span><span class="n">ui</span> <span class="o">-</span><span class="n">o</span> <span class="n">ui_app1</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">x</span>
 </pre></div>
 </div>
 <p>You’ll get a new Python file generated from ui file, simply run with
-<code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">ui_app1.py</span></code>, a window will pop up:</p>
+<code class="docutils literal"><span class="pre">python3</span> <span class="pre">ui_app1.py</span></code>, a window will pop up:</p>
 <a class="reference internal image-reference" href="../_images/app1_04.png"><img alt="../_images/app1_04.png" class="align-center" src="../_images/app1_04.png" style="width: 500px;" /></a>
 <p>The <em>MatplotlibCurveWidget</em> is designed with the ability to change the
 figure properties via the context menu, by right-clicking in the figure,
@@ -283,15 +294,15 @@ fundamental ones is to update the curve, e.g. the <em>Update</em> should be
 used as the trigger for curve updating, every clicking, here, the curve
 would be updated with a new sine curve with random noise.</p>
 <p>The slot
-<a class="reference internal" href="dev.html#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYData" title="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYData"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setYData()</span></code></a> could
+<a class="reference internal" href="dev.html#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYData" title="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYData"><code class="xref py py-meth docutils literal"><span class="pre">setYData()</span></code></a> could
 be used to update the y data of the curve, generally, connecting with
 a PyQt signal to this slot will make this happen. However, before writing
 some code to the generated Python module, one thing should keep in mind,
 that is usually the updating will not be applied directly to that Python file
 in place, but by extending it, here is how to accomplish:</p>
-<p>Create a new file named as, for instance, <code class="docutils literal notranslate"><span class="pre">app1.py</span></code>, and inherit the class
+<p>Create a new file named as, for instance, <code class="docutils literal"><span class="pre">app1.py</span></code>, and inherit the class
 which renders the UI, then extend within the new class:</p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -384,11 +395,11 @@ which renders the UI, then extend within the new class:</p>
 <li>Connect the signal to the specific slot;</li>
 <li>Emit the signal when needed.</li>
 </ol>
-<p>In this example, the signal named <code class="docutils literal notranslate"><span class="pre">yDataChanged</span></code> is created with data type
-of <code class="docutils literal notranslate"><span class="pre">QVariant</span></code>, then connected with <code class="docutils literal notranslate"><span class="pre">setYData</span></code> slot of
-<em>matplotlibcurveWidget</em>; next, the <code class="docutils literal notranslate"><span class="pre">clicked</span></code> signal is connected with the
-defined slot <code class="docutils literal notranslate"><span class="pre">update_ydata</span></code>, in which new y data is generated and emitted.</p>
-<p>Run this app by <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">app1.py</span></code>, and click <code class="docutils literal notranslate"><span class="pre">Update</span></code> button to see the
+<p>In this example, the signal named <code class="docutils literal"><span class="pre">yDataChanged</span></code> is created with data type
+of <code class="docutils literal"><span class="pre">QVariant</span></code>, then connected with <code class="docutils literal"><span class="pre">setYData</span></code> slot of
+<em>matplotlibcurveWidget</em>; next, the <code class="docutils literal"><span class="pre">clicked</span></code> signal is connected with the
+defined slot <code class="docutils literal"><span class="pre">update_ydata</span></code>, in which new y data is generated and emitted.</p>
+<p>Run this app by <code class="docutils literal"><span class="pre">python3</span> <span class="pre">app1.py</span></code>, and click <code class="docutils literal"><span class="pre">Update</span></code> button to see the
 updating curve, and change the figure property when needed, e.g. check
 <em>Auto Scale</em> on and off (see below), to see the what happen.</p>
 <a class="reference internal image-reference" href="../_images/update.gif"><img alt="../_images/update.gif" class="align-center" src="../_images/update.gif" style="width: 500px;" /></a>
@@ -414,7 +425,7 @@ updating curve, and change the figure property when needed, e.g. check
         <a href="keyshort.html" class="btn btn-neutral float-right" title="Keyborard Shortcuts" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="deploy.html" class="btn btn-neutral" title="Deployment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="deploy.html" class="btn btn-neutral float-left" title="Deployment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -423,7 +434,7 @@ updating curve, and change the figure property when needed, e.g. check
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Tong Zhang.
+        &copy; Copyright 2018, Tong Zhang
 
     </p>
   </div>
@@ -440,32 +451,16 @@ updating curve, and change the figure property when needed, e.g. check
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'2.1.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
