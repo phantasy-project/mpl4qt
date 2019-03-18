@@ -325,8 +325,7 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
 
     def clear_annote(self):
         if self._all_annotes is not None:
-            [o.remove() for o in self._all_annotes]
-
+            [o.remove() for o in self._all_annotes if o in self.axes.texts]
 
 
 def adjust_bar(patches, eblines, x, y, yerr, bar_width):
