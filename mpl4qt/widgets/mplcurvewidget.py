@@ -164,6 +164,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.update_figure()
         return l
 
+    def update_curve(self, x_data, y_data, **kws):
+        """Update curve by feeding two 1D array: *x_data* and *y_data*.
+        """
+        self._line.set_data(x_data, y_data)
+        self._x_data, self._y_data = x_data, y_data
+        self.update_figure()
+
     def get_all_curves(self):
         """Return all curves."""
         return self._lines
@@ -930,7 +937,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._fig_auto_scale = f
         if f:
             self.axes.autoscale()
-            self.update_canvas()
             self.update_figure()
         #
         self.autoScaleOnUpdated.emit(f)
@@ -1331,7 +1337,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
         """Force update widget."""
         self.update_legend()
         self.update_figure()
-        self.resize_figure()
 
     def update_legend(self):
         # update legend if on
@@ -1410,8 +1415,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
         elif e.key == 'r':
             # force refresh
             self.force_update()
-            self.update_figure()
-            self.resize_figure()
         elif e.key == 's' and self.widget_type != 'image':
             # circulate y-axis scale type
             self.setFigureYScale(
@@ -1447,6 +1450,26 @@ class MatplotlibCurveWidget(BasePlotWidget):
         lbls = getattr(self.axes, "get_{}ticklabels".format(axis))()
         for o in lbls:
             o.set_rotation(angle)
+
+    def set_xlimit(self, *args):
+        """Set xlimit with new limit, e.g. `set_xlimit(xmin, xmax)`.
+
+        See Also
+        --------
+        setXLimitMin, setXLimitMax
+        """
+        self.axes.set_xlim(args)
+        self.update_figure()
+
+    def set_ylimit(self, *args):
+        """Set ylimit with new limit.
+
+        See Also
+        --------
+        setYLimitMin, setYLimitMax
+        """
+        self.axes.set_ylim(args)
+        self.update_figure()
 
 
 if __name__ == "__main__":
