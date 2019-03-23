@@ -126,8 +126,7 @@ class BasePlotWidget(FigureCanvas):
         raise NotImplementedError
 
     def update_figure(self):
-        self.figure.canvas.draw_idle()
-        self.update()
+        self.draw_idle()
 
     def resize_figure(self):
         """Must be triggered for set fig size.
@@ -187,9 +186,6 @@ class BasePlotWidget(FigureCanvas):
         if font is None:
             font = self.sys_title_font
         _set_font(self.axes.title, font)
-
-    def update_canvas(self):
-        self.draw_idle()
 
     def set_context_menu(self, ):
         self.setContextMenuPolicy(Qt.DefaultContextMenu)
