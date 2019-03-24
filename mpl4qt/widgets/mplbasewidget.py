@@ -72,23 +72,24 @@ class BasePlotWidget(FigureCanvas):
         self.set_context_menu()
 
         # track (x,y)
-        self.figure.canvas.mpl_connect('motion_notify_event', self.on_motion)
+        self.mpl_connect('motion_notify_event', self.on_motion)
 
         # key press
-        self.figure.canvas.mpl_connect('key_press_event', self.on_key_press)
+        self.mpl_connect('key_press_event', self.on_key_press)
 
         # key release
-        self.figure.canvas.mpl_connect('key_release_event', self.on_key_release)
+        self.mpl_connect('key_release_event', self.on_key_release)
 
         # pick
-        self.figure.canvas.mpl_connect('pick_event', self.on_pick)
+        self.mpl_connect('pick_event', self.on_pick)
 
         # button
-        #self.figure.canvas.mpl_connect('button_press_event', self.on_press)
-        self.figure.canvas.mpl_connect('button_release_event', self.on_release)
+        self.mpl_connect('button_release_event', self.on_release)
 
-        self.figure.canvas.setFocusPolicy(Qt.ClickFocus)
-        self.figure.canvas.setFocus()
+        self.mpl_connect('scroll_event', self.on_scroll)
+
+        self.setFocusPolicy(Qt.ClickFocus)
+        self.setFocus()
 
         # dnd
         self.setAcceptDrops(True)
@@ -109,15 +110,33 @@ class BasePlotWidget(FigureCanvas):
     def connect_button_press_event(self):
         """Connect 'button_press_event'
         """
-        self.btn_cid = self.figure.canvas.mpl_connect('button_press_event', self.on_press)
+        self.btn_cid = self.mpl_connect('button_press_event', self.on_press)
 
     def disconnect_button_press_event(self):
         """Disconnect 'button_press_event'
         """
-        self.figure.canvas.mpl_disconnect(self.btn_cid)
+        self.mpl_disconnect(self.btn_cid)
 
     def post_style_figure(self):
         self.set_figure_color()
+
+    def on_scroll(self, e):
+        if e.step > 0:
+            f = 1.05 ** e.step
+        else:
+            f = 0.95 ** (-e.step)
+        self.zoom(e, f)
+
+    def zoom(self, e, factor):
+        x0, y0 = e.xdata, e.ydata
+        x_left, x_right = self.axes.get_xlim()
+        y_bottom, y_up = self.axes.get_ylim()
+
+        self.axes.set_xlim((x0 - (x0 - x_left) * factor,
+                            x0 + (x_right - x0) * factor))
+        self.axes.set_ylim((y0 - (y0 - y_bottom) * factor,
+                            y0 + (y_up - y0) * factor))
+        self.update_figure()
 
     def on_motion(self, e):
         pass
