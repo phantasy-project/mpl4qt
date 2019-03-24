@@ -1404,6 +1404,9 @@ class MatplotlibCurveWidget(BasePlotWidget):
         elif k1 == 'a' and k2 == 'y':
             # auto yscale
             self.set_autoscale('y')
+        elif k1 == 'shift' and k2 == '?':
+            # help msgbox
+            self.kbd_help()
 
     def process_keyshort(self, k):
         BasePlotWidget.process_keyshort(self, k)
@@ -1429,9 +1432,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
             # circulate y-axis scale type
             self.setFigureYScale(
                 cycle_list_next(SCALE_STY_VALS, self.getFigureYScale()))
-        elif k == '/':
-            # help msgbox
-            self.kbd_help()
         elif k == 'c' and self.widget_type == 'image':
             # circulate image colormap
             self.setColorMap(
