@@ -25,6 +25,9 @@ from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtGui import QPalette
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QFontDatabase
 from PyQt5.QtGui import QResizeEvent
 
@@ -35,11 +38,19 @@ from matplotlib.ticker import AutoMinorLocator
 from matplotlib.ticker import NullLocator
 
 import numpy as np
+import time
+from collections import deque
+from functools import partial
 
 MPL_VERSION = mpl.__version__
+DTMSEC = 500  # msec
+DTSEC = DTMSEC / 1000.0  # sec
 
 
 class BasePlotWidget(FigureCanvas):
+    #
+    keycombo_cached = pyqtSignal(str, float)
+
     def __init__(self, parent=None, width=5, height=4, dpi=100, **kws):
         self.figure = Figure(figsize=(width, height), dpi=dpi)
         self.axes = self.figure.add_subplot(111)
@@ -66,6 +77,9 @@ class BasePlotWidget(FigureCanvas):
         # key press
         self.figure.canvas.mpl_connect('key_press_event', self.on_key_press)
 
+        # key release
+        self.figure.canvas.mpl_connect('key_release_event', self.on_key_release)
+
         # pick
         self.figure.canvas.mpl_connect('pick_event', self.on_pick)
 
@@ -88,6 +102,10 @@ class BasePlotWidget(FigureCanvas):
         self._cpoint = None       # cross-point of h,v rulers
         self._cpoint_text = None  # coord annote of cross-point
 
+        # keypress cache
+        self.dq_keycombo = deque([], 2)
+        self.keycombo_cached.connect(self.on_update_keycombo_cache)
+
     def connect_button_press_event(self):
         """Connect 'button_press_event'
         """
@@ -105,7 +123,17 @@ class BasePlotWidget(FigureCanvas):
         pass
 
     def on_key_press(self, e):
-        pass
+        k, t = e.key, time.time()
+        self.keycombo_cached.emit(k, t)
+        QTimer.singleShot(DTMSEC, partial(self._on_delay_pop, k, t))
+
+    def on_key_release(self, e):
+        if len(self.dq_keycombo) != 2:
+            return
+        (k1, t1) = self.dq_keycombo.popleft()
+        (k2, t2) = self.dq_keycombo.popleft()
+        if t2 - t1 < DTSEC:
+            self.process_keyshort_combo(k1, k2)
 
     def on_pick(self, e):
         pass
@@ -193,6 +221,26 @@ class BasePlotWidget(FigureCanvas):
     def clear_figure(self):
         self.axes.clear()
         self.update_figure()
+
+    @pyqtSlot('QString', float)
+    def on_update_keycombo_cache(self, key, ts):
+        self.dq_keycombo.append((key, ts))
+
+    def _on_delay_pop(self, k, t):
+        if (k, t) not in self.dq_keycombo:
+            return
+        self.process_keyshort(k)
+        self.dq_keycombo.remove((k, t))
+
+    def process_keyshort(self, k):
+        """Override this method to define keyshorts.
+        """
+        print("Capture key: ", k)
+
+    def process_keyshort_combo(self, k1, k2):
+        """Override this method to define combo keyshorts.
+        """
+        print("Capture key combo: ", k1, k2)
 
 
 class MatplotlibBaseWidget(BasePlotWidget):
