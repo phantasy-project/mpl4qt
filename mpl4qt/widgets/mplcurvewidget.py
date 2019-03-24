@@ -1414,8 +1414,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
             # turn on/off grid
             self.setFigureGridToggle(not self.getFigureGridToggle())
         elif k == 'a' and self.widget_type != 'image':
-            # turn on/off autoscale
-            self.setFigureAutoScale(not self.getFigureAutoScale())
+            # autoscale
+            self.set_autoscale()
         elif k == 'm':
             # turn on/off mticks
             self.setFigureMTicksToggle(not self.getFigureMTicksToggle())
@@ -1482,6 +1482,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.update_figure()
 
     def set_autoscale(self, axis='both'):
+        self.axes.relim()
         self.axes.autoscale(axis=axis)
         self.update_figure()
 

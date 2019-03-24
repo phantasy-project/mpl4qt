@@ -481,7 +481,10 @@ class Ui_Dialog(object):
         self.label_16.setText(_translate("Dialog", "Function"))
         self.label_3.setText(_translate("Dialog", "a"))
         self.label_10.setText(
-            _translate("Dialog", "Turn on/off auto scale (only curve)"))
+            _translate(
+                "Dialog",
+                "<html><head/><body><p>Auto X&amp;Y scale (only curve)</p></body></html>"
+            ))
         self.label_23.setText(_translate("Dialog", "a,x"))
         self.label_24.setText(
             _translate(
