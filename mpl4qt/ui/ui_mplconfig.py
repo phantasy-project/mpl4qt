@@ -1903,9 +1903,8 @@ class Ui_Dialog(object):
                                          _translate("Dialog", "Log Transform"))
         self.xaxis_scale_cbb.setItemText(
             2, _translate("Dialog", "Symmetrical Log Transform"))
-        self.xaxis_scale_cbb.setItemText(3,
-                                         _translate("Dialog",
-                                                    "Logistic Transform"))
+        self.xaxis_scale_cbb.setItemText(
+            3, _translate("Dialog", "Logistic Transform"))
         self.label_41.setText(_translate("Dialog", "Y"))
         self.yaxis_scale_cbb.setItemText(0, _translate("Dialog",
                                                        "Linear Scale"))
@@ -1913,9 +1912,8 @@ class Ui_Dialog(object):
                                          _translate("Dialog", "Log Transform"))
         self.yaxis_scale_cbb.setItemText(
             2, _translate("Dialog", "Symmetrical Log Transform"))
-        self.yaxis_scale_cbb.setItemText(3,
-                                         _translate("Dialog",
-                                                    "Logistic Transform"))
+        self.yaxis_scale_cbb.setItemText(
+            3, _translate("Dialog", "Logistic Transform"))
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.figure_tab),
             _translate("Dialog", "Figure"))
