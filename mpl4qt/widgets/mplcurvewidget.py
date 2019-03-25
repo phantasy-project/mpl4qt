@@ -33,7 +33,6 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QMenu
 from PyQt5.QtWidgets import QAction
 from PyQt5.QtWidgets import QFileDialog
@@ -1174,13 +1173,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def get_ylim(self):
         return self.axes.get_ylim()
 
-    def update_figure(self):
-        if self.getFigureAutoScale():
-            self.axes.relim()
-            self.axes.autoscale()
-        self.figure.canvas.draw_idle()
-        self.update()
-
     def contextMenuEvent(self, e):
         menu = QMenu(self)
         config_action = QAction(QIcon(QPixmap(config_icon)),
@@ -1221,6 +1213,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
             self._handlers['w_mpl_tools'] = w
             w.selectedIndicesUpdated.connect(self.on_selected_indices)
         w.show_toolbar()
+        w.floatable_changed.emit(False)
 
     @pyqtSlot(QVariant, QVariant)
     def on_selected_indices(self, ind, pts):
@@ -1509,6 +1502,12 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.axes.relim()
         self.axes.autoscale(axis=axis)
         self.update_figure()
+
+    def update_figure(self):
+        if self.getFigureAutoScale():
+            self.axes.relim()
+            self.axes.autoscale()
+        BasePlotWidget.update_figure(self)
 
 
 if __name__ == "__main__":
