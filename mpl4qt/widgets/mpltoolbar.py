@@ -62,6 +62,14 @@ QToolBar {
 class NavigationToolbar(NavigationToolbar2QT):
     def __init__(self, canvas, parent=None):
         super(self.__class__, self).__init__(canvas, parent)
+        self.tb = parent
+        self.mpl = self.tb.parent
+
+    def release_zoom(self, e):
+        NavigationToolbar2QT.release_zoom(self, e)
+        xlim = self.mpl.axes.get_xlim()
+        ylim = self.mpl.axes.get_ylim()
+        self.tb.zoom_roi_changed.emit(xlim, ylim)
 
 
 class MToolbar(QToolBar):
@@ -78,8 +86,11 @@ class MToolbar(QToolBar):
     # indices list of points selected by lasso tool
     selectedIndicesUpdated = pyqtSignal(QVariant, QVariant)
 
-    #
+    # toolbar floatable status
     floatable_changed = pyqtSignal(bool)
+
+    # zoomed ROI changed
+    zoom_roi_changed = pyqtSignal(tuple, tuple)
 
     def __init__(self, canvas, parent=None):
         super(MToolbar, self).__init__()
