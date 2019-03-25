@@ -84,6 +84,9 @@ class MatplotlibCurveWidget(BasePlotWidget):
     # autoscale
     autoScaleOnUpdated = pyqtSignal(bool)
 
+    # zoomed ROI changed
+    zoom_roi_changed = pyqtSignal(tuple, tuple)
+
     def __init__(self, parent=None):
         self._fig_width = 4
         self._fig_height = 3
@@ -1212,12 +1215,18 @@ class MatplotlibCurveWidget(BasePlotWidget):
             w = MToolbar(self.figure.canvas, self)
             self._handlers['w_mpl_tools'] = w
             w.selectedIndicesUpdated.connect(self.on_selected_indices)
+            w.zoom_roi_changed.connect(self.on_zoom_roi_changed)
         w.show_toolbar()
         w.floatable_changed.emit(False)
 
     @pyqtSlot(QVariant, QVariant)
     def on_selected_indices(self, ind, pts):
         self.selectedIndicesUpdated.emit(ind, pts)
+
+    @pyqtSlot(tuple, tuple)
+    def on_zoom_roi_changed(self, xlim, ylim):
+        print("Zoomed Rect ROI: ", xlim, ylim)
+        self.zoom_roi_changed.emit(xlim, ylim)
 
     def on_config(self):
         config_panel = MatplotlibConfigPanel(self)
