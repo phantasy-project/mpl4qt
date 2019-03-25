@@ -17,4 +17,6 @@ from ._repos import icon as repos_tool_icon
 from ._cross import icon as cross_tool_icon
 from ._dock import icon as dock_tool_icon
 from ._popup import icon as popup_tool_icon
+from ._backward import icon as backward_tool_icon
+from ._forward import icon as forward_tool_icon
 from ._tools import icon as tools_icon
