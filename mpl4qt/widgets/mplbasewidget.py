@@ -21,19 +21,20 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 """
 
-from PyQt5.QtWidgets import QSizePolicy
-from PyQt5.QtGui import QPalette
-from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import QTimer
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QFontDatabase
+from PyQt5.QtGui import QPalette
 from PyQt5.QtGui import QResizeEvent
+from PyQt5.QtWidgets import QSizePolicy
+from PyQt5.QtWidgets import QVBoxLayout
+from PyQt5.QtWidgets import QWidget
 
+import matplotlib as mpl
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-import matplotlib as mpl
 from matplotlib.ticker import AutoMinorLocator
 from matplotlib.ticker import NullLocator
 
@@ -47,15 +48,16 @@ DTMSEC = 500  # msec
 DTSEC = DTMSEC / 1000.0  # sec
 
 
-class BasePlotWidget(FigureCanvas):
+class BasePlotWidget(QWidget):
     #
     keycombo_cached = pyqtSignal(str, float)
 
     def __init__(self, parent=None, width=5, height=4, dpi=100, **kws):
+        super(BasePlotWidget, self).__init__(parent)
         self.figure = Figure(figsize=(width, height), dpi=dpi)
         self.axes = self.figure.add_subplot(111)
         self.init_figure()
-        super(BasePlotWidget, self).__init__(self.figure)
+        self.canvas = FigureCanvas(self.figure)
         self.setParent(parent)
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.sys_bg_color = self.palette().color(QPalette.Background)
@@ -68,29 +70,32 @@ class BasePlotWidget(FigureCanvas):
         self.sys_label_font = DEFAULT_FONTS['general']
         self.sys_title_font = DEFAULT_FONTS['title']
         self.post_style_figure()
+        # set up layout
+        self.set_up_layout()
+
         self.adjustSize()
         self.set_context_menu()
 
         # track (x,y)
-        self.mpl_connect('motion_notify_event', self.on_motion)
+        self.canvas.mpl_connect('motion_notify_event', self.on_motion)
 
         # key press
-        self.mpl_connect('key_press_event', self.on_key_press)
+        self.canvas.mpl_connect('key_press_event', self.on_key_press)
 
         # key release
-        self.mpl_connect('key_release_event', self.on_key_release)
+        self.canvas.mpl_connect('key_release_event', self.on_key_release)
 
         # pick
-        self.mpl_connect('pick_event', self.on_pick)
+        self.canvas.mpl_connect('pick_event', self.on_pick)
 
         # button
-        self.mpl_connect('button_press_event', self.on_press)
-        self.mpl_connect('button_release_event', self.on_release)
+        self.canvas.mpl_connect('button_press_event', self.on_press)
+        self.canvas.mpl_connect('button_release_event', self.on_release)
 
-        self.mpl_connect('scroll_event', self.on_scroll)
+        self.canvas.mpl_connect('scroll_event', self.on_scroll)
 
-        self.setFocusPolicy(Qt.ClickFocus)
-        self.setFocus()
+        self.canvas.setFocusPolicy(Qt.ClickFocus)
+        self.canvas.setFocus()
 
         # dnd
         self.setAcceptDrops(True)
@@ -111,6 +116,12 @@ class BasePlotWidget(FigureCanvas):
         # keypress cache
         self.dq_keycombo = deque([], 2)
         self.keycombo_cached.connect(self.on_update_keycombo_cache)
+
+    def set_up_layout(self):
+        self.vbox = QVBoxLayout()
+        self.vbox.setContentsMargins(0, 0, 0, 0)
+        self.vbox.addWidget(self.canvas)
+        self.setLayout(self.vbox)
 
     def post_style_figure(self):
         self.set_figure_color()
@@ -168,12 +179,12 @@ class BasePlotWidget(FigureCanvas):
         raise NotImplementedError
 
     def update_figure(self):
-        self.draw_idle()
+        self.canvas.draw_idle()
 
     def resize_figure(self):
         """Must be triggered for set fig size.
         """
-        self.resizeEvent(QResizeEvent(self.size(), self.size()))
+        self.canvas.resizeEvent(QResizeEvent(self.canvas.size(), self.canvas.size()))
 
     def set_figure_color(self, color=None):
         if color is None:
