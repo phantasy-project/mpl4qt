@@ -9,7 +9,6 @@ from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtWidgets import QToolBar
 from PyQt5.QtWidgets import QVBoxLayout
-from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtCore import Qt
@@ -109,7 +108,6 @@ class MToolbar(QToolBar):
             w.dock_act.setIcon(QIcon(QPixmap(dock_tool_icon)))
             w.dock_act.setToolTip("Dock toolbar")
             w.show_toolbar()
-            w.adjustSize()
         else:  # non-floatable
             self.setStyleSheet(TBSTY_NONFLOATING)
             self.parent.vbox.insertWidget(0, self)
@@ -182,6 +180,8 @@ class MToolbar(QToolBar):
 
         # pos display tool
         self.pos_lbl = QLabel(self)
+        self.pos_lbl.setSizePolicy(
+                QSizePolicy.MinimumExpanding, QSizePolicy.Preferred)
         self.pos_lbl.setToolTip("Pointed (x, y) coordinate")
         self.pos_lbl.setStyleSheet("""
             QLabel {
@@ -206,13 +206,10 @@ class MToolbar(QToolBar):
 
         self.addSeparator()
         self.addWidget(self.pos_lbl)
-        space = QWidget()
-        space.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-        self.addWidget(space)
         self.addSeparator()
 
-        self.addAction(exit_act)
         self.addAction(dock_act)
+        self.addAction(exit_act)
 
         # events
         home_act.triggered.connect(self.home)
@@ -238,6 +235,7 @@ class MToolbar(QToolBar):
     @pyqtSlot()
     def repos_toolbar(self):
         self.move(self.get_pos())
+        self.adjustSize()
 
     @pyqtSlot(list)
     def on_update_xypos(self, coord):
@@ -250,15 +248,12 @@ class MToolbar(QToolBar):
             self.pos_lbl.setText(
                     "<html><sup>(x,y,z)</sup>({0:<.4g},{1:<.4g},{2:<.4g})</html>".format(x, y, z))
 
-        self.adjustSize()
-
     @pyqtSlot()
     def zoom(self):
         self.tb.zoom()
 
     @pyqtSlot()
     def pan(self):
-        self.parent.installEventFilter(self)
         self.tb.pan()
 
     @pyqtSlot()
@@ -333,12 +328,6 @@ class MToolbar(QToolBar):
             self.move(e.globalX() - self.pos_x, e.globalY() - self.pos_y)
         except:
             pass
-
-    def eventFilter(self, source, event):
-        if event.type() == QEvent.MouseButtonPress:
-            if event.button() == Qt.RightButton:
-                return True
-        return QWidget.eventFilter(self, source, event)
 
 
 class SelectFromPoints(QObject):
