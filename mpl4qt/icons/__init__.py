@@ -11,7 +11,7 @@ from .mplbarwidget_icon import icon as mplbarwidget_icon
 from ._home import icon as home_tool_icon
 from ._zoom import icon as zoom_tool_icon
 from ._exit import icon as exit_tool_icon
-#from ._pan import icon as pan_tool_icon
+from ._pan import icon as pan_tool_icon
 from ._save import icon as save_tool_icon
 from ._lasso import icon as lasso_tool_icon
 from ._repos import icon as repos_tool_icon
