@@ -1343,14 +1343,38 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.setLegendToggle(self._legend_toggle)
 
     def on_motion(self, event):
-        if event.inaxes is not None:
-            x_pos, y_pos = event.xdata, event.ydata
-            self.xyposUpdated.emit([x_pos, y_pos])
+        if event.inaxes is None:
+            return
+        x_pos, y_pos = event.xdata, event.ydata
+        self.xyposUpdated.emit([x_pos, y_pos])
 
     def on_press(self, e):
-        if e.inaxes is not None:
+        if e.inaxes is None:
+            return
+        if e.button == 1 and self._ruler_on:
             self.set_visible_hvlines(True)
             self.draw_hvlines(e.xdata, e.ydata)
+        elif e.button == 2:
+            self._pan_x0 = e.xdata
+            self._pan_y0 = e.ydata
+            self._pan_xlim0 = self.axes.get_xlim()
+            self._pan_ylim0 = self.axes.get_ylim()
+            self._pan_on = True
+            self.setCursor(Qt.ClosedHandCursor)
+
+    def on_release(self, e):
+        if e.inaxes is None:
+            return
+        if e.button == 2 and self._pan_on:
+            self._pan_on = False
+            dx = self._pan_x0 - e.xdata
+            dy = self._pan_y0 - e.ydata
+            xlim = [i + dx for i in self._pan_xlim0]
+            ylim = [i + dy for i in self._pan_ylim0]
+            self.axes.set_xlim(xlim)
+            self.axes.set_ylim(ylim)
+            self.update_figure()
+            self.unsetCursor()
 
     def draw_hvlines(self, x0, y0):
         if self._hline is None:

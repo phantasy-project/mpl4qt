@@ -84,6 +84,7 @@ class BasePlotWidget(FigureCanvas):
         self.mpl_connect('pick_event', self.on_pick)
 
         # button
+        self.mpl_connect('button_press_event', self.on_press)
         self.mpl_connect('button_release_event', self.on_release)
 
         self.mpl_connect('scroll_event', self.on_scroll)
@@ -102,20 +103,14 @@ class BasePlotWidget(FigureCanvas):
         self._vline = None        # v-ruler
         self._cpoint = None       # cross-point of h,v rulers
         self._cpoint_text = None  # coord annote of cross-point
+        self._ruler_on = False    # default is not enabled
+
+        # pan
+        self._pan_on = False
 
         # keypress cache
         self.dq_keycombo = deque([], 2)
         self.keycombo_cached.connect(self.on_update_keycombo_cache)
-
-    def connect_button_press_event(self):
-        """Connect 'button_press_event'
-        """
-        self.btn_cid = self.mpl_connect('button_press_event', self.on_press)
-
-    def disconnect_button_press_event(self):
-        """Disconnect 'button_press_event'
-        """
-        self.mpl_disconnect(self.btn_cid)
 
     def post_style_figure(self):
         self.set_figure_color()
@@ -158,7 +153,7 @@ class BasePlotWidget(FigureCanvas):
         pass
 
     def on_press(self, e):
-        pass
+        print(e.button)
 
     def on_release(self, e):
         pass
