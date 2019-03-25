@@ -109,6 +109,9 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.line_width_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
         self.mk_size_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
         self.mk_width_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
+        for o in (self.xmin_lineEdit, self.xmax_lineEdit,
+                  self.ymin_lineEdit, self.ymax_lineEdit, ):
+            o.setValidator(QDoubleValidator(self))
 
         # events
         self.bkgd_color_btn.clicked.connect(self.set_fig_bkgdcolor)
