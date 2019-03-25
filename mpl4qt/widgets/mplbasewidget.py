@@ -127,10 +127,10 @@ class BasePlotWidget(QWidget):
         self.set_figure_color()
 
     def on_scroll(self, e):
-        if e.step > 0:
-            f = 1.05 ** e.step
+        if e.step < 0:
+            f = 1.05 ** (-e.step)
         else:
-            f = 0.95 ** (-e.step)
+            f = 0.95 ** e.step
         self.zoom(e, f)
 
     def zoom(self, e, factor):
