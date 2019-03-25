@@ -35,6 +35,8 @@ from mpl4qt.icons import repos_tool_icon
 from mpl4qt.icons import cross_tool_icon
 from mpl4qt.icons import dock_tool_icon
 from mpl4qt.icons import popup_tool_icon
+from mpl4qt.icons import backward_tool_icon
+from mpl4qt.icons import forward_tool_icon
 
 TBSTY_FLOATING ="""
 QToolBar {
@@ -131,7 +133,17 @@ class MToolbar(QToolBar):
 
         # home tool
         home_act = QAction(QIcon(QPixmap(home_tool_icon)), "Home", self)
-        home_act.setToolTip("Reset to original")
+        home_act.setToolTip("Reset to original view")
+
+        # backward
+        backward_act = QAction(QIcon(QPixmap(backward_tool_icon)),
+                              "Backward", self)
+        backward_act.setToolTip("Backward view")
+
+        # forward
+        forward_act = QAction(QIcon(QPixmap(forward_tool_icon)),
+                              "Forward", self)
+        forward_act.setToolTip("Forward view")
 
         # pan tool
         pan_act = QAction(QIcon(QPixmap(pan_tool_icon)), "Pan", self)
@@ -179,23 +191,33 @@ class MToolbar(QToolBar):
             """)
         self.parent.xyposUpdated.connect(self.on_update_xypos)
 
+        # widgets in toolbar
         self.addAction(home_act)
+        self.addAction(backward_act)
+        self.addAction(forward_act)
+        self.addSeparator()
+
         self.addAction(pan_act)
         self.addAction(zoom_act)
         self.addAction(lasso_act)
         self.addAction(cross_act)
         self.addAction(save_act)
         self.addAction(repos_act)
+
         self.addSeparator()
-        self.addAction(exit_act)
         self.addWidget(self.pos_lbl)
         space = QWidget()
         space.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         self.addWidget(space)
+        self.addSeparator()
+
+        self.addAction(exit_act)
         self.addAction(dock_act)
 
         # events
         home_act.triggered.connect(self.home)
+        forward_act.triggered.connect(self.forward)
+        backward_act.triggered.connect(self.backward)
         pan_act.toggled.connect(self.pan)
         zoom_act.toggled.connect(self.zoom)
         lasso_act.toggled.connect(self.lasso)
@@ -242,6 +264,14 @@ class MToolbar(QToolBar):
     @pyqtSlot()
     def home(self):
         self.tb.home()
+
+    @pyqtSlot()
+    def forward(self):
+        self.tb.forward()
+
+    @pyqtSlot()
+    def backward(self):
+        self.tb.back()
 
     @pyqtSlot()
     def save(self):
