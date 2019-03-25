@@ -16,6 +16,7 @@ from PyQt5.QtCore import QPoint
 from PyQt5.QtCore import Qt, pyqtSlot, pyqtSignal, QVariant, QObject
 from mpl4qt.icons import exit_tool_icon
 from mpl4qt.icons import home_tool_icon
+from mpl4qt.icons import pan_tool_icon
 from mpl4qt.icons import zoom_tool_icon
 from mpl4qt.icons import save_tool_icon
 from mpl4qt.icons import lasso_tool_icon
@@ -101,6 +102,12 @@ class MToolbar(QToolBar):
         home_act = QAction(QIcon(QPixmap(home_tool_icon)), "Home", self)
         home_act.setToolTip("Reset to original")
 
+        # pan tool
+        pan_act = QAction(QIcon(QPixmap(pan_tool_icon)), "Pan", self)
+        pan_act.setCheckable(True)
+        self.pan_act = pan_act
+        pan_act.setToolTip("Pan axes with left mouse")
+
         # save tool
         save_act = QAction(QIcon(QPixmap(save_tool_icon)), "Save", self)
         save_act.setToolTip("Save figure as file")
@@ -137,6 +144,7 @@ class MToolbar(QToolBar):
         self.parent.xyposUpdated.connect(self.on_update_xypos)
 
         self.addAction(home_act)
+        self.addAction(pan_act)
         self.addAction(zoom_act)
         self.addAction(lasso_act)
         self.addAction(cross_act)
@@ -148,6 +156,7 @@ class MToolbar(QToolBar):
 
         # events
         home_act.triggered.connect(self.home)
+        pan_act.toggled.connect(self.pan)
         zoom_act.toggled.connect(self.zoom)
         lasso_act.toggled.connect(self.lasso)
         cross_act.toggled.connect(self.cross_ruler)
@@ -158,10 +167,7 @@ class MToolbar(QToolBar):
     @pyqtSlot()
     def cross_ruler(self):
         # parent widget defines how to draw cross ruler.
-        if self.sender().isChecked():
-            self.parent.connect_button_press_event()
-        else:
-            self.parent.disconnect_button_press_event()
+        self.parent._ruler_on = self.sender().isChecked()
 
     @pyqtSlot()
     def repos_toolbar(self):
@@ -183,6 +189,11 @@ class MToolbar(QToolBar):
     @pyqtSlot()
     def zoom(self):
         self.tb.zoom()
+
+    @pyqtSlot()
+    def pan(self):
+        self.parent.installEventFilter(self)
+        self.tb.pan()
 
     @pyqtSlot()
     def home(self):
@@ -214,10 +225,15 @@ class MToolbar(QToolBar):
         self.selectedIndicesUpdated.emit(ind, pts)
 
     def closeEvent(self, e):
+        for o in (self.lasso_act, self.zoom_act, self.pan_act, ):
+            if o.isChecked():
+                o.setChecked(False)
+        """
         if self.lasso_act.isChecked():
             self.lasso_act.setChecked(False)
         if self.zoom_act.isChecked():
             self.zoom_act.setChecked(False) # emit toggled
+        """
         self.close()
 
     def get_pos(self):
@@ -238,6 +254,13 @@ class MToolbar(QToolBar):
             self.move(e.globalX() - self.pos_x, e.globalY() - self.pos_y)
         except:
             pass
+
+    def eventFilter(self, source, event):
+        from PyQt5.QtCore import QEvent
+        if event.type() == QEvent.MouseButtonPress:
+            if event.button() == Qt.RightButton:
+                return True
+        return QWidget.eventFilter(self, source, event)
 
 
 class SelectFromPoints(QObject):
