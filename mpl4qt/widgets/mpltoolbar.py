@@ -4,16 +4,27 @@
 Navigation toolbar for matplotlib widgets
 """
 
-from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as Toolbar
+from PyQt5.QtWidgets import QAction
+from PyQt5.QtWidgets import QLabel
+from PyQt5.QtWidgets import QSizePolicy
+from PyQt5.QtWidgets import QToolBar
+from PyQt5.QtWidgets import QVBoxLayout
+from PyQt5.QtWidgets import QWidget
+from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QEvent
+from PyQt5.QtCore import QObject
+from PyQt5.QtCore import QPoint
+from PyQt5.QtCore import QVariant
+from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QPixmap
+
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT
 from matplotlib.path import Path
 from matplotlib.widgets import LassoSelector
 import numpy as np
 
-from PyQt5.QtWidgets import QToolBar, QAction, QLabel
-from PyQt5.QtWidgets import QWidget, QVBoxLayout
-from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtCore import QPoint
-from PyQt5.QtCore import Qt, pyqtSlot, pyqtSignal, QVariant, QObject
 from mpl4qt.icons import exit_tool_icon
 from mpl4qt.icons import home_tool_icon
 from mpl4qt.icons import pan_tool_icon
@@ -22,30 +33,34 @@ from mpl4qt.icons import save_tool_icon
 from mpl4qt.icons import lasso_tool_icon
 from mpl4qt.icons import repos_tool_icon
 from mpl4qt.icons import cross_tool_icon
+from mpl4qt.icons import dock_tool_icon
+from mpl4qt.icons import popup_tool_icon
 
+TBSTY_FLOATING ="""
+QToolBar {
+    background-color: white;
+    border-radius: 6px;
+    border-bottom: 2px solid #8f8f91;
+    border-top: 2px solid #8f8f91;
+    spacing: 5px;
+    padding: 10px;
+}
+"""
 
-class NavigationToolbar(Toolbar):
+TBSTY_NONFLOATING ="""
+QToolBar {
+    background-color: white;
+    border-radius: 2px;
+    border-bottom: 1px solid #8f8f91;
+    border-top: 1px solid #8f8f91;
+    spacing: 4px;
+    padding: 2px;
+}
+"""
+
+class NavigationToolbar(NavigationToolbar2QT):
     def __init__(self, canvas, parent=None):
         super(self.__class__, self).__init__(canvas, parent)
-
-
-class MToolbarWidget(QWidget):
-    def __init__(self, canvas, parent=None):
-        super(MToolbarWidget, self).__init__()
-
-        self.tb = MToolbar(canvas, parent)
-        layout = QVBoxLayout()
-        #layout.setMenuBar(self.tb)
-        layout.addWidget(self.tb)
-
-        self.setLayout(layout)
-
-    def show_widget(self):
-        #self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
-        self.setWindowFlags(Qt.WindowStaysOnTopHint)
-        self.move(self.tb.get_pos())
-        self.show()
-        self.raise_()
 
 
 class MToolbar(QToolBar):
@@ -62,6 +77,9 @@ class MToolbar(QToolBar):
     # indices list of points selected by lasso tool
     selectedIndicesUpdated = pyqtSignal(QVariant, QVariant)
 
+    #
+    floatable_changed = pyqtSignal(bool)
+
     def __init__(self, canvas, parent=None):
         super(MToolbar, self).__init__()
         self.parent = parent
@@ -76,18 +94,31 @@ class MToolbar(QToolBar):
         self.show()
         self.raise_()
 
-    def init_ui(self):
+    @pyqtSlot(bool)
+    def on_floatable_changed(self, f):
+        if f:  # floatable
+            if self.parent.vbox.count() > 1:
+                w = self.parent.vbox.takeAt(0).widget()
+                self.parent.vbox.removeWidget(w)
+            else:
+                w = self
+            w.setStyleSheet(TBSTY_FLOATING)
+            w.setParent(None)
+            w.dock_act.setIcon(QIcon(QPixmap(dock_tool_icon)))
+            w.dock_act.setToolTip("Dock toolbar")
+            w.show_toolbar()
+            w.adjustSize()
+        else:  # non-floatable
+            self.setStyleSheet(TBSTY_NONFLOATING)
+            self.parent.vbox.insertWidget(0, self)
+            self.dock_act.setIcon(QIcon(QPixmap(popup_tool_icon)))
+            self.dock_act.setToolTip("Undock toolbar")
+        self._floating = f
 
-        self.setStyleSheet("""
-                QToolBar {
-                    background-color: white;
-                    border-radius: 6px;
-                    border-bottom: 2px solid #8f8f91;
-                    border-top: 2px solid #8f8f91;
-                    spacing: 5px;
-                    padding: 10px;
-                }
-                """)
+    def init_ui(self):
+        #
+        self._floating = True
+        self.floatable_changed.connect(self.on_floatable_changed)
 
         self.tb = tb = NavigationToolbar(self.canvas, self)
         tb.hide()
@@ -127,6 +158,11 @@ class MToolbar(QToolBar):
         exit_act = QAction(QIcon(QPixmap(exit_tool_icon)), "Exit", self)
         exit_act.setToolTip("Exit toolbar")
 
+        # dock tool
+        dock_act = QAction(QIcon(QPixmap(dock_tool_icon)), "Dock", self)
+        self.dock_act = dock_act
+        dock_act.setToolTip("Dock toolbar")
+
         # repos to center (toolbar) tool
         repos_act = QAction(QIcon(QPixmap(repos_tool_icon)), "Repos", self)
         repos_act.setToolTip(
@@ -149,10 +185,14 @@ class MToolbar(QToolBar):
         self.addAction(lasso_act)
         self.addAction(cross_act)
         self.addAction(save_act)
-        self.addWidget(self.pos_lbl)
-        self.addSeparator()
         self.addAction(repos_act)
+        self.addSeparator()
         self.addAction(exit_act)
+        self.addWidget(self.pos_lbl)
+        space = QWidget()
+        space.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        self.addWidget(space)
+        self.addAction(dock_act)
 
         # events
         home_act.triggered.connect(self.home)
@@ -163,6 +203,10 @@ class MToolbar(QToolBar):
         save_act.triggered.connect(self.save)
         repos_act.triggered.connect(self.repos_toolbar)
         exit_act.triggered.connect(self.close)
+        dock_act.triggered.connect(self.dock)
+
+        #
+        self.floatable_changed.emit(self._floating)
 
     @pyqtSlot()
     def cross_ruler(self):
@@ -216,6 +260,11 @@ class MToolbar(QToolBar):
             self.selector.disconnect()
             self.selector.selectedIndicesReady.disconnect()
 
+    @pyqtSlot()
+    def dock(self):
+        # dock tb to mplwidget or undock
+        self.floatable_changed.emit(not self._floating)
+
     @pyqtSlot(QVariant, QVariant)
     def update_selected_indices(self, ind, pts):
         """Emit selected indice list and points.
@@ -256,7 +305,6 @@ class MToolbar(QToolBar):
             pass
 
     def eventFilter(self, source, event):
-        from PyQt5.QtCore import QEvent
         if event.type() == QEvent.MouseButtonPress:
             if event.button() == Qt.RightButton:
                 return True
