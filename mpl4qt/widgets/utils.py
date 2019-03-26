@@ -269,6 +269,10 @@ def mfont_to_qfont(pf):
 def weight_as_number(weight):
     """Return mpl font weight as a number.
     """
+    # mpl 2.0.0, return weight as an int, while 2.1.1 return a str
+    if isinstance(weight, (int, float)):
+        return weight
+    #
     return weight_dict[weight]
 
 
