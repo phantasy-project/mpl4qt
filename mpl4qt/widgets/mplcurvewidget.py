@@ -84,6 +84,9 @@ class MatplotlibCurveWidget(BasePlotWidget):
     # autoscale
     autoScaleOnUpdated = pyqtSignal(bool)
 
+    # bg color
+    bgColorChanged = pyqtSignal(QColor)
+
     # zoomed ROI changed
     zoom_roi_changed = pyqtSignal(tuple, tuple)
 
@@ -597,6 +600,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._fig_bgcolor = color
         self.set_figure_color(color.getRgbF())
         self.update_figure()
+        self.bgColorChanged.emit(color)
 
     figureBackgroundColor = pyqtProperty(QColor, getFigureBgColor,
                                          setFigureBgColor)
