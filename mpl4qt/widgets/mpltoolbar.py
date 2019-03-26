@@ -36,6 +36,9 @@ from mpl4qt.icons import dock_tool_icon
 from mpl4qt.icons import popup_tool_icon
 from mpl4qt.icons import backward_tool_icon
 from mpl4qt.icons import forward_tool_icon
+from mpl4qt.icons import autox_tool_icon
+from mpl4qt.icons import autoy_tool_icon
+from mpl4qt.icons import autoxy_tool_icon
 
 TBSTY_FLOATING ="""
 QToolBar {
@@ -154,6 +157,18 @@ class MToolbar(QToolBar):
                               "Forward", self)
         forward_act.setToolTip("Forward view")
 
+        # auto scale tool
+        auto_scale_act = QAction(QIcon(QPixmap(autoxy_tool_icon)), "Auto Scale", self)
+        auto_scale_act.setToolTip("Auto Scale")
+
+        # auto xscale tool
+        auto_xscale_act = QAction(QIcon(QPixmap(autox_tool_icon)), "Auto X-Scale", self)
+        auto_xscale_act.setToolTip("Auto X-Scale")
+
+        # auto yscale tool
+        auto_yscale_act = QAction(QIcon(QPixmap(autoy_tool_icon)), "Auto Y-Scale", self)
+        auto_yscale_act.setToolTip("Auto Y-Scale")
+
         # pan tool
         pan_act = QAction(QIcon(QPixmap(pan_tool_icon)), "Pan", self)
         pan_act.setCheckable(True)
@@ -208,17 +223,22 @@ class MToolbar(QToolBar):
         self.addAction(forward_act)
         self.addSeparator()
 
+        self.addAction(auto_scale_act)
+        self.addAction(auto_xscale_act)
+        self.addAction(auto_yscale_act)
+        self.addSeparator()
+
         self.addAction(pan_act)
         self.addAction(zoom_act)
         self.addAction(lasso_act)
         self.addAction(cross_act)
         self.addAction(save_act)
-        self.addAction(repos_act)
-
         self.addSeparator()
+
         self.addWidget(self.pos_lbl)
         self.addSeparator()
 
+        self.addAction(repos_act)
         self.addAction(dock_act)
         self.addAction(exit_act)
 
@@ -226,6 +246,9 @@ class MToolbar(QToolBar):
         home_act.triggered.connect(self.home)
         forward_act.triggered.connect(self.forward)
         backward_act.triggered.connect(self.backward)
+        auto_scale_act.triggered.connect(self.auto_scale)
+        auto_xscale_act.triggered.connect(self.auto_xscale)
+        auto_yscale_act.triggered.connect(self.auto_yscale)
         pan_act.toggled.connect(self.pan)
         zoom_act.toggled.connect(self.zoom)
         lasso_act.toggled.connect(self.lasso)
@@ -278,6 +301,22 @@ class MToolbar(QToolBar):
     @pyqtSlot()
     def backward(self):
         self.tb.back()
+
+    @pyqtSlot()
+    def auto_scale(self):
+        self.parent.set_autoscale()
+
+    @pyqtSlot()
+    def auto_xscale(self):
+        self.parent.set_autoscale('x')
+
+    @pyqtSlot()
+    def auto_xscale(self):
+        self.parent.set_autoscale('x')
+
+    @pyqtSlot()
+    def auto_yscale(self):
+        self.parent.set_autoscale('y')
 
     @pyqtSlot()
     def save(self):
