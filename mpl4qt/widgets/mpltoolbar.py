@@ -218,6 +218,10 @@ class MToolbar(QToolBar):
         self.parent.xyposUpdated.connect(self.on_update_xypos)
 
         # widgets in toolbar
+        self.addAction(dock_act)
+        self.addAction(repos_act)
+        self.addSeparator()
+
         self.addAction(home_act)
         self.addAction(backward_act)
         self.addAction(forward_act)
@@ -238,8 +242,6 @@ class MToolbar(QToolBar):
         self.addWidget(self.pos_lbl)
         self.addSeparator()
 
-        self.addAction(repos_act)
-        self.addAction(dock_act)
         self.addAction(exit_act)
 
         # events
@@ -281,6 +283,7 @@ class MToolbar(QToolBar):
             x, y, z = coord
             self.pos_lbl.setText(
                     "<html><sup>(x,y,z)</sup>({0:<.4g},{1:<.4g},{2:<.4g})</html>".format(x, y, z))
+        self.adjustSize()
 
     @pyqtSlot()
     def zoom(self):
