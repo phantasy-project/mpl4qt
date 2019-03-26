@@ -3,8 +3,9 @@
 
 # always use Qt5Agg for mpl < 2.0
 import matplotlib
-if matplotlib.__version__ < "2.0.0":
+if matplotlib.__version__ <= "2.0.0":
     matplotlib.use("Qt5Agg")
+    matplotlib.rcParams['agg.path.chunksize'] = 2000
 #
 
 __authors__ = "Tong Zhang"
