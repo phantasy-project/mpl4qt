@@ -110,9 +110,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._fig_title = ''
         self._fig_xlabel = ''
         self._fig_ylabel = ''
-        self._fig_xylabel_font = self.sys_label_font
-        self._fig_xyticks_font = self.sys_label_font
-        self._fig_title_font = self.sys_title_font
         self._fig_xtick_formatter_type = 'Auto'
         self._fig_xtick_formatter = None  # placeholder only
         self._fig_xtick_cfmt = '' # c string format for FuncFormatter

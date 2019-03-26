@@ -43,13 +43,17 @@ import time
 from collections import deque
 from functools import partial
 
+from .utils import set_font
+from .utils import mfont_to_qfont
+
+
 MPL_VERSION = mpl.__version__
 DTMSEC = 500  # msec
 DTSEC = DTMSEC / 1000.0  # sec
 
 
 class BasePlotWidget(QWidget):
-    #
+    # combo keyshorts, keystring, timestamp
     keycombo_cached = pyqtSignal(str, float)
 
     def __init__(self, parent=None, width=5, height=4, dpi=100, **kws):
@@ -124,7 +128,22 @@ class BasePlotWidget(QWidget):
         self.setLayout(self.vbox)
 
     def post_style_figure(self):
+        self.init_prop_settings()
         self.set_figure_color()
+
+    def init_prop_settings(self):
+        """Initial settings for properties.
+        """
+        ## font:
+        # xy labels
+        lbl = self.axes.xaxis.label
+        self._fig_xylabel_font = mfont_to_qfont(lbl.get_fontproperties())
+        # xy ticklabels
+        tklbl = self.axes.get_xticklabels()[0]
+        self._fig_xyticks_font = mfont_to_qfont(tklbl.get_fontproperties())
+        # title
+        title = self.axes.title
+        self._fig_title_font = mfont_to_qfont(title.get_fontproperties())
 
     def on_scroll(self, e):
         if e.step < 0:
@@ -226,19 +245,19 @@ class BasePlotWidget(QWidget):
     def set_xylabel_font(self, font=None):
         if font is None:
             font = self.sys_label_font
-        _set_font(self.axes.xaxis.label, font)
-        _set_font(self.axes.yaxis.label, font)
+        set_font(self.axes.xaxis.label, font)
+        set_font(self.axes.yaxis.label, font)
 
     def set_xyticks_font(self, font=None):
         if font is None:
             font = self.sys_label_font
         all_lbls = self.axes.get_xticklabels() + self.axes.get_yticklabels()
-        [_set_font(lbl, font) for lbl in all_lbls]
+        [set_font(lbl, font) for lbl in all_lbls]
 
     def set_title_font(self, font=None):
         if font is None:
             font = self.sys_title_font
-        _set_font(self.axes.title, font)
+        set_font(self.axes.title, font)
 
     def set_context_menu(self, ):
         self.setContextMenuPolicy(Qt.DefaultContextMenu)
@@ -302,17 +321,6 @@ class MatplotlibCMapWidget(BasePlotWidget):
     def set_reverse_cmap(self, f):
         self._rcmap = '_r' if f else ''
         self.set_cmap(self._cmap)
-
-
-def _set_font(obj, font):
-    obj.set_size(font.pointSizeF())
-    obj.set_family(font.family())
-    obj.set_weight(int(font.weight() / 87.0 * 1000))
-    obj.set_stretch(font.stretch())
-    if font.italic():
-        obj.set_style('italic')
-    else:
-        obj.set_style('normal')
 
 
 if __name__ == '__main__':
