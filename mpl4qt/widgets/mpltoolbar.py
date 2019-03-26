@@ -52,14 +52,14 @@ QToolBar {
 """
 
 TBSTY_NONFLOATING ="""
-QToolBar {
-    background-color: white;
+QToolBar {{
+    background-color: {};
     border-radius: 2px;
     border-bottom: 1px solid #8f8f91;
     border-top: 1px solid #8f8f91;
     spacing: 4px;
     padding: 2px;
-}
+}}
 """
 
 class NavigationToolbar(NavigationToolbar2QT):
@@ -104,6 +104,8 @@ class MToolbar(QToolBar):
         # window flags
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
 
+        self._bgcolor = self.parent.getFigureBgColor().name()
+
     def show_toolbar(self):
         self.move(self.get_pos())
         self.show()
@@ -123,7 +125,7 @@ class MToolbar(QToolBar):
             w.dock_act.setToolTip("Dock toolbar")
             w.show_toolbar()
         else:  # non-floatable
-            self.setStyleSheet(TBSTY_NONFLOATING)
+            self.setStyleSheet(TBSTY_NONFLOATING.format(self._bgcolor))
             self.parent.vbox.insertWidget(0, self)
             self.dock_act.setIcon(QIcon(QPixmap(popup_tool_icon)))
             self.dock_act.setToolTip("Undock toolbar")
@@ -133,6 +135,9 @@ class MToolbar(QToolBar):
         #
         self._floating = True
         self.floatable_changed.connect(self.on_floatable_changed)
+
+        # bg
+        self.parent.bgColorChanged.connect(self.update_bgcolor)
 
         self.tb = tb = NavigationToolbar(self.canvas, self)
         tb.hide()
@@ -262,6 +267,11 @@ class MToolbar(QToolBar):
 
         #
         self.floatable_changed.emit(self._floating)
+
+    def update_bgcolor(self, color):
+        if not self._floating:
+            self._bgcolor = color.name()
+            self.setStyleSheet(TBSTY_NONFLOATING.format(self._bgcolor))
 
     @pyqtSlot()
     def cross_ruler(self):
