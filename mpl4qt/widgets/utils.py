@@ -8,6 +8,10 @@ from copy import deepcopy
 import re
 from math import log10
 
+from PyQt5.QtGui import QFont
+from matplotlib.font_manager import weight_dict
+from matplotlib.font_manager import stretch_dict
+
 try:
     basestring
 except NameError:
@@ -178,6 +182,100 @@ COLORMAPS_DICT = OrderedDict(COLORMAPS)
 ALL_COLORMAPS = []
 for k, v in COLORMAPS:
     ALL_COLORMAPS.extend(v)
+
+
+# font style
+FONT_STYLE_Q2M = {
+    QFont.StyleNormal: 'normal',
+    QFont.StyleItalic: 'italic',
+    QFont.StyleOblique: 'oblique',
+}
+FONT_STYLE_M2Q = {v:k for k,v in FONT_STYLE_Q2M.items()}
+
+# font weight
+FONT_WEIGHT_Q2M = {
+    0: 100,
+    12: 100,
+    25: 200,
+    50: 400,
+    57: 500,
+    63: 600,
+    75: 700,
+    81: 800,
+    87: 900,
+}
+FONT_WEIGHT_M2Q = {v:k for k,v in FONT_WEIGHT_Q2M.items()}
+
+# font stretch
+FONT_STRETCH_Q2M = {
+    50: 100,
+    62: 200,
+    75: 300,
+    87: 400,
+    100: 500,
+    112: 600,
+    125: 700,
+    150: 800,
+    200: 900,
+}
+FONT_STRETCH_M2Q = {v:k for k,v in FONT_STRETCH_Q2M.items()}
+
+
+
+def set_font(obj, font):
+    """Update the font of *obj* with *font*.
+
+    Parameters
+    ---------- 100i
+    obj :
+        Matplotlib object could be set font.
+    font : QFont
+        Font to set.
+    """
+    obj.set_size(font.pointSizeF())
+    obj.set_family(font.family())
+    obj.set_weight(FONT_WEIGHT_Q2M[font.weight()])
+    if font.stretch() == 0:
+        font.setStretch(100)
+    obj.set_stretch(FONT_STRETCH_Q2M[font.stretch()])
+    obj.set_style(FONT_STYLE_Q2M[font.style()])
+
+
+def mfont_to_qfont(pf):
+    """Return QFont instance from mpl font property.
+
+    Parameters
+    ----------
+    pf :
+        Instance of Matplotlib FontProperties.
+
+    Returns
+    -------
+    r :
+        Instance of QFont.
+    """
+    family = pf.get_family()[0]
+    size = pf.get_size_in_points()
+    weight = weight_as_number(pf.get_weight())
+    stretch = stretch_as_number(pf.get_stretch())
+    style = pf.get_style()
+    font = QFont(family, size)
+    font.setStyle(FONT_STYLE_M2Q[style])
+    font.setWeight(FONT_WEIGHT_M2Q[weight])
+    font.setStretch(FONT_STRETCH_M2Q[stretch])
+    return font
+
+
+def weight_as_number(weight):
+    """Return mpl font weight as a number.
+    """
+    return weight_dict[weight]
+
+
+def stretch_as_number(stretch):
+    """Return mpl font stretch as a number.
+    """
+    return stretch_dict[stretch]
 
 
 def pyformat_from_cformat(s, math_text=False):
