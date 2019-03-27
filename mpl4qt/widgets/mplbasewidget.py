@@ -221,6 +221,22 @@ class BasePlotWidget(QWidget):
         all_lbls = self.axes.get_xticklabels() + self.axes.get_yticklabels()
         [lbl.set_color(color) for lbl in all_lbls]
 
+    def set_xticks(self, tks):
+        self.axes.set_xticks(tks)
+        self.update_figure()
+
+    def set_yticks(self, tks):
+        self.axes.set_yticks(tks)
+        self.update_figure()
+
+    def set_xticklabels(self, tklbls):
+        self.axes.set_xticklabels(tklbls)
+        self.update_figure()
+
+    def set_yticklabels(self, tklbls):
+        self.axes.set_yticklabels(tklbls)
+        self.update_figure()
+
     def toggle_mticks(self, f):
         if f:
             self.axes.xaxis.set_minor_locator(AutoMinorLocator())
