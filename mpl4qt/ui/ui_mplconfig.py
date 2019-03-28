@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(1048, 385)
+        Dialog.resize(925, 363)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -20,6 +20,32 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(Dialog.sizePolicy().hasHeightForWidth())
         Dialog.setSizePolicy(sizePolicy)
         Dialog.setMinimumSize(QtCore.QSize(0, 0))
+        Dialog.setStyleSheet(
+            " QToolButton#grid_color_btn, #ticks_color_btn, #border_color_btn, #bkgd_color_btn, #bar_color_btn, #ebline_color_btn, #line_color_btn, #mk_facecolor_btn, #mk_edgecolor_btn, #eb_line_color_btn, #eb_mk_facecolor_btn, #eb_mk_edgecolor_btn {\n"
+            "    margin: 1px;\n"
+            "    border-color: rgb(0, 85, 0);\n"
+            "    border-style: outset;\n"
+            "    border-radius: 3px;\n"
+            "    border-width: 1px;\n"
+            "    color: black;\n"
+            "    background-color: gray;\n"
+            "}\n"
+            "QToolButton#grid_color_btn:pressed, QToolButton#ticks_color_btn:pressed,\n"
+            "QToolButton#border_color_btn:pressed,\n"
+            "QToolButton#bkgd_color_btn:pressed,\n"
+            "QToolButton#bar_color_btn:pressed,\n"
+            "QToolButton#ebline_color_btn:pressed,\n"
+            "QToolButton#line_color_btn:pressed,\n"
+            "QToolButton#mk_facecolor_btn:pressed,\n"
+            "QToolButton#mk_edgecolor_btn:pressed,\n"
+            "QToolButton#eb_mk_edgecolor_btn:pressed,\n"
+            "QToolButton#eb_mk_facecolor_btn:pressed,\n"
+            "QToolButton#eb_line_color_btn:pressed {\n"
+            "    background-color: white;\n"
+            "}\n"
+            "\n"
+            "QTabBar::tab::disabled {width: 0; height: 0; margin: 0; padding: 0; border: none;} "
+        )
         Dialog.setSizeGripEnabled(False)
         Dialog.setModal(False)
         self.gridLayout_3 = QtWidgets.QGridLayout(Dialog)
@@ -502,31 +528,6 @@ class Ui_Dialog(object):
         self.label_21.setSizePolicy(sizePolicy)
         self.label_21.setObjectName("label_21")
         self.gridLayout.addWidget(self.label_21, 2, 4, 1, 1)
-        self.mk_edgecolor_btn = QtWidgets.QPushButton(self.curve_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.mk_edgecolor_btn.sizePolicy().hasHeightForWidth())
-        self.mk_edgecolor_btn.setSizePolicy(sizePolicy)
-        self.mk_edgecolor_btn.setStyleSheet(
-            " QPushButton {\n"
-            "    margin: 1px;\n"
-            "    border-color: rgb(0, 85, 0);\n"
-            "    border-style: outset;\n"
-            "    border-radius: 3px;\n"
-            "    border-width: 1px;\n"
-            "    color: black;\n"
-            "    background-color: gray;\n"
-            "}\n"
-            "QPushButton:pressed {\n"
-            "    background-color: white;\n"
-            "}")
-        self.mk_edgecolor_btn.setText("")
-        self.mk_edgecolor_btn.setAutoDefault(False)
-        self.mk_edgecolor_btn.setObjectName("mk_edgecolor_btn")
-        self.gridLayout.addWidget(self.mk_edgecolor_btn, 2, 6, 1, 1)
         self.mk_size_lineEdit = QtWidgets.QLineEdit(self.curve_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
@@ -587,55 +588,6 @@ class Ui_Dialog(object):
         self.line_hide_chkbox = QtWidgets.QCheckBox(self.curve_tab)
         self.line_hide_chkbox.setObjectName("line_hide_chkbox")
         self.gridLayout.addWidget(self.line_hide_chkbox, 0, 9, 1, 1)
-        self.mk_facecolor_btn = QtWidgets.QPushButton(self.curve_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.mk_facecolor_btn.sizePolicy().hasHeightForWidth())
-        self.mk_facecolor_btn.setSizePolicy(sizePolicy)
-        self.mk_facecolor_btn.setStyleSheet(
-            " QPushButton {\n"
-            "    margin: 1px;\n"
-            "    border-color: rgb(0, 85, 0);\n"
-            "    border-style: outset;\n"
-            "    border-radius: 3px;\n"
-            "    border-width: 1px;\n"
-            "    color: black;\n"
-            "    background-color: gray;\n"
-            "}\n"
-            "QPushButton:pressed {\n"
-            "    background-color: white;\n"
-            "}")
-        self.mk_facecolor_btn.setText("")
-        self.mk_facecolor_btn.setAutoDefault(False)
-        self.mk_facecolor_btn.setObjectName("mk_facecolor_btn")
-        self.gridLayout.addWidget(self.mk_facecolor_btn, 2, 5, 1, 1)
-        self.line_color_btn = QtWidgets.QPushButton(self.curve_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.line_color_btn.sizePolicy().hasHeightForWidth())
-        self.line_color_btn.setSizePolicy(sizePolicy)
-        self.line_color_btn.setStyleSheet(" QPushButton {\n"
-                                          "    margin: 1px;\n"
-                                          "    border-color: rgb(0, 85, 0);\n"
-                                          "    border-style: outset;\n"
-                                          "    border-radius: 3px;\n"
-                                          "    border-width: 1px;\n"
-                                          "    color: black;\n"
-                                          "    background-color: gray;\n"
-                                          "}\n"
-                                          "QPushButton:pressed {\n"
-                                          "    background-color: white;\n"
-                                          "}")
-        self.line_color_btn.setText("")
-        self.line_color_btn.setAutoDefault(False)
-        self.line_color_btn.setObjectName("line_color_btn")
-        self.gridLayout.addWidget(self.line_color_btn, 1, 5, 1, 1)
         self.line_width_lineEdit = QtWidgets.QLineEdit(self.curve_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
@@ -754,6 +706,39 @@ class Ui_Dialog(object):
         self.opacity_val_slider.setTickPosition(QtWidgets.QSlider.NoTicks)
         self.opacity_val_slider.setObjectName("opacity_val_slider")
         self.gridLayout.addWidget(self.opacity_val_slider, 3, 1, 1, 5)
+        self.mk_edgecolor_btn = QtWidgets.QToolButton(self.curve_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.mk_edgecolor_btn.sizePolicy().hasHeightForWidth())
+        self.mk_edgecolor_btn.setSizePolicy(sizePolicy)
+        self.mk_edgecolor_btn.setText("")
+        self.mk_edgecolor_btn.setObjectName("mk_edgecolor_btn")
+        self.gridLayout.addWidget(self.mk_edgecolor_btn, 2, 6, 1, 1)
+        self.mk_facecolor_btn = QtWidgets.QToolButton(self.curve_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.mk_facecolor_btn.sizePolicy().hasHeightForWidth())
+        self.mk_facecolor_btn.setSizePolicy(sizePolicy)
+        self.mk_facecolor_btn.setText("")
+        self.mk_facecolor_btn.setObjectName("mk_facecolor_btn")
+        self.gridLayout.addWidget(self.mk_facecolor_btn, 2, 5, 1, 1)
+        self.line_color_btn = QtWidgets.QToolButton(self.curve_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.line_color_btn.sizePolicy().hasHeightForWidth())
+        self.line_color_btn.setSizePolicy(sizePolicy)
+        self.line_color_btn.setText("")
+        self.line_color_btn.setObjectName("line_color_btn")
+        self.gridLayout.addWidget(self.line_color_btn, 1, 5, 1, 1)
         self.config_tabWidget.addTab(self.curve_tab, "")
         self.eb_tab = QtWidgets.QWidget()
         self.eb_tab.setObjectName("eb_tab")
@@ -866,31 +851,6 @@ class Ui_Dialog(object):
         self.label_35.setSizePolicy(sizePolicy)
         self.label_35.setObjectName("label_35")
         self.gridLayout_2.addWidget(self.label_35, 2, 4, 1, 1)
-        self.eb_mk_edgecolor_btn = QtWidgets.QPushButton(self.eb_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.eb_mk_edgecolor_btn.sizePolicy().hasHeightForWidth())
-        self.eb_mk_edgecolor_btn.setSizePolicy(sizePolicy)
-        self.eb_mk_edgecolor_btn.setStyleSheet(
-            " QPushButton {\n"
-            "    margin: 1px;\n"
-            "    border-color: rgb(0, 85, 0);\n"
-            "    border-style: outset;\n"
-            "    border-radius: 3px;\n"
-            "    border-width: 1px;\n"
-            "    color: black;\n"
-            "    background-color: gray;\n"
-            "}\n"
-            "QPushButton:pressed {\n"
-            "    background-color: white;\n"
-            "}")
-        self.eb_mk_edgecolor_btn.setText("")
-        self.eb_mk_edgecolor_btn.setAutoDefault(False)
-        self.eb_mk_edgecolor_btn.setObjectName("eb_mk_edgecolor_btn")
-        self.gridLayout_2.addWidget(self.eb_mk_edgecolor_btn, 2, 6, 1, 1)
         self.eb_mk_size_lineEdit = QtWidgets.QLineEdit(self.eb_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
@@ -938,32 +898,7 @@ class Ui_Dialog(object):
                                             QtWidgets.QSizePolicy.Minimum,
                                             QtWidgets.QSizePolicy.Expanding)
         self.gridLayout_2.addItem(spacerItem1, 4, 2, 1, 1)
-        self.eb_mk_facecolor_btn = QtWidgets.QPushButton(self.eb_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.eb_mk_facecolor_btn.sizePolicy().hasHeightForWidth())
-        self.eb_mk_facecolor_btn.setSizePolicy(sizePolicy)
-        self.eb_mk_facecolor_btn.setStyleSheet(
-            " QPushButton {\n"
-            "    margin: 1px;\n"
-            "    border-color: rgb(0, 85, 0);\n"
-            "    border-style: outset;\n"
-            "    border-radius: 3px;\n"
-            "    border-width: 1px;\n"
-            "    color: black;\n"
-            "    background-color: gray;\n"
-            "}\n"
-            "QPushButton:pressed {\n"
-            "    background-color: white;\n"
-            "}")
-        self.eb_mk_facecolor_btn.setText("")
-        self.eb_mk_facecolor_btn.setAutoDefault(False)
-        self.eb_mk_facecolor_btn.setObjectName("eb_mk_facecolor_btn")
-        self.gridLayout_2.addWidget(self.eb_mk_facecolor_btn, 2, 5, 1, 1)
-        self.eb_line_color_btn = QtWidgets.QPushButton(self.eb_tab)
+        self.eb_line_color_btn = QtWidgets.QToolButton(self.eb_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -971,23 +906,31 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.eb_line_color_btn.sizePolicy().hasHeightForWidth())
         self.eb_line_color_btn.setSizePolicy(sizePolicy)
-        self.eb_line_color_btn.setStyleSheet(
-            " QPushButton {\n"
-            "    margin: 1px;\n"
-            "    border-color: rgb(0, 85, 0);\n"
-            "    border-style: outset;\n"
-            "    border-radius: 3px;\n"
-            "    border-width: 1px;\n"
-            "    color: black;\n"
-            "    background-color: gray;\n"
-            "}\n"
-            "QPushButton:pressed {\n"
-            "    background-color: white;\n"
-            "}")
         self.eb_line_color_btn.setText("")
-        self.eb_line_color_btn.setAutoDefault(False)
         self.eb_line_color_btn.setObjectName("eb_line_color_btn")
         self.gridLayout_2.addWidget(self.eb_line_color_btn, 1, 5, 1, 1)
+        self.eb_mk_facecolor_btn = QtWidgets.QToolButton(self.eb_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.eb_mk_facecolor_btn.sizePolicy().hasHeightForWidth())
+        self.eb_mk_facecolor_btn.setSizePolicy(sizePolicy)
+        self.eb_mk_facecolor_btn.setText("")
+        self.eb_mk_facecolor_btn.setObjectName("eb_mk_facecolor_btn")
+        self.gridLayout_2.addWidget(self.eb_mk_facecolor_btn, 2, 5, 1, 1)
+        self.eb_mk_edgecolor_btn = QtWidgets.QToolButton(self.eb_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.eb_mk_edgecolor_btn.sizePolicy().hasHeightForWidth())
+        self.eb_mk_edgecolor_btn.setSizePolicy(sizePolicy)
+        self.eb_mk_edgecolor_btn.setText("")
+        self.eb_mk_edgecolor_btn.setObjectName("eb_mk_edgecolor_btn")
+        self.gridLayout_2.addWidget(self.eb_mk_edgecolor_btn, 2, 6, 1, 1)
         self.config_tabWidget.addTab(self.eb_tab, "")
         self.image_tab = QtWidgets.QWidget()
         self.image_tab.setObjectName("image_tab")
@@ -1197,30 +1140,6 @@ class Ui_Dialog(object):
         self.label_51.setFont(font)
         self.label_51.setObjectName("label_51")
         self.gridLayout_4.addWidget(self.label_51, 1, 0, 1, 1)
-        self.bar_color_btn = QtWidgets.QPushButton(self.barchart_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.bar_color_btn.sizePolicy().hasHeightForWidth())
-        self.bar_color_btn.setSizePolicy(sizePolicy)
-        self.bar_color_btn.setStyleSheet(" QPushButton {\n"
-                                         "    margin: 1px;\n"
-                                         "    border-color: rgb(0, 85, 0);\n"
-                                         "    border-style: outset;\n"
-                                         "    border-radius: 3px;\n"
-                                         "    border-width: 1px;\n"
-                                         "    color: black;\n"
-                                         "    background-color: gray;\n"
-                                         "}\n"
-                                         "QPushButton:pressed {\n"
-                                         "    background-color: white;\n"
-                                         "}")
-        self.bar_color_btn.setText("")
-        self.bar_color_btn.setAutoDefault(False)
-        self.bar_color_btn.setObjectName("bar_color_btn")
-        self.gridLayout_4.addWidget(self.bar_color_btn, 0, 2, 1, 1)
         self.bar_opacity_lbl = QtWidgets.QLabel(self.barchart_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Preferred)
@@ -1412,31 +1331,6 @@ class Ui_Dialog(object):
         self.label_56 = QtWidgets.QLabel(self.barchart_tab)
         self.label_56.setObjectName("label_56")
         self.gridLayout_4.addWidget(self.label_56, 3, 1, 1, 1)
-        self.ebline_color_btn = QtWidgets.QPushButton(self.barchart_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.ebline_color_btn.sizePolicy().hasHeightForWidth())
-        self.ebline_color_btn.setSizePolicy(sizePolicy)
-        self.ebline_color_btn.setStyleSheet(
-            " QPushButton {\n"
-            "    margin: 1px;\n"
-            "    border-color: rgb(0, 85, 0);\n"
-            "    border-style: outset;\n"
-            "    border-radius: 3px;\n"
-            "    border-width: 1px;\n"
-            "    color: black;\n"
-            "    background-color: gray;\n"
-            "}\n"
-            "QPushButton:pressed {\n"
-            "    background-color: white;\n"
-            "}")
-        self.ebline_color_btn.setText("")
-        self.ebline_color_btn.setAutoDefault(False)
-        self.ebline_color_btn.setObjectName("ebline_color_btn")
-        self.gridLayout_4.addWidget(self.ebline_color_btn, 1, 2, 1, 1)
         self.label_49 = QtWidgets.QLabel(self.barchart_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Preferred)
@@ -1474,6 +1368,28 @@ class Ui_Dialog(object):
         self.bar_width_lineEdit.setSizePolicy(sizePolicy)
         self.bar_width_lineEdit.setObjectName("bar_width_lineEdit")
         self.gridLayout_4.addWidget(self.bar_width_lineEdit, 0, 7, 1, 1)
+        self.bar_color_btn = QtWidgets.QToolButton(self.barchart_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.bar_color_btn.sizePolicy().hasHeightForWidth())
+        self.bar_color_btn.setSizePolicy(sizePolicy)
+        self.bar_color_btn.setText("")
+        self.bar_color_btn.setObjectName("bar_color_btn")
+        self.gridLayout_4.addWidget(self.bar_color_btn, 0, 2, 1, 1)
+        self.ebline_color_btn = QtWidgets.QToolButton(self.barchart_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.ebline_color_btn.sizePolicy().hasHeightForWidth())
+        self.ebline_color_btn.setSizePolicy(sizePolicy)
+        self.ebline_color_btn.setText("")
+        self.ebline_color_btn.setObjectName("ebline_color_btn")
+        self.gridLayout_4.addWidget(self.ebline_color_btn, 1, 2, 1, 1)
         self.config_tabWidget.addTab(self.barchart_tab, "")
         self.style_tab = QtWidgets.QWidget()
         self.style_tab.setObjectName("style_tab")
@@ -1546,17 +1462,16 @@ class Ui_Dialog(object):
                                     self.label_17)
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
-        self.bkgd_color_label = QtWidgets.QLabel(self.style_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+        self.label_62 = QtWidgets.QLabel(self.style_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.bkgd_color_label.sizePolicy().hasHeightForWidth())
-        self.bkgd_color_label.setSizePolicy(sizePolicy)
-        self.bkgd_color_label.setAlignment(QtCore.Qt.AlignCenter)
-        self.bkgd_color_label.setObjectName("bkgd_color_label")
-        self.horizontalLayout_6.addWidget(self.bkgd_color_label)
+            self.label_62.sizePolicy().hasHeightForWidth())
+        self.label_62.setSizePolicy(sizePolicy)
+        self.label_62.setObjectName("label_62")
+        self.horizontalLayout_6.addWidget(self.label_62)
         self.bkgd_color_btn = QtWidgets.QToolButton(self.style_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
@@ -1565,15 +1480,63 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.bkgd_color_btn.sizePolicy().hasHeightForWidth())
         self.bkgd_color_btn.setSizePolicy(sizePolicy)
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(
-            QtGui.QPixmap(":/icons/pick-color.png"), QtGui.QIcon.Normal,
-            QtGui.QIcon.Off)
-        self.bkgd_color_btn.setIcon(icon4)
-        self.bkgd_color_btn.setIconSize(QtCore.QSize(28, 28))
-        self.bkgd_color_btn.setAutoRaise(True)
+        self.bkgd_color_btn.setText("")
         self.bkgd_color_btn.setObjectName("bkgd_color_btn")
         self.horizontalLayout_6.addWidget(self.bkgd_color_btn)
+        self.label_65 = QtWidgets.QLabel(self.style_tab)
+        self.label_65.setObjectName("label_65")
+        self.horizontalLayout_6.addWidget(self.label_65)
+        self.border_color_btn = QtWidgets.QToolButton(self.style_tab)
+        self.border_color_btn.setStyleSheet("")
+        self.border_color_btn.setText("")
+        self.border_color_btn.setObjectName("border_color_btn")
+        self.horizontalLayout_6.addWidget(self.border_color_btn)
+        self.label_63 = QtWidgets.QLabel(self.style_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_63.sizePolicy().hasHeightForWidth())
+        self.label_63.setSizePolicy(sizePolicy)
+        self.label_63.setObjectName("label_63")
+        self.horizontalLayout_6.addWidget(self.label_63)
+        self.ticks_color_btn = QtWidgets.QToolButton(self.style_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.ticks_color_btn.sizePolicy().hasHeightForWidth())
+        self.ticks_color_btn.setSizePolicy(sizePolicy)
+        self.ticks_color_btn.setText("")
+        self.ticks_color_btn.setObjectName("ticks_color_btn")
+        self.horizontalLayout_6.addWidget(self.ticks_color_btn)
+        self.label_64 = QtWidgets.QLabel(self.style_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_64.sizePolicy().hasHeightForWidth())
+        self.label_64.setSizePolicy(sizePolicy)
+        self.label_64.setObjectName("label_64")
+        self.horizontalLayout_6.addWidget(self.label_64)
+        self.grid_color_btn = QtWidgets.QToolButton(self.style_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.grid_color_btn.sizePolicy().hasHeightForWidth())
+        self.grid_color_btn.setSizePolicy(sizePolicy)
+        self.grid_color_btn.setText("")
+        self.grid_color_btn.setObjectName("grid_color_btn")
+        self.horizontalLayout_6.addWidget(self.grid_color_btn)
+        spacerItem6 = QtWidgets.QSpacerItem(40, 20,
+                                            QtWidgets.QSizePolicy.Expanding,
+                                            QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_6.addItem(spacerItem6)
         self.formLayout_3.setLayout(1, QtWidgets.QFormLayout.FieldRole,
                                     self.horizontalLayout_6)
         self.label_7 = QtWidgets.QLabel(self.style_tab)
@@ -1615,22 +1578,6 @@ class Ui_Dialog(object):
         self.xy_ticks_font_btn.setAutoRaise(True)
         self.xy_ticks_font_btn.setObjectName("xy_ticks_font_btn")
         self.horizontalLayout_7.addWidget(self.xy_ticks_font_btn)
-        self.ticks_color_label = QtWidgets.QLabel(self.style_tab)
-        self.ticks_color_label.setObjectName("ticks_color_label")
-        self.horizontalLayout_7.addWidget(self.ticks_color_label)
-        self.ticks_color_btn = QtWidgets.QToolButton(self.style_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.ticks_color_btn.sizePolicy().hasHeightForWidth())
-        self.ticks_color_btn.setSizePolicy(sizePolicy)
-        self.ticks_color_btn.setIcon(icon4)
-        self.ticks_color_btn.setIconSize(QtCore.QSize(28, 28))
-        self.ticks_color_btn.setAutoRaise(True)
-        self.ticks_color_btn.setObjectName("ticks_color_btn")
-        self.horizontalLayout_7.addWidget(self.ticks_color_btn)
         self.formLayout_3.setLayout(2, QtWidgets.QFormLayout.FieldRole,
                                     self.horizontalLayout_7)
         self.label_37 = QtWidgets.QLabel(self.style_tab)
@@ -1718,30 +1665,6 @@ class Ui_Dialog(object):
         self.gridon_chkbox.setSizePolicy(sizePolicy)
         self.gridon_chkbox.setObjectName("gridon_chkbox")
         self.horizontalLayout_8.addWidget(self.gridon_chkbox)
-        self.grid_color_btn = QtWidgets.QPushButton(self.style_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.grid_color_btn.sizePolicy().hasHeightForWidth())
-        self.grid_color_btn.setSizePolicy(sizePolicy)
-        self.grid_color_btn.setStyleSheet(" QPushButton {\n"
-                                          "    margin: 1px;\n"
-                                          "    border-color: rgb(0, 85, 0);\n"
-                                          "    border-style: outset;\n"
-                                          "    border-radius: 3px;\n"
-                                          "    border-width: 1px;\n"
-                                          "    color: black;\n"
-                                          "    background-color: gray;\n"
-                                          "}\n"
-                                          "QPushButton:pressed {\n"
-                                          "    background-color: white;\n"
-                                          "}")
-        self.grid_color_btn.setText("")
-        self.grid_color_btn.setAutoDefault(False)
-        self.grid_color_btn.setObjectName("grid_color_btn")
-        self.horizontalLayout_8.addWidget(self.grid_color_btn)
         self.formLayout_3.setLayout(5, QtWidgets.QFormLayout.FieldRole,
                                     self.horizontalLayout_8)
         self.horizontalLayout_18 = QtWidgets.QHBoxLayout()
@@ -1840,11 +1763,9 @@ class Ui_Dialog(object):
         Dialog.setTabOrder(self.cb_orientation_cbb, self.figWidth_lineEdit)
         Dialog.setTabOrder(self.figWidth_lineEdit, self.figHeight_lineEdit)
         Dialog.setTabOrder(self.figHeight_lineEdit, self.figDpi_lineEdit)
-        Dialog.setTabOrder(self.figDpi_lineEdit, self.bkgd_color_btn)
-        Dialog.setTabOrder(self.bkgd_color_btn, self.mticks_chkbox)
+        Dialog.setTabOrder(self.figDpi_lineEdit, self.mticks_chkbox)
         Dialog.setTabOrder(self.mticks_chkbox, self.xy_ticks_font_btn)
-        Dialog.setTabOrder(self.xy_ticks_font_btn, self.ticks_color_btn)
-        Dialog.setTabOrder(self.ticks_color_btn, self.enable_mathtext_chkbox)
+        Dialog.setTabOrder(self.xy_ticks_font_btn, self.enable_mathtext_chkbox)
         Dialog.setTabOrder(self.enable_mathtext_chkbox,
                            self.xtick_formatter_cbb)
         Dialog.setTabOrder(self.xtick_formatter_cbb,
@@ -1856,8 +1777,7 @@ class Ui_Dialog(object):
         Dialog.setTabOrder(self.ytick_funcformatter_lineEdit,
                            self.tightLayout_chkbox)
         Dialog.setTabOrder(self.tightLayout_chkbox, self.gridon_chkbox)
-        Dialog.setTabOrder(self.gridon_chkbox, self.grid_color_btn)
-        Dialog.setTabOrder(self.grid_color_btn, self.config_tabWidget)
+        Dialog.setTabOrder(self.gridon_chkbox, self.config_tabWidget)
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -1927,19 +1847,19 @@ class Ui_Dialog(object):
         self.label_5.setText(_translate("Dialog", "Color"))
         self.label_19.setText(_translate("Dialog", "Style"))
         self.label_21.setText(_translate("Dialog", "Color"))
-        self.mk_edgecolor_btn.setToolTip(_translate("Dialog", "Edge Color"))
         self.label_20.setText(_translate("Dialog", "Size"))
         self.line_id_cbb.setToolTip(
             _translate("Dialog", "Select line to configure"))
         self.label_22.setText(_translate("Dialog", "Width"))
         self.label_23.setText(_translate("Dialog", "Label"))
         self.line_hide_chkbox.setText(_translate("Dialog", "Hide"))
-        self.mk_facecolor_btn.setToolTip(_translate("Dialog", "Face Color"))
         self.label_2.setText(_translate("Dialog", "Line ID"))
         self.label_4.setText(_translate("Dialog", "Marker"))
         self.label_26.setText(_translate("Dialog", "Opacity"))
         self.label_9.setText(_translate("Dialog", "Width"))
         self.opacity_val_lbl.setText(_translate("Dialog", "100%"))
+        self.mk_edgecolor_btn.setToolTip(_translate("Dialog", "Edge Color"))
+        self.mk_facecolor_btn.setToolTip(_translate("Dialog", "Face Color"))
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.curve_tab),
             _translate("Dialog", "Curve"))
@@ -1968,11 +1888,11 @@ class Ui_Dialog(object):
         self.label_34.setText(_translate("Dialog", "Width"))
         self.label_28.setText(_translate("Dialog", "Cap"))
         self.label_35.setText(_translate("Dialog", "Color"))
-        self.eb_mk_edgecolor_btn.setToolTip(_translate("Dialog", "Edge Color"))
         self.label_31.setText(_translate("Dialog", "Width"))
         self.eb_line_hide_chkbox.setText(_translate("Dialog", "Hide"))
         self.label_33.setText(_translate("Dialog", "Style"))
         self.eb_mk_facecolor_btn.setToolTip(_translate("Dialog", "Face Color"))
+        self.eb_mk_edgecolor_btn.setToolTip(_translate("Dialog", "Edge Color"))
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.eb_tab),
             _translate("Dialog", "Errorbar"))
@@ -2029,15 +1949,15 @@ class Ui_Dialog(object):
         self.label_15.setText(_translate("Dialog", "DPI"))
         self.figDpi_lineEdit.setText(_translate("Dialog", "120"))
         self.figDpi_lineEdit.setPlaceholderText(_translate("Dialog", "120"))
-        self.label_17.setText(_translate("Dialog", "Background Color"))
-        self.bkgd_color_label.setText(_translate("Dialog", "#FFFFFF"))
-        self.bkgd_color_btn.setText(_translate("Dialog", "Pick Color"))
+        self.label_17.setText(_translate("Dialog", "Colors"))
+        self.label_62.setText(_translate("Dialog", "Background"))
+        self.label_65.setText(_translate("Dialog", "Boundaries"))
+        self.label_63.setText(_translate("Dialog", "Ticks"))
+        self.label_64.setText(_translate("Dialog", "Grid"))
         self.label_7.setText(_translate("Dialog", "Ticks"))
         self.mticks_chkbox.setText(_translate("Dialog", "Minor On"))
         self.xy_ticks_sample_lbl.setText(_translate("Dialog", "Sample"))
         self.xy_ticks_font_btn.setText(_translate("Dialog", "Choose Font"))
-        self.ticks_color_label.setText(_translate("Dialog", "#FFFFFF"))
-        self.ticks_color_btn.setText(_translate("Dialog", "Pick Color"))
         self.label_37.setText(_translate("Dialog", "Tick Format"))
         self.enable_mathtext_chkbox.setToolTip(
             _translate(
