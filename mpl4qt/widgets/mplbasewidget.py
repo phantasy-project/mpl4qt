@@ -23,8 +23,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import pyqtProperty
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QFontDatabase
 from PyQt5.QtGui import QPalette
 from PyQt5.QtGui import QResizeEvent
@@ -45,7 +47,7 @@ from functools import partial
 
 from .utils import set_font
 from .utils import mfont_to_qfont
-
+from .utils import mplcolor2hex
 
 MPL_VERSION = mpl.__version__
 DTMSEC = 500  # msec
@@ -144,6 +146,11 @@ class BasePlotWidget(QWidget):
         # title
         title = self.axes.title
         self._fig_title_font = mfont_to_qfont(title.get_fontproperties())
+
+        ## color:
+        # border
+        _bc = list(self.axes.spines.values())[0].get_ec()
+        self._fig_border_color = QColor(mplcolor2hex(_bc))
 
     def on_scroll(self, e):
         if e.step < 0:
@@ -301,6 +308,29 @@ class BasePlotWidget(QWidget):
         """Override this method to define combo keyshorts.
         """
         print("Capture key combo: ", k1, k2)
+
+    def set_border_color(self, c):
+        for _, o in self.axes.spines.items():
+            o.set_color(c.getRgbF())
+
+    def getFigureBorderColor(self):
+        return self._fig_border_color
+
+    @pyqtSlot(QColor)
+    def setFigureBorderColor(self, c, **kws):
+        """Set color for the data boundaries.
+
+        Parameters
+        ----------
+        c : QColor
+            Color of the boundaries.
+        """
+        self._fig_border_color = c
+        self.set_border_color(c)
+        self.update_figure()
+
+    figureBorderColor = pyqtProperty(QColor, getFigureBorderColor,
+                                     setFigureBorderColor)
 
 
 class MatplotlibBaseWidget(BasePlotWidget):
