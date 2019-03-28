@@ -15,17 +15,20 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtGui import QDoubleValidator
 
+from functools import partial
+
 from mpl4qt.ui.ui_mplconfig import Ui_Dialog
-from .utils import mplcolor2hex
-from .utils import MK_CODE
-from .utils import MK_SYMBOL
-from .utils import LINE_STY_DICT
-from .utils import SCALE_STY_KEYS
-from .utils import SCALE_STY_VALS
-from .utils import generate_formatter
-from .utils import AUTOFORMATTER
-from .utils import AUTOFORMATTER_MATHTEXT
-from .utils import COLORMAPS_DICT
+
+from mpl4qt.widgets.utils import mplcolor2hex
+from mpl4qt.widgets.utils import MK_CODE
+from mpl4qt.widgets.utils import MK_SYMBOL
+from mpl4qt.widgets.utils import LINE_STY_DICT
+from mpl4qt.widgets.utils import SCALE_STY_KEYS
+from mpl4qt.widgets.utils import SCALE_STY_VALS
+from mpl4qt.widgets.utils import generate_formatter
+from mpl4qt.widgets.utils import AUTOFORMATTER
+from mpl4qt.widgets.utils import AUTOFORMATTER_MATHTEXT
+from mpl4qt.widgets.utils import COLORMAPS_DICT
 
 
 class MatplotlibConfigPanel(QDialog, Ui_Dialog):
@@ -86,6 +89,9 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     # color opacity
     figLineAlphaChanged = pyqtSignal(float)
 
+    # border color
+    figBorderColorChanged = pyqtSignal(QColor)
+
     def __init__(self, parent=None):
         super(MatplotlibConfigPanel, self).__init__()
         self.parent = parent
@@ -99,9 +105,6 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         for tab in (self.eb_tab, self.image_tab, self.barchart_tab):
             self.config_tabWidget.setTabEnabled(
                 self.config_tabWidget.indexOf(tab), False)
-        # set the style sheet
-        self.setStyleSheet(
-            "QTabBar::tab::disabled {width: 0; height: 0; margin: 0; padding: 0; border: none;} ")
 
         self.figWidth_lineEdit.setValidator(QIntValidator(2, 20, self))
         self.figHeight_lineEdit.setValidator(QIntValidator(2, 20, self))
@@ -114,8 +117,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
             o.setValidator(QDoubleValidator(self))
 
         # events
-        self.bkgd_color_btn.clicked.connect(self.set_fig_bkgdcolor)
-        self.ticks_color_btn.clicked.connect(self.set_fig_xyticks_color)
+
         self.figWidth_lineEdit.textChanged.connect(self.set_figsize_width)
         self.figHeight_lineEdit.textChanged.connect(self.set_figsize_height)
         self.figDpi_lineEdit.textChanged.connect(self.set_figdpi)
@@ -136,9 +138,17 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
                 lambda i: self.opacity_val_lbl.setText('{}%'.format(i)))
         self.opacity_val_slider.valueChanged.connect(self.set_line_opacity)
 
-        # link to main mpl widget
-        self.bgcolorChanged[QColor].connect(self.set_bgcolor_label)
-        self.bgcolorChanged[QColor].connect(self.parent.setFigureBgColor)
+        # background color
+        self.bgcolorChanged.connect(partial(self.set_btn_color, self.bkgd_color_btn))
+        self.bgcolorChanged.connect(self.parent.setFigureBgColor)
+        self.bkgd_color_btn.clicked.connect(self.set_bkgdcolor)
+        self.set_btn_color(self.bkgd_color_btn, self.parent.getFigureBgColor())
+        # borders color
+        self.figBorderColorChanged.connect(partial(self.set_btn_color, self.border_color_btn))
+        self.figBorderColorChanged.connect(self.parent.setFigureBorderColor)
+        self.border_color_btn.clicked.connect(self.set_border_color)
+        self.set_btn_color(self.border_color_btn, self.parent.getFigureBorderColor())
+
         self.figWidthChanged[int].connect(self.parent.setFigureWidth)
         self.figHeightChanged[int].connect(self.parent.setFigureHeight)
         self.figDpiChanged[int].connect(self.parent.setFigureDpi)
@@ -168,9 +178,13 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
 
         # xy ticks
         self.figXYticksFontChanged.connect(self.parent.setFigureXYticksFont)
-        self.figXYticksColorChanged[QColor].connect(
-            self.parent.setFigureXYticksColor)
-        self.figXYticksColorChanged[QColor].connect(self.set_ticks_color_label)
+        # color
+        self.figXYticksColorChanged.connect(partial(self.set_btn_color, self.ticks_color_btn))
+        self.figXYticksColorChanged.connect(self.parent.setFigureXYticksColor)
+        self.ticks_color_btn.clicked.connect(self.set_xyticks_color)
+        self.set_btn_color(self.ticks_color_btn, self.parent.getFigureXYticksColor())
+        #
+
         self.mticks_chkbox.stateChanged.connect(self.set_fig_mticks)
         self.figMTicksChanged[bool].connect(self.parent.setFigureMTicksToggle)
         # rot
@@ -194,8 +208,8 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
 
         # grid
         self.figGridChanged[bool].connect(lambda x: self.parent.setFigureGridToggle(x, mticks=self.mticks_chkbox.isChecked()))
-        self.figGridColorChanged[QColor].connect(lambda x: self.parent.setFigureGridColor(x, mticks=self.mticks_chkbox.isChecked(), toggle_checked=self.gridon_chkbox.isChecked()))
-        self.figGridColorChanged[QColor].connect(self.set_grid_color_btn)
+        self.figGridColorChanged.connect(lambda x: self.parent.setFigureGridColor(x, mticks=self.mticks_chkbox.isChecked(), toggle_checked=self.gridon_chkbox.isChecked()))
+        self.figGridColorChanged.connect(partial(self.set_btn_color, self.grid_color_btn))
         self.gridon_chkbox.stateChanged.connect(self.set_fig_grid)
         self.grid_color_btn.clicked.connect(self.set_grid_color)
 
@@ -214,8 +228,8 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.post_init_ui()
 
         # line color
-        self.figLineColorChanged[QColor].connect(self.set_line_color_btn)
-        self.figLineColorChanged[QColor].connect(self.parent.setLineColor)
+        self.figLineColorChanged.connect(partial(self.set_btn_color, self.line_color_btn))
+        self.figLineColorChanged.connect(self.parent.setLineColor)
         self.line_color_btn.clicked.connect(self.set_line_color)
         # line style
         self.line_style_cbb.currentTextChanged['QString'].connect(
@@ -236,12 +250,12 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.mk_style_cbb.currentIndexChanged[int].connect(
             self.set_marker_style)
         # marker: mec
-        self.figMkeColorChanged[QColor].connect(self.set_mec_btn)
-        self.figMkeColorChanged[QColor].connect(self.parent.setMkEdgeColor)
+        self.figMkeColorChanged.connect(partial(self.set_btn_color, self.mk_edgecolor_btn))
+        self.figMkeColorChanged.connect(self.parent.setMkEdgeColor)
         self.mk_edgecolor_btn.clicked.connect(self.set_mec)
         # marker: mfc
-        self.figMkfColorChanged[QColor].connect(self.set_mfc_btn)
-        self.figMkfColorChanged[QColor].connect(self.parent.setMkFaceColor)
+        self.figMkfColorChanged.connect(partial(self.set_btn_color, self.mk_facecolor_btn))
+        self.figMkfColorChanged.connect(self.parent.setMkFaceColor)
         self.mk_facecolor_btn.clicked.connect(self.set_mfc)
 
         # axis scale
@@ -254,8 +268,6 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.adjustSize()
 
     def post_init_ui(self):
-        self.set_bgcolor_label(self.parent.getFigureBgColor())
-        self.set_ticks_color_label(self.parent.getFigureXYticksColor())
         self.figWidth_lineEdit.setText(str(self.parent.getFigureWidth()))
         self.figHeight_lineEdit.setText(str(self.parent.getFigureHeight()))
         self.figDpi_lineEdit.setText(str(self.parent.getFigureDpi()))
@@ -269,7 +281,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.xticks_rotation_sbox.setValue(self.parent.getFigureXTicksAngle())
         self.yticks_rotation_sbox.setValue(self.parent.getFigureYTicksAngle())
         self.gridon_chkbox.setChecked(self.parent.getFigureGridToggle())
-        self.set_grid_color_btn(self.parent.getFigureGridColor())
+        self.set_btn_color(self.grid_color_btn, self.parent.getFigureGridColor())
         self.set_xylimits()
         # marker style
         self.mk_style_cbb.clear()
@@ -392,9 +404,9 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     def _set_line_config_panel(self, config):
         """Update line config panel when line id is switched."""
         # colors
-        self.set_line_color_btn(QColor(mplcolor2hex(config['c'])))
-        self.set_mec_btn(QColor(mplcolor2hex(config['mec'])))
-        self.set_mfc_btn(QColor(mplcolor2hex(config['mfc'])))
+        self.set_btn_color(self.line_color_btn, QColor(mplcolor2hex(config['c'])))
+        self.set_btn_color(self.mk_edgecolor_btn, QColor(mplcolor2hex(config['mec'])))
+        self.set_btn_color(self.mk_facecolor_btn, QColor(mplcolor2hex(config['mfc'])))
         # line style
         self.line_style_cbb.setCurrentText(LINE_STY_DICT[config['ls']])
         # marker style
@@ -474,19 +486,11 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         if color.isValid():
             self.figLineColorChanged.emit(color)
 
-    @pyqtSlot(QColor)
-    def set_line_color_btn(self, color):
-        self._set_btn_color(self.line_color_btn, color)
-
     @pyqtSlot()
     def set_mec(self):
         color = QColorDialog.getColor()
         if color.isValid():
             self.figMkeColorChanged.emit(color)
-
-    @pyqtSlot(QColor)
-    def set_mec_btn(self, color):
-        self._set_btn_color(self.mk_edgecolor_btn, color)
 
     @pyqtSlot()
     def set_mfc(self):
@@ -494,25 +498,17 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         if color.isValid():
             self.figMkfColorChanged.emit(color)
 
-    @pyqtSlot(QColor)
-    def set_mfc_btn(self, color):
-        self._set_btn_color(self.mk_facecolor_btn, color)
-
     @pyqtSlot()
     def set_grid_color(self):
         color = QColorDialog.getColor()
         if color.isValid():
             self.figGridColorChanged.emit(color)
 
-    @pyqtSlot(QColor)
-    def set_grid_color_btn(self, color):
-        self._set_btn_color(self.grid_color_btn, color)
-
     @staticmethod
-    def _set_btn_color(btn, color):
-        """Set the button with giving color.
+    def set_btn_color(btn, color):
+        """Set the button with giving qcolor.
         """
-        btn.setStyleSheet("QPushButton {\n"
+        btn.setStyleSheet("QToolButton {\n"
                           "  margin: 1px;\n"
                           "  border-color: rgb(0, 85, 0);\n"
                           "  border-style: outset;\n"
@@ -520,7 +516,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
                           "  border-width: 1px;\n"
                           "  color: black;\n"
                           "  background-color: %s;\n" % color.name() + "}\n"
-                          "QPushButton:pressed {\n"
+                          "QToolButton:pressed {\n"
                           "  background-color: white;\n"
                           "}")
 
@@ -547,13 +543,19 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.figYlabelChanged.emit(t)
 
     @pyqtSlot()
-    def set_fig_bkgdcolor(self):
+    def set_bkgdcolor(self):
         color = QColorDialog.getColor()
         if color.isValid():
             self.bgcolorChanged.emit(color)
 
     @pyqtSlot()
-    def set_fig_xyticks_color(self):
+    def set_border_color(self):
+        color = QColorDialog.getColor()
+        if color.isValid():
+            self.figBorderColorChanged.emit(color)
+
+    @pyqtSlot()
+    def set_xyticks_color(self):
         color = QColorDialog.getColor()
         if color.isValid():
             self.figXYticksColorChanged.emit(color)
@@ -618,24 +620,6 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     @pyqtSlot(int)
     def set_line_visible(self, state):
         self.figLineVisibleChanged.emit(state==Qt.Unchecked)
-
-    @pyqtSlot(QColor)
-    def set_bgcolor_label(self, color):
-        self.bkgd_color_label.setText(color.name().upper())
-        self.bkgd_color_label.setStyleSheet(
-            "QLabel {\n"
-            "  background-color: %s;\n" % color.name() +
-            "  border-radius: 5px;\n"
-            "}")
-
-    @pyqtSlot(QColor)
-    def set_ticks_color_label(self, color):
-        self.ticks_color_label.setText(color.name().upper())
-        self.ticks_color_label.setStyleSheet(
-            "QLabel {\n"
-            "  background-color: %s;\n" % color.name() +
-            "  border-radius: 5px;\n"
-            "}")
 
 
 class MatplotlibConfigErrorbarPanel(MatplotlibConfigPanel):
@@ -766,7 +750,7 @@ class MatplotlibConfigErrorbarPanel(MatplotlibConfigPanel):
 
     @pyqtSlot(QColor)
     def set_eb_mec_btn(self, color):
-        self._set_btn_color(self.eb_mk_edgecolor_btn, color)
+        self.set_btn_color(self.eb_mk_edgecolor_btn, color)
 
     @pyqtSlot()
     def set_eb_mfc(self):
@@ -776,7 +760,7 @@ class MatplotlibConfigErrorbarPanel(MatplotlibConfigPanel):
 
     @pyqtSlot(QColor)
     def set_eb_mfc_btn(self, color):
-        self._set_btn_color(self.eb_mk_facecolor_btn, color)
+        self.set_btn_color(self.eb_mk_facecolor_btn, color)
 
     @pyqtSlot(int)
     def set_xeb_marker_style(self, i):
@@ -828,7 +812,7 @@ class MatplotlibConfigErrorbarPanel(MatplotlibConfigPanel):
 
     @pyqtSlot(QColor)
     def set_eb_line_color_btn(self, color):
-        self._set_btn_color(self.eb_line_color_btn, color)
+        self.set_btn_color(self.eb_line_color_btn, color)
 
 
 class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
@@ -1049,11 +1033,11 @@ class MatplotlibConfigBarPanel(MatplotlibConfigPanel):
 
     @pyqtSlot(QColor)
     def set_ebline_color_btn(self, color):
-        self._set_btn_color(self.ebline_color_btn, color)
+        self.set_btn_color(self.ebline_color_btn, color)
 
     @pyqtSlot(QColor)
     def set_bar_color_btn(self, color):
-        self._set_btn_color(self.bar_color_btn, color)
+        self.set_btn_color(self.bar_color_btn, color)
 
     def _set_barchart_config_panel(self, config):
         eb_color = mplcolor2hex(config.get('eb_color'))
