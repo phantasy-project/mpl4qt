@@ -157,6 +157,8 @@ class BasePlotWidget(QWidget):
         self._fig_border_visible = o.get_visible()
 
     def on_scroll(self, e):
+        if e.inaxes is None:
+            return
         if e.step < 0:
             f = 1.05 ** (-e.step)
         else:
