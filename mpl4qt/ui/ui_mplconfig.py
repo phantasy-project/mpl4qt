@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(925, 363)
+        Dialog.resize(988, 400)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -359,7 +359,7 @@ class Ui_Dialog(object):
         self.legend_on_chkbox.setObjectName("legend_on_chkbox")
         self.horizontalLayout_14.addWidget(self.legend_on_chkbox)
         self.label_24 = QtWidgets.QLabel(self.figure_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1483,14 +1483,6 @@ class Ui_Dialog(object):
         self.bkgd_color_btn.setText("")
         self.bkgd_color_btn.setObjectName("bkgd_color_btn")
         self.horizontalLayout_6.addWidget(self.bkgd_color_btn)
-        self.label_65 = QtWidgets.QLabel(self.style_tab)
-        self.label_65.setObjectName("label_65")
-        self.horizontalLayout_6.addWidget(self.label_65)
-        self.border_color_btn = QtWidgets.QToolButton(self.style_tab)
-        self.border_color_btn.setStyleSheet("")
-        self.border_color_btn.setText("")
-        self.border_color_btn.setObjectName("border_color_btn")
-        self.horizontalLayout_6.addWidget(self.border_color_btn)
         self.label_63 = QtWidgets.QLabel(self.style_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Preferred)
@@ -1665,12 +1657,23 @@ class Ui_Dialog(object):
         self.gridon_chkbox.setSizePolicy(sizePolicy)
         self.gridon_chkbox.setObjectName("gridon_chkbox")
         self.horizontalLayout_8.addWidget(self.gridon_chkbox)
+        spacerItem7 = QtWidgets.QSpacerItem(40, 20,
+                                            QtWidgets.QSizePolicy.Expanding,
+                                            QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_8.addItem(spacerItem7)
         self.formLayout_3.setLayout(5, QtWidgets.QFormLayout.FieldRole,
                                     self.horizontalLayout_8)
         self.horizontalLayout_18 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_18.setContentsMargins(-1, 0, -1, -1)
         self.horizontalLayout_18.setObjectName("horizontalLayout_18")
         self.label_59 = QtWidgets.QLabel(self.style_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_59.sizePolicy().hasHeightForWidth())
+        self.label_59.setSizePolicy(sizePolicy)
         self.label_59.setObjectName("label_59")
         self.horizontalLayout_18.addWidget(self.label_59)
         self.label_60 = QtWidgets.QLabel(self.style_tab)
@@ -1681,6 +1684,9 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.label_60.sizePolicy().hasHeightForWidth())
         self.label_60.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setUnderline(True)
+        self.label_60.setFont(font)
         self.label_60.setObjectName("label_60")
         self.horizontalLayout_18.addWidget(self.label_60)
         self.xticks_rotation_sbox = QtWidgets.QDoubleSpinBox(self.style_tab)
@@ -1698,6 +1704,9 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.label_61.sizePolicy().hasHeightForWidth())
         self.label_61.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setUnderline(True)
+        self.label_61.setFont(font)
         self.label_61.setObjectName("label_61")
         self.horizontalLayout_18.addWidget(self.label_61)
         self.yticks_rotation_sbox = QtWidgets.QDoubleSpinBox(self.style_tab)
@@ -1708,6 +1717,80 @@ class Ui_Dialog(object):
         self.horizontalLayout_18.addWidget(self.yticks_rotation_sbox)
         self.formLayout_3.setLayout(3, QtWidgets.QFormLayout.FieldRole,
                                     self.horizontalLayout_18)
+        self.label_66 = QtWidgets.QLabel(self.style_tab)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_66.setFont(font)
+        self.label_66.setObjectName("label_66")
+        self.formLayout_3.setWidget(6, QtWidgets.QFormLayout.LabelRole,
+                                    self.label_66)
+        self.horizontalLayout_19 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_19.setObjectName("horizontalLayout_19")
+        self.border_hide_chkbox = QtWidgets.QCheckBox(self.style_tab)
+        self.border_hide_chkbox.setObjectName("border_hide_chkbox")
+        self.horizontalLayout_19.addWidget(self.border_hide_chkbox)
+        self.line_2 = QtWidgets.QFrame(self.style_tab)
+        self.line_2.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line_2.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_2.setObjectName("line_2")
+        self.horizontalLayout_19.addWidget(self.line_2)
+        self.label_67 = QtWidgets.QLabel(self.style_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_67.sizePolicy().hasHeightForWidth())
+        self.label_67.setSizePolicy(sizePolicy)
+        self.label_67.setObjectName("label_67")
+        self.horizontalLayout_19.addWidget(self.label_67)
+        self.border_color_btn = QtWidgets.QToolButton(self.style_tab)
+        self.border_color_btn.setStyleSheet("")
+        self.border_color_btn.setText("")
+        self.border_color_btn.setObjectName("border_color_btn")
+        self.horizontalLayout_19.addWidget(self.border_color_btn)
+        self.label_65 = QtWidgets.QLabel(self.style_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_65.sizePolicy().hasHeightForWidth())
+        self.label_65.setSizePolicy(sizePolicy)
+        self.label_65.setObjectName("label_65")
+        self.horizontalLayout_19.addWidget(self.label_65)
+        self.border_lw_sbox = QtWidgets.QDoubleSpinBox(self.style_tab)
+        self.border_lw_sbox.setDecimals(1)
+        self.border_lw_sbox.setMaximum(10.0)
+        self.border_lw_sbox.setSingleStep(0.1)
+        self.border_lw_sbox.setObjectName("border_lw_sbox")
+        self.horizontalLayout_19.addWidget(self.border_lw_sbox)
+        self.label_68 = QtWidgets.QLabel(self.style_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_68.sizePolicy().hasHeightForWidth())
+        self.label_68.setSizePolicy(sizePolicy)
+        self.label_68.setObjectName("label_68")
+        self.horizontalLayout_19.addWidget(self.label_68)
+        self.border_ls_cbb = QtWidgets.QComboBox(self.style_tab)
+        self.border_ls_cbb.setSizeAdjustPolicy(
+            QtWidgets.QComboBox.AdjustToContentsOnFirstShow)
+        self.border_ls_cbb.setObjectName("border_ls_cbb")
+        self.border_ls_cbb.addItem("")
+        self.border_ls_cbb.addItem("")
+        self.border_ls_cbb.addItem("")
+        self.border_ls_cbb.addItem("")
+        self.horizontalLayout_19.addWidget(self.border_ls_cbb)
+        spacerItem8 = QtWidgets.QSpacerItem(40, 20,
+                                            QtWidgets.QSizePolicy.Expanding,
+                                            QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_19.addItem(spacerItem8)
+        self.formLayout_3.setLayout(6, QtWidgets.QFormLayout.FieldRole,
+                                    self.horizontalLayout_19)
         self.config_tabWidget.addTab(self.style_tab, "")
         self.gridLayout_3.addWidget(self.config_tabWidget, 0, 0, 1, 1)
 
@@ -1823,8 +1906,9 @@ class Ui_Dialog(object):
                                          _translate("Dialog", "Log Transform"))
         self.xaxis_scale_cbb.setItemText(
             2, _translate("Dialog", "Symmetrical Log Transform"))
-        self.xaxis_scale_cbb.setItemText(
-            3, _translate("Dialog", "Logistic Transform"))
+        self.xaxis_scale_cbb.setItemText(3,
+                                         _translate("Dialog",
+                                                    "Logistic Transform"))
         self.label_41.setText(_translate("Dialog", "Y"))
         self.yaxis_scale_cbb.setItemText(0, _translate("Dialog",
                                                        "Linear Scale"))
@@ -1832,8 +1916,9 @@ class Ui_Dialog(object):
                                          _translate("Dialog", "Log Transform"))
         self.yaxis_scale_cbb.setItemText(
             2, _translate("Dialog", "Symmetrical Log Transform"))
-        self.yaxis_scale_cbb.setItemText(
-            3, _translate("Dialog", "Logistic Transform"))
+        self.yaxis_scale_cbb.setItemText(3,
+                                         _translate("Dialog",
+                                                    "Logistic Transform"))
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.figure_tab),
             _translate("Dialog", "Figure"))
@@ -1951,7 +2036,6 @@ class Ui_Dialog(object):
         self.figDpi_lineEdit.setPlaceholderText(_translate("Dialog", "120"))
         self.label_17.setText(_translate("Dialog", "Colors"))
         self.label_62.setText(_translate("Dialog", "Background"))
-        self.label_65.setText(_translate("Dialog", "Boundaries"))
         self.label_63.setText(_translate("Dialog", "Ticks"))
         self.label_64.setText(_translate("Dialog", "Grid"))
         self.label_7.setText(_translate("Dialog", "Ticks"))
@@ -1991,6 +2075,15 @@ class Ui_Dialog(object):
         self.xticks_rotation_sbox.setSuffix(_translate("Dialog", " deg"))
         self.label_61.setText(_translate("Dialog", "Y"))
         self.yticks_rotation_sbox.setSuffix(_translate("Dialog", " deg"))
+        self.label_66.setText(_translate("Dialog", "Boundaries"))
+        self.border_hide_chkbox.setText(_translate("Dialog", "Hide"))
+        self.label_67.setText(_translate("Dialog", "Color"))
+        self.label_65.setText(_translate("Dialog", "Width"))
+        self.label_68.setText(_translate("Dialog", "Style"))
+        self.border_ls_cbb.setItemText(0, _translate("Dialog", "solid"))
+        self.border_ls_cbb.setItemText(1, _translate("Dialog", "dashed"))
+        self.border_ls_cbb.setItemText(2, _translate("Dialog", "dashdot"))
+        self.border_ls_cbb.setItemText(3, _translate("Dialog", "dotted"))
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.style_tab),
             _translate("Dialog", "Style"))
