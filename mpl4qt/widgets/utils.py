@@ -281,6 +281,8 @@ def weight_as_number(weight):
 def stretch_as_number(stretch):
     """Return mpl font stretch as a number.
     """
+    if isinstance(stretch, (int, float)):
+        return stretch
     return stretch_dict[stretch]
 
 
