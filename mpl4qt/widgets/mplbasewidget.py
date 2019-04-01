@@ -48,6 +48,7 @@ from functools import partial
 from .utils import set_font
 from .utils import mfont_to_qfont
 from .utils import mplcolor2hex
+from .utils import LINE_STY_VALS
 
 MPL_VERSION = mpl.__version__
 DTMSEC = 500  # msec
@@ -147,10 +148,13 @@ class BasePlotWidget(QWidget):
         title = self.axes.title
         self._fig_title_font = mfont_to_qfont(title.get_fontproperties())
 
-        ## color:
-        # border
-        _bc = list(self.axes.spines.values())[0].get_ec()
-        self._fig_border_color = QColor(mplcolor2hex(_bc))
+        ## border
+        o = list(self.axes.spines.values())[0]
+        # c, lw, ls, vis
+        self._fig_border_color = QColor(mplcolor2hex(o.get_ec()))
+        self._fig_border_lw = o.get_linewidth()
+        self._fig_border_ls = o.get_linestyle()
+        self._fig_border_visible = o.get_visible()
 
     def on_scroll(self, e):
         if e.step < 0:
@@ -313,6 +317,18 @@ class BasePlotWidget(QWidget):
         for _, o in self.axes.spines.items():
             o.set_color(c.getRgbF())
 
+    def set_border_lw(self, x):
+        for _, o in self.axes.spines.items():
+            o.set_linewidth(x)
+
+    def set_border_ls(self, s):
+        for _, o in self.axes.spines.items():
+            o.set_linestyle(s)
+
+    def set_border_visible(self, f):
+        for _, o in self.axes.spines.items():
+            o.set_visible(f)
+
     def getFigureBorderColor(self):
         return self._fig_border_color
 
@@ -331,6 +347,66 @@ class BasePlotWidget(QWidget):
 
     figureBorderColor = pyqtProperty(QColor, getFigureBorderColor,
                                      setFigureBorderColor)
+
+    def getFigureBorderLineWidth(self):
+        return self._fig_border_lw
+
+    @pyqtSlot(float)
+    def setFigureBorderLineWidth(self, x):
+        """Set line width for the border.
+
+        Parameters
+        ----------
+        x : float
+            Line width.
+        """
+        self._fig_border_lw = x
+        self.set_border_lw(x)
+        self.update_figure()
+
+    figureBorderLineWidth = pyqtProperty(float, getFigureBorderLineWidth,
+                                         setFigureBorderLineWidth)
+
+    def getFigureBorderLineStyle(self):
+        return self._fig_border_ls
+
+    @pyqtSlot('QString')
+    def setFigureBorderLineStyle(self, s):
+        """Set line style for the border.
+
+        Parameters
+        ----------
+        s : str
+            String for the line style, see `line style <https://matplotlib.org/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D>`_.
+        """
+        if s not in LINE_STY_VALS:
+            return
+        self._fig_border_ls = s
+        self.set_border_ls(s)
+        self.update_figure()
+
+    figureBorderLineStyle = pyqtProperty('QString',
+            getFigureBorderLineStyle, setFigureBorderLineStyle)
+
+
+    def getFigureBorderVisible(self):
+        return self._fig_border_visible
+
+    @pyqtSlot(bool)
+    def setFigureBorderVisible(self, f):
+        """Set borders visible or not.
+
+        Parameters
+        ----------
+        f : bool
+            Line visible (True) or not (False).
+        """
+        self._fig_border_visible = f
+        self.set_border_visible(f)
+        self.update_figure()
+
+    figureBorderVisible = pyqtProperty(bool, getFigureBorderVisible,
+                                       setFigureBorderVisible)
 
 
 class MatplotlibBaseWidget(BasePlotWidget):
