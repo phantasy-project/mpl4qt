@@ -294,6 +294,7 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
 
         self._x_data = x_data
         self._y_data = y_data
+        self._yerr_data = yerr_data
         adjust_bar(self._rects, self._eb_lines, x_data, y_data, yerr_data,
                    self._bar_width)
         self.update_figure()
@@ -309,7 +310,8 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
         """
         all_annotes = []
         ax = self.axes
-        fmt = kws.get('fmt', '{0:.2g}')
+        fmt0 = "${0:.2g}\pm{1:.2g}$"
+        fmt = kws.get('fmt', fmt0)
         hw = self._bar_width / 2.0
         eta = 2.0
         for ix, iy, iyerr in zip(self._x_data, self._y_data, self._yerr_data):
@@ -318,7 +320,7 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
             else:
                 tp_y = iy - iyerr * eta
             tp = (ix - hw, tp_y)
-            anote = ax.annotate(s=fmt.format(iy), xy=(ix, iy),
+            anote = ax.annotate(s=fmt.format(iy, iyerr), xy=(ix, iy),
                                 xytext=tp)
             all_annotes.append(anote)
         self._all_annotes = all_annotes
