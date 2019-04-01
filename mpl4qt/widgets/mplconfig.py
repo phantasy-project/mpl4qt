@@ -91,6 +91,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
 
     # border color
     figBorderColorChanged = pyqtSignal(QColor)
+    figBorderLineWidthChanged = pyqtSignal(float)
 
     def __init__(self, parent=None):
         super(MatplotlibConfigPanel, self).__init__()
@@ -148,6 +149,19 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.figBorderColorChanged.connect(self.parent.setFigureBorderColor)
         self.border_color_btn.clicked.connect(self.set_border_color)
         self.set_btn_color(self.border_color_btn, self.parent.getFigureBorderColor())
+        # borders lw
+        self.figBorderLineWidthChanged.connect(self.parent.setFigureBorderLineWidth)
+        self.border_lw_sbox.valueChanged.connect(self.set_border_lw)
+        self.border_lw_sbox.setValue(self.parent.getFigureBorderLineWidth())
+        # borders ls
+        self.border_ls_cbb.currentTextChanged.connect(self.parent.setFigureBorderLineStyle)
+        self.border_ls_cbb.setCurrentText(self.parent.getFigureBorderLineStyle())
+        # boders hide?
+        self.border_hide_chkbox.toggled.connect(
+                lambda f:self.parent.setFigureBorderVisible(not f))
+        self.border_hide_chkbox.setChecked(not self.parent.getFigureBorderVisible())
+
+
 
         self.figWidthChanged[int].connect(self.parent.setFigureWidth)
         self.figHeightChanged[int].connect(self.parent.setFigureHeight)
@@ -435,6 +449,10 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         if s == '': return
         w = max(float(s), 0.05)
         self.figLineWidthChanged.emit(w)
+
+    @pyqtSlot(float)
+    def set_border_lw(self, w):
+        self.figBorderLineWidthChanged.emit(w)
 
     @pyqtSlot('QString')
     def set_marker_size(self, s):
