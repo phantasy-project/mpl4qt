@@ -49,6 +49,8 @@ from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
 from mpl4qt.widgets.utils import mplcolor2hex
 from mpl4qt.widgets.utils import DEFAULT_MPL_SETTINGS
 from mpl4qt.widgets.utils import SCALE_STY_VALS
+from mpl4qt.widgets.utils import LINE_STY_VALS
+from mpl4qt.widgets.utils import MK_SYMBOL
 from mpl4qt.widgets.utils import ALL_COLORMAPS
 from mpl4qt.widgets.utils import cycle_list_next
 from mpl4qt.widgets.utils import AUTOFORMATTER_MATHTEXT
@@ -704,6 +706,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
         s : str
             String for the line style, see `line style <https://matplotlib.org/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D>`_.
         """
+        if s not in LINE_STY_VALS:
+            return
         self._line_style = s
         self._line.set_ls(s)
         self.update_figure()
@@ -722,6 +726,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
         s : str
             String for the marker style, see `marker style <https://matplotlib.org/api/markers_api.html>`_.
         """
+        if s not in MK_SYMBOL:
+            return
         self._marker_style = s
         self._line.set_marker(s)
         self.update_figure()

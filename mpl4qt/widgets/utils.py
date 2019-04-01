@@ -102,6 +102,7 @@ LINE_STY_DICT = {
     ':': 'dotted',
     'None': 'None',
 }
+LINE_STY_VALS = LINE_STY_DICT.values()
 
 # axis scale mapping
 SCALE_STY_DICT = OrderedDict([
