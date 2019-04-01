@@ -143,6 +143,9 @@ class MatplotlibCurveWidget(BasePlotWidget):
         # widget type
         self.widget_type = 'curve'
 
+        # show mpltool by default.
+        self.__show_mpl_tools()
+
     def add_curve(self, x_data=None, y_data=None, **kws):
         """Add one curve to figure, accepts all ``pyplot.plot`` keyword
         arguments, see `matplotlib.pyplot.plot <https://matplotlib.org/api/_as_gen/matplotlib.pyplot.plot.html>`_.
@@ -1211,11 +1214,10 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
         menu.exec_(self.mapToGlobal(e.pos()))
 
-        #menu.move(e.globalPos())
-        #menu.show()
-        #menu.activateWindow()
-
     def show_mpl_tools(self, e):
+        self.__show_mpl_tools()
+
+    def __show_mpl_tools(self):
         if 'w_mpl_tools' in self._handlers:
             w = self._handlers['w_mpl_tools']
         else:
