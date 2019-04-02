@@ -127,7 +127,7 @@ class BasePlotWidget(QWidget):
     def set_up_layout(self):
         self.vbox = QVBoxLayout()
         self.vbox.setContentsMargins(0, 0, 0, 0)
-        self.vbox.addWidget(self.canvas)
+        self.vbox.addWidget(self.canvas, 1)
         self.setLayout(self.vbox)
 
     def post_style_figure(self):

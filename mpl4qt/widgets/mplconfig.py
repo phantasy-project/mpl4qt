@@ -162,7 +162,6 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.border_hide_chkbox.setChecked(not self.parent.getFigureBorderVisible())
 
 
-
         self.figWidthChanged[int].connect(self.parent.setFigureWidth)
         self.figHeightChanged[int].connect(self.parent.setFigureHeight)
         self.figDpiChanged[int].connect(self.parent.setFigureDpi)

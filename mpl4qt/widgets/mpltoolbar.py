@@ -126,6 +126,8 @@ class MToolbar(QToolBar):
             w.show_toolbar()
         else:  # non-floatable
             self.setStyleSheet(TBSTY_NONFLOATING.format(self._bgcolor))
+            self.setSizePolicy(
+                QSizePolicy.Expanding, QSizePolicy.Preferred)
             self.parent.vbox.insertWidget(0, self)
             self.dock_act.setIcon(QIcon(QPixmap(popup_tool_icon)))
             self.dock_act.setToolTip("Undock toolbar")
@@ -293,7 +295,6 @@ class MToolbar(QToolBar):
             x, y, z = coord
             self.pos_lbl.setText(
                     "<html><sup>(x,y,z)</sup>({0:<.4g},{1:<.4g},{2:<.4g})</html>".format(x, y, z))
-        self.adjustSize()
 
     @pyqtSlot()
     def zoom(self):
