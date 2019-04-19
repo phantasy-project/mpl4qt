@@ -156,6 +156,9 @@ class BasePlotWidget(QWidget):
         self._fig_border_ls = o.get_linestyle()
         self._fig_border_visible = o.get_visible()
 
+        # aspect
+        self._fig_aspect = str(self.axes.get_aspect())
+
     def on_scroll(self, e):
         if e.inaxes is None:
             return
@@ -409,6 +412,36 @@ class BasePlotWidget(QWidget):
 
     figureBorderVisible = pyqtProperty(bool, getFigureBorderVisible,
                                        setFigureBorderVisible)
+
+    def getFigureAspectRatio(self):
+        return self._fig_aspect
+
+    @pyqtSlot('QString')
+    def setFigureAspectRatio(self, s):
+        """Set aspect ratio of the axes.
+
+        Parameters
+        ----------
+        s : str
+            Aspect ratio, 'auto', 'equal' and any number.
+        """
+        try:
+            float(s)
+        except ValueError:
+            if s in ('auto', 'equal'):
+                self._fig_aspect = s
+            else:
+                return
+        else:
+            if float(s) <= 0:
+                return
+            self._fig_aspect = s
+        finally:
+            self.axes.set_aspect(self._fig_aspect)
+            self.update_figure()
+
+    figureAspectRatio = pyqtProperty('QString', getFigureAspectRatio,
+                                     setFigureAspectRatio)
 
 
 class MatplotlibBaseWidget(BasePlotWidget):
