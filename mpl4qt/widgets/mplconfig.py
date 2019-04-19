@@ -160,6 +160,10 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.border_hide_chkbox.toggled.connect(
                 lambda f:self.parent.setFigureBorderVisible(not f))
         self.border_hide_chkbox.setChecked(not self.parent.getFigureBorderVisible())
+        # aspect ratio
+        self.figAspect_cbb.currentTextChanged.connect(
+                lambda s:self.parent.setFigureAspectRatio(s.lower()))
+        self.figAspect_cbb.setCurrentText(self.parent.getFigureAspectRatio().capitalize())
 
 
         self.figWidthChanged[int].connect(self.parent.setFigureWidth)
