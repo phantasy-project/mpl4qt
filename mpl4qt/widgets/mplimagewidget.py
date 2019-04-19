@@ -41,11 +41,12 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
 
     def __init__(self, parent=None):
         # colormap
-        self._cmap = "jet" # "viridis"
+        self._cmap = "viridis"
         # colorbar
         self._cb_toggle = False
         self.cb = None
         self._cb_orientation = 'vertical'
+        self._auto_clim = False
 
         # placeholders of xylim (not applicable)
         self._xlim_min = 0
@@ -127,7 +128,7 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
                                            orientation=self._cb_orientation,
                                            aspect=20, shrink=0.95, pad=0.08,
                                            fraction=0.05)
-        if not f:
+        if not f and self.cb is not None:
             self.cb.remove()
             self.cb = None
         self.update_figure()
@@ -147,6 +148,22 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
 
     colorBarOrientation = pyqtProperty('QString', getColorBarOrientation,
                                        setColorBarOrientation)
+
+    def getAutoColorLimit(self):
+        return self._auto_clim
+
+    @pyqtSlot(bool)
+    def setAutoColorLimit(self, f):
+        """Turn on/off auto clim.
+        """
+        self._auto_clim = f
+        if f:
+            self.on_auto_clim()
+        else:
+            self.update_figure()
+
+    autoColorLimit = pyqtProperty(bool, getAutoColorLimit,
+                                  setAutoColorLimit)
 
     def get_all_curves(self):
         """Return all additional curves."""
@@ -201,11 +218,24 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
         """
         self.z = zdata
         self.im.set_array(zdata)
+
+        # WIP
         xdim, ydim = self.z.shape
         xy_extent = [0, ydim, 0, xdim]
         self.im.set_extent(xy_extent)
-        self.update_figure()
 
+        if self._auto_clim:
+            self.on_auto_clim()
+        else:
+            self.update_figure()
+
+    def on_auto_clim(self):
+        """Auto set clim.
+        """
+        cmin, cmax = self.z.min(), self.z.max()
+        self._cr_min, self._cr_max = cmin, cmax
+        self.im.set_clim(vmin=cmin, vmax=cmax)
+        self.update_figure()
 
 
 def fn_peaks(x, y):
