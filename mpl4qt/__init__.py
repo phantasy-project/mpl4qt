@@ -8,7 +8,7 @@ if d == 'debian':
     matplotlib.rcParams['agg.path.chunksize'] = 2000
 
 # always use Qt5Agg for mpl < 2.0
-if matplotlib.__version__ <= "2.0.0":
+if matplotlib.__version__ < "2.0.0":
     matplotlib.use("Qt5Agg")
 #
 
