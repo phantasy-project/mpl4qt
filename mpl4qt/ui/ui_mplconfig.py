@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(988, 400)
+        Dialog.resize(1139, 400)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -993,6 +993,16 @@ class Ui_Dialog(object):
                                   self.label_44)
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.auto_clim_chkbox = QtWidgets.QCheckBox(self.image_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.auto_clim_chkbox.sizePolicy().hasHeightForWidth())
+        self.auto_clim_chkbox.setSizePolicy(sizePolicy)
+        self.auto_clim_chkbox.setObjectName("auto_clim_chkbox")
+        self.horizontalLayout_4.addWidget(self.auto_clim_chkbox)
         self.cr_reset_tbtn = QtWidgets.QToolButton(self.image_tab)
         icon3 = QtGui.QIcon()
         icon3.addPixmap(
@@ -1018,6 +1028,8 @@ class Ui_Dialog(object):
             QtWidgets.QAbstractSpinBox.UpDownArrows)
         self.cr_min_dSpinBox.setProperty("showGroupSeparator", False)
         self.cr_min_dSpinBox.setDecimals(3)
+        self.cr_min_dSpinBox.setMinimum(-999.0)
+        self.cr_min_dSpinBox.setMaximum(999.0)
         self.cr_min_dSpinBox.setObjectName("cr_min_dSpinBox")
         self.horizontalLayout_4.addWidget(self.cr_min_dSpinBox)
         self.label_46 = QtWidgets.QLabel(self.image_tab)
@@ -1032,6 +1044,8 @@ class Ui_Dialog(object):
         self.horizontalLayout_4.addWidget(self.label_46)
         self.cr_max_dSpinBox = QtWidgets.QDoubleSpinBox(self.image_tab)
         self.cr_max_dSpinBox.setDecimals(3)
+        self.cr_max_dSpinBox.setMinimum(-999.0)
+        self.cr_max_dSpinBox.setMaximum(999.0)
         self.cr_max_dSpinBox.setObjectName("cr_max_dSpinBox")
         self.horizontalLayout_4.addWidget(self.cr_max_dSpinBox)
         self.formLayout.setLayout(1, QtWidgets.QFormLayout.FieldRole,
@@ -1450,6 +1464,15 @@ class Ui_Dialog(object):
         self.figDpi_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
         self.figDpi_lineEdit.setObjectName("figDpi_lineEdit")
         self.horizontalLayout_5.addWidget(self.figDpi_lineEdit)
+        self.label_69 = QtWidgets.QLabel(self.style_tab)
+        self.label_69.setObjectName("label_69")
+        self.horizontalLayout_5.addWidget(self.label_69)
+        self.figAspect_cbb = QtWidgets.QComboBox(self.style_tab)
+        self.figAspect_cbb.setEditable(True)
+        self.figAspect_cbb.setObjectName("figAspect_cbb")
+        self.figAspect_cbb.addItem("")
+        self.figAspect_cbb.addItem("")
+        self.horizontalLayout_5.addWidget(self.figAspect_cbb)
         self.formLayout_3.setLayout(0, QtWidgets.QFormLayout.FieldRole,
                                     self.horizontalLayout_5)
         self.label_17 = QtWidgets.QLabel(self.style_tab)
@@ -1986,6 +2009,7 @@ class Ui_Dialog(object):
         self.del_from_fav_btn.setText(_translate("Dialog", "..."))
         self.reverse_cmap_chkbox.setText(_translate("Dialog", "Reverse"))
         self.label_44.setText(_translate("Dialog", "Color Range"))
+        self.auto_clim_chkbox.setText(_translate("Dialog", "Auto"))
         self.cr_reset_tbtn.setToolTip(
             _translate(
                 "Dialog",
@@ -2034,6 +2058,9 @@ class Ui_Dialog(object):
         self.label_15.setText(_translate("Dialog", "DPI"))
         self.figDpi_lineEdit.setText(_translate("Dialog", "120"))
         self.figDpi_lineEdit.setPlaceholderText(_translate("Dialog", "120"))
+        self.label_69.setText(_translate("Dialog", "Ratio"))
+        self.figAspect_cbb.setItemText(0, _translate("Dialog", "Auto"))
+        self.figAspect_cbb.setItemText(1, _translate("Dialog", "Equal"))
         self.label_17.setText(_translate("Dialog", "Colors"))
         self.label_62.setText(_translate("Dialog", "Background"))
         self.label_63.setText(_translate("Dialog", "Ticks"))
