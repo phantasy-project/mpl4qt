@@ -165,6 +165,10 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
     autoColorLimit = pyqtProperty(bool, getAutoColorLimit,
                                   setAutoColorLimit)
 
+    def set_autoscale(self, axis='both'):
+        self.axes.autoscale(axis)
+        self.update_figure()
+
     def get_all_curves(self):
         """Return all additional curves."""
         return self._lines
@@ -179,9 +183,11 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
         z = fn_peaks(x, y)
         # color range
         self._cr_min, self._cr_max = z.min(), z.max()
+        et = (x[0, 0], x[-1, -1], y[0, 0], y[-1, -1])
         im = self.axes.imshow(z, cmap=self._cmap,
                 vmin=self._cr_min,
-                vmax=self._cr_max, origin="lower left")
+                vmax=self._cr_max, origin="lower left",
+                extent=et)
 
         self.x, self.y, self.z = x, y, z
         self.im = im
@@ -208,9 +214,12 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
 
     def on_motion(self, event):
         if event.inaxes is not None:
+            _in, _ = self.im.contains(event)
             x_pos, y_pos = event.xdata, event.ydata
-            x_ind, y_ind = int(x_pos), int(y_pos)
-            z_pos = self.z[y_ind][x_ind]
+            if _in:
+                z_pos = self.im.get_cursor_data(event)
+            else:
+                z_pos = np.nan
             self.xyposUpdated.emit([x_pos, y_pos, z_pos])
 
     def update_image(self, zdata):
@@ -219,15 +228,27 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
         self.z = zdata
         self.im.set_array(zdata)
 
-        # WIP
         xdim, ydim = self.z.shape
-        xy_extent = [0, ydim, 0, xdim]
-        self.im.set_extent(xy_extent)
+        if self.z.shape != self.x.shape:
+            self.set_extent((0, ydim, 0, xdim))
+        else:
+            self.set_extent()
 
         if self._auto_clim:
             self.on_auto_clim()
         else:
             self.update_figure()
+
+    def update_xdata(self, xdata):
+        self.x = xdata
+
+    def update_ydata(self, ydata):
+        self.y = ydata
+
+    def set_extent(self, et=None):
+        if et is None:
+            et = (self.x[0, 0], self.x[-1, -1], self.y[0, 0], self.y[-1, -1])
+        self.im.set_extent(et)
 
     def on_auto_clim(self):
         """Auto set clim.
