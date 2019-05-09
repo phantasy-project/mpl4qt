@@ -30,6 +30,7 @@ from PyQt5.QtCore import pyqtProperty
 
 from mpl4qt.widgets.mplcurvewidget import MatplotlibCurveWidget
 from mpl4qt.widgets.mplconfig import MatplotlibConfigImagePanel
+from mpl4qt.widgets.utils import get_cursor_data
 
 
 class MatplotlibImageWidget(MatplotlibCurveWidget):
@@ -189,7 +190,7 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
                 vmax=self._cr_max, origin="lower left",
                 extent=et)
 
-        self.x, self.y, self.z = x, y, z
+        self._x_data, self._y_data, self.z = x, y, z
         self.im = im
 
     @pyqtSlot(float)
@@ -228,26 +229,41 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
         self.z = zdata
         self.im.set_array(zdata)
 
-        xdim, ydim = self.z.shape
-        if self.z.shape != self.x.shape:
-            self.set_extent((0, ydim, 0, xdim))
-        else:
-            self.set_extent()
+        ydim, xdim = self.z.shape
+        if self.z.shape != self._x_data.shape:
+            print("update xydata")
+            _x = np.linspace(0, xdim - 1, xdim)
+            _y = np.linspace(0, ydim - 1, ydim)
+            self._x_data, self._y_data = np.meshgrid(_x, _y)
+        self.set_extent()
 
         if self._auto_clim:
             self.on_auto_clim()
         else:
             self.update_figure()
 
-    def update_xdata(self, xdata):
-        self.x = xdata
+    def setXData(self, xdata):
+        self._x_data = xdata
 
-    def update_ydata(self, ydata):
-        self.y = ydata
+    def getXData(self):
+        return self._x_data
+
+    def setYData(self, ydata):
+        self._y_data = ydata
+
+    def getYData(self):
+        return self._y_data
+
+    def get_points(self):
+        """Return (x, y) coords.
+        """
+        x, y = self._x_data[0, :], self._y_data[:, 0]
+        return np.asarray([(i, j) for j in y for i in x])
 
     def set_extent(self, et=None):
         if et is None:
-            et = (self.x[0, 0], self.x[-1, -1], self.y[0, 0], self.y[-1, -1])
+            et = (self._x_data[0, 0], self._x_data[-1, -1],
+                  self._y_data[0, 0], self._y_data[-1, -1])
         self.im.set_extent(et)
 
     def on_auto_clim(self):
@@ -257,6 +273,9 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
         self._cr_min, self._cr_max = cmin, cmax
         self.im.set_clim(vmin=cmin, vmax=cmax)
         self.update_figure()
+
+    def get_cursor_data(self, x, y):
+        return get_cursor_data(self.im, x, y)
 
 
 def fn_peaks(x, y):
