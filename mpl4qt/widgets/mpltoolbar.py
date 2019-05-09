@@ -339,9 +339,7 @@ class MToolbar(QToolBar):
     @pyqtSlot()
     def lasso(self):
         if self.sender().isChecked():
-            _x = self.parent.getXData()
-            _y = self.parent.getYData()
-            pts = np.vstack([_x, _y]).T
+            pts = self.parent.get_points()
             ax = self.parent.axes
             self.selector = SelectFromPoints(ax, pts)
             self.selector.selectedIndicesReady.connect(self.update_selected_indices)

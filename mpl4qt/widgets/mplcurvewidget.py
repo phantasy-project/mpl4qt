@@ -1527,6 +1527,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
             self.axes.autoscale()
         BasePlotWidget.update_figure(self)
 
+    def get_points(self):
+        """Return array contains (x, y) coords on curve.
+        """
+        x = self._x_data
+        y = self._y_data
+        return np.vstack([x, y]).T
+
 
 if __name__ == "__main__":
 
