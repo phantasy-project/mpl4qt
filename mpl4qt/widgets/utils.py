@@ -6,11 +6,13 @@ from collections import OrderedDict
 import json
 from copy import deepcopy
 import re
+import numpy as np
 from math import log10
 
 from PyQt5.QtGui import QFont
 from matplotlib.font_manager import weight_dict
 from matplotlib.font_manager import stretch_dict
+from matplotlib.transforms import BboxTransform, Bbox
 
 try:
     basestring
@@ -455,6 +457,24 @@ class MatplotlibCurveWidgetSettings(OrderedDict):
 
 # default mpl figure settings
 DEFAULT_MPL_SETTINGS = MatplotlibCurveWidgetSettings.default_settings()
+
+
+def get_cursor_data(im, x, y):
+    xmin, xmax, ymin, ymax = im.get_extent()
+    if im.origin == 'upper':
+        ymin, ymax = ymax, ymin
+    arr = im.get_array()
+    data_extent = Bbox([[ymin, xmin], [ymax, xmax]])
+    array_extent = Bbox([[0, 0], arr.shape[:2]])
+    trans = BboxTransform(boxin=data_extent, boxout=array_extent)
+    point = trans.transform_point([y, x])
+    if any(np.isnan(point)):
+        return None
+    i, j = point.astype(int)
+    if not (0 <= i < arr.shape[0]) or not (0 <= j < arr.shape[1]):
+        return None
+    else:
+        return arr[i, j]
 
 
 def main():
