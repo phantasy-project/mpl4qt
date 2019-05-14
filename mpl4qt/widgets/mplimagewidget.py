@@ -244,12 +244,16 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
 
     def setXData(self, xdata):
         self._x_data = xdata
+        self.set_extent()
+        self.update_figure()
 
     def getXData(self):
         return self._x_data
 
     def setYData(self, ydata):
         self._y_data = ydata
+        self.set_extent()
+        self.update_figure()
 
     def getYData(self):
         return self._y_data
