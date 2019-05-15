@@ -96,7 +96,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._fig_width = 4
         self._fig_height = 3
         self._fig_dpi = 120
-        self._fig_tight_layout = False
         self._fig_auto_scale = False
         self._fig_xscale = 'linear'
         self._fig_yscale = 'linear'
@@ -195,29 +194,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
         return QSize(1.1 * self._fig_width * self._fig_dpi,
                      1.1 * self._fig_height * self._fig_dpi)
 
-    def getTightLayoutToggle(self):
-        return self._fig_tight_layout
-
-    @pyqtSlot(bool)
-    def setTightLayoutToggle(self, f):
-        """Toggle for the tight layout.
-
-        Parameters
-        ----------
-        f : bool
-            Tight layout toggle.
-        """
-        self._fig_tight_layout = f
-        if f:
-            #self.figure.set_tight_layout({'pad': 0.1})
-            self.figure.subplots_adjust(left=0.05, right=0.98, top=0.98, bottom=0.06)
-        else:
-            #self.figure.set_tight_layout({'pad': 1.2})
-            self.figure.subplots_adjust(left=0.125, right=0.9, top=0.9, bottom=0.10)
-        self.update_figure()
-
-    figureTightLayout = pyqtProperty(bool, getTightLayoutToggle,
-                                     setTightLayoutToggle)
 
     def getFigureMTicksToggle(self):
         return self._fig_mticks_toggle

@@ -159,6 +159,9 @@ class BasePlotWidget(QWidget):
         # aspect
         self._fig_aspect = str(self.axes.get_aspect())
 
+        # tight?
+        self._fig_tight_layout = False
+
     def on_scroll(self, e):
         if e.inaxes is None:
             return
@@ -442,6 +445,30 @@ class BasePlotWidget(QWidget):
 
     figureAspectRatio = pyqtProperty('QString', getFigureAspectRatio,
                                      setFigureAspectRatio)
+
+    def getTightLayoutToggle(self):
+        return self._fig_tight_layout
+
+    @pyqtSlot(bool)
+    def setTightLayoutToggle(self, f):
+        """Toggle for the tight layout.
+
+        Parameters
+        ----------
+        f : bool
+            Tight layout toggle.
+        """
+        self._fig_tight_layout = f
+        if f:
+            #self.figure.set_tight_layout({'pad': 0.1})
+            self.figure.subplots_adjust(left=0.05, right=0.98, top=0.98, bottom=0.06)
+        else:
+            #self.figure.set_tight_layout({'pad': 1.2})
+            self.figure.subplots_adjust(left=0.125, right=0.9, top=0.9, bottom=0.10)
+        self.update_figure()
+
+    figureTightLayout = pyqtProperty(bool, getTightLayoutToggle,
+                                     setTightLayoutToggle)
 
 
 class MatplotlibBaseWidget(BasePlotWidget):
