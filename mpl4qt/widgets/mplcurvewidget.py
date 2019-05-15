@@ -142,6 +142,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
         # widget type
         self.widget_type = 'curve'
 
+        # tb_toggle
+        self._fig_tb_toggle = False
         # show mpltool by default.
         self.__show_mpl_tools()
 
@@ -193,7 +195,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def sizeHint(self):
         return QSize(1.1 * self._fig_width * self._fig_dpi,
                      1.1 * self._fig_height * self._fig_dpi)
-
 
     def getFigureMTicksToggle(self):
         return self._fig_mticks_toggle
@@ -1509,6 +1510,29 @@ class MatplotlibCurveWidget(BasePlotWidget):
         x = self._x_data
         y = self._y_data
         return np.vstack([x, y]).T
+
+    def getToolbarToggle(self):
+        return self._fig_tb_toggle
+
+    @pyqtSlot(bool)
+    def setToolbarToggle(self, f):
+        """Toggle for the mpl toolbar.
+
+        Parameters
+        ----------
+        f : bool
+            Turn on/off mpl toolbar.
+        """
+        self._fig_tb_toggle = f
+        w = self._handlers.get('w_mpl_tools', None)
+        if w is not None and not f:
+            w.floatable_changed.emit(True)
+            w.close()
+        else:
+            self.__show_mpl_tools()
+        self.update_figure()
+
+    figureToolbarToggle = pyqtProperty(bool, getToolbarToggle, setToolbarToggle)
 
 
 if __name__ == "__main__":
