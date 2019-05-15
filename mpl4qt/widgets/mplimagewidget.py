@@ -281,6 +281,9 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
     def get_cursor_data(self, x, y):
         return get_cursor_data(self.im, x, y)
 
+    def get_data(self):
+        return self.im.get_array()
+
 
 def fn_peaks(x, y):
     return 3.0 * (1.0 - x)**2.0 * np.exp(-(x**2) - (y+1)**2) \
