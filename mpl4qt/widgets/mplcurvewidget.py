@@ -108,9 +108,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._fig_bgcolor = self.sys_bg_color
         self._fig_ticks_color = self.sys_fg_color
         self._fig_grid_color = QColor('gray')
-        self._fig_title = ''
-        self._fig_xlabel = ''
-        self._fig_ylabel = ''
         self._fig_xtick_formatter_type = 'Auto'
         self._fig_xtick_formatter = None  # placeholder only
         self._fig_xtick_cfmt = '' # c string format for FuncFormatter
@@ -387,25 +384,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     figureDPI = pyqtProperty(int, getFigureDpi, setFigureDpi)
 
-    def getFigureXYlabelFont(self):
-        return self._fig_xylabel_font
-
-    @pyqtSlot(QFont)
-    def setFigureXYlabelFont(self, font):
-        """Set font for x and y labels.
-
-        Parameters
-        ----------
-        font : QFont
-            Font to set.
-        """
-        self._fig_xylabel_font = font
-        self.set_xylabel_font(font)
-        self.update_figure()
-
-    figureXYlabelFont = pyqtProperty(QFont, getFigureXYlabelFont,
-                                     setFigureXYlabelFont)
-
     def getFigureXTicksAngle(self):
         return self._fig_xticks_angle
 
@@ -544,25 +522,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._fig_ytick_formatter = formatter
         self.axes.yaxis.set_major_formatter(formatter)
         self.update_figure()
-
-    def getFigureTitleFont(self):
-        return self._fig_title_font
-
-    @pyqtSlot(QFont)
-    def setFigureTitleFont(self, font):
-        """Set font for figure title.
-
-        Parameters
-        ----------
-        font : QFont
-            Font to set.
-        """
-        self._fig_title_font = font
-        self.set_title_font(font)
-        self.update_figure()
-
-    figureTitleFont = pyqtProperty(QFont, getFigureTitleFont,
-                                   setFigureTitleFont)
 
     def getFigureBgColor(self):
         return self._fig_bgcolor
@@ -968,60 +927,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.update_figure()
 
     figureYScale = pyqtProperty('QString', getFigureYScale, setFigureYScale)
-
-    def getFigureTitle(self):
-        return self._fig_title
-
-    @pyqtSlot('QString')
-    def setFigureTitle(self, s):
-        """Set figure title.
-
-        Parameters
-        ----------
-        s : str
-            Title for the figure.
-        """
-        self._fig_title = s
-        self.axes.set_title(s)
-        self.update_figure()
-
-    figureTitle = pyqtProperty('QString', getFigureTitle, setFigureTitle)
-
-    def getFigureXlabel(self):
-        return self._fig_xlabel
-
-    @pyqtSlot('QString')
-    def setFigureXlabel(self, s):
-        """Set xlabel string.
-
-        Parameters
-        ----------
-        s : str
-            String for xlabel.
-        """
-        self._fig_xlabel = s
-        self.axes.set_xlabel(s)
-        self.update_figure()
-
-    figureXlabel = pyqtProperty('QString', getFigureXlabel, setFigureXlabel)
-
-    def getFigureYlabel(self):
-        return self._fig_ylabel
-
-    @pyqtSlot('QString')
-    def setFigureYlabel(self, s):
-        """Set ylabel string.
-
-        Parameters
-        ----------
-        s : str
-            String for ylabel.
-        """
-        self._fig_ylabel = s
-        self.axes.set_ylabel(s)
-        self.update_figure()
-
-    figureYlabel = pyqtProperty('QString', getFigureYlabel, setFigureYlabel)
 
     @pyqtSlot(QVariant)
     def setXData(self, x):

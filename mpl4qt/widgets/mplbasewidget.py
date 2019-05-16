@@ -27,6 +27,7 @@ from PyQt5.QtCore import pyqtProperty
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QFont
 from PyQt5.QtGui import QFontDatabase
 from PyQt5.QtGui import QPalette
 from PyQt5.QtGui import QResizeEvent
@@ -161,6 +162,11 @@ class BasePlotWidget(QWidget):
 
         # tight?
         self._fig_tight_layout = False
+
+        # lbls,title
+        self._fig_title = ''
+        self._fig_xlabel = ''
+        self._fig_ylabel = ''
 
     def on_scroll(self, e):
         if e.inaxes is None:
@@ -469,6 +475,98 @@ class BasePlotWidget(QWidget):
 
     figureTightLayout = pyqtProperty(bool, getTightLayoutToggle,
                                      setTightLayoutToggle)
+
+    def getFigureXlabel(self):
+        return self._fig_xlabel
+
+    @pyqtSlot('QString')
+    def setFigureXlabel(self, s):
+        """Set xlabel string.
+
+        Parameters
+        ----------
+        s : str
+            String for xlabel.
+        """
+        self._fig_xlabel = s
+        self.axes.set_xlabel(s)
+        self.update_figure()
+
+    figureXlabel = pyqtProperty('QString', getFigureXlabel, setFigureXlabel)
+
+    def getFigureYlabel(self):
+        return self._fig_ylabel
+
+    @pyqtSlot('QString')
+    def setFigureYlabel(self, s):
+        """Set ylabel string.
+
+        Parameters
+        ----------
+        s : str
+            String for ylabel.
+        """
+        self._fig_ylabel = s
+        self.axes.set_ylabel(s)
+        self.update_figure()
+
+    figureYlabel = pyqtProperty('QString', getFigureYlabel, setFigureYlabel)
+
+    def getFigureTitle(self):
+        return self._fig_title
+
+    @pyqtSlot('QString')
+    def setFigureTitle(self, s):
+        """Set figure title.
+
+        Parameters
+        ----------
+        s : str
+            Title for the figure.
+        """
+        self._fig_title = s
+        self.axes.set_title(s)
+        self.update_figure()
+
+    figureTitle = pyqtProperty('QString', getFigureTitle, setFigureTitle)
+
+    def getFigureXYlabelFont(self):
+        return self._fig_xylabel_font
+
+    @pyqtSlot(QFont)
+    def setFigureXYlabelFont(self, font):
+        """Set font for x and y labels.
+
+        Parameters
+        ----------
+        font : QFont
+            Font to set.
+        """
+        self._fig_xylabel_font = font
+        self.set_xylabel_font(font)
+        self.update_figure()
+
+    figureXYlabelFont = pyqtProperty(QFont, getFigureXYlabelFont,
+                                     setFigureXYlabelFont)
+
+    def getFigureTitleFont(self):
+        return self._fig_title_font
+
+    @pyqtSlot(QFont)
+    def setFigureTitleFont(self, font):
+        """Set font for figure title.
+
+        Parameters
+        ----------
+        font : QFont
+            Font to set.
+        """
+        self._fig_title_font = font
+        self.set_title_font(font)
+        self.update_figure()
+
+    figureTitleFont = pyqtProperty(QFont, getFigureTitleFont,
+                                   setFigureTitleFont)
 
 
 class MatplotlibBaseWidget(BasePlotWidget):
