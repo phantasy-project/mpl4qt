@@ -143,7 +143,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.widget_type = 'curve'
 
         # tb_toggle
-        self._fig_tb_toggle = False
+        self._fig_tb_toggle = True
         # show mpltool by default.
         self.__show_mpl_tools()
 
