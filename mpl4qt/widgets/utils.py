@@ -1,24 +1,23 @@
 # -*- coding: utf-8 -*-
 
-import matplotlib.colors as colors
-from matplotlib.ticker import FuncFormatter
-from collections import OrderedDict
 import json
-from copy import deepcopy
 import re
-import numpy as np
-from math import log10
+from collections import OrderedDict
+from copy import deepcopy
 
+import matplotlib.colors as colors
+import numpy as np
 from PyQt5.QtGui import QFont
-from matplotlib.font_manager import weight_dict
+from math import log10
 from matplotlib.font_manager import stretch_dict
+from matplotlib.font_manager import weight_dict
+from matplotlib.ticker import FuncFormatter
 from matplotlib.transforms import BboxTransform, Bbox
 
 try:
     basestring
 except NameError:
     basestring = str
-
 
 # marker style
 MK_STY_DICT = {
@@ -92,9 +91,9 @@ MK_STY_DICT = {
     },
 }
 # represent as symbol
-MK_CODE = [v['code'] for k,v in MK_STY_DICT.items()]
+MK_CODE = [v['code'] for k, v in MK_STY_DICT.items()]
 # use by mpl
-MK_SYMBOL = [v['symbol'] for k,v in MK_STY_DICT.items()]
+MK_SYMBOL = [v['symbol'] for k, v in MK_STY_DICT.items()]
 
 # line style
 LINE_STY_DICT = {
@@ -112,7 +111,7 @@ SCALE_STY_DICT = OrderedDict([
     ('Linear Scale', 'linear'),
     ('Log Transform', 'log'),
     ('Symmetrical Log Transform', 'symlog'),
-    #('Logistic Transform', 'logit'),
+    # ('Logistic Transform', 'logit'),
 ])
 SCALE_STY_KEYS = [k for k in SCALE_STY_DICT]
 SCALE_STY_VALS = [v for v in SCALE_STY_DICT.values()]
@@ -151,34 +150,32 @@ DEFAULT_LAYOUT_TIGHT_ON = False
 DEFAULT_LAYOUT_GRID_ON = False
 DEFAULT_LAYOUT_GRID_COLOR = "#808080"
 
-
-AUTOFORMATTER = FuncFormatter(lambda v,_:'{:g}'.format(v))
-AUTOFORMATTER_MATHTEXT = FuncFormatter(lambda v,_:'${:g}$'.format(v))
-
+AUTOFORMATTER = FuncFormatter(lambda v, _: '{:g}'.format(v))
+AUTOFORMATTER_MATHTEXT = FuncFormatter(lambda v, _: '${:g}$'.format(v))
 
 # colormaps
 COLORMAPS = [
-        ('Sequential-Uniform', [
-            'viridis', 'plasma', 'inferno', 'magma']),
-        ('Sequential-I', [
-            'Greys', 'Purples', 'Blues', 'Greens', 'Oranges', 'Reds',
-            'YlOrBr', 'YlOrRd', 'OrRd', 'PuRd', 'RdPu', 'BuPu',
-            'GnBu', 'PuBu', 'YlGnBu', 'PuBuGn', 'BuGn', 'YlGn']),
-        ('Sequential-II', [
-            'binary', 'gist_yarg', 'gist_gray', 'gray', 'bone', 'pink',
-            'spring', 'summer', 'autumn', 'winter', 'cool', 'Wistia',
-            'hot', 'afmhot', 'gist_heat', 'copper']),
-        ('Diverging', [
-            'PiYG', 'PRGn', 'BrBG', 'PuOr', 'RdGy', 'RdBu',
-            'RdYlBu', 'RdYlGn', 'Spectral', 'coolwarm', 'bwr', 'seismic']),
-        ('Qualitative', [
-            'Pastel1', 'Pastel2', 'Paired', 'Accent',
-            'Dark2', 'Set1', 'Set2', 'Set3',
-            'tab10', 'tab20', 'tab20b', 'tab20c']),
-        ('Miscellaneous', [
-            'flag', 'prism', 'ocean', 'gist_earth', 'terrain', 'gist_stern',
-            'gnuplot', 'gnuplot2', 'CMRmap', 'cubehelix', 'brg', 'hsv',
-            'gist_rainbow', 'rainbow', 'jet', 'nipy_spectral', 'gist_ncar'])
+    ('Sequential-Uniform', [
+        'viridis', 'plasma', 'inferno', 'magma']),
+    ('Sequential-I', [
+        'Greys', 'Purples', 'Blues', 'Greens', 'Oranges', 'Reds',
+        'YlOrBr', 'YlOrRd', 'OrRd', 'PuRd', 'RdPu', 'BuPu',
+        'GnBu', 'PuBu', 'YlGnBu', 'PuBuGn', 'BuGn', 'YlGn']),
+    ('Sequential-II', [
+        'binary', 'gist_yarg', 'gist_gray', 'gray', 'bone', 'pink',
+        'spring', 'summer', 'autumn', 'winter', 'cool', 'Wistia',
+        'hot', 'afmhot', 'gist_heat', 'copper']),
+    ('Diverging', [
+        'PiYG', 'PRGn', 'BrBG', 'PuOr', 'RdGy', 'RdBu',
+        'RdYlBu', 'RdYlGn', 'Spectral', 'coolwarm', 'bwr', 'seismic']),
+    ('Qualitative', [
+        'Pastel1', 'Pastel2', 'Paired', 'Accent',
+        'Dark2', 'Set1', 'Set2', 'Set3',
+        'tab10', 'tab20', 'tab20b', 'tab20c']),
+    ('Miscellaneous', [
+        'flag', 'prism', 'ocean', 'gist_earth', 'terrain', 'gist_stern',
+        'gnuplot', 'gnuplot2', 'CMRmap', 'cubehelix', 'brg', 'hsv',
+        'gist_rainbow', 'rainbow', 'jet', 'nipy_spectral', 'gist_ncar'])
 ]
 
 COLORMAPS_DICT = OrderedDict(COLORMAPS)
@@ -187,14 +184,13 @@ ALL_COLORMAPS = []
 for k, v in COLORMAPS:
     ALL_COLORMAPS.extend(v)
 
-
 # font style
 FONT_STYLE_Q2M = {
     QFont.StyleNormal: 'normal',
     QFont.StyleItalic: 'italic',
     QFont.StyleOblique: 'oblique',
 }
-FONT_STYLE_M2Q = {v:k for k,v in FONT_STYLE_Q2M.items()}
+FONT_STYLE_M2Q = {v: k for k, v in FONT_STYLE_Q2M.items()}
 
 # font weight
 FONT_WEIGHT_Q2M = {
@@ -208,7 +204,7 @@ FONT_WEIGHT_Q2M = {
     81: 800,
     87: 900,
 }
-FONT_WEIGHT_M2Q = {v:k for k,v in FONT_WEIGHT_Q2M.items()}
+FONT_WEIGHT_M2Q = {v: k for k, v in FONT_WEIGHT_Q2M.items()}
 
 # font stretch
 FONT_STRETCH_Q2M = {
@@ -222,8 +218,7 @@ FONT_STRETCH_Q2M = {
     150: 800,
     200: 900,
 }
-FONT_STRETCH_M2Q = {v:k for k,v in FONT_STRETCH_Q2M.items()}
-
+FONT_STRETCH_M2Q = {v: k for k, v in FONT_STRETCH_Q2M.items()}
 
 
 def set_font(obj, font):
@@ -297,7 +292,7 @@ def pyformat_from_cformat(s, math_text=False):
     if r is None:
         return None, None
     prefix, specifier = r.group(1), r.group(2)
-    if 'n' in specifier: # log scale
+    if 'n' in specifier:  # log scale
         islog = True
         if prefix != '':
             fmt = prefix + '{{{:' + 'd' + '}}}'
@@ -443,12 +438,12 @@ class MatplotlibCurveWidgetSettings(OrderedDict):
             'mticks_on': DEFAULT_MTICKS_ON,
             'font': DEFAULT_MTICKS_FONT,
             'color': DEFAULT_MTICKS_COLOR,
-            }})
+        }})
         sstyle.update({'layout': {
             'tight_on': DEFAULT_LAYOUT_TIGHT_ON,
             'grid_on': DEFAULT_LAYOUT_GRID_ON,
             'grid_color': DEFAULT_LAYOUT_GRID_COLOR,
-            }})
+        }})
 
         s.update({'style': sstyle})
 
@@ -483,12 +478,12 @@ def main():
     import os
 
     parser = argparse.ArgumentParser(description=
-            "Generate default JSON settings for MatplotlibCurveWidget",
-            formatter_class=argparse.RawTextHelpFormatter)
+                                     "Generate default JSON settings for MatplotlibCurveWidget",
+                                     formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('--path', dest='filepath', nargs='?',
-            help='path of the JSON settings file')
+                        help='path of the JSON settings file')
     parser.epilog = \
-"""
+        """
 Examples:
 > {0} --path mplsettings.json
 > {0}

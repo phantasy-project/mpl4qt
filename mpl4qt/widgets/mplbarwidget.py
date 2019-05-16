@@ -23,17 +23,18 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 """
 
 import numpy as np
-from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtCore import pyqtProperty
+from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QColor
 
-from mpl4qt.widgets.mplcurvewidget import MatplotlibCurveWidget
 from mpl4qt.widgets.mplconfig import MatplotlibConfigBarPanel
+from mpl4qt.widgets.mplcurvewidget import MatplotlibCurveWidget
 
 
 class MatplotlibBarWidget(MatplotlibCurveWidget):
     """MatplotlibBarWidget(MatplotlibCurveWidget)
     """
+
     def __init__(self, parent=None):
         self._init_config()
 
@@ -70,9 +71,9 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
                                    alpha=self._bar_alpha,
                                    label=self._label,
                                    yerr=yerr, error_kw={
-                                        'ecolor': self._eb_line_color.getRgbF(),
-                                        'alpha': self._eb_line_alpha,
-                                        'lw': self._eb_line_width,})
+                'ecolor': self._eb_line_color.getRgbF(),
+                'alpha': self._eb_line_alpha,
+                'lw': self._eb_line_width, })
 
         self._eb_lines = self._bars.errorbar.lines[-1][0]
         self._rects = self._bars.patches
@@ -84,13 +85,13 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
     def get_barchart_config(self):
         # eb color, ls, lw, alpha
         eb_color = self._eb_lines.get_color()[0].tolist()  # (r,g,b,a)
-        eb_alpha = self._eb_lines.get_alpha()           # float
-        eb_lw = self._eb_lines.get_linewidth()[0]          # float
+        eb_alpha = self._eb_lines.get_alpha()  # float
+        eb_lw = self._eb_lines.get_linewidth()[0]  # float
         # bar color, alpha
         rect = self._rects[0]
-        bar_color = rect.get_facecolor()                   # (r,g,b,a)
-        bar_alpha = rect.get_alpha()                       # float
-        bar_width = rect.get_width()                       # float
+        bar_color = rect.get_facecolor()  # (r,g,b,a)
+        bar_alpha = rect.get_alpha()  # float
+        bar_width = rect.get_width()  # float
         # label
         label = self._bars.get_label()
 
@@ -315,7 +316,7 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
         hw = self._bar_width / 2.0
         eta = 2.0
         for ix, iy, iyerr in zip(self._x_data, self._y_data, self._yerr_data):
-            if iy >=0:
+            if iy >= 0:
                 tp_y = iy + iyerr * eta
             else:
                 tp_y = iy - iyerr * eta
@@ -341,7 +342,6 @@ def adjust_bar(patches, eblines, x, y, yerr, bar_width):
 
 
 if __name__ == "__main__":
-
     import sys
     from PyQt5.QtWidgets import QApplication
 

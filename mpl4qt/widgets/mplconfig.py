@@ -2,33 +2,28 @@
 # -*- coding: utf-8 -*-
 """Configuration widget for matplotlib.
 """
-from PyQt5.QtWidgets import QDialog
-from PyQt5.QtWidgets import QColorDialog
-from PyQt5.QtWidgets import QFontDialog
-from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtCore import Qt
-from PyQt5.QtCore import QVariant
-from PyQt5.QtGui import QColor
-from PyQt5.QtGui import QFont
-from PyQt5.QtGui import QIntValidator
-from PyQt5.QtGui import QDoubleValidator
-
 from functools import partial
 
-from mpl4qt.ui.ui_mplconfig import Ui_Dialog
+from PyQt5.QtCore import Qt
+from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QDoubleValidator
+from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QIntValidator
+from PyQt5.QtWidgets import QColorDialog
+from PyQt5.QtWidgets import QDialog
+from PyQt5.QtWidgets import QFontDialog
+from PyQt5.QtWidgets import QMessageBox
 
-from mpl4qt.widgets.utils import mplcolor2hex
+from mpl4qt.ui.ui_mplconfig import Ui_Dialog
+from mpl4qt.widgets.utils import COLORMAPS_DICT
+from mpl4qt.widgets.utils import LINE_STY_DICT
 from mpl4qt.widgets.utils import MK_CODE
 from mpl4qt.widgets.utils import MK_SYMBOL
-from mpl4qt.widgets.utils import LINE_STY_DICT
 from mpl4qt.widgets.utils import SCALE_STY_KEYS
 from mpl4qt.widgets.utils import SCALE_STY_VALS
-from mpl4qt.widgets.utils import generate_formatter
-from mpl4qt.widgets.utils import AUTOFORMATTER
-from mpl4qt.widgets.utils import AUTOFORMATTER_MATHTEXT
-from mpl4qt.widgets.utils import COLORMAPS_DICT
+from mpl4qt.widgets.utils import mplcolor2hex
 
 
 class MatplotlibConfigPanel(QDialog, Ui_Dialog):
@@ -96,7 +91,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     def __init__(self, parent=None):
         super(MatplotlibConfigPanel, self).__init__()
         self.parent = parent
-        #self.setParent(parent)
+        # self.setParent(parent)
 
         # UI
         self.setupUi(self)
@@ -114,7 +109,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.mk_size_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
         self.mk_width_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
         for o in (self.xmin_lineEdit, self.xmax_lineEdit,
-                  self.ymin_lineEdit, self.ymax_lineEdit, ):
+                  self.ymin_lineEdit, self.ymax_lineEdit,):
             o.setValidator(QDoubleValidator(self))
 
         # events
@@ -136,7 +131,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.line_hide_chkbox.stateChanged.connect(self.set_line_visible)
         # opacity
         self.opacity_val_slider.valueChanged.connect(
-                lambda i: self.opacity_val_lbl.setText('{}%'.format(i)))
+            lambda i: self.opacity_val_lbl.setText('{}%'.format(i)))
         self.opacity_val_slider.valueChanged.connect(self.set_line_opacity)
 
         # background color
@@ -158,13 +153,12 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.border_ls_cbb.setCurrentText(self.parent.getFigureBorderLineStyle())
         # boders hide?
         self.border_hide_chkbox.toggled.connect(
-                lambda f:self.parent.setFigureBorderVisible(not f))
+            lambda f: self.parent.setFigureBorderVisible(not f))
         self.border_hide_chkbox.setChecked(not self.parent.getFigureBorderVisible())
         # aspect ratio
         self.figAspect_cbb.currentTextChanged.connect(
-                lambda s:self.parent.setFigureAspectRatio(s.lower()))
+            lambda s: self.parent.setFigureAspectRatio(s.lower()))
         self.figAspect_cbb.setCurrentText(self.parent.getFigureAspectRatio().capitalize())
-
 
         self.figWidthChanged[int].connect(self.parent.setFigureWidth)
         self.figHeightChanged[int].connect(self.parent.setFigureHeight)
@@ -212,11 +206,11 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.xtick_formatter_cbb.currentTextChanged['QString'].connect(self.on_tickformatter_changed)
         self.ytick_formatter_cbb.currentTextChanged['QString'].connect(self.on_tickformatter_changed)
         self.xtick_funcformatter_lineEdit.returnPressed.connect(
-                lambda: self.on_set_funcformatter(self.xtick_funcformatter_lineEdit.text(),
-                                                  set_xticks=True))
+            lambda: self.on_set_funcformatter(self.xtick_funcformatter_lineEdit.text(),
+                                              set_xticks=True))
         self.ytick_funcformatter_lineEdit.returnPressed.connect(
-                lambda: self.on_set_funcformatter(self.ytick_funcformatter_lineEdit.text(),
-                                                  set_yticks=True))
+            lambda: self.on_set_funcformatter(self.ytick_funcformatter_lineEdit.text(),
+                                              set_yticks=True))
         self.figXTickFormatChanged['QString', 'QString'].connect(self.parent.setXTickFormat)
         self.figYTickFormatChanged['QString', 'QString'].connect(self.parent.setYTickFormat)
 
@@ -224,8 +218,11 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.enable_mathtext_chkbox.toggled.connect(self.on_enable_ticks_mathtext)
 
         # grid
-        self.figGridChanged[bool].connect(lambda x: self.parent.setFigureGridToggle(x, mticks=self.mticks_chkbox.isChecked()))
-        self.figGridColorChanged.connect(lambda x: self.parent.setFigureGridColor(x, mticks=self.mticks_chkbox.isChecked(), toggle_checked=self.gridon_chkbox.isChecked()))
+        self.figGridChanged[bool].connect(
+            lambda x: self.parent.setFigureGridToggle(x, mticks=self.mticks_chkbox.isChecked()))
+        self.figGridColorChanged.connect(
+            lambda x: self.parent.setFigureGridColor(x, mticks=self.mticks_chkbox.isChecked(),
+                                                     toggle_checked=self.gridon_chkbox.isChecked()))
         self.figGridColorChanged.connect(partial(self.set_btn_color, self.grid_color_btn))
         self.gridon_chkbox.stateChanged.connect(self.set_fig_grid)
         self.grid_color_btn.clicked.connect(self.set_grid_color)
@@ -277,9 +274,9 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
 
         # axis scale
         self.xaxis_scale_cbb.currentIndexChanged.connect(
-                lambda i: self.parent.setFigureXScale(SCALE_STY_VALS[i]))
+            lambda i: self.parent.setFigureXScale(SCALE_STY_VALS[i]))
         self.yaxis_scale_cbb.currentIndexChanged.connect(
-                lambda i: self.parent.setFigureYScale(SCALE_STY_VALS[i]))
+            lambda i: self.parent.setFigureYScale(SCALE_STY_VALS[i]))
 
         # sizer
         self.adjustSize()
@@ -305,7 +302,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.mk_style_cbb.addItems(MK_CODE)
 
         # line id combo
-        if self.parent.get_all_curves() == []:
+        if not self.parent.get_all_curves():  # is []
             self.config_tabWidget.setTabEnabled(
                 self.config_tabWidget.indexOf(self.curve_tab), False)
         else:
@@ -329,11 +326,11 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
             self.xaxis_scale_cbb.clear()
             self.xaxis_scale_cbb.addItems(SCALE_STY_KEYS)
             self.xaxis_scale_cbb.setCurrentIndex(
-                    SCALE_STY_VALS.index(self.parent.getFigureXScale()))
+                SCALE_STY_VALS.index(self.parent.getFigureXScale()))
             self.yaxis_scale_cbb.clear()
             self.yaxis_scale_cbb.addItems(SCALE_STY_KEYS)
             self.yaxis_scale_cbb.setCurrentIndex(
-                    SCALE_STY_VALS.index(self.parent.getFigureYScale()))
+                SCALE_STY_VALS.index(self.parent.getFigureYScale()))
 
             self.__set_cfmt()
             # tick formatter
@@ -372,11 +369,11 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     def on_enable_ticks_mathtext(self, ischecked):
         self.parent._fig_ticks_enable_mathtext = ischecked
         self.figXTickFormatChanged.emit(
-                self.parent._fig_xtick_formatter_type,
-                self.parent._fig_xtick_cfmt)
+            self.parent._fig_xtick_formatter_type,
+            self.parent._fig_xtick_cfmt)
         self.figYTickFormatChanged.emit(
-                self.parent._fig_ytick_formatter_type,
-                self.parent._fig_ytick_cfmt)
+            self.parent._fig_ytick_formatter_type,
+            self.parent._fig_ytick_cfmt)
 
     @pyqtSlot('QString')
     def on_tickformatter_changed(self, s):
@@ -440,12 +437,12 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.line_hide_chkbox.setChecked(not config['visible'])
         # opacity: alpha = opacity / 100
         alpha = config['alpha']
-        opacity = 100 if alpha is None else alpha*100
+        opacity = 100 if alpha is None else alpha * 100
         self.opacity_val_slider.setValue(opacity)
 
     @pyqtSlot(int)
     def set_line_opacity(self, i):
-        self.figLineAlphaChanged.emit(i/100.0)
+        self.figLineAlphaChanged.emit(i / 100.0)
 
     @pyqtSlot('QString')
     def set_line_width(self, s):
@@ -489,17 +486,19 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     def set_ylimit_min(self, s):
         try:
             x = float(s)
-            self.figYminLimitChanged.emit(float(s))
         except:
             pass
+        else:
+            self.figYminLimitChanged.emit(float(s))
 
     @pyqtSlot('QString')
     def set_ylimit_max(self, s):
         try:
             x = float(s)
-            self.figYmaxLimitChanged.emit(float(s))
         except:
             pass
+        else:
+            self.figYmaxLimitChanged.emit(float(s))
 
     @pyqtSlot()
     def set_line_color(self):
@@ -537,9 +536,9 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
                           "  border-width: 1px;\n"
                           "  color: black;\n"
                           "  background-color: %s;\n" % color.name() + "}\n"
-                          "QToolButton:pressed {\n"
-                          "  background-color: white;\n"
-                          "}")
+                                                                       "QToolButton:pressed {\n"
+                                                                       "  background-color: white;\n"
+                                                                       "}")
 
     @pyqtSlot(int)
     def set_fig_grid(self, state):
@@ -640,7 +639,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
 
     @pyqtSlot(int)
     def set_line_visible(self, state):
-        self.figLineVisibleChanged.emit(state==Qt.Unchecked)
+        self.figLineVisibleChanged.emit(state == Qt.Unchecked)
 
 
 class MatplotlibConfigErrorbarPanel(MatplotlibConfigPanel):
@@ -709,7 +708,6 @@ class MatplotlibConfigErrorbarPanel(MatplotlibConfigPanel):
         self.xeb_mk_style_cbb.currentIndexChanged[int].connect(
             self.set_xeb_marker_style)
 
-
         # cap mk style (y)
         self.yeb_mk_style_cbb.clear()
         self.yeb_mk_style_cbb.addItems(MK_CODE)
@@ -743,7 +741,7 @@ class MatplotlibConfigErrorbarPanel(MatplotlibConfigPanel):
 
     @pyqtSlot(int)
     def set_eb_line_visible(self, state):
-        self.figEbLineVisibleChanged.emit(state==Qt.Unchecked)
+        self.figEbLineVisibleChanged.emit(state == Qt.Unchecked)
 
     @pyqtSlot('QString')
     def set_eb_line_width(self, s):
@@ -819,7 +817,7 @@ class MatplotlibConfigErrorbarPanel(MatplotlibConfigPanel):
         # eb line width
         self.eb_line_width_lineEdit.setText('{}'.format(yeb_line['lw']))
         # eb line style can set, but does not sync to config panel
-        #self.eb_line_style_cbb.setCurrentText(
+        # self.eb_line_style_cbb.setCurrentText(
         #        LINE_STY_DICT[str(config['line']['linestyle'])])
 
         # eb line visibility
@@ -857,9 +855,9 @@ class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
 
         # colormap cbb
         self.cmap_cbb.currentTextChanged.connect(
-                self.on_cmap_changed)
+            self.on_cmap_changed)
         self.cmap_class_cbb.currentTextChanged.connect(
-                self.on_cmap_class_changed)
+            self.on_cmap_class_changed)
         self.cmap_class_cbb.clear()
         self.cmap_class_cbb.addItems(COLORMAPS_DICT.keys())
         # reverse cmap chkbox
@@ -897,7 +895,7 @@ class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
         rcmap = self.parent._rcmap
         rcmap_toggle = self.parent.getReverseCMapToggle()
 
-        for k,v in COLORMAPS_DICT.items():
+        for k, v in COLORMAPS_DICT.items():
             if cmap in v:
                 current_cmap_class = k
 
@@ -913,8 +911,8 @@ class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
         cr_min = cr_min0 - (cr_max0 - cr_min0) * 10.0
         cr_max = cr_max0 + (cr_max0 - cr_min0) * 10.0
         single_step = (cr_max0 - cr_min0) / 100
-        a, b, c = int(cr_min*1000)/1000, int(cr_max*1000)/1000, \
-                  int(single_step*1000)/1000
+        a, b, c = int(cr_min * 1000) / 1000, int(cr_max * 1000) / 1000, \
+                  int(single_step * 1000) / 1000
         self.cr_min_dSpinBox.setDecimals(3)
         self.cr_max_dSpinBox.setDecimals(3)
         self.cr_min_dSpinBox.setRange(a, b)
@@ -929,7 +927,6 @@ class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
         self.show_colorbar_chkbox.setChecked(self.parent.getColorBarToggle())
         # colorbar orientation
         self.cb_orientation_cbb.setCurrentText(self.parent.getColorBarOrientation())
-
 
     @pyqtSlot('QString')
     def on_cmap_class_changed(self, c):
@@ -974,7 +971,7 @@ class MatplotlibConfigBarPanel(MatplotlibConfigPanel):
         """
         # show barchart tab
         self.config_tabWidget.setTabEnabled(
-                self.config_tabWidget.indexOf(self.barchart_tab), True)
+            self.config_tabWidget.indexOf(self.barchart_tab), True)
 
         self.ebline_width_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
         self.bar_width_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
@@ -987,7 +984,7 @@ class MatplotlibConfigBarPanel(MatplotlibConfigPanel):
 
         # ebline opacity
         self.ebline_opacity_slider.valueChanged.connect(
-                lambda i: self.ebline_opacity_lbl.setText('{}%'.format(i)))
+            lambda i: self.ebline_opacity_lbl.setText('{}%'.format(i)))
         self.ebline_opacity_slider.valueChanged.connect(self.set_ebline_opacity)
         self.figEbLineAlphaChanged[float].connect(self.parent.setEbLineAlpha)
 
@@ -1009,7 +1006,7 @@ class MatplotlibConfigBarPanel(MatplotlibConfigPanel):
 
         # bar opacity
         self.bar_opacity_slider.valueChanged.connect(
-                lambda i: self.bar_opacity_lbl.setText('{}%'.format(i)))
+            lambda i: self.bar_opacity_lbl.setText('{}%'.format(i)))
         self.bar_opacity_slider.valueChanged.connect(self.set_bar_opacity)
         self.figBarAlphaChanged[float].connect(self.parent.setBarAlpha)
 
@@ -1034,11 +1031,11 @@ class MatplotlibConfigBarPanel(MatplotlibConfigPanel):
 
     @pyqtSlot(int)
     def set_ebline_opacity(self, i):
-        self.figEbLineAlphaChanged.emit(i/100.0)
+        self.figEbLineAlphaChanged.emit(i / 100.0)
 
     @pyqtSlot(int)
     def set_bar_opacity(self, i):
-        self.figBarAlphaChanged.emit(i/100.0)
+        self.figBarAlphaChanged.emit(i / 100.0)
 
     @pyqtSlot()
     def set_ebline_color(self):

@@ -22,45 +22,45 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 """
 
-from PyQt5.QtCore import pyqtProperty
-from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtCore import pyqtSignal
+from collections import OrderedDict
+
+import numpy as np
 from PyQt5.QtCore import QSize
 from PyQt5.QtCore import QVariant
 from PyQt5.QtCore import Qt
+from PyQt5.QtCore import pyqtProperty
+from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QFont
 from PyQt5.QtGui import QIcon
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import QMenu
 from PyQt5.QtWidgets import QAction
+from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QMenu
 from PyQt5.QtWidgets import QMessageBox
 
-import numpy as np
-from collections import OrderedDict
-
+from mpl4qt.icons import config_icon
+from mpl4qt.icons import export_icon
+from mpl4qt.icons import import_icon
+from mpl4qt.icons import reset_icon
+from mpl4qt.icons import tools_icon
+from mpl4qt.widgets.kbdhelpdialog import KbdHelpDialog
 from mpl4qt.widgets.mplbasewidget import BasePlotWidget
 from mpl4qt.widgets.mplconfig import MatplotlibConfigPanel
 from mpl4qt.widgets.mpltoolbar import MToolbar
-from mpl4qt.widgets.kbdhelpdialog import KbdHelpDialog
-from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
-from mpl4qt.widgets.utils import mplcolor2hex
+from mpl4qt.widgets.utils import ALL_COLORMAPS
+from mpl4qt.widgets.utils import AUTOFORMATTER
+from mpl4qt.widgets.utils import AUTOFORMATTER_MATHTEXT
 from mpl4qt.widgets.utils import DEFAULT_MPL_SETTINGS
-from mpl4qt.widgets.utils import SCALE_STY_VALS
 from mpl4qt.widgets.utils import LINE_STY_VALS
 from mpl4qt.widgets.utils import MK_SYMBOL
-from mpl4qt.widgets.utils import ALL_COLORMAPS
+from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
+from mpl4qt.widgets.utils import SCALE_STY_VALS
 from mpl4qt.widgets.utils import cycle_list_next
-from mpl4qt.widgets.utils import AUTOFORMATTER_MATHTEXT
-from mpl4qt.widgets.utils import AUTOFORMATTER
 from mpl4qt.widgets.utils import generate_formatter
-from mpl4qt.icons import config_icon
-from mpl4qt.icons import reset_icon
-from mpl4qt.icons import import_icon
-from mpl4qt.icons import export_icon
-from mpl4qt.icons import tools_icon
+from mpl4qt.widgets.utils import mplcolor2hex
 
 
 class MatplotlibCurveWidget(BasePlotWidget):
@@ -110,11 +110,11 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._fig_grid_color = QColor('gray')
         self._fig_xtick_formatter_type = 'Auto'
         self._fig_xtick_formatter = None  # placeholder only
-        self._fig_xtick_cfmt = '' # c string format for FuncFormatter
+        self._fig_xtick_cfmt = ''  # c string format for FuncFormatter
         self._fig_ytick_formatter_type = 'Auto'
         self._fig_ytick_formatter = None  # placeholder only
-        self._fig_ytick_cfmt = '' # c string format for FuncFormatter
-        self._fig_ticks_enable_mathtext = False # use math text or not
+        self._fig_ytick_cfmt = ''  # c string format for FuncFormatter
+        self._fig_ticks_enable_mathtext = False  # use math text or not
         self._fig_xticks_angle = 0
         self._fig_yticks_angle = 0
         # x,y limits
@@ -823,7 +823,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
             'ymax': self.getYLimitMax(),
         })
         s['figure']['legend'].update({
-            'show': self.getLegendToggle()==True,
+            'show': self.getLegendToggle() is True,
             'location': self.getLegendLocation()
         })
         # curve
@@ -846,7 +846,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
                 },
                 'label': config['label'],
                 'line_id': line_id,
-                })
+            })
             curve_settings.append(curve_setting)
         s.update({'curve': curve_settings})
         # style
@@ -859,13 +859,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
             'color': self.getFigureBgColor().name(),
         })
         s['style']['ticks'].update({
-            'mticks_on': self.getFigureMTicksToggle()==True,
+            'mticks_on': self.getFigureMTicksToggle() is True,
             'font': self.getFigureXYticksFont().toString(),
             'color': self.getFigureXYticksColor().name(),
         })
         s['style']['layout'].update({
-            'tight_on': self.getTightLayoutToggle()==True,
-            'grid_on': self.getFigureGridToggle()==True,
+            'tight_on': self.getTightLayoutToggle() is True,
+            'grid_on': self.getFigureGridToggle() is True,
             'grid_color': self.getFigureGridColor().name(),
         })
         return s
@@ -1077,9 +1077,9 @@ class MatplotlibCurveWidget(BasePlotWidget):
         import_action = QAction(QIcon(QPixmap(import_icon)),
                                 "Import", menu)
         reset_action = QAction(QIcon(QPixmap(reset_icon)),
-                              "Reset", menu)
+                               "Reset", menu)
         tb_action = self._handlers.setdefault('show_tools_action',
-                QAction(QIcon(QPixmap(tools_icon)), "Show Tools", menu))
+                                              QAction(QIcon(QPixmap(tools_icon)), "Show Tools", menu))
         menu.addAction(config_action)
         menu.addAction(export_action)
         menu.addAction(import_action)
@@ -1125,9 +1125,9 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     def on_export_config(self):
         filepath, _ = QFileDialog.getSaveFileName(self,
-                "Save Settings",
-                "./mpl_settings.json",
-                "JSON Files (*.json)")
+                                                  "Save Settings",
+                                                  "./mpl_settings.json",
+                                                  "JSON Files (*.json)")
         if not filepath:
             return
         try:
@@ -1135,18 +1135,18 @@ class MatplotlibCurveWidget(BasePlotWidget):
             s.write(filepath)
         except:
             QMessageBox.warning(self, "Warning",
-                    "Cannot export settings to {}".format(filepath),
-                    QMessageBox.Ok)
+                                "Cannot export settings to {}".format(filepath),
+                                QMessageBox.Ok)
         else:
             QMessageBox.information(self, "Information",
-                    "Successfully export settings to {}".format(filepath),
-                    QMessageBox.Ok)
+                                    "Successfully export settings to {}".format(filepath),
+                                    QMessageBox.Ok)
 
     def on_import_config(self):
         filepath, _ = QFileDialog.getOpenFileName(self,
-                "Open Settings",
-                "./mpl_settings.json",
-                "JSON Files (*.json)")
+                                                  "Open Settings",
+                                                  "./mpl_settings.json",
+                                                  "JSON Files (*.json)")
         if not filepath:
             return
         self._import_mpl_settings(filepath)
@@ -1157,12 +1157,12 @@ class MatplotlibCurveWidget(BasePlotWidget):
             self.apply_mpl_settings(s)
         except:
             QMessageBox.warning(self, "Warning",
-                    "Cannot import&apply settings with {}".format(filepath),
-                    QMessageBox.Ok)
+                                "Cannot import&apply settings with {}".format(filepath),
+                                QMessageBox.Ok)
         else:
             QMessageBox.information(self, "Information",
-                    "Successfully import&apply settings with {}".format(filepath),
-                    QMessageBox.Ok)
+                                    "Successfully import&apply settings with {}".format(filepath),
+                                    QMessageBox.Ok)
 
     def on_reset_config(self):
         # apply default settings
@@ -1272,7 +1272,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def draw_hvlines(self, x0, y0):
         if self._hline is None:
             self._hline = self.axes.axhline(y0,
-                    alpha=0.8, color='b', ls='--')
+                                            alpha=0.8, color='b', ls='--')
             self._hline.set_label('H-Ruler')
             self._lines.append(self._hline)
         else:
@@ -1280,7 +1280,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
         if self._vline is None:
             self._vline = self.axes.axvline(x0,
-                    alpha=0.8, color='b', ls='--')
+                                            alpha=0.8, color='b', ls='--')
             self._vline.set_label('V-Ruler')
             self._lines.append(self._vline)
         else:
@@ -1293,9 +1293,9 @@ class MatplotlibCurveWidget(BasePlotWidget):
             self._lines.append(self._cpoint)
             text = '{0:g}, {1:g}'.format(x0, y0)
             self._cpoint_text = self.axes.annotate(
-                    text, xy=(x0, y0), xytext=(15, 15),
-                    xycoords="data", textcoords="offset pixels",
-                    bbox=dict(boxstyle="round", fc='w'))
+                text, xy=(x0, y0), xytext=(15, 15),
+                xycoords="data", textcoords="offset pixels",
+                bbox=dict(boxstyle="round", fc='w'))
             self._cpoint_text.get_bbox_patch().set_alpha(0.5)
         else:
             self._cpoint.set_data([x0], [y0])
@@ -1364,7 +1364,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         path = e.mimeData().urls()[0].toLocalFile()
         self._import_mpl_settings(path)
 
-    def kbd_help(self,):
+    def kbd_help(self, ):
         """Help message box for keyboard shortcuts.
         """
         w = KbdHelpDialog(self)
@@ -1441,7 +1441,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
 
 if __name__ == "__main__":
-
     import sys
 
     app = QApplication(sys.argv)

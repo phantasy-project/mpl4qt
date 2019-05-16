@@ -4,43 +4,40 @@
 Navigation toolbar for matplotlib widgets
 """
 
+import numpy as np
+from PyQt5.QtCore import QObject
+from PyQt5.QtCore import QPoint
+from PyQt5.QtCore import QVariant
+from PyQt5.QtCore import Qt
+from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QAction
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtWidgets import QToolBar
-from PyQt5.QtWidgets import QVBoxLayout
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtCore import Qt
-from PyQt5.QtCore import QEvent
-from PyQt5.QtCore import QObject
-from PyQt5.QtCore import QPoint
-from PyQt5.QtCore import QVariant
-from PyQt5.QtGui import QIcon
-from PyQt5.QtGui import QPixmap
-
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT
 from matplotlib.path import Path
 from matplotlib.widgets import LassoSelector
-import numpy as np
 
-from mpl4qt.icons import exit_tool_icon
-from mpl4qt.icons import home_tool_icon
-from mpl4qt.icons import pan_tool_icon
-from mpl4qt.icons import zoom_tool_icon
-from mpl4qt.icons import save_tool_icon
-from mpl4qt.icons import lasso_tool_icon
-from mpl4qt.icons import repos_tool_icon
+from mpl4qt.icons import autox_tool_icon
+from mpl4qt.icons import autoxy_tool_icon
+from mpl4qt.icons import autoy_tool_icon
+from mpl4qt.icons import backward_tool_icon
 from mpl4qt.icons import cross_tool_icon
 from mpl4qt.icons import dock_tool_icon
-from mpl4qt.icons import popup_tool_icon
-from mpl4qt.icons import backward_tool_icon
+from mpl4qt.icons import exit_tool_icon
 from mpl4qt.icons import forward_tool_icon
-from mpl4qt.icons import autox_tool_icon
-from mpl4qt.icons import autoy_tool_icon
-from mpl4qt.icons import autoxy_tool_icon
+from mpl4qt.icons import home_tool_icon
+from mpl4qt.icons import lasso_tool_icon
+from mpl4qt.icons import pan_tool_icon
+from mpl4qt.icons import popup_tool_icon
+from mpl4qt.icons import repos_tool_icon
+from mpl4qt.icons import save_tool_icon
+from mpl4qt.icons import zoom_tool_icon
 
-TBSTY_FLOATING ="""
+TBSTY_FLOATING = """
 QToolBar {
     background-color: white;
     border-radius: 6px;
@@ -51,7 +48,7 @@ QToolBar {
 }
 """
 
-TBSTY_NONFLOATING ="""
+TBSTY_NONFLOATING = """
 QToolBar {{
     background-color: {};
     border-radius: 2px;
@@ -61,6 +58,7 @@ QToolBar {{
     padding: 2px;
 }}
 """
+
 
 class NavigationToolbar(NavigationToolbar2QT):
     def __init__(self, canvas, parent=None):
@@ -156,7 +154,7 @@ class MToolbar(QToolBar):
 
         # backward
         backward_act = QAction(QIcon(QPixmap(backward_tool_icon)),
-                              "Backward", self)
+                               "Backward", self)
         backward_act.setToolTip("Backward view")
 
         # forward
@@ -214,7 +212,7 @@ class MToolbar(QToolBar):
         # pos display tool
         self.pos_lbl = QLabel(self)
         self.pos_lbl.setSizePolicy(
-                QSizePolicy.MinimumExpanding, QSizePolicy.Preferred)
+            QSizePolicy.MinimumExpanding, QSizePolicy.Preferred)
         self.pos_lbl.setToolTip("Pointed (x, y) coordinate")
         self.pos_lbl.setStyleSheet("""
             QLabel {
@@ -294,7 +292,7 @@ class MToolbar(QToolBar):
         elif len(coord) == 3:
             x, y, z = coord
             self.pos_lbl.setText(
-                    "<html><sup>(x,y,z)</sup>({0:<.4g},{1:<.4g},{2:<.4g})</html>".format(x, y, z))
+                "<html><sup>(x,y,z)</sup>({0:<.4g},{1:<.4g},{2:<.4g})</html>".format(x, y, z))
 
     @pyqtSlot()
     def zoom(self):
@@ -361,7 +359,7 @@ class MToolbar(QToolBar):
         self.selectedIndicesUpdated.emit(ind, pts)
 
     def closeEvent(self, e):
-        for o in (self.lasso_act, self.zoom_act, self.pan_act, ):
+        for o in (self.lasso_act, self.zoom_act, self.pan_act,):
             if o.isChecked():
                 o.setChecked(False)
         """
@@ -399,6 +397,7 @@ class SelectFromPoints(QObject):
     # ind: index of orginal xy points array,
     # pts: selected points
     selectedIndicesReady = pyqtSignal(QVariant, QVariant)
+
     def __init__(self, ax, points, alpha_other=0.3, radius=0):
         super(SelectFromPoints, self).__init__()
         self.canvas = ax.figure.canvas
@@ -411,7 +410,7 @@ class SelectFromPoints(QObject):
     def on_select(self, verts):
         path = Path(verts)
         ind = np.nonzero(
-                path.contains_points(self.points, radius=self.radius))[0]
+            path.contains_points(self.points, radius=self.radius))[0]
         self.canvas.draw_idle()
         self.selectedIndicesReady.emit(ind, self.points[ind])
 

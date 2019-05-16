@@ -23,13 +23,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 """
 
 import numpy as np
-
-from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import pyqtProperty
+from PyQt5.QtCore import pyqtSlot
 
-from mpl4qt.widgets.mplcurvewidget import MatplotlibCurveWidget
 from mpl4qt.widgets.mplconfig import MatplotlibConfigImagePanel
+from mpl4qt.widgets.mplcurvewidget import MatplotlibCurveWidget
 from mpl4qt.widgets.utils import get_cursor_data
 
 
@@ -186,9 +184,9 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
         self._cr_min, self._cr_max = z.min(), z.max()
         et = (x[0, 0], x[-1, -1], y[0, 0], y[-1, -1])
         im = self.axes.imshow(z, cmap=self._cmap,
-                vmin=self._cr_min,
-                vmax=self._cr_max, origin="lower left",
-                extent=et)
+                              vmin=self._cr_min,
+                              vmax=self._cr_max, origin="lower left",
+                              extent=et)
 
         self._x_data, self._y_data, self.z = x, y, z
         self.im = im
@@ -286,9 +284,9 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
 
 
 def fn_peaks(x, y):
-    return 3.0 * (1.0 - x)**2.0 * np.exp(-(x**2) - (y+1)**2) \
-         - 10*(x/5 - x**3 - y**5) * np.exp(-x**2-y**2) \
-         - 1.0/3.0*np.exp(-(x+1)**2 - y**2)
+    return 3.0 * (1.0 - x) ** 2.0 * np.exp(-(x ** 2) - (y + 1) ** 2) \
+           - 10 * (x / 5 - x ** 3 - y ** 5) * np.exp(-x ** 2 - y ** 2) \
+           - 1.0 / 3.0 * np.exp(-(x + 1) ** 2 - y ** 2)
 
 
 if __name__ == "__main__":

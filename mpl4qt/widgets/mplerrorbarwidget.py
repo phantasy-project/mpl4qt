@@ -23,12 +23,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 """
 
 import numpy as np
-from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtCore import pyqtProperty
+from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QColor
 
-from mpl4qt.widgets.mplcurvewidget import MatplotlibCurveWidget
 from mpl4qt.widgets.mplconfig import MatplotlibConfigErrorbarPanel
+from mpl4qt.widgets.mplcurvewidget import MatplotlibCurveWidget
 
 
 class MatplotlibErrorbarWidget(MatplotlibCurveWidget):

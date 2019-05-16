@@ -21,8 +21,14 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 """
 
-from PyQt5.QtCore import Qt
+import time
+from collections import deque
+from functools import partial
+
+import matplotlib as mpl
+import numpy as np
 from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import Qt
 from PyQt5.QtCore import pyqtProperty
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import pyqtSlot
@@ -34,22 +40,15 @@ from PyQt5.QtGui import QResizeEvent
 from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QWidget
-
-import matplotlib as mpl
-from matplotlib.figure import Figure
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
 from matplotlib.ticker import AutoMinorLocator
 from matplotlib.ticker import NullLocator
 
-import numpy as np
-import time
-from collections import deque
-from functools import partial
-
-from .utils import set_font
+from .utils import LINE_STY_VALS
 from .utils import mfont_to_qfont
 from .utils import mplcolor2hex
-from .utils import LINE_STY_VALS
+from .utils import set_font
 
 MPL_VERSION = mpl.__version__
 DTMSEC = 500  # msec
@@ -112,11 +111,11 @@ class BasePlotWidget(QWidget):
         self._handlers = {}
 
         # hvlines
-        self._hline = None        # h-ruler
-        self._vline = None        # v-ruler
-        self._cpoint = None       # cross-point of h,v rulers
+        self._hline = None  # h-ruler
+        self._vline = None  # v-ruler
+        self._cpoint = None  # cross-point of h,v rulers
         self._cpoint_text = None  # coord annote of cross-point
-        self._ruler_on = False    # default is not enabled
+        self._ruler_on = False  # default is not enabled
 
         # pan
         self._pan_on = False
@@ -400,8 +399,7 @@ class BasePlotWidget(QWidget):
         self.update_figure()
 
     figureBorderLineStyle = pyqtProperty('QString',
-            getFigureBorderLineStyle, setFigureBorderLineStyle)
-
+                                         getFigureBorderLineStyle, setFigureBorderLineStyle)
 
     def getFigureBorderVisible(self):
         return self._fig_border_visible
@@ -466,10 +464,10 @@ class BasePlotWidget(QWidget):
         """
         self._fig_tight_layout = f
         if f:
-            #self.figure.set_tight_layout({'pad': 0.1})
+            # self.figure.set_tight_layout({'pad': 0.1})
             self.figure.subplots_adjust(left=0.05, right=0.98, top=0.98, bottom=0.06)
         else:
-            #self.figure.set_tight_layout({'pad': 1.2})
+            # self.figure.set_tight_layout({'pad': 1.2})
             self.figure.subplots_adjust(left=0.125, right=0.9, top=0.9, bottom=0.10)
         self.update_figure()
 
@@ -572,8 +570,9 @@ class BasePlotWidget(QWidget):
 class MatplotlibBaseWidget(BasePlotWidget):
     """MatplotlibBaseWidget(BasePlotWidget)
     """
+
     def __init__(self, parent=None):
-         super(MatplotlibBaseWidget, self).__init__(parent)
+        super(MatplotlibBaseWidget, self).__init__(parent)
 
     def init_figure(self):
         pass
@@ -584,7 +583,7 @@ class MatplotlibCMapWidget(BasePlotWidget):
         super(MatplotlibCMapWidget, self).__init__(parent, height=0.2)
         self.figure.set_tight_layout(True)
         self.figure.subplots_adjust(
-                top=0.9999, bottom=0.0001, left=0.0001, right=0.9999)
+            top=0.9999, bottom=0.0001, left=0.0001, right=0.9999)
         self.axes.set_axis_off()
 
         # reverse cmap flag, '' or '_r'
