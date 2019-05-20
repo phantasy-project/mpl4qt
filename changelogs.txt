@@ -1,3 +1,20 @@
+2.6.0
+  * Add controls to on/off mpltoolbar in Qt-designer.
+  * Move some attributes from curvewidget to basewidget.
+  * New attributes, auto clim, aspect ratio, etc.
+  * Slots for extent and image data for imagewidget.
+
+2.5.0
+  * Resolve matplotlib version isseu on Debian.
+  * Mpltoolbar supports floating/embeded/close modes.
+  * Update fonts initialization.
+  * Zoom in/out by mouse.
+
+2.4.0
+  * New widget for barchart dataviz.
+  * New tag for barchart config in mplwidget.
+  * Add controls for ticks angle.
+
 2.3.3
   * Return line2D object from add_curve() method of mplcurvewidget.
   * Add slot to update image for mplimagewidget.
