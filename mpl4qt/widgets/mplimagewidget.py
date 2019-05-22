@@ -219,6 +219,9 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
                 z_pos = self.im.get_cursor_data(event)
             else:
                 z_pos = np.nan
+            # ?
+            if z_pos is None: z_pos = np.nan
+            #
             self.xyposUpdated.emit([x_pos, y_pos, z_pos])
 
     def update_image(self, zdata):
