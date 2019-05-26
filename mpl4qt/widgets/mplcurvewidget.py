@@ -93,9 +93,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
     zoom_roi_changed = pyqtSignal(tuple, tuple)
 
     def __init__(self, parent=None):
-        self._fig_width = 4
-        self._fig_height = 3
-        self._fig_dpi = 120
         self._fig_auto_scale = False
         self._fig_xscale = 'linear'
         self._fig_yscale = 'linear'
@@ -103,8 +100,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._fig_grid_toggle = False
         self._legend_toggle = False
         self._legend_location = 0
-        super(MatplotlibCurveWidget, self).__init__(
-            parent, self._fig_width, self._fig_height, self._fig_dpi)
+        super(MatplotlibCurveWidget, self).__init__(parent)
         self._fig_bgcolor = self.sys_bg_color
         self._fig_ticks_color = self.sys_fg_color
         self._fig_grid_color = QColor('gray')
@@ -326,63 +322,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     figureGridColor = pyqtProperty(QColor, getFigureGridColor,
                                    setFigureGridColor)
-
-    def getFigureWidth(self):
-        return self._fig_width
-
-    @pyqtSlot(int)
-    def setFigureWidth(self, w):
-        """Set figure width.
-
-        Parameters
-        ----------
-        w : int
-            Figure width in inch (>= 2).
-        """
-        self._fig_width = max(w, 2)
-        self.figure.set_size_inches([self._fig_width, self._fig_height])
-        self.resize_figure()
-        self.update_figure()
-
-    figureWidth = pyqtProperty(int, getFigureWidth, setFigureWidth)
-
-    def getFigureHeight(self):
-        return self._fig_height
-
-    @pyqtSlot(int)
-    def setFigureHeight(self, h):
-        """Set figure height.
-
-        Parameters
-        ----------
-        h : int
-            Figure height in inch (>= 2).
-        """
-        self._fig_height = max(h, 2)
-        self.figure.set_size_inches([self._fig_width, self._fig_height])
-        self.resize_figure()
-        self.update_figure()
-
-    figureHeight = pyqtProperty(int, getFigureHeight, setFigureHeight)
-
-    def getFigureDpi(self):
-        return self._fig_dpi
-
-    @pyqtSlot(int)
-    def setFigureDpi(self, d):
-        """Set figure dpi.
-
-        Parameters
-        ----------
-        d : int
-            Figure dpi in [50, 1000].
-        """
-        self._fig_dpi = min(1000, max(d, 50))
-        self.figure.set_dpi(d)
-        self.resize_figure()
-        self.update_figure()
-
-    figureDPI = pyqtProperty(int, getFigureDpi, setFigureDpi)
 
     def getFigureXTicksAngle(self):
         return self._fig_xticks_angle
