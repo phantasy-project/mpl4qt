@@ -170,6 +170,7 @@ class BasePlotWidget(QWidget):
         # figure, w,h,dpi
         self._fig_width, self._fig_height = self.figure.get_size_inches()
         self._fig_dpi = self.figure.get_dpi()
+        print("fig w x h, dpi", self._fig_width, self._fig_height, self._fig_dpi)
 
     def on_scroll(self, e):
         if e.inaxes is None:
@@ -573,59 +574,59 @@ class BasePlotWidget(QWidget):
     def getFigureWidth(self):
         return self._fig_width
 
-    @pyqtSlot(int)
+    @pyqtSlot(float)
     def setFigureWidth(self, w):
-        """Set figure width.
+        """Set figure width in inch.
 
         Parameters
         ----------
-        w : int
-            Figure width in inch (>= 2).
+        w : float
+            Figure width in inch (>= 2.0).
         """
-        self._fig_width = max(w, 2)
+        self._fig_width = max(w, 2.0)
         self.figure.set_size_inches([self._fig_width, self._fig_height])
         self.resize_figure()
         self.update_figure()
 
-    figureWidth = pyqtProperty(int, getFigureWidth, setFigureWidth)
+    figureWidth = pyqtProperty(float, getFigureWidth, setFigureWidth)
 
     def getFigureHeight(self):
         return self._fig_height
 
-    @pyqtSlot(int)
+    @pyqtSlot(float)
     def setFigureHeight(self, h):
-        """Set figure height.
+        """Set figure height in inch.
 
         Parameters
         ----------
-        h : int
-            Figure height in inch (>= 2).
+        h : float
+            Figure height in inch (>= 2.0).
         """
-        self._fig_height = max(h, 2)
+        self._fig_height = max(h, 2.0)
         self.figure.set_size_inches([self._fig_width, self._fig_height])
         self.resize_figure()
         self.update_figure()
 
-    figureHeight = pyqtProperty(int, getFigureHeight, setFigureHeight)
+    figureHeight = pyqtProperty(float, getFigureHeight, setFigureHeight)
 
     def getFigureDpi(self):
         return self._fig_dpi
 
-    @pyqtSlot(int)
+    @pyqtSlot(float)
     def setFigureDpi(self, d):
         """Set figure dpi.
 
         Parameters
         ----------
-        d : int
-            Figure dpi in [50, 1000].
+        d : float
+            Figure dpi in [50.0, 600.0].
         """
-        self._fig_dpi = min(1000, max(d, 50))
+        self._fig_dpi = min(600.0, max(d, 50.0))
         self.figure.set_dpi(d)
         self.resize_figure()
         self.update_figure()
 
-    figureDPI = pyqtProperty(int, getFigureDpi, setFigureDpi)
+    figureDPI = pyqtProperty(float, getFigureDpi, setFigureDpi)
 
 
 class MatplotlibBaseWidget(BasePlotWidget):

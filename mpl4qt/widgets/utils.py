@@ -141,7 +141,7 @@ DEFAULT_MK_WIDTH = 1.0
 DEFAULT_LINE_LABEL = "line1"
 DEFAULT_FIG_WIDTH = 4
 DEFAULT_FIG_HEIGHT = 3
-DEFAULT_FIG_DPI = 120
+DEFAULT_FIG_DPI = 100
 DEFAULT_BKGD_COLOR = "#EDECEB"
 DEFAULT_MTICKS_ON = False
 DEFAULT_MTICKS_FONT = "Sans Serif,10,-1,5,50,0,0,0,0,0"
@@ -452,6 +452,17 @@ class MatplotlibCurveWidgetSettings(OrderedDict):
 
 # default mpl figure settings
 DEFAULT_MPL_SETTINGS = MatplotlibCurveWidgetSettings.default_settings()
+
+# fig width, height, dpi
+FIG_WIDTH_MIN, FIG_WIDTH_MAX = 2.0, 20.0
+FIG_HEIGHT_MIN, FIG_HEIGHT_MAX = 2.0, 20.0
+FIG_DPI_MIN, FIG_DPI_MAX = 50.0, 600.0
+# line width
+LINE_WIDTH_MIN, LINE_WIDTH_MAX = 0.0, 20.0
+# marker size
+MK_SIZE_MIN, MK_SIZE_MAX = 0.0, 50.0
+# marker width
+MK_WIDTH_MIN, MK_WIDTH_MAX = 0.0, 20.0
 
 
 def get_cursor_data(im, x, y):

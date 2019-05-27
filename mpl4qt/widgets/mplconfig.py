@@ -24,14 +24,26 @@ from mpl4qt.widgets.utils import MK_SYMBOL
 from mpl4qt.widgets.utils import SCALE_STY_KEYS
 from mpl4qt.widgets.utils import SCALE_STY_VALS
 from mpl4qt.widgets.utils import mplcolor2hex
+from mpl4qt.widgets.utils import FIG_WIDTH_MIN
+from mpl4qt.widgets.utils import FIG_WIDTH_MAX
+from mpl4qt.widgets.utils import FIG_HEIGHT_MIN
+from mpl4qt.widgets.utils import FIG_HEIGHT_MAX
+from mpl4qt.widgets.utils import FIG_DPI_MIN
+from mpl4qt.widgets.utils import FIG_DPI_MAX
+from mpl4qt.widgets.utils import LINE_WIDTH_MIN
+from mpl4qt.widgets.utils import LINE_WIDTH_MAX
+from mpl4qt.widgets.utils import MK_SIZE_MIN
+from mpl4qt.widgets.utils import MK_SIZE_MAX
+from mpl4qt.widgets.utils import MK_WIDTH_MIN
+from mpl4qt.widgets.utils import MK_WIDTH_MAX
 
 
 class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     # fig size and color
     bgcolorChanged = pyqtSignal(QColor)
-    figWidthChanged = pyqtSignal(int)
-    figHeightChanged = pyqtSignal(int)
-    figDpiChanged = pyqtSignal(int)
+    figWidthChanged = pyqtSignal(float)
+    figHeightChanged = pyqtSignal(float)
+    figDpiChanged = pyqtSignal(float)
 
     # layout and scale
     figAutoScaleChanged = pyqtSignal(bool)
@@ -102,12 +114,18 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
             self.config_tabWidget.setTabEnabled(
                 self.config_tabWidget.indexOf(tab), False)
 
-        self.figWidth_lineEdit.setValidator(QIntValidator(2, 20, self))
-        self.figHeight_lineEdit.setValidator(QIntValidator(2, 20, self))
-        self.figDpi_lineEdit.setValidator(QIntValidator(50, 500, self))
-        self.line_width_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
-        self.mk_size_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
-        self.mk_width_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
+        self.figWidth_lineEdit.setValidator(
+                QDoubleValidator(FIG_WIDTH_MIN, FIG_WIDTH_MAX, 6, self))
+        self.figHeight_lineEdit.setValidator(
+                QDoubleValidator(FIG_HEIGHT_MIN, FIG_HEIGHT_MAX, 6, self))
+        self.figDpi_lineEdit.setValidator(
+                QDoubleValidator(FIG_DPI_MIN, FIG_DPI_MAX, 6, self))
+        self.line_width_lineEdit.setValidator(
+                QDoubleValidator(LINE_WIDTH_MIN, LINE_WIDTH_MAX, 1, self))
+        self.mk_size_lineEdit.setValidator(
+                QDoubleValidator(MK_SIZE_MIN, MK_SIZE_MAX, 1, self))
+        self.mk_width_lineEdit.setValidator(
+                QDoubleValidator(MK_WIDTH_MIN, MK_WIDTH_MAX, 1, self))
         for o in (self.xmin_lineEdit, self.xmax_lineEdit,
                   self.ymin_lineEdit, self.ymax_lineEdit,):
             o.setValidator(QDoubleValidator(self))
@@ -160,9 +178,9 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
             lambda s: self.parent.setFigureAspectRatio(s.lower()))
         self.figAspect_cbb.setCurrentText(self.parent.getFigureAspectRatio().capitalize())
 
-        self.figWidthChanged[int].connect(self.parent.setFigureWidth)
-        self.figHeightChanged[int].connect(self.parent.setFigureHeight)
-        self.figDpiChanged[int].connect(self.parent.setFigureDpi)
+        self.figWidthChanged[float].connect(self.parent.setFigureWidth)
+        self.figHeightChanged[float].connect(self.parent.setFigureHeight)
+        self.figDpiChanged[float].connect(self.parent.setFigureDpi)
         self.figAutoScaleChanged[bool].connect(self.parent.setFigureAutoScale)
         self.figTightLayoutChanged[bool].connect(
             self.parent.setTightLayoutToggle)
@@ -605,19 +623,19 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     @pyqtSlot('QString')
     def set_figsize_width(self, s):
         if s == '': return
-        w = max(int(s), 2)
+        w = max(float(s), 2.0)
         self.figWidthChanged.emit(w)
 
     @pyqtSlot('QString')
     def set_figsize_height(self, s):
         if s == '': return
-        h = max(int(s), 2)
+        h = max(float(s), 2.0)
         self.figHeightChanged.emit(h)
 
     @pyqtSlot('QString')
     def set_figdpi(self, s):
         if s == '': return
-        d = max(int(s), 20)
+        d = max(float(s), 20.0)
         self.figDpiChanged.emit(d)
 
     @pyqtSlot(int)
