@@ -170,7 +170,6 @@ class BasePlotWidget(QWidget):
         # figure, w,h,dpi
         self._fig_width, self._fig_height = self.figure.get_size_inches()
         self._fig_dpi = self.figure.get_dpi()
-        print("fig w x h, dpi", self._fig_width, self._fig_height, self._fig_dpi)
 
     def on_scroll(self, e):
         if e.inaxes is None:
@@ -642,7 +641,8 @@ class MatplotlibBaseWidget(BasePlotWidget):
 
 class MatplotlibCMapWidget(BasePlotWidget):
     def __init__(self, parent=None):
-        super(MatplotlibCMapWidget, self).__init__(parent, height=0.2)
+        super(MatplotlibCMapWidget, self).__init__(parent)
+        self.figure.set_size_inches((self.getFigureWidth(), 0.2))
         self.figure.set_tight_layout(True)
         self.figure.subplots_adjust(
             top=0.9999, bottom=0.0001, left=0.0001, right=0.9999)
