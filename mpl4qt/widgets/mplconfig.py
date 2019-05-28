@@ -297,7 +297,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
             lambda i: self.parent.setFigureYScale(SCALE_STY_VALS[i]))
 
         # sizer
-        self.adjustSize()
+        #self.adjustSize()
 
     def post_init_ui(self):
         self.figWidth_lineEdit.setText(str(self.parent.getFigureWidth()))
