@@ -5,6 +5,7 @@
 from functools import partial
 
 from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QSize
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QColor
@@ -103,7 +104,6 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     def __init__(self, parent=None):
         super(MatplotlibConfigPanel, self).__init__()
         self.parent = parent
-        # self.setParent(parent)
 
         # UI
         self.setupUi(self)
@@ -296,8 +296,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.yaxis_scale_cbb.currentIndexChanged.connect(
             lambda i: self.parent.setFigureYScale(SCALE_STY_VALS[i]))
 
-        # sizer
-        #self.adjustSize()
+        self.adjustSize()
 
     def post_init_ui(self):
         self.figWidth_lineEdit.setText(str(self.parent.getFigureWidth()))
@@ -658,6 +657,9 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     @pyqtSlot(int)
     def set_line_visible(self, state):
         self.figLineVisibleChanged.emit(state == Qt.Unchecked)
+
+    def sizeHint(self):
+        return QSize(200, 100)
 
 
 class MatplotlibConfigErrorbarPanel(MatplotlibConfigPanel):
