@@ -1,3 +1,7 @@
+2.6.1
+  * Update mplconfig style and fix the widget size issue.
+  * Move attributes figure width, height and dpi to BasePlotWidget.
+
 2.6.0
   * Add controls to on/off mpltoolbar in Qt-designer.
   * Move some attributes from curvewidget to basewidget.
