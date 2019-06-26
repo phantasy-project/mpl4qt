@@ -886,6 +886,9 @@ class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
         self.reverse_cmap_chkbox.toggled.connect(self.on_reverse_cmap)
         self.reverse_cmap_chkbox.toggled.connect(self.parent.setReverseCMapToggle)
 
+        # autoclim
+        self.auto_clim_chkbox.toggled.connect(self.parent.setAutoColorLimit)
+
         # colorbar toggle
         self.show_colorbar_chkbox.toggled.connect(self.parent.setColorBarToggle)
         self.show_colorbar_chkbox.toggled.connect(self.cb_orientation_cbb.setEnabled)
@@ -933,6 +936,8 @@ class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
         self.show_colorbar_chkbox.setChecked(self.parent.getColorBarToggle())
         # colorbar orientation
         self.cb_orientation_cbb.setCurrentText(self.parent.getColorBarOrientation())
+        # auto clim
+        self.auto_clim_chkbox.setChecked(self.parent.getAutoColorLimit())
 
     def _set_color_range(self):
         # set color range.
