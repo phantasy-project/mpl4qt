@@ -29,6 +29,7 @@ from PyQt5.QtCore import pyqtSlot
 from mpl4qt.widgets.mplconfig import MatplotlibConfigImagePanel
 from mpl4qt.widgets.mplcurvewidget import MatplotlibCurveWidget
 from mpl4qt.widgets.utils import get_cursor_data
+from mpl4qt.widgets.utils import get_array_range
 
 
 class MatplotlibImageWidget(MatplotlibCurveWidget):
@@ -180,8 +181,9 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
         x, y = np.meshgrid(np.linspace(-3, 3, 100),
                            np.linspace(-3, 3, 100))
         z = fn_peaks(x, y)
+
         # color range
-        self._cr_min, self._cr_max = z.min(), z.max()
+        self._cr_min, self._cr_max = get_array_range(z)
         et = (x[0, 0], x[-1, -1], y[0, 0], y[-1, -1])
         im = self.axes.imshow(z, cmap=self._cmap,
                               vmin=self._cr_min,
@@ -222,6 +224,9 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
             # ?
             if z_pos is None: z_pos = np.nan
             #
+            if np.ma.is_masked(z_pos):
+                z_pos = np.nan
+
             self.xyposUpdated.emit([x_pos, y_pos, z_pos])
 
     def update_image(self, zdata):
@@ -274,9 +279,8 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
     def on_auto_clim(self):
         """Auto set clim.
         """
-        cmin, cmax = self.z.min(), self.z.max()
-        self._cr_min, self._cr_max = cmin, cmax
-        self.im.set_clim(vmin=cmin, vmax=cmax)
+        self._cr_min, self._cr_max = get_array_range(self.z)
+        self.im.set_clim(vmin=self._cr_min, vmax=self._cr_max)
         self.update_figure()
 
     def get_cursor_data(self, x, y):

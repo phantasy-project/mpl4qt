@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """Configuration widget for matplotlib.
 """
+import numpy as np
 from functools import partial
 
 from PyQt5.QtCore import Qt
@@ -18,6 +19,7 @@ from PyQt5.QtWidgets import QFontDialog
 from PyQt5.QtWidgets import QMessageBox
 
 from mpl4qt.ui.ui_mplconfig import Ui_Dialog
+from mpl4qt.widgets.utils import get_array_range
 from mpl4qt.widgets.utils import COLORMAPS_DICT
 from mpl4qt.widgets.utils import LINE_STY_DICT
 from mpl4qt.widgets.utils import MK_CODE
@@ -925,8 +927,18 @@ class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
         self.reverse_cmap_chkbox.setChecked(rcmap_toggle)
 
         # color range
-        cr_min0 = self.parent.z.min()
-        cr_max0 = self.parent.z.max()
+        self._set_color_range()
+
+        # colorbar on/off
+        self.show_colorbar_chkbox.setChecked(self.parent.getColorBarToggle())
+        # colorbar orientation
+        self.cb_orientation_cbb.setCurrentText(self.parent.getColorBarOrientation())
+
+    def _set_color_range(self):
+        # set color range.
+        cr_min0, cr_max0 = get_array_range(self.parent.z)
+        if np.ma.is_masked(cr_min0):
+            return
         self._color_range0 = (cr_min0, cr_max0)
         cr_min = cr_min0 - (cr_max0 - cr_min0) * 10.0
         cr_max = cr_max0 + (cr_max0 - cr_min0) * 10.0
@@ -942,11 +954,6 @@ class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
         # initial values
         self.cr_min_dSpinBox.setValue(self.parent.getColorRangeMin())
         self.cr_max_dSpinBox.setValue(self.parent.getColorRangeMax())
-
-        # colorbar on/off
-        self.show_colorbar_chkbox.setChecked(self.parent.getColorBarToggle())
-        # colorbar orientation
-        self.cb_orientation_cbb.setCurrentText(self.parent.getColorBarOrientation())
 
     @pyqtSlot('QString')
     def on_cmap_class_changed(self, c):
