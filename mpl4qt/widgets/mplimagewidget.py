@@ -270,6 +270,9 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
         x, y = self._x_data[0, :], self._y_data[:, 0]
         return np.asarray([(i, j) for j in y for i in x])
 
+    def get_extent(self):
+        return self.im.get_extent()
+
     def set_extent(self, et=None):
         if et is None:
             et = (self._x_data[0, 0], self._x_data[-1, -1],
