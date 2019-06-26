@@ -483,6 +483,13 @@ def get_cursor_data(im, x, y):
         return arr[i, j]
 
 
+def get_array_range(z):
+    """Return valid min and max of the input array *z*.
+    """
+    zz = np.ma.masked_invalid(z)
+    return zz.min(), zz.max()
+
+
 def main():
     import argparse
     import sys
