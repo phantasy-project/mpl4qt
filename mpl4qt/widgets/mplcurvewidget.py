@@ -1017,8 +1017,9 @@ class MatplotlibCurveWidget(BasePlotWidget):
                                 "Import", menu)
         reset_action = QAction(QIcon(QPixmap(reset_icon)),
                                "Reset", menu)
-        tb_action = self._handlers.setdefault('show_tools_action',
-                                              QAction(QIcon(QPixmap(tools_icon)), "Show Tools", menu))
+        tb_action = self._handlers.setdefault(
+                'show_tools_action',
+                QAction(QIcon(QPixmap(tools_icon)), "Tools", menu))
         menu.addAction(config_action)
         menu.addAction(export_action)
         menu.addAction(import_action)
