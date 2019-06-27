@@ -178,8 +178,8 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
         self._lines = []
 
         # image
-        x, y = np.meshgrid(np.linspace(-3, 3, 100),
-                           np.linspace(-3, 3, 100))
+        x, y = np.meshgrid(np.linspace(-3, 3, 40),
+                           np.linspace(-3, 3, 40))
         z = fn_peaks(x, y)
 
         # color range
@@ -291,6 +291,11 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
 
     def get_data(self):
         return self.im.get_array()
+
+    def clear_data(self):
+        """Set with empty canvas, clear image.
+        """
+        self.update_image(np.ones(self.getXData().shape) * np.nan)
 
 
 def fn_peaks(x, y):
