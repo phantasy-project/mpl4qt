@@ -128,6 +128,11 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
             Error array in x.
         yerr_data : list or array
             Error array in y.
+
+        Returns
+        -------
+        o : Line2D
+            The added average line object.
         """
         # Add new line(avg) + errorbar
         # append avg line and err lines (dict)
@@ -144,6 +149,7 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
         })
         self.update_legend()
         self.update_figure()
+        return avgline
 
     def on_config(self):
         config_panel = MatplotlibConfigErrorbarPanel(self)
