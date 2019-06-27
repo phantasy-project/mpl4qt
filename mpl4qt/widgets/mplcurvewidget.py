@@ -46,6 +46,7 @@ from mpl4qt.icons import export_icon
 from mpl4qt.icons import import_icon
 from mpl4qt.icons import reset_icon
 from mpl4qt.icons import tools_icon
+from mpl4qt.icons import fitting_icon
 from mpl4qt.widgets.kbdhelpdialog import KbdHelpDialog
 from mpl4qt.widgets.mplbasewidget import BasePlotWidget
 from mpl4qt.widgets.mplconfig import MatplotlibConfigPanel
@@ -1014,7 +1015,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         import_action = QAction(QIcon(QPixmap(import_icon)), "Import", menu)
         reset_action = QAction(QIcon(QPixmap(reset_icon)), "Reset", menu)
         tb_action = QAction(QIcon(QPixmap(tools_icon)), "Tools", menu)
-        fitting_action = QAction(QIcon(QPixmap(tools_icon)), "Fitting", menu)
+        fitting_action = QAction(QIcon(QPixmap(fitting_icon)), "Fitting", menu)
         menu.addAction(config_action)
         menu.addAction(export_action)
         menu.addAction(import_action)

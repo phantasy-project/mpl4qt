@@ -23,3 +23,4 @@ from ._tools import icon as tools_icon
 from ._autox import icon as autox_tool_icon
 from ._autoy import icon as autoy_tool_icon
 from ._autoxy import icon as autoxy_tool_icon
+from ._fitting import icon as fitting_icon
