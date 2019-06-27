@@ -40,22 +40,22 @@ from mpl4qt.icons import zoom_tool_icon
 TBSTY_FLOATING = """
 QToolBar {
     background-color: white;
-    border-radius: 6px;
-    border-bottom: 2px solid #8f8f91;
-    border-top: 2px solid #8f8f91;
-    spacing: 5px;
-    padding: 10px;
+    border-radius: 0px;
+    border-bottom: 1px solid #8f8f91;
+    border-top: 1px solid #8f8f91;
+    spacing: 2px;
+    padding: 4px;
 }
 """
 
 TBSTY_NONFLOATING = """
 QToolBar {{
     background-color: {};
-    border-radius: 2px;
-    border-bottom: 1px solid #8f8f91;
-    border-top: 1px solid #8f8f91;
-    spacing: 4px;
-    padding: 2px;
+    border-radius: 0px;
+    border-bottom: 0.5px solid #8f8f91;
+    border-top: 0.5px solid #8f8f91;
+    spacing: 0px;
+    padding: 1px;
 }}
 """
 
