@@ -29,6 +29,7 @@ from PyQt5.QtGui import QColor
 
 from mpl4qt.widgets.mplconfig import MatplotlibConfigErrorbarPanel
 from mpl4qt.widgets.mplcurvewidget import MatplotlibCurveWidget
+from mpl4qt.widgets.utils import mplcolor2hex
 
 
 class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
@@ -37,7 +38,6 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
     def __init__(self, parent=None):
         # initial eb config
         self._init_config()
-
         # regular lines (avg lines)
         self._lines = []
         # eb lines + mks, each item:
@@ -48,6 +48,19 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
 
         # widget type
         self.widget_type = 'errorbar'
+
+        # post_init line attrs
+        self._post_init()
+
+    def _post_init(self):
+        # sync the settings of colors for avg line, when these objects are
+        # created, the parent class does not know, should manually update
+        # them. 2019-06-27 16:09:23 PM EDT
+        o = self._avgline
+        c = mplcolor2hex(o.get_c())
+        self._line_color = QColor(c)
+        self._mec = QColor(mplcolor2hex(o.get_mec()))
+        self._mfc = QColor(mplcolor2hex(o.get_mfc()))
 
     def _init_config(self):
         self.eb_fmt = ''
@@ -141,7 +154,15 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
         xerr = np.nan if xerr_data is None else xerr_data
         yerr = np.nan if yerr_data is None else yerr_data
         avgline, ebmks, eblines = self.axes.errorbar(
-                x, y, xerr=xerr, yerr=yerr, **kws)
+                x, y, xerr=xerr, yerr=yerr,
+                fmt=self.eb_fmt,
+                linewidth=self.avg_lw,
+                ls=self.avg_ls,
+                marker=self.avg_marker,
+                ms=self.avg_ms,
+                elinewidth=self.eb_lw,
+                capsize=self.eb_markersize,
+                capthick=self.eb_mew)
         self._lines.append(avgline)
         self._eb_lines.append({
             'xerr': (ebmks[0:2], eblines[0]),
