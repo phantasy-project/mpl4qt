@@ -310,6 +310,11 @@ class BasePlotWidget(QWidget):
         self.axes.clear()
         self.update_figure()
 
+    def clear_data(self):
+        """Set with empty canvas.
+        """
+        pass
+
     @pyqtSlot('QString', float)
     def on_update_keycombo_cache(self, key, ts):
         self.dq_keycombo.append((key, ts))
