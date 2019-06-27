@@ -88,6 +88,12 @@ class FittingImage(QDialog, Ui_Dialog):
         self._y = y
         self._data = data
 
+        o = self.matplotlibimageWidget
+        p = self.parent
+        o.setFigureXlabel(p.getFigureXlabel())
+        o.setFigureYlabel(p.getFigureYlabel())
+        o.setFigureTitle(p.getFigureTitle())
+
         # post init
         self._reconfig_ui()
         self._update_smooth_func()
