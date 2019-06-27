@@ -1009,22 +1009,18 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     def contextMenuEvent(self, e):
         menu = QMenu(self)
-        config_action = QAction(QIcon(QPixmap(config_icon)),
-                                "Config", menu)
-        export_action = QAction(QIcon(QPixmap(export_icon)),
-                                "Export", menu)
-        import_action = QAction(QIcon(QPixmap(import_icon)),
-                                "Import", menu)
-        reset_action = QAction(QIcon(QPixmap(reset_icon)),
-                               "Reset", menu)
-        tb_action = self._handlers.setdefault(
-                'show_tools_action',
-                QAction(QIcon(QPixmap(tools_icon)), "Tools", menu))
+        config_action = QAction(QIcon(QPixmap(config_icon)), "Config", menu)
+        export_action = QAction(QIcon(QPixmap(export_icon)), "Export", menu)
+        import_action = QAction(QIcon(QPixmap(import_icon)), "Import", menu)
+        reset_action = QAction(QIcon(QPixmap(reset_icon)), "Reset", menu)
+        tb_action = QAction(QIcon(QPixmap(tools_icon)), "Tools", menu)
+        fitting_action = QAction(QIcon(QPixmap(tools_icon)), "Fitting", menu)
         menu.addAction(config_action)
         menu.addAction(export_action)
         menu.addAction(import_action)
         menu.addSeparator()
         menu.addAction(tb_action)
+        menu.addAction(fitting_action)
         menu.addSeparator()
         menu.addAction(reset_action)
 
@@ -1033,8 +1029,26 @@ class MatplotlibCurveWidget(BasePlotWidget):
         import_action.triggered.connect(self.on_import_config)
         reset_action.triggered.connect(self.on_reset_config)
         tb_action.triggered.connect(self.show_mpl_tools)
+        fitting_action.triggered.connect(self.on_fitting_data)
 
         menu.exec_(self.mapToGlobal(e.pos()))
+
+    def on_fitting_data(self):
+        """Fitting data.
+        """
+        wt = self.widget_type
+        if wt == 'curve':
+            print("Fitting Curve")
+        elif wt == 'image':
+            if 'FittingImage' not in dir():
+                from mpl4qt.widgets.fitting import FittingImage
+            w = self._handlers.setdefault(
+                    'fitting_image_widget', FittingImage(self))
+            print("Fitting: ", id(w))
+            w.show()
+            w.init_data()
+        else:
+            print("To be implemented")
 
     def show_mpl_tools(self, e):
         self.__show_mpl_tools()
@@ -1049,6 +1063,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
             w.zoom_roi_changed.connect(self.on_zoom_roi_changed)
         w.show_toolbar()
         w.floatable_changed.emit(False)
+        print("MPL Toolbar: ", id(w))
 
     @pyqtSlot(QVariant, QVariant)
     def on_selected_indices(self, ind, pts):
