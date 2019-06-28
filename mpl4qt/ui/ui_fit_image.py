@@ -126,6 +126,8 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        self.matplotlibimageWidget.setFigureAspectRatio(
+            _translate("Dialog", "auto"))
         self.label.setText(_translate("Dialog", "Smooth Method"))
         self.label_2.setText(_translate("Dialog", "# of points "))
         self.smooth_method_cbb.setItemText(0, _translate("Dialog", "Spline-1"))
