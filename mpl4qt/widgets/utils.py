@@ -9,6 +9,7 @@ import matplotlib.colors as colors
 import numpy as np
 from PyQt5.QtGui import QFont
 from math import log10
+import matplotlib as mpl
 from matplotlib.font_manager import stretch_dict
 from matplotlib.font_manager import weight_dict
 from matplotlib.ticker import FuncFormatter
@@ -172,6 +173,8 @@ COLORMAPS = [
         'Pastel1', 'Pastel2', 'Paired', 'Accent',
         'Dark2', 'Set1', 'Set2', 'Set3',
         'tab10', 'tab20', 'tab20b', 'tab20c']),
+    ('Cyclic', [
+        'twilight', 'twilight_shifted', 'hsv']),
     ('Miscellaneous', [
         'flag', 'prism', 'ocean', 'gist_earth', 'terrain', 'gist_stern',
         'gnuplot', 'gnuplot2', 'CMRmap', 'cubehelix', 'brg', 'hsv',
@@ -367,6 +370,10 @@ def mplcolor2hex(c):
             except:
                 clr = colors.cnames[c]
     return clr.upper()
+
+
+def is_cmap_valid(cmap):
+    return hasattr(mpl.cm, cmap)
 
 
 class MatplotlibCurveWidgetSettings(OrderedDict):

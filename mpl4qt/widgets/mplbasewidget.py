@@ -49,6 +49,7 @@ from .utils import LINE_STY_VALS
 from .utils import mfont_to_qfont
 from .utils import mplcolor2hex
 from .utils import set_font
+from .utils import is_cmap_valid
 
 MPL_VERSION = mpl.__version__
 DTMSEC = 500  # msec
@@ -662,6 +663,8 @@ class MatplotlibCMapWidget(BasePlotWidget):
         self.im = self.axes.imshow(gradient, aspect='auto')
 
     def set_cmap(self, c):
+        if not is_cmap_valid(c):
+            return
         self._cmap = c
         self.im.set_cmap(self._cmap + self._rcmap)
         self.update_figure()

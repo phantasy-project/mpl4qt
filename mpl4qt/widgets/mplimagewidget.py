@@ -30,6 +30,7 @@ from mpl4qt.widgets.mplconfig import MatplotlibConfigImagePanel
 from mpl4qt.widgets.mplcurvewidget import MatplotlibCurveWidget
 from mpl4qt.widgets.utils import get_cursor_data
 from mpl4qt.widgets.utils import get_array_range
+from mpl4qt.widgets.utils import is_cmap_valid
 
 
 class MatplotlibImageWidget(MatplotlibCurveWidget):
@@ -68,7 +69,8 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
 
     @pyqtSlot('QString')
     def setColorMap(self, c):
-        if c == '': return
+        if not is_cmap_valid(c):
+            return
         self._cmap = c
         self.im.set_cmap(self._cmap + self._rcmap)
         self.update_figure()
