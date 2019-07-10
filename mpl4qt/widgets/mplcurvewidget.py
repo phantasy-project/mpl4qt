@@ -1122,7 +1122,12 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     def on_reset_config(self):
         # apply default settings
-        self.apply_mpl_settings()
+        if self.widget_type == 'curve':
+            self.apply_mpl_settings()
+        else:
+            QMessageBox.warning(self, "Reset Drawing settings",
+                    "Only curve widget is fully implemented.",
+                    QMessageBox.Ok)
 
     def apply_mpl_settings(self, settings=None):
         """Apply mpl settings to the mplcurvewidget, if *settings* is not
