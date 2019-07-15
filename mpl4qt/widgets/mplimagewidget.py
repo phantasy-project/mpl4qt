@@ -31,6 +31,7 @@ from mpl4qt.widgets.mplcurvewidget import MatplotlibCurveWidget
 from mpl4qt.widgets.utils import get_cursor_data
 from mpl4qt.widgets.utils import get_array_range
 from mpl4qt.widgets.utils import is_cmap_valid
+from mpl4qt.widgets.utils import func_peaks
 
 
 class MatplotlibImageWidget(MatplotlibCurveWidget):
@@ -182,7 +183,7 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
         # image
         x, y = np.meshgrid(np.linspace(-3, 3, 40),
                            np.linspace(-3, 3, 40))
-        z = fn_peaks(x, y)
+        z = func_peaks(x, y)
 
         # color range
         self._cr_min, self._cr_max = get_array_range(z)
@@ -298,12 +299,6 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
         """Set with empty canvas, clear image.
         """
         self.update_image(np.ones(self.getXData().shape) * np.nan)
-
-
-def fn_peaks(x, y):
-    return 3.0 * (1.0 - x) ** 2.0 * np.exp(-(x ** 2) - (y + 1) ** 2) \
-           - 10 * (x / 5 - x ** 3 - y ** 5) * np.exp(-x ** 2 - y ** 2) \
-           - 1.0 / 3.0 * np.exp(-(x + 1) ** 2 - y ** 2)
 
 
 if __name__ == "__main__":

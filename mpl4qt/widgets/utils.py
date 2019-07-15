@@ -497,6 +497,12 @@ def get_array_range(z):
     return zz.min(), zz.max()
 
 
+def func_peaks(x, y):
+    return 3.0 * (1.0 - x) ** 2.0 * np.exp(-(x ** 2) - (y + 1) ** 2) \
+           - 10 * (x / 5 - x ** 3 - y ** 5) * np.exp(-x ** 2 - y ** 2) \
+           - 1.0 / 3.0 * np.exp(-(x + 1) ** 2 - y ** 2)
+
+
 def main():
     import argparse
     import sys
