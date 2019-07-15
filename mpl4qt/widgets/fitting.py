@@ -21,6 +21,17 @@ SMOOTH_METH = {
 }
 
 
+# smooth method, literal to param
+SMOOTH_METHOD_DICT = {
+    'Nearest': 'nearest',
+    'Linear': 'linear',
+    'Spline-0': 'zero',
+    'Spline-1': 'slinear',
+    'Spline-2': 'quadratic',
+    'Spline-3': 'cubic',
+}
+
+
 class FittingImage(QDialog, Ui_Dialog):
 
     def __init__(self, parent=None):
@@ -44,6 +55,22 @@ class FittingImage(QDialog, Ui_Dialog):
         for xoy, o in zip(('x', 'y'), (self.nx_sbox, self.ny_sbox)):
             o.valueChanged.connect(partial(self.on_update_n, xoy))
             o.valueChanged.emit(o.value())
+
+        # reset nx & ny
+        self.reset_pts_btn.clicked.connect(self.on_reset_xypoints)
+
+        # 3d view
+        self.view_3d_btn.clicked.connect(self.on_view_3d)
+
+    @pyqtSlot()
+    def on_view_3d(self):
+        # show data in 3D.
+        self._show_surface_view(self.matplotlibimageWidget, 1.2, 0.8)
+
+    @pyqtSlot()
+    def on_reset_xypoints(self):
+        self.nx_sbox.setValue(self._nx0)
+        self.ny_sbox.setValue(self._ny0)
 
     @pyqtSlot(int)
     def on_update_n(self, xoy, i):
@@ -104,6 +131,33 @@ class FittingImage(QDialog, Ui_Dialog):
     def _reconfig_ui(self):
         # limit spinbox lower limit
         nx, ny = len(self._x), len(self._y)
+        self._nx0, self._ny0 = nx, ny
         for n, o in zip((nx, ny), (self.nx_sbox, self.ny_sbox)):
             o.setMinimum(n)
             o.setValue(2.0 * n)
+
+    def _show_surface_view(self, o, f, alpha):
+        import matplotlib.pyplot as plt
+        from mpl_toolkits.mplot3d import Axes3D
+
+        z = o.get_data()
+        x = o.getXData()
+        y = o.getYData()
+        cm = o.getColorMap()
+        xlbl = o.getFigureXlabel()
+        ylbl = o.getFigureYlabel()
+
+        fig = plt.figure("View in 3D Surface", figsize=(10, 8))
+        ax = fig.add_subplot(111, projection='3d')
+        ax.plot_surface(x, y, z, cmap=cm, alpha=alpha)
+        ax.contour(x, y, z, zdir='z', offset=z.min() * f, cmap=cm)
+        ax.contour(x, y, z, zdir='x', offset=x.min() * f, cmap=cm)
+        ax.contour(x, y, z, zdir='y', offset=y.max() * f, cmap=cm)
+        ax.set_xlim(x.min() * f, x.max() * f)
+        ax.set_ylim(y.min() * f, y.max() * f)
+        ax.set_zlim(z.min() * f, z.max() * f)
+        ax.set_xlabel(xlbl)
+        ax.set_ylabel(ylbl)
+        plt.show()
+
+
