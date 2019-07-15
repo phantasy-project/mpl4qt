@@ -15,12 +15,6 @@ class Ui_Dialog(object):
         Dialog.resize(985, 891)
         self.gridLayout = QtWidgets.QGridLayout(Dialog)
         self.gridLayout.setObjectName("gridLayout")
-        self.matplotlibimageWidget = MatplotlibImageWidget(Dialog)
-        self.matplotlibimageWidget.setProperty("figureToolbarToggle", False)
-        self.matplotlibimageWidget.setProperty("reseverColorMap", False)
-        self.matplotlibimageWidget.setAutoColorLimit(True)
-        self.matplotlibimageWidget.setObjectName("matplotlibimageWidget")
-        self.gridLayout.addWidget(self.matplotlibimageWidget, 2, 0, 1, 5)
         self.label = QtWidgets.QLabel(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
@@ -33,6 +27,12 @@ class Ui_Dialog(object):
                                 | QtCore.Qt.AlignVCenter)
         self.label.setObjectName("label")
         self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
+        self.matplotlibimageWidget = MatplotlibImageWidget(Dialog)
+        self.matplotlibimageWidget.setProperty("figureToolbarToggle", False)
+        self.matplotlibimageWidget.setProperty("reseverColorMap", False)
+        self.matplotlibimageWidget.setAutoColorLimit(True)
+        self.matplotlibimageWidget.setObjectName("matplotlibimageWidget")
+        self.gridLayout.addWidget(self.matplotlibimageWidget, 3, 0, 1, 5)
         self.label_2 = QtWidgets.QLabel(Dialog)
         self.label_2.setAlignment(QtCore.Qt.AlignRight
                                   | QtCore.Qt.AlignTrailing
@@ -101,6 +101,19 @@ class Ui_Dialog(object):
         self.ny_sbox.setProperty("value", 50)
         self.ny_sbox.setObjectName("ny_sbox")
         self.horizontalLayout.addWidget(self.ny_sbox)
+        self.reset_pts_btn = QtWidgets.QToolButton(Dialog)
+        icon = QtGui.QIcon()
+        icon.addPixmap(
+            QtGui.QPixmap(":/icons/reset_btn.png"), QtGui.QIcon.Normal,
+            QtGui.QIcon.Off)
+        self.reset_pts_btn.setIcon(icon)
+        self.reset_pts_btn.setIconSize(QtCore.QSize(24, 24))
+        self.reset_pts_btn.setAutoRaise(True)
+        self.reset_pts_btn.setObjectName("reset_pts_btn")
+        self.horizontalLayout.addWidget(self.reset_pts_btn)
+        self.view_3d_btn = QtWidgets.QPushButton(Dialog)
+        self.view_3d_btn.setObjectName("view_3d_btn")
+        self.horizontalLayout.addWidget(self.view_3d_btn)
         self.gridLayout.addLayout(self.horizontalLayout, 1, 1, 1, 4)
         self.method_info_le = QtWidgets.QLineEdit(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
@@ -126,20 +139,23 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        self.label.setText(_translate("Dialog", "Smooth Method"))
         self.matplotlibimageWidget.setFigureAspectRatio(
             _translate("Dialog", "auto"))
-        self.label.setText(_translate("Dialog", "Smooth Method"))
         self.label_2.setText(_translate("Dialog", "# of points "))
         self.smooth_method_cbb.setItemText(0, _translate("Dialog", "Spline-1"))
         self.smooth_method_cbb.setItemText(1, _translate("Dialog", "Spline-3"))
         self.smooth_method_cbb.setItemText(2, _translate("Dialog", "Spline-5"))
         self.label_3.setText(_translate("Dialog", "Horizontal"))
         self.label_4.setText(_translate("Dialog", "Vertical"))
+        self.reset_pts_btn.setText(_translate("Dialog", "..."))
+        self.view_3d_btn.setText(_translate("Dialog", "3D View"))
         self.method_info_le.setText(
             _translate("Dialog", "First Order Spline Interpolation"))
 
 
 from mpl4qt.widgets.mplimagewidget import MatplotlibImageWidget
+from . import resources_rc
 
 if __name__ == "__main__":
     import sys
