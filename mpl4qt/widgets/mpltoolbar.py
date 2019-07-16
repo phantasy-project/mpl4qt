@@ -21,21 +21,6 @@ from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT
 from matplotlib.path import Path
 from matplotlib.widgets import LassoSelector
 
-from mpl4qt.icons import autox_tool_icon
-from mpl4qt.icons import autoxy_tool_icon
-from mpl4qt.icons import autoy_tool_icon
-from mpl4qt.icons import backward_tool_icon
-from mpl4qt.icons import cross_tool_icon
-from mpl4qt.icons import dock_tool_icon
-from mpl4qt.icons import exit_tool_icon
-from mpl4qt.icons import forward_tool_icon
-from mpl4qt.icons import home_tool_icon
-from mpl4qt.icons import lasso_tool_icon
-from mpl4qt.icons import pan_tool_icon
-from mpl4qt.icons import popup_tool_icon
-from mpl4qt.icons import repos_tool_icon
-from mpl4qt.icons import save_tool_icon
-from mpl4qt.icons import zoom_tool_icon
 
 TBSTY_FLOATING = """
 QToolBar {
@@ -119,7 +104,7 @@ class MToolbar(QToolBar):
                 w = self
             w.setStyleSheet(TBSTY_FLOATING)
             w.setParent(None)
-            w.dock_act.setIcon(QIcon(QPixmap(dock_tool_icon)))
+            w.dock_act.setIcon(QIcon(QPixmap(":/tools/top_dock.png")))
             w.dock_act.setToolTip("Dock toolbar")
             w.show_toolbar()
         else:  # non-floatable
@@ -127,7 +112,7 @@ class MToolbar(QToolBar):
             self.setSizePolicy(
                 QSizePolicy.Expanding, QSizePolicy.Preferred)
             self.parent.vbox.insertWidget(0, self)
-            self.dock_act.setIcon(QIcon(QPixmap(popup_tool_icon)))
+            self.dock_act.setIcon(QIcon(QPixmap(":/tools/popup.png")))
             self.dock_act.setToolTip("Undock toolbar")
         self._floating = f
 
@@ -143,69 +128,69 @@ class MToolbar(QToolBar):
         tb.hide()
 
         # zoom tool
-        zoom_act = QAction(QIcon(QPixmap(zoom_tool_icon)), "Zoom", self)
+        zoom_act = QAction(QIcon(QPixmap(":/tools/zoom.png")), "Zoom", self)
         zoom_act.setCheckable(True)
         self.zoom_act = zoom_act
         zoom_act.setToolTip("Zoom into selected region")
 
         # home tool
-        home_act = QAction(QIcon(QPixmap(home_tool_icon)), "Home", self)
+        home_act = QAction(QIcon(QPixmap(":/tools/home.png")), "Home", self)
         home_act.setToolTip("Reset to original view")
 
         # backward
-        backward_act = QAction(QIcon(QPixmap(backward_tool_icon)),
+        backward_act = QAction(QIcon(QPixmap(":/tools/backward.png")),
                                "Backward", self)
         backward_act.setToolTip("Backward view")
 
         # forward
-        forward_act = QAction(QIcon(QPixmap(forward_tool_icon)),
+        forward_act = QAction(QIcon(QPixmap(":/tools/forward.png")),
                               "Forward", self)
         forward_act.setToolTip("Forward view")
 
         # auto scale tool
-        auto_scale_act = QAction(QIcon(QPixmap(autoxy_tool_icon)), "Auto Scale", self)
+        auto_scale_act = QAction(QIcon(QPixmap(":/tools/auto-scale.png")), "Auto Scale", self)
         auto_scale_act.setToolTip("Auto Scale")
 
         # auto xscale tool
-        auto_xscale_act = QAction(QIcon(QPixmap(autox_tool_icon)), "Auto X-Scale", self)
+        auto_xscale_act = QAction(QIcon(QPixmap(":/tools/auto-xscale.png")), "Auto X-Scale", self)
         auto_xscale_act.setToolTip("Auto X-Scale")
 
         # auto yscale tool
-        auto_yscale_act = QAction(QIcon(QPixmap(autoy_tool_icon)), "Auto Y-Scale", self)
+        auto_yscale_act = QAction(QIcon(QPixmap(":/tools/auto-yscale.png")), "Auto Y-Scale", self)
         auto_yscale_act.setToolTip("Auto Y-Scale")
 
         # pan tool
-        pan_act = QAction(QIcon(QPixmap(pan_tool_icon)), "Pan", self)
+        pan_act = QAction(QIcon(QPixmap(":/tools/pan.png")), "Pan", self)
         pan_act.setCheckable(True)
         self.pan_act = pan_act
         pan_act.setToolTip("Pan axes with left mouse")
 
         # save tool
-        save_act = QAction(QIcon(QPixmap(save_tool_icon)), "Save", self)
+        save_act = QAction(QIcon(QPixmap(":/tools/save.png")), "Save", self)
         save_act.setToolTip("Save figure as file")
 
         # lasso tool
-        lasso_act = QAction(QIcon(QPixmap(lasso_tool_icon)), "Selector", self)
+        lasso_act = QAction(QIcon(QPixmap(":/tools/lasso.png")), "Selector", self)
         self.lasso_act = lasso_act
         lasso_act.setCheckable(True)
         lasso_act.setToolTip("Select point(s) by lassoing")
 
         # cross ruler tool
-        cross_act = QAction(QIcon(QPixmap(cross_tool_icon)), "Cross ruler", self)
+        cross_act = QAction(QIcon(QPixmap(":/tools/cross.png")), "Cross ruler", self)
         cross_act.setCheckable(True)
         cross_act.setToolTip("Cross ruler for locating coordinate")
 
         # exit tool
-        exit_act = QAction(QIcon(QPixmap(exit_tool_icon)), "Exit", self)
+        exit_act = QAction(QIcon(QPixmap(":/tools/exit.png")), "Exit", self)
         exit_act.setToolTip("Exit toolbar")
 
         # dock tool
-        dock_act = QAction(QIcon(QPixmap(dock_tool_icon)), "Dock", self)
+        dock_act = QAction(QIcon(QPixmap(":/tools/top_dock.png")), "Dock", self)
         self.dock_act = dock_act
         dock_act.setToolTip("Dock toolbar")
 
         # repos to center (toolbar) tool
-        repos_act = QAction(QIcon(QPixmap(repos_tool_icon)), "Repos", self)
+        repos_act = QAction(QIcon(QPixmap(":/tools/repos.png")), "Repos", self)
         repos_act.setToolTip(
             "Reposition toolbar wrt figure widget, drag & move to otherwhere")
 
