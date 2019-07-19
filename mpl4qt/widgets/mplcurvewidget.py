@@ -41,12 +41,6 @@ from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtWidgets import QMenu
 from PyQt5.QtWidgets import QMessageBox
 
-from mpl4qt.icons import config_icon
-from mpl4qt.icons import export_icon
-from mpl4qt.icons import import_icon
-from mpl4qt.icons import reset_icon
-from mpl4qt.icons import tools_icon
-from mpl4qt.icons import fitting_icon
 from mpl4qt.widgets.kbdhelpdialog import KbdHelpDialog
 from mpl4qt.widgets.mplbasewidget import BasePlotWidget
 from mpl4qt.widgets.mplconfig import MatplotlibConfigPanel
@@ -1010,12 +1004,18 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     def contextMenuEvent(self, e):
         menu = QMenu(self)
-        config_action = QAction(QIcon(QPixmap(config_icon)), "Config", menu)
-        export_action = QAction(QIcon(QPixmap(export_icon)), "Export", menu)
-        import_action = QAction(QIcon(QPixmap(import_icon)), "Import", menu)
-        reset_action = QAction(QIcon(QPixmap(reset_icon)), "Reset", menu)
-        tb_action = QAction(QIcon(QPixmap(tools_icon)), "Tools", menu)
-        fitting_action = QAction(QIcon(QPixmap(fitting_icon)), "Fitting", menu)
+        config_action = QAction(QIcon(QPixmap(":/tools/config.png")),
+                                "Config", menu)
+        export_action = QAction(QIcon(QPixmap(":/tools/export.png")),
+                                "Export", menu)
+        import_action = QAction(QIcon(QPixmap(":/tools/import.png")),
+                                "Import", menu)
+        reset_action = QAction(QIcon(QPixmap(":/tools/reset.png")),
+                               "Reset", menu)
+        tb_action = QAction(QIcon(QPixmap(":/tools/tools.png")),
+                            "Tools", menu)
+        fitting_action = QAction(QIcon(QPixmap(":/tools/fitting.png")),
+                                 "Fitting", menu)
         menu.addAction(config_action)
         menu.addAction(export_action)
         menu.addAction(import_action)

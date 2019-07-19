@@ -26,7 +26,6 @@ from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtDesigner import QPyDesignerCustomWidgetPlugin
 
 from mpl4qt.widgets.mplerrorbarwidget import MatplotlibErrorbarWidget
-from mpl4qt.icons import mplerrorbarwidget_icon
 
 
 class MatplotlibErrorbarWidgetPlugin(QPyDesignerCustomWidgetPlugin):
@@ -75,4 +74,4 @@ class MatplotlibErrorbarWidgetPlugin(QPyDesignerCustomWidgetPlugin):
         return "mpl4qt.widgets.mplerrorbarwidget"
 
 # Define the image used for the icon.
-_logo_pixmap = QPixmap(mplerrorbarwidget_icon)
+_logo_pixmap = QPixmap(":/logos/mplerrorbarwidget_icon.png")

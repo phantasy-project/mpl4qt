@@ -26,7 +26,6 @@ from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtDesigner import QPyDesignerCustomWidgetPlugin
 
 from mpl4qt.widgets.mplbarwidget import MatplotlibBarWidget
-from mpl4qt.icons import mplbarwidget_icon
 
 
 class MatplotlibBarWidgetPlugin(QPyDesignerCustomWidgetPlugin):
@@ -75,4 +74,4 @@ class MatplotlibBarWidgetPlugin(QPyDesignerCustomWidgetPlugin):
         return "mpl4qt.widgets.mplbarwidget"
 
 # Define the image used for the icon.
-_logo_pixmap = QPixmap(mplbarwidget_icon)
+_logo_pixmap = QPixmap(":/logos/mplbarwidget_icon.png")

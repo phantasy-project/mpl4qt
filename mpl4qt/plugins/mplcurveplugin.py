@@ -26,7 +26,6 @@ from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtDesigner import QPyDesignerCustomWidgetPlugin
 
 from mpl4qt.widgets.mplcurvewidget import MatplotlibCurveWidget
-from mpl4qt.icons import mplcurvewidget_icon
 
 
 class MatplotlibCurveWidgetPlugin(QPyDesignerCustomWidgetPlugin):
@@ -75,4 +74,4 @@ class MatplotlibCurveWidgetPlugin(QPyDesignerCustomWidgetPlugin):
         return "mpl4qt.widgets.mplcurvewidget"
 
 # Define the image used for the icon.
-_logo_pixmap = QPixmap(mplcurvewidget_icon)
+_logo_pixmap = QPixmap(":/logos/mplcurvewidget_icon.png")

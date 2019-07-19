@@ -27,7 +27,6 @@ from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtDesigner import QPyDesignerCustomWidgetPlugin
 
 from mpl4qt.widgets.mplbasewidget import MatplotlibBaseWidget
-from mpl4qt.icons import mplbasewidget_icon
 
 
 class MatplotBaseWidgetPlugin(QPyDesignerCustomWidgetPlugin):
@@ -72,4 +71,4 @@ class MatplotBaseWidgetPlugin(QPyDesignerCustomWidgetPlugin):
 
 
 # Define the image used for the icon.
-_logo_pixmap = QPixmap(mplbasewidget_icon)
+_logo_pixmap = QPixmap(":/logos/mplbasewidget_icon.png")
