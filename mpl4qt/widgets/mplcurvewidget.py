@@ -1019,11 +1019,12 @@ class MatplotlibCurveWidget(BasePlotWidget):
         menu.addAction(config_action)
         menu.addAction(export_action)
         menu.addAction(import_action)
+        menu.addAction(reset_action)
         menu.addSeparator()
         menu.addAction(tb_action)
         menu.addAction(fitting_action)
-        menu.addSeparator()
-        menu.addAction(reset_action)
+
+        menu.setStyleSheet('QMenu {margin: 2px;}')
 
         config_action.triggered.connect(self.on_config)
         export_action.triggered.connect(self.on_export_config)
