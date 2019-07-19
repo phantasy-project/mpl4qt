@@ -19,7 +19,7 @@ def main():
     designer.setProcessEnvironment(env)
     designer_bin = QLibraryInfo.location(QLibraryInfo.BinariesPath)
 
-    designer.start(os.path.join(designer_bin, 'designer'))
+    designer.start(os.path.join(designer_bin, 'designer'), sys.argv[1:])
     designer.waitForFinished(-1)
 
     sys.exit(designer.exitCode())
