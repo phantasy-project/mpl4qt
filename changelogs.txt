@@ -1,3 +1,9 @@
+2.6.2
+  * Fix clim cannot be calculated when data has nan for Imagewidget.
+  * Add 'Fitting' action to context menu.
+  * Add support to pass .ui files to run_designer command.
+  * Update icons.
+
 2.6.1
   * Update mplconfig style and fix the widget size issue.
   * Move attributes figure width, height and dpi to BasePlotWidget.
@@ -82,11 +88,11 @@
   * Fix resize issue when resizing the figure (including DPI).
   * Keyboard shortcuts are available, 'g', 'm', 'a', 'l', 't', 'r'
     - 'g', turn on/off grid
-	- 'm', turn on/off minor ticks
-	- 'a', turn on/off auto scale
-	- 'l', turn on/off legend
-	- 't', tightlayout or not
-	- 'r', force refresh
+    - 'm', turn on/off minor ticks
+    - 'a', turn on/off auto scale
+    - 'l', turn on/off legend
+    - 't', tightlayout or not
+    - 'r', force refresh
   * New help message window for keyboard shortcuts.
   * Update HTML documentation.
 
