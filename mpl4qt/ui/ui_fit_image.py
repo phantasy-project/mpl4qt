@@ -103,9 +103,8 @@ class Ui_Dialog(object):
         self.horizontalLayout.addWidget(self.ny_sbox)
         self.reset_pts_btn = QtWidgets.QToolButton(Dialog)
         icon = QtGui.QIcon()
-        icon.addPixmap(
-            QtGui.QPixmap(":/icons/reset_btn.png"), QtGui.QIcon.Normal,
-            QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/icons/reset_btn.png"),
+                       QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.reset_pts_btn.setIcon(icon)
         self.reset_pts_btn.setIconSize(QtCore.QSize(24, 24))
         self.reset_pts_btn.setAutoRaise(True)
@@ -114,6 +113,9 @@ class Ui_Dialog(object):
         self.view_3d_btn = QtWidgets.QPushButton(Dialog)
         self.view_3d_btn.setObjectName("view_3d_btn")
         self.horizontalLayout.addWidget(self.view_3d_btn)
+        self.view_hm_btn = QtWidgets.QPushButton(Dialog)
+        self.view_hm_btn.setObjectName("view_hm_btn")
+        self.horizontalLayout.addWidget(self.view_hm_btn)
         self.gridLayout.addLayout(self.horizontalLayout, 1, 1, 1, 4)
         self.method_info_le = QtWidgets.QLineEdit(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
@@ -150,6 +152,7 @@ class Ui_Dialog(object):
         self.label_4.setText(_translate("Dialog", "Vertical"))
         self.reset_pts_btn.setText(_translate("Dialog", "..."))
         self.view_3d_btn.setText(_translate("Dialog", "3D View"))
+        self.view_hm_btn.setText(_translate("Dialog", "HM View"))
         self.method_info_le.setText(
             _translate("Dialog", "First Order Spline Interpolation"))
 
