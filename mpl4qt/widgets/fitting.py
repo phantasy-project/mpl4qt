@@ -10,6 +10,7 @@ from scipy import interpolate
 
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QDialog
+from PyQt5.QtWidgets import QMessageBox
 
 from mpl4qt.ui.ui_fit_image import Ui_Dialog
 
@@ -62,10 +63,18 @@ class FittingImage(QDialog, Ui_Dialog):
         # 3d view
         self.view_3d_btn.clicked.connect(self.on_view_3d)
 
+        # hm view
+        self.view_hm_btn.clicked.connect(self.on_view_hm)
+
     @pyqtSlot()
     def on_view_3d(self):
         # show data in 3D.
         self._show_surface_view(self.matplotlibimageWidget, 1.2, 0.8)
+
+    @pyqtSlot()
+    def on_view_hm(self):
+        # show data in heatmap
+        self._show_heatmap_view(self.matplotlibimageWidget, 0.8)
 
     @pyqtSlot()
     def on_reset_xypoints(self):
@@ -161,4 +170,27 @@ class FittingImage(QDialog, Ui_Dialog):
         ax.set_ylabel(ylbl)
         plt.show()
 
+    def _show_heatmap_view(self, o, alpha):
+        try:
+            import seaborn as sns
+        except ModuleNotFoundError:
+            QMessageBox.warning(self, "Module Not Found",
+                    "Python package 'seaborn' is not found.",
+                    QMessageBox.Ok)
+            return
 
+        import matplotlib.pyplot as plt
+
+        z = o.get_data()
+        x = o.getXData()
+        y = o.getYData()
+        cm = o.getColorMap()
+        xlbl = o.getFigureXlabel()
+        ylbl = o.getFigureYlabel()
+
+        fig = plt.figure("View in Heatmap", figsize=(10, 8))
+        ax = fig.add_subplot(111)
+        sns.heatmap(z, ax=ax, cmap=cm, alpha=alpha, linewidth=0.01)
+        ax.set_xlabel(xlbl)
+        ax.set_ylabel(ylbl)
+        plt.show()
