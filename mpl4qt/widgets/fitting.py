@@ -120,6 +120,7 @@ class FittingImage(QDialog, Ui_Dialog):
         o.setFigureXlabel(p.getFigureXlabel())
         o.setFigureYlabel(p.getFigureYlabel())
         o.setFigureTitle(p.getFigureTitle())
+        o.setColorMap(p.getColorMap())
 
         # post init
         self._reconfig_ui()
