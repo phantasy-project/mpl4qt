@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting Started &mdash; mpl4qt 2.3.3 documentation</title>
+  <title>Getting Started &mdash; mpl4qt 2.6.2 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                2.3.3
+                2.6.2
               </div>
             
           
@@ -179,7 +179,7 @@
 <code class="docutils literal notranslate"><span class="pre">mpl4qt</span></code> will be addressed, starting the development with the following
 applications:</p>
 <ul class="simple">
-<li><a class="reference internal" href="#random-x-y-curve-plotter"><span class="std std-ref">Random X-Y Curve Plotter</span></a></li>
+<li><p><a class="reference internal" href="#random-x-y-curve-plotter"><span class="std std-ref">Random X-Y Curve Plotter</span></a></p></li>
 </ul>
 <div class="section" id="start-qt5-designer">
 <h2>Start Qt5-designer<a class="headerlink" href="#start-qt5-designer" title="Permalink to this headline">¶</a></h2>
@@ -200,8 +200,8 @@ terminal to launch designer:</p>
 <em>DataViz Widgets</em> is shown, inside which there is one widget called
 <em>MatplotlibCurveWidget</em>, which is ready to be dragged&amp;dropped.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">If the following error message happens: <em>qtcore.so: undefined symbol: pyslice_adjustindices</em>, could be resolved by uninstalling pyqt5 package by <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">uninstall</span> <span class="pre">pyqt5</span></code>, and installing the OS distributed one, see <a class="reference internal" href="deploy.html#deploy-pre"><span class="std std-ref">Install mpl4qt</span></a>.</p>
+<p class="admonition-title">Warning</p>
+<p>If the following error message happens: <em>qtcore.so: undefined symbol: pyslice_adjustindices</em>, could be resolved by uninstalling pyqt5 package by <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">uninstall</span> <span class="pre">pyqt5</span></code>, and installing the OS distributed one, see <a class="reference internal" href="deploy.html#deploy-pre"><span class="std std-ref">Install mpl4qt</span></a>.</p>
 </div>
 </div>
 <div class="section" id="random-x-y-curve-plotter">
@@ -277,7 +277,7 @@ of <em>doubleSpinBox</em> to <em>setLineWidth(double)</em> slot of <em>matplotli
 <div class="section" id="implement-additional-features">
 <h3>Implement Additional Features<a class="headerlink" href="#implement-additional-features" title="Permalink to this headline">¶</a></h3>
 <p><em>MatplotlibCurveWidget</em> features a lot of functionality that could be
-implemented via Qt’s signal and slot mechanism <a class="footnote-reference" href="#f1" id="id2">[1]</a>.
+implemented via Qt’s signal and slot mechanism <a class="footnote-reference brackets" href="#f1" id="id2">1</a>.
 Some of them could be achieved in <em>designer</em>, but some are not,
 see <a class="reference internal" href="dev.html#dev-slots"><span class="std std-ref">Slots</span></a>.
 One of the additional
@@ -382,9 +382,9 @@ which renders the UI, then extend within the new class:</p>
 </td></tr></table></div>
 <p>One can note how the signal and slot mechanism works:</p>
 <ol class="arabic simple">
-<li>Define your PyQt signal;</li>
-<li>Connect the signal to the specific slot;</li>
-<li>Emit the signal when needed.</li>
+<li><p>Define your PyQt signal;</p></li>
+<li><p>Connect the signal to the specific slot;</p></li>
+<li><p>Emit the signal when needed.</p></li>
 </ol>
 <p>In this example, the signal named <code class="docutils literal notranslate"><span class="pre">yDataChanged</span></code> is created with data type
 of <code class="docutils literal notranslate"><span class="pre">QVariant</span></code>, then connected with <code class="docutils literal notranslate"><span class="pre">setYData</span></code> slot of
@@ -395,12 +395,11 @@ updating curve, and change the figure property when needed, e.g. check
 <em>Auto Scale</em> on and off (see below), to see the what happen.</p>
 <a class="reference internal image-reference" href="../_images/update.gif"><img alt="../_images/update.gif" class="align-center" src="../_images/update.gif" style="width: 500px;" /></a>
 <p class="rubric">Footnotes</p>
-<table class="docutils footnote" frame="void" id="f1" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td><a class="reference external" href="http://doc.qt.io/qt-5/signalsandslots.html">http://doc.qt.io/qt-5/signalsandslots.html</a></td></tr>
-</tbody>
-</table>
+<dl class="footnote brackets">
+<dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
+<dd><p><a class="reference external" href="http://doc.qt.io/qt-5/signalsandslots.html">http://doc.qt.io/qt-5/signalsandslots.html</a></p>
+</dd>
+</dl>
 </div>
 </div>
 </div>
@@ -427,7 +426,7 @@ updating curve, and change the figure property when needed, e.g. check
     <p>
         &copy; Copyright 2018-2019, Tong Zhang &lt;zhangt@frib.msu.edu&gt;
       <span class="lastupdated">
-        Last updated on Mar 15, 2019.
+        Last updated on Oct 08, 2019.
       </span>
 
     </p>

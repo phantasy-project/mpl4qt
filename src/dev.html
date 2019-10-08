@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Signals &mdash; mpl4qt 2.3.3 documentation</title>
+  <title>Signals &mdash; mpl4qt 2.6.2 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                2.3.3
+                2.6.2
               </div>
             
           
@@ -179,74 +179,61 @@
 <p>These slots are not exposed to the <em>Property Editor</em> column of <em>designer</em>:</p>
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.add_curve">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">add_curve</code><span class="sig-paren">(</span><em>x_data=None</em>, <em>y_data=None</em>, <em>**kws</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.add_curve" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">add_curve</code><span class="sig-paren">(</span><em class="sig-param">x_data=None</em>, <em class="sig-param">y_data=None</em>, <em class="sig-param">**kws</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.add_curve" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add one curve to figure, accepts all <code class="docutils literal notranslate"><span class="pre">pyplot.plot</span></code> keyword
 arguments, see <a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.plot.html">matplotlib.pyplot.plot</a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>x_data</strong> (<em>list</em><em> or </em><em>array</em>) – Array of x data.</li>
-<li><strong>y_data</strong> (<em>list</em><em> or </em><em>array</em>) – Array of y data.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_data</strong> (<em>list</em><em> or </em><em>array</em>) – Array of x data.</p></li>
+<li><p><strong>y_data</strong> (<em>list</em><em> or </em><em>array</em>) – Array of y data.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>o</strong> – The added line object.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Line2D</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>o</strong> – The added line object.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Line2D</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLineID">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setLineID</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLineID" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setLineID</code><span class="sig-paren">(</span><em class="sig-param">i</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLineID" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set line id, which is used to discriminate one from another, the
 first drawn line is of index 0, next one is 1, and so on.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>i</strong> (<em>int</em>) – Line index number.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>i</strong> (<em>int</em>) – Line index number.</p>
+</dd>
+</dl>
 <div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.add_curve" title="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.add_curve"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_curve()</span></code></a></p>
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.add_curve" title="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.add_curve"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_curve()</span></code></a></p>
 </div>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setXData">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setXData</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setXData" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setXData</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setXData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set x data for the current curve, signal type should be <code class="docutils literal notranslate"><span class="pre">QVariant</span></code>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> (<em>list</em><em> or </em><em>array</em>) – Array of x data.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>list</em><em> or </em><em>array</em>) – Array of x data.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYData">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setYData</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYData" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setYData</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set y data for the current curve, signal type should be <code class="docutils literal notranslate"><span class="pre">QVariant</span></code>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> (<em>list</em><em> or </em><em>array</em>) – Array of y data.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>list</em><em> or </em><em>array</em>) – Array of y data.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -255,441 +242,348 @@ first drawn line is of index 0, next one is 1, and so on.</p>
 <p>These slots are exposed to the <em>Property Editor</em> column of <em>designer</em>:</p>
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setTightLayoutToggle">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setTightLayoutToggle</code><span class="sig-paren">(</span><em>f</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setTightLayoutToggle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setTightLayoutToggle</code><span class="sig-paren">(</span><em class="sig-param">f</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setTightLayoutToggle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Toggle for the tight layout.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>f</strong> (<em>bool</em>) – Tight layout toggle.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>f</strong> (<em>bool</em>) – Tight layout toggle.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureMTicksToggle">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setFigureMTicksToggle</code><span class="sig-paren">(</span><em>f</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureMTicksToggle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setFigureMTicksToggle</code><span class="sig-paren">(</span><em class="sig-param">f</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureMTicksToggle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Toggle for the minor ticks.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Before toggle on, be sure the axis scale is linear.</p>
+<p class="admonition-title">Note</p>
+<p>Before toggle on, be sure the axis scale is linear.</p>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>f</strong> (<em>bool</em>) – Minor ticks on/off toggle.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>f</strong> (<em>bool</em>) – Minor ticks on/off toggle.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureGridToggle">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setFigureGridToggle</code><span class="sig-paren">(</span><em>f</em>, <em>**kws</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureGridToggle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setFigureGridToggle</code><span class="sig-paren">(</span><em class="sig-param">f</em>, <em class="sig-param">**kws</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureGridToggle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Toggle for the figure grid.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>f</strong> (<em>bool</em>) – Figure grid toggle.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>f</strong> (<em>bool</em>) – Figure grid toggle.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLegendToggle">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setLegendToggle</code><span class="sig-paren">(</span><em>f</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLegendToggle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setLegendToggle</code><span class="sig-paren">(</span><em class="sig-param">f</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLegendToggle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Toggle for figure legend.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>f</strong> (<em>bool</em>) – Figure legend on/off toggle.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>f</strong> (<em>bool</em>) – Figure legend on/off toggle.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLegendLocation">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setLegendLocation</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLegendLocation" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setLegendLocation</code><span class="sig-paren">(</span><em class="sig-param">i</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLegendLocation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set legend location.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>i</strong> (<em>int</em>) – Index number of legend location,
-see <a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.legend.html">matplotlib.pyplot.legend</a>.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>i</strong> (<em>int</em>) – Index number of legend location,
+see <a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.legend.html">matplotlib.pyplot.legend</a>.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureGridColor">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setFigureGridColor</code><span class="sig-paren">(</span><em>c</em>, <em>**kws</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureGridColor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setFigureGridColor</code><span class="sig-paren">(</span><em class="sig-param">c</em>, <em class="sig-param">**kws</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureGridColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set color for the grid line.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>c</strong> (<em>QColor</em>) – Color of the grid line.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>c</strong> (<em>QColor</em>) – Color of the grid line.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureWidth">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setFigureWidth</code><span class="sig-paren">(</span><em>w</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureWidth" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set figure width.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>w</strong> (<em>int</em>) – Figure width in inch (&gt;= 2).</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setFigureWidth</code><span class="sig-paren">(</span><em class="sig-param">w</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureWidth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set figure width in inch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>w</strong> (<em>float</em>) – Figure width in inch (&gt;= 2.0).</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureHeight">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setFigureHeight</code><span class="sig-paren">(</span><em>h</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureHeight" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set figure height.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>h</strong> (<em>int</em>) – Figure height in inch (&gt;= 2).</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setFigureHeight</code><span class="sig-paren">(</span><em class="sig-param">h</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureHeight" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set figure height in inch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>h</strong> (<em>float</em>) – Figure height in inch (&gt;= 2.0).</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureDpi">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setFigureDpi</code><span class="sig-paren">(</span><em>d</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureDpi" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setFigureDpi</code><span class="sig-paren">(</span><em class="sig-param">d</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureDpi" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set figure dpi.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> (<em>int</em>) – Figure dpi in [50, 1000].</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>d</strong> (<em>float</em>) – Figure dpi in [50.0, 600.0].</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureXYlabelFont">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setFigureXYlabelFont</code><span class="sig-paren">(</span><em>font</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureXYlabelFont" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setFigureXYlabelFont</code><span class="sig-paren">(</span><em class="sig-param">font</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureXYlabelFont" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set font for x and y labels.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>font</strong> (<em>QFont</em>) – Font to set.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>font</strong> (<em>QFont</em>) – Font to set.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureXYticksFont">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setFigureXYticksFont</code><span class="sig-paren">(</span><em>font</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureXYticksFont" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setFigureXYticksFont</code><span class="sig-paren">(</span><em class="sig-param">font</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureXYticksFont" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set font for the tick labels.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>font</strong> (<em>QFont</em>) – Font to set.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>font</strong> (<em>QFont</em>) – Font to set.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureTitleFont">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setFigureTitleFont</code><span class="sig-paren">(</span><em>font</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureTitleFont" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setFigureTitleFont</code><span class="sig-paren">(</span><em class="sig-param">font</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureTitleFont" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set font for figure title.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>font</strong> (<em>QFont</em>) – Font to set.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>font</strong> (<em>QFont</em>) – Font to set.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureBgColor">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setFigureBgColor</code><span class="sig-paren">(</span><em>color</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureBgColor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setFigureBgColor</code><span class="sig-paren">(</span><em class="sig-param">color</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureBgColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set figure background color.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>color</strong> (<em>QColor</em>) – Color to set.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>color</strong> (<em>QColor</em>) – Color to set.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureXYticksColor">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setFigureXYticksColor</code><span class="sig-paren">(</span><em>color</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureXYticksColor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setFigureXYticksColor</code><span class="sig-paren">(</span><em class="sig-param">color</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureXYticksColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set color for the ticks.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>color</strong> (<em>QColor</em>) – Color to set.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>color</strong> (<em>QColor</em>) – Color to set.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLineColor">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setLineColor</code><span class="sig-paren">(</span><em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLineColor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setLineColor</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLineColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set line color for the current curve.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>c</strong> (<em>QColor</em>) – Color to set.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>c</strong> (<em>QColor</em>) – Color to set.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setMkEdgeColor">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setMkEdgeColor</code><span class="sig-paren">(</span><em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setMkEdgeColor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setMkEdgeColor</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setMkEdgeColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set marker edgecolor.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>c</strong> (<em>QColor</em>) – Color to set.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>c</strong> (<em>QColor</em>) – Color to set.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setMkFaceColor">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setMkFaceColor</code><span class="sig-paren">(</span><em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setMkFaceColor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setMkFaceColor</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setMkFaceColor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set marker facecolor.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>c</strong> (<em>QColor</em>) – Color to set.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>c</strong> (<em>QColor</em>) – Color to set.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLineStyle">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setLineStyle</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLineStyle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setLineStyle</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLineStyle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set line style for the current curve.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>s</strong> (<em>str</em>) – String for the line style, see <a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D">line style</a>.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>s</strong> (<em>str</em>) – String for the line style, see <a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D">line style</a>.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setMarkerStyle">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setMarkerStyle</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setMarkerStyle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setMarkerStyle</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setMarkerStyle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set marker style.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>s</strong> (<em>str</em>) – String for the marker style, see <a class="reference external" href="https://matplotlib.org/api/markers_api.html">marker style</a>.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>s</strong> (<em>str</em>) – String for the marker style, see <a class="reference external" href="https://matplotlib.org/api/markers_api.html">marker style</a>.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setMarkerThickness">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setMarkerThickness</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setMarkerThickness" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setMarkerThickness</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setMarkerThickness" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the thickness of marker.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> (<em>float</em>) – Number for marker thickness.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>float</em>) – Number for marker thickness.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLineLabel">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setLineLabel</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLineLabel" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setLineLabel</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLineLabel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set label for current curve.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>s</strong> (<em>str</em>) – Label string which will be shown as legend.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>s</strong> (<em>str</em>) – Label string which will be shown as legend.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLineWidth">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setLineWidth</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLineWidth" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setLineWidth</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLineWidth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set line width for the current curve.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> (<em>float</em>) – Line width.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>float</em>) – Line width.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setMarkerSize">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setMarkerSize</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setMarkerSize" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setMarkerSize</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setMarkerSize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set marker size.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> (<em>float</em>) – Marker size.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>float</em>) – Marker size.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureAutoScale">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setFigureAutoScale</code><span class="sig-paren">(</span><em>f</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureAutoScale" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setFigureAutoScale</code><span class="sig-paren">(</span><em class="sig-param">f</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureAutoScale" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set xy limits as autoscale or not.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>f</strong> (<em>bool</em>) – Toggle for the autoscale.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>f</strong> (<em>bool</em>) – Toggle for the autoscale.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureTitle">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setFigureTitle</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureTitle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setFigureTitle</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureTitle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set figure title.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>s</strong> (<em>str</em>) – Title for the figure.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>s</strong> (<em>str</em>) – Title for the figure.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureXlabel">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setFigureXlabel</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureXlabel" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setFigureXlabel</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureXlabel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set xlabel string.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>s</strong> (<em>str</em>) – String for xlabel.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>s</strong> (<em>str</em>) – String for xlabel.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureYlabel">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setFigureYlabel</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureYlabel" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setFigureYlabel</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setFigureYlabel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set ylabel string.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>s</strong> (<em>str</em>) – String for ylabel.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>s</strong> (<em>str</em>) – String for ylabel.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setXLimitMin">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setXLimitMin</code><span class="sig-paren">(</span><em>x=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setXLimitMin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setXLimitMin</code><span class="sig-paren">(</span><em class="sig-param">x=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setXLimitMin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set minimum of xlimit.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> (<em>float</em>) – Minimum of xlimit.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>float</em>) – Minimum of xlimit.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setXLimitMax">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setXLimitMax</code><span class="sig-paren">(</span><em>x=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setXLimitMax" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setXLimitMax</code><span class="sig-paren">(</span><em class="sig-param">x=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setXLimitMax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set maximum of xlimit.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> (<em>float</em>) – Maximum of xlimit.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>float</em>) – Maximum of xlimit.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYLimitMin">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setYLimitMin</code><span class="sig-paren">(</span><em>y=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYLimitMin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setYLimitMin</code><span class="sig-paren">(</span><em class="sig-param">y=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYLimitMin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set minimum of ylimit.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>float</em>) – Minimum of ylimit.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>y</strong> (<em>float</em>) – Minimum of ylimit.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYLimitMax">
-<code class="descclassname">MatplotlibCurveWidget.</code><code class="descname">setYLimitMax</code><span class="sig-paren">(</span><em>y=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYLimitMax" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">MatplotlibCurveWidget.</code><code class="sig-name descname">setYLimitMax</code><span class="sig-paren">(</span><em class="sig-param">y=None</em><span class="sig-paren">)</span><a class="headerlink" href="#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYLimitMax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set maximum of ylimit.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>float</em>) – Maximum of ylimit.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>y</strong> (<em>float</em>) – Maximum of ylimit.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -715,7 +609,7 @@ see <a class="reference external" href="https://matplotlib.org/api/_as_gen/matpl
     <p>
         &copy; Copyright 2018-2019, Tong Zhang &lt;zhangt@frib.msu.edu&gt;
       <span class="lastupdated">
-        Last updated on Mar 15, 2019.
+        Last updated on Oct 08, 2019.
       </span>
 
     </p>
