@@ -1016,6 +1016,9 @@ class MatplotlibCurveWidget(BasePlotWidget):
                             "Tools", menu)
         fitting_action = QAction(QIcon(QPixmap(":/tools/fitting.png")),
                                  "Fitting", menu)
+        export_data_action = QAction(QIcon(QPixmap(":/tools/export.png")),
+                                "Export Data", menu)
+
         menu.addAction(config_action)
         menu.addAction(export_action)
         menu.addAction(import_action)
@@ -1023,6 +1026,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         menu.addSeparator()
         menu.addAction(tb_action)
         menu.addAction(fitting_action)
+        menu.addAction(export_data_action)
 
         menu.setStyleSheet('QMenu {margin: 2px;}')
 
@@ -1032,8 +1036,34 @@ class MatplotlibCurveWidget(BasePlotWidget):
         reset_action.triggered.connect(self.on_reset_config)
         tb_action.triggered.connect(self.show_mpl_tools)
         fitting_action.triggered.connect(self.on_fitting_data)
+        export_data_action.triggered.connect(self.on_export_data)
 
         menu.exec_(self.mapToGlobal(e.pos()))
+
+    def on_export_data(self):
+        if self.widget_type != 'image':
+            QMessageBox.warning(self, "Export Data",
+                    "This testing feature is only for imagewidget now, other widgets will be supported soon.",
+                    QMessageBox.Ok)
+            return
+
+        filepath, _ = QFileDialog.getSaveFileName(self,
+                "Export Data",
+                "./{}-data.json".format(self.widget_type),
+                "JSON Files (*.json)")
+        if not filepath:
+            return
+        try:
+            self.export_data(filepath)
+        except:
+            QMessageBox.warning(self, "Warning",
+                                "Cannot export data to {}".format(filepath),
+                                QMessageBox.Ok)
+        else:
+            QMessageBox.information(self, "Information",
+                                    "Successfully export data to {}".format(filepath),
+                                    QMessageBox.Ok)
+
 
     def on_fitting_data(self):
         """Fitting data.

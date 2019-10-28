@@ -300,6 +300,19 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
         """
         self.update_image(np.ones(self.getXData().shape) * np.nan)
 
+    def export_data(self, filepath):
+        # temp
+        import json
+        zdata = self.get_data()
+        xdata = self.getXData()
+        ydata = self.getYData()
+        d = {'array': zdata.tolist(),
+             'shape': zdata.shape,
+             'x': xdata.tolist(),
+             'y': ydata.tolist()}
+        with open(filepath, 'w') as fp:
+            json.dump(d, fp, indent=2)
+
 
 if __name__ == "__main__":
     from PyQt5.QtWidgets import QApplication
