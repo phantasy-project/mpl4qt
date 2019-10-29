@@ -236,7 +236,7 @@ def set_font(obj, font):
     """
     obj.set_size(font.pointSizeF())
     obj.set_family(font.family())
-    obj.set_weight(FONT_WEIGHT_Q2M[font.weight()])
+    obj.set_weight(FONT_WEIGHT_Q2M.get(font.weight(), 100))
     if font.stretch() == 0:
         font.setStretch(100)
     obj.set_stretch(FONT_STRETCH_Q2M[font.stretch()])
