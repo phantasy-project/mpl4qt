@@ -198,7 +198,7 @@ class MToolbar(QToolBar):
         self.pos_lbl = QLabel(self)
         self.pos_lbl.setSizePolicy(
             QSizePolicy.MinimumExpanding, QSizePolicy.Preferred)
-        self.pos_lbl.setToolTip("Pointed (x, y) coordinate")
+        self.pos_lbl.setToolTip("Pointed Cartesian coordinate")
         self.pos_lbl.setStyleSheet("""
             QLabel {
                 font-family: monospace;
