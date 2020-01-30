@@ -1,3 +1,8 @@
+2.6.3
+  * Update tooltip of point coordinate.
+  * Fix font weight conversion error.
+  * Add heat view from image widget, retain colormap.
+
 2.6.2
   * Fix clim cannot be calculated when data has nan for Imagewidget.
   * Add 'Fitting' action to context menu.
