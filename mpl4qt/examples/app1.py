@@ -4,7 +4,7 @@
 from mpl4qt.examples.ui_app1 import Ui_Form
 
 from PyQt5.QtWidgets import QWidget
-from PyQt5.QtCore import pyqtSignal, pyqtSlot
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import QVariant
 
 import numpy as np
@@ -13,6 +13,7 @@ import numpy as np
 class RandomCurveWidget(Ui_Form, QWidget):
 
     yDataChanged = pyqtSignal(QVariant)
+    addCurveSignal = pyqtSignal(QVariant, QVariant)
 
     def __init__(self,):
         super(self.__class__, self).__init__()
@@ -24,7 +25,10 @@ class RandomCurveWidget(Ui_Form, QWidget):
         self.yDataChanged.connect(self.matplotlibcurveWidget.setYData)
         self.pushButton.clicked.connect(self.update_ydata)
 
-    @pyqtSlot()
+        # add curve
+        self.add_curve_btn.clicked.connect(self.add_curve)
+        self.addCurveSignal.connect(self.matplotlibcurveWidget.add_curve)
+
     def update_ydata(self):
         """Set xy data for the curve figure.
         """
@@ -32,6 +36,10 @@ class RandomCurveWidget(Ui_Form, QWidget):
         y = np.sin(x) * (1 + np.random.randn() * np.random.random(x.shape))
         self.yDataChanged.emit(y)
 
+    def add_curve(self):
+        x = self.matplotlibcurveWidget.getXData()
+        y = np.sin(x) * (1 + np.random.randn() * np.random.random(x.shape))
+        self.addCurveSignal.emit(x, y)
 
 def run():
     import sys

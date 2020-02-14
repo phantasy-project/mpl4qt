@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>743</width>
-    <height>647</height>
+    <width>1027</width>
+    <height>919</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2">
-   <item row="0" column="0">
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
     <widget class="QLabel" name="label">
      <property name="font">
       <font>
@@ -31,22 +31,54 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item>
     <widget class="MatplotlibCurveWidget" name="matplotlibcurveWidget"/>
    </item>
-   <item row="2" column="0">
+   <item>
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
       <widget class="QLabel" name="label_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>1</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>Line Width</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="pushButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Update</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>1</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Update Y Data</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
       <widget class="QDoubleSpinBox" name="doubleSpinBox">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -65,36 +97,45 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Update Y Data</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QPushButton" name="pushButton">
+     <item row="2" column="1">
+      <widget class="QPushButton" name="add_curve_btn">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Update</string>
+        <string>Add Curve</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>1</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Add a New Curve with Random Noise</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QSpinBox" name="line_id_sbox"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>Line ID</string>
        </property>
       </widget>
      </item>
     </layout>
    </item>
   </layout>
-  <zorder>label</zorder>
-  <zorder>matplotlibcurveWidget</zorder>
-  <zorder>pushButton</zorder>
-  <zorder>label_2</zorder>
-  <zorder>doubleSpinBox</zorder>
-  <zorder>label_3</zorder>
-  <zorder>label_2</zorder>
  </widget>
  <customwidgets>
   <customwidget>
@@ -112,12 +153,28 @@
    <slot>setLineWidth(double)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>530</x>
-     <y>617</y>
+     <x>1014</x>
+     <y>796</y>
     </hint>
     <hint type="destinationlabel">
      <x>473</x>
      <y>297</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>line_id_sbox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>matplotlibcurveWidget</receiver>
+   <slot>setLineID(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>394</x>
+     <y>738</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>406</x>
+     <y>675</y>
     </hint>
    </hints>
   </connection>
