@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting Started &mdash; mpl4qt 2.6.2 documentation</title>
+  <title>Getting Started &mdash; mpl4qt 2.6.3 documentation</title>
   
 
   
@@ -21,10 +21,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                2.6.2
+                2.6.3
               </div>
             
           
@@ -99,6 +99,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#inspect-matplotlibcurvewidget">Inspect MatplotlibCurveWidget</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#edit-signal-slot">Edit Signal/Slot</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#implement-additional-features">Implement Additional Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extended">Extended</a></li>
 </ul>
 </li>
 </ul>
@@ -285,7 +286,7 @@ fundamental ones is to update the curve, e.g. the <em>Update</em> should be
 used as the trigger for curve updating, every clicking, here, the curve
 would be updated with a new sine curve with random noise.</p>
 <p>The slot
-<a class="reference internal" href="dev.html#mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYData" title="mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setYData"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setYData()</span></code></a> could
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">setYData()</span></code> could
 be used to update the y data of the curve, generally, connecting with
 a PyQt signal to this slot will make this happen. However, before writing
 some code to the generated Python module, one thing should keep in mind,
@@ -344,7 +345,7 @@ which renders the UI, then extend within the new class:</p>
 <span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">pyqtSignal</span><span class="p">,</span> <span class="n">pyqtSlot</span>
 <span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">QVariant</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
 <span class="k">class</span> <span class="nc">RandomCurveWidget</span><span class="p">(</span><span class="n">Ui_Form</span><span class="p">,</span> <span class="n">QWidget</span><span class="p">):</span>
@@ -394,6 +395,135 @@ defined slot <code class="docutils literal notranslate"><span class="pre">update
 updating curve, and change the figure property when needed, e.g. check
 <em>Auto Scale</em> on and off (see below), to see the what happen.</p>
 <a class="reference internal image-reference" href="../_images/update.gif"><img alt="../_images/update.gif" class="align-center" src="../_images/update.gif" style="width: 500px;" /></a>
+</div>
+<div class="section" id="extended">
+<h3>Extended<a class="headerlink" href="#extended" title="Permalink to this headline">¶</a></h3>
+<p><em>matplotlibcurveWidget</em> also supports multiple curves visualization by the slot
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">add_curve()</span></code>.
+Currently, multiple curves are managed by line ID, the first curve is of line
+ID 0, the second one is of line ID 1, and so on. Every time <cite>add_curve</cite>, the
+current line ID will be set of the new added one, so switching line ID is
+required to do the data updating for other lines, by
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">setLineID()</span></code> slot.</p>
+<a class="reference internal image-reference" href="../_images/app1-extended.png"><img alt="../_images/app1-extended.png" class="align-center" src="../_images/app1-extended.png" style="width: 500px;" /></a>
+<p>Below is an extended version of <code class="docutils literal notranslate"><span class="pre">app1.py</span></code>, which supports more operations.</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">mpl4qt.examples.ui_app1</span> <span class="kn">import</span> <span class="n">Ui_Form</span>
+
+<span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="kn">import</span> <span class="n">QWidget</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">pyqtSignal</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">QVariant</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="k">class</span> <span class="nc">RandomCurveWidget</span><span class="p">(</span><span class="n">Ui_Form</span><span class="p">,</span> <span class="n">QWidget</span><span class="p">):</span>
+
+    <span class="n">yDataChanged</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="n">QVariant</span><span class="p">)</span>
+    <span class="n">addCurveSignal</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="n">QVariant</span><span class="p">,</span> <span class="n">QVariant</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="c1"># UI</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># update_ydata</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yDataChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matplotlibcurveWidget</span><span class="o">.</span><span class="n">setYData</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_ydata</span><span class="p">)</span>
+
+        <span class="c1"># add curve</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_curve_btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">add_curve</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addCurveSignal</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matplotlibcurveWidget</span><span class="o">.</span><span class="n">add_curve</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">update_ydata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set xy data for the curve figure.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matplotlibcurveWidget</span><span class="o">.</span><span class="n">getXData</span><span class="p">()</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">()</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yDataChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_curve</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matplotlibcurveWidget</span><span class="o">.</span><span class="n">getXData</span><span class="p">()</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">()</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addCurveSignal</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="kn">import</span> <span class="n">QApplication</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">RandomCurveWidget</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;MatplotlibCurveWidget Example App&quot;</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">run</span><span class="p">()</span>
+</pre></div>
+</td></tr></table></div>
+<p>The full working example could be downloaded from
+<a class="reference download internal" download="" href="../_downloads/40c484eae2643a0565c1744871ffa117/app1.tar.bz2"><code class="xref download docutils literal notranslate"><span class="pre">here</span></code></a>.</p>
 <p class="rubric">Footnotes</p>
 <dl class="footnote brackets">
 <dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
@@ -426,7 +556,7 @@ updating curve, and change the figure property when needed, e.g. check
     <p>
         &copy; Copyright 2018-2019, Tong Zhang &lt;zhangt@frib.msu.edu&gt;
       <span class="lastupdated">
-        Last updated on Oct 08, 2019.
+        Last updated on Feb 14, 2020.
       </span>
 
     </p>
