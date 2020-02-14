@@ -206,6 +206,22 @@ updating curve, and change the figure property when needed, e.g. check
     :align: center
     :width: 500px
 
+Extended
+^^^^^^^^
+*matplotlibcurveWidget* also supports multiple curves visualization by the slot
+:py:meth:`~mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.add_curve`.
+Currently, multiple curves are managed by line ID, the first curve is of line
+ID 0, the second one is of line ID 1, and so on. Every time `add_curve`, the
+current line ID will be set of the new added one, so switching line ID is
+required to do the data updating for other lines, by
+:py:meth:`~mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLineID` slot.
+
+Below is an extended version of ``app1.py``, which supports more operations.
+
+.. literalinclude:: ../snippets/app1-extended.py
+    :language: python
+    :linenos:
+
 
 .. only:: html
 
