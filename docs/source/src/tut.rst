@@ -216,11 +216,19 @@ current line ID will be set of the new added one, so switching line ID is
 required to do the data updating for other lines, by
 :py:meth:`~mpl4qt.widgets.mplcurvewidget.MatplotlibCurveWidget.setLineID` slot.
 
+.. image:: ../images/app1-extended.png
+    :align: center
+    :width: 500px
+
 Below is an extended version of ``app1.py``, which supports more operations.
 
 .. literalinclude:: ../snippets/app1-extended.py
     :language: python
     :linenos:
+
+
+The full working example could be downloaded from
+:download:`here <../snippets/app1.tar.bz2>`.
 
 
 .. only:: html
