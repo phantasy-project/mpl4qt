@@ -311,7 +311,7 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
         """
         all_annotes = []
         ax = self.axes
-        fmt0 = "${0:.2g}\pm{1:.2g}$"
+        fmt0 = "${0:.3g}\pm{1:.3g}$"
         fmt = kws.get('fmt', fmt0)
         hw = self._bar_width / 2.0
         eta = 2.0
