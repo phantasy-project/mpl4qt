@@ -994,6 +994,9 @@ class MatplotlibConfigBarPanel(MatplotlibConfigPanel):
     # bar width
     figBarWidthChanged = pyqtSignal(float)
 
+    # annotation config
+    figAnnoteConfigChanged = pyqtSignal()
+
     def __init__(self, parent=None):
         super(MatplotlibConfigBarPanel, self).__init__(parent)
         self._post_setup()
@@ -1046,8 +1049,51 @@ class MatplotlibConfigBarPanel(MatplotlibConfigPanel):
         self.bar_width_lineEdit.textChanged.connect(self.set_bar_width)
         self.figBarWidthChanged[float].connect(self.parent.setBarWidth)
 
+        # annotation config
+        self.annote_fontsize_sbox.valueChanged.connect(self.set_annote_fontsize)
+        self.annote_angle_dsbox.valueChanged.connect(self.set_annote_angle)
+        self.annote_bbox_alpha_dsbox.valueChanged.connect(self.set_annote_bbox_alpha)
+        self.annote_fmt_lineEdit.returnPressed.connect(self.set_annote_fmt)
+        self.figAnnoteConfigChanged.connect(self.parent.on_annote_config_changed)
+        # reset annote fmt
+        self.reset_annote_fmt_btn.clicked.connect(self.on_reset_annote_fmt)
+
         # set config
         self._set_barchart_config_panel(self.parent.get_barchart_config())
+
+    @pyqtSlot()
+    def on_reset_annote_fmt(self):
+        self.annote_fmt_lineEdit.setText(self.parent._default_annote_fmt)
+        self.annote_fmt_lineEdit.returnPressed.emit()
+
+    @pyqtSlot(int)
+    def set_annote_fontsize(self, i):
+        """Update annotation font size.
+        """
+        self.parent.update_annote_config_dict(size=i)
+        self.figAnnoteConfigChanged.emit()
+
+    @pyqtSlot(float)
+    def set_annote_angle(self, x):
+        """Update annotation rotation angle in degree.
+        """
+        self.parent.update_annote_config_dict(rotation=x)
+        self.figAnnoteConfigChanged.emit()
+
+    @pyqtSlot(float)
+    def set_annote_bbox_alpha(self, x):
+        """Update annotation bbox alpha.
+        """
+        bbox_dict = self.parent._annote_config_dict.get('bbox_dict')
+        bbox_dict.update({'alpha': x})
+        self.parent.update_annote_config_dict(bbox_dict=bbox_dict)
+        self.figAnnoteConfigChanged.emit()
+
+    @pyqtSlot()
+    def set_annote_fmt(self):
+        self.parent.update_annote_config_dict(
+                fmt=self.annote_fmt_lineEdit.text())
+        self.figAnnoteConfigChanged.emit()
 
     @pyqtSlot('QString')
     def set_ebline_width(self, s):
@@ -1098,6 +1144,8 @@ class MatplotlibConfigBarPanel(MatplotlibConfigPanel):
         bar_alpha = config.get('bar_alpha')
         bar_width = config.get('bar_width')
         label = config.get('label')
+        annote_config = config.get('annote_config')
+
         eb_opacity = 100 if eb_alpha is None else eb_alpha * 100
         bar_opacity = 100 if bar_alpha is None else bar_alpha * 100
 
@@ -1117,6 +1165,16 @@ class MatplotlibConfigBarPanel(MatplotlibConfigPanel):
         self.bar_opacity_slider.setValue(bar_opacity)
         # bar width
         self.bar_width_lineEdit.setText('{}'.format(bar_width))
+
+        # annotations
+        fontsize = annote_config['size']
+        angle = annote_config['rotation']
+        bbox_alpha = annote_config['bbox_dict']['alpha']
+        fmt = annote_config['fmt']
+        self.annote_fontsize_sbox.setValue(fontsize)
+        self.annote_angle_dsbox.setValue(angle)
+        self.annote_bbox_alpha_dsbox.setValue(bbox_alpha)
+        self.annote_fmt_lineEdit.setText(fmt)
 
 
 def select_font(obj, current_font, options=None):

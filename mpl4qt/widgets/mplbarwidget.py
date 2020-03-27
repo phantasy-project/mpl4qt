@@ -56,6 +56,18 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
         self._label = "_barchart"
         # annotations
         self._all_annotes = None
+        self._default_annote_fmt = "${0:.3g}\pm{1:.3g}$"
+        self._annote_config_dict = {
+            "fmt": self._default_annote_fmt,
+            "size": 10, # fontsize
+            "rotation": 0.0, # rotation
+            "bbox_dict": {
+                "boxstyle": "round,pad=0.2",
+                "fc": "w", "ec": "0.5", "lw": 1, "alpha": 1.0},
+        }
+
+    def update_annote_config_dict(self, **kws):
+        self._annote_config_dict.update(**kws)
 
     def init_figure(self, x=None, y=None, yerr=None):
         if x is None:
@@ -94,12 +106,15 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
         bar_width = rect.get_width()  # float
         # label
         label = self._bars.get_label()
+        # annote
+        annote_config = self._annote_config_dict
 
         return {'label': label, 'eb_color': eb_color,
                 'eb_alpha': eb_alpha, 'eb_lw': eb_lw,
                 'eb_ls': self._eb_line_style,
                 'bar_color': bar_color, 'bar_alpha': bar_alpha,
-                'bar_width': bar_width}
+                'bar_width': bar_width,
+                'annote_config': annote_config}
 
     def getLabel(self):
         return self._label
@@ -306,13 +321,30 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
         self.clear_figure()
         self.init_figure(x, y, yerr)
 
+    @pyqtSlot()
+    def on_annote_config_changed(self):
+        """Annotations style config is changed.
+        """
+        self.clear_annote()
+        self.annotate_bar(**self._annote_config_dict)
+        self.update_figure()
+
     def annotate_bar(self, **kws):
         """Annotate with height value on top/bottom of bar.
+
+        Keyword Arguments
+        -----------------
+        fmt : str
+            Data (average and error) format, default is "${0:.3g}\pm{1:.3g}$".
+
+        See Also
+        --------
+        clear_annote : Clear all annotations.
         """
         all_annotes = []
         ax = self.axes
-        fmt0 = "${0:.3g}\pm{1:.3g}$"
-        fmt = kws.get('fmt', fmt0)
+        fmt = kws.pop('fmt')
+        bbox_dict = kws.pop('bbox_dict')
         hw = self._bar_width / 2.0
         eta = 2.0
         for ix, iy, iyerr in zip(self._x_data, self._y_data, self._yerr_data):
@@ -322,7 +354,8 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
                 tp_y = iy - iyerr * eta
             tp = (ix - hw, tp_y)
             anote = ax.annotate(s=fmt.format(iy, iyerr), xy=(ix, iy),
-                                xytext=tp)
+                                xytext=tp, bbox=dict(**bbox_dict),
+                                **kws)
             all_annotes.append(anote)
         self._all_annotes = all_annotes
 
