@@ -30,6 +30,8 @@ from PyQt5.QtGui import QColor
 from mpl4qt.widgets.mplconfig import MatplotlibConfigBarPanel
 from mpl4qt.widgets.mplcurvewidget import MatplotlibCurveWidget
 
+from matplotlib.text import Text
+
 
 class MatplotlibBarWidget(MatplotlibCurveWidget):
     """MatplotlibBarWidget(MatplotlibCurveWidget)
@@ -65,6 +67,7 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
                 "boxstyle": "round,pad=0.2",
                 "fc": "w", "ec": "0.5", "lw": 1, "alpha": 1.0},
         }
+        self._pk_text = None
 
     def update_annote_config_dict(self, **kws):
         self._annote_config_dict.update(**kws)
@@ -346,7 +349,7 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
         fmt = kws.pop('fmt')
         bbox_dict = kws.pop('bbox_dict')
         hw = self._bar_width / 2.0
-        eta = 2.0
+        eta = 0.0
         for ix, iy, iyerr in zip(self._x_data, self._y_data, self._yerr_data):
             if iy >= 0:
                 tp_y = iy + iyerr * eta
@@ -356,12 +359,31 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
             anote = ax.annotate(s=fmt.format(iy, iyerr), xy=(ix, iy),
                                 xytext=tp, bbox=dict(**bbox_dict),
                                 **kws)
+            anote.set_picker(True)
             all_annotes.append(anote)
         self._all_annotes = all_annotes
 
     def clear_annote(self):
         if self._all_annotes is not None:
             [o.remove() for o in self._all_annotes if o in self.axes.texts]
+
+    def on_pick(self, evt):
+        if isinstance(evt.artist, Text):
+            obj = evt.artist
+            pos = evt.mouseevent.xdata, evt.mouseevent.ydata
+            self._pk_text = (obj, pos)
+
+    def on_release(self, evt):
+        if not evt.inaxes or self._pk_text is None:
+            return
+        n_x, n_y = evt.xdata, evt.ydata
+        obj, pos = self._pk_text
+        o_x, o_y = obj.get_position()
+        x = o_x + n_x - pos[0]
+        y = o_y + n_y - pos[1]
+        obj.set_position((x, y))
+        self.update_figure()
+        self._pk_text = None
 
 
 def adjust_bar(patches, eblines, x, y, yerr, bar_width):
