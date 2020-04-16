@@ -1,3 +1,8 @@
+2.6.4
+  * Update examples and tutorials documentation page.
+  * Add support to configure bar chart widget annotation style.
+  * Add support to reposition bar chart annotation with mouse.
+
 2.6.3
   * Update tooltip of point coordinate.
   * Fix font weight conversion error.
