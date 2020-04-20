@@ -12,8 +12,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(985, 891)
+        Dialog.resize(589, 482)
         self.gridLayout = QtWidgets.QGridLayout(Dialog)
+        self.gridLayout.setContentsMargins(6, 6, 6, 6)
+        self.gridLayout.setSpacing(4)
         self.gridLayout.setObjectName("gridLayout")
         self.label = QtWidgets.QLabel(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
@@ -54,6 +56,7 @@ class Ui_Dialog(object):
         self.gridLayout.addWidget(self.smooth_method_cbb, 0, 1, 1, 2)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setContentsMargins(-1, -1, 0, -1)
+        self.horizontalLayout.setSpacing(4)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.label_3 = QtWidgets.QLabel(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum,
