@@ -3,8 +3,6 @@
 
 import os
 import sys
-import platform
-import shutil
 
 from PyQt5.QtCore import QProcessEnvironment
 from PyQt5.QtCore import QProcess
@@ -14,13 +12,20 @@ curdir = os.path.dirname(__file__)
 
 
 def locate_designer():
+    # PyQt5 > PySide2
     exec_name = 'designer'
-    if platform.system() == "Windows":
-        if 'PyQt5' in sys.modules:
+    if 'PyQt5' in sys.modules:
+        try:
+            from pyqt5_tools.entrypoints import pyqt5designer
+        except ImportError:
+            print("Please install pyqt5-tools if does not work.")
+            if 'PySide2' in sys.modules:
+                exec_name = 'pyside2-designer'
+        else:
             exec_name = 'pyqt5designer'
-        elif 'PySide2' in sys.modules:
-            exec_name = 'pyside2-designer'
-    return shutil.which(exec_name)
+    elif 'PySide2' in sys.modules:
+        exec_name = 'pyside2-designer'
+    return exec_name
 
 
 def main():
@@ -30,7 +35,21 @@ def main():
 
     designer = QProcess()
     designer.setProcessEnvironment(env)
-    designer.start(locate_designer(), sys.argv[1:])
+
+    exec_name = locate_designer()
+
+    if exec_name in 'designer':
+        # linux default
+        designer_bin = QLibraryInfo.location(QLibraryInfo.BinariesPath)
+    elif exec_name == 'pyside2-designer':
+        import PySide2
+        designer_bin = PySide2.__path__[0]
+    elif exec_name == 'pyqt5designer':
+        import pyqt5_tools
+        designer_bin = os.path.join(pyqt5_tools.__path__[0], "Qt", "bin")
+
+    designer_path = os.path.join(designer_bin, 'designer')
+    designer.start(designer_path, sys.argv[1:])
     designer.waitForFinished(-1)
 
     sys.exit(designer.exitCode())
