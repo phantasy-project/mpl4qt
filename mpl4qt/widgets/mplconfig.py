@@ -548,16 +548,18 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         """Set the button with giving qcolor.
         """
         btn.setStyleSheet("QToolButton {\n"
-                          "  margin: 1px;\n"
-                          "  border-color: rgb(0, 85, 0);\n"
-                          "  border-style: outset;\n"
-                          "  border-radius: 3px;\n"
-                          "  border-width: 1px;\n"
-                          "  color: black;\n"
+                          "  margin: 4px;\n"
+                          "  border-color: #F8F7F6;\n"
+                          "  border-radius: 2px;\n"
                           "  background-color: %s;\n" % color.name() + "}\n"
-                                                                       "QToolButton:pressed {\n"
-                                                                       "  background-color: white;\n"
-                                                                       "}")
+                          "QToolButton:pressed {\n"
+                          "  background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #DADBDE, stop:1 #F6F7FA);\n"
+                          "}\n"
+                          "QToolButton:hover {\n"
+                          "  border: 2px solid black;\n"
+                          "  background-color: qradialgradient(cx:0.5, cy:0.5, radius:1, fx:0.5, fy:0.5, stop:0 %s, stop:1 #F6F7FA);\n" % color.name() +
+                          "}")
+        btn.setToolTip(color.name().upper())
 
     @pyqtSlot(int)
     def set_fig_grid(self, state):
