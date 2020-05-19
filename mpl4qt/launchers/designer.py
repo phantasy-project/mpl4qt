@@ -3,6 +3,7 @@
 
 import os
 import sys
+import platform
 
 from PyQt5.QtCore import QProcessEnvironment
 from PyQt5.QtCore import QProcess
@@ -33,9 +34,6 @@ def main():
     plugin_path = os.path.abspath(os.path.join(curdir, '..', 'plugins'))
     env.insert('PYQTDESIGNERPATH', plugin_path)
 
-    designer = QProcess()
-    designer.setProcessEnvironment(env)
-
     exec_name = locate_designer()
 
     if exec_name in 'designer':
@@ -47,6 +45,15 @@ def main():
     elif exec_name == 'pyqt5designer':
         import pyqt5_tools
         designer_bin = os.path.join(pyqt5_tools.__path__[0], "Qt", "bin")
+        if platform.system() == "Windows":
+            env.insert('QT_DEBUG_PLUGINS', '1')
+            env.insert('QT_PLUGIN_PATH',
+                       os.path.join(pyqt5_tools.__path__[0], "Qt", "plugins"))
+            env.insert('PYTHONPATH', ';'.join(sys.path) + ';' +
+                       os.path.join(plugin_path, '../..'))
+
+    designer = QProcess()
+    designer.setProcessEnvironment(env)
 
     designer_path = os.path.join(designer_bin, 'designer')
     designer.start(designer_path, sys.argv[1:])
