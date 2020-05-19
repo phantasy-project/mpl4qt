@@ -90,7 +90,7 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
         self._eb_line_visible = True
 
     def init_figure(self):
-        x = np.linspace(-4, 4, 50)
+        x = np.linspace(-4, 4, 100)
         y = np.sin(10 * x) / x
         xerr = np.std((np.random.random(100) - 0.5)/500 + 1)
         yerr = np.std((np.random.random(100) - 0.5)/1 + 1)

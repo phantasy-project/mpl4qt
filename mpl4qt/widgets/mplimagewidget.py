@@ -181,8 +181,8 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
         self._lines = []
 
         # image
-        x, y = np.meshgrid(np.linspace(-3, 3, 40),
-                           np.linspace(-3, 3, 40))
+        x, y = np.meshgrid(np.linspace(-3, 3, 80),
+                           np.linspace(-3, 3, 80))
         z = func_peaks(x, y)
 
         # color range

@@ -173,7 +173,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     def init_figure(self):
         # initial xy data and line
-        self._x_data = x = np.linspace(-4, 4, 100)
+        self._x_data = x = np.linspace(-4, 4, 300)
         self._y_data = y = np.sin(10 * x) / x
         self._lines = self.axes.plot(x, y, 'r-')
 
