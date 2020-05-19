@@ -1018,6 +1018,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
                                  "Fitting", menu)
         export_data_action = QAction(QIcon(QPixmap(":/tools/export.png")),
                                 "Export Data", menu)
+        info_action = QAction(QIcon(QPixmap(":/tools/info.png")),
+                                "About", menu)
 
         menu.addAction(config_action)
         menu.addAction(export_action)
@@ -1027,6 +1029,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
         menu.addAction(tb_action)
         menu.addAction(fitting_action)
         menu.addAction(export_data_action)
+        menu.addSeparator()
+        menu.addAction(info_action)
 
         menu.setStyleSheet('QMenu {margin: 2px;}')
 
@@ -1037,6 +1041,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         tb_action.triggered.connect(self.show_mpl_tools)
         fitting_action.triggered.connect(self.on_fitting_data)
         export_data_action.triggered.connect(self.on_export_data)
+        info_action.triggered.connect(self.on_info)
 
         menu.exec_(self.mapToGlobal(e.pos()))
 
@@ -1105,6 +1110,11 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def on_zoom_roi_changed(self, xlim, ylim):
         print("Zoomed Rect ROI: ", xlim, ylim)
         self.zoom_roi_changed.emit(xlim, ylim)
+
+    @pyqtSlot()
+    def on_info(self):
+        from ._info import get_pkg_info
+        QMessageBox.about(self, 'About mpl4qt', get_pkg_info())
 
     def on_config(self):
         config_panel = MatplotlibConfigPanel(self)

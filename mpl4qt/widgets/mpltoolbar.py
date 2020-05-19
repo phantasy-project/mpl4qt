@@ -15,6 +15,7 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QAction
 from PyQt5.QtWidgets import QLabel
+from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtWidgets import QToolBar
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT
@@ -180,6 +181,10 @@ class MToolbar(QToolBar):
         cross_act.setCheckable(True)
         cross_act.setToolTip("Cross ruler for locating coordinate")
 
+        # info tool
+        info_act = QAction(QIcon(QPixmap(":/tools/info.png")), "About", self)
+        info_act.setToolTip("About")
+
         # exit tool
         exit_act = QAction(QIcon(QPixmap(":/tools/exit.png")), "Exit", self)
         exit_act.setToolTip("Exit toolbar")
@@ -199,12 +204,6 @@ class MToolbar(QToolBar):
         self.pos_lbl.setSizePolicy(
             QSizePolicy.MinimumExpanding, QSizePolicy.Preferred)
         self.pos_lbl.setToolTip("Pointed Cartesian coordinate")
-        self.pos_lbl.setStyleSheet("""
-            QLabel {
-                font-family: monospace;
-                color: black;
-            }
-            """)
         self.parent.xyposUpdated.connect(self.on_update_xypos)
 
         # widgets in toolbar
@@ -232,6 +231,7 @@ class MToolbar(QToolBar):
         self.addWidget(self.pos_lbl)
         self.addSeparator()
 
+        self.addAction(info_act)
         self.addAction(exit_act)
 
         # events
@@ -249,6 +249,7 @@ class MToolbar(QToolBar):
         repos_act.triggered.connect(self.repos_toolbar)
         exit_act.triggered.connect(self.close)
         dock_act.triggered.connect(self.dock)
+        info_act.triggered.connect(self.about_info)
 
         #
         self.floatable_changed.emit(self._floating)
@@ -273,11 +274,11 @@ class MToolbar(QToolBar):
         if len(coord) == 2:
             x, y = coord
             self.pos_lbl.setText(
-                "<html><sup>(x,y)</sup>({0:<.4g},{1:<.4g})</html>".format(x, y))
+                "<html><pre><sup>(x,y)</sup>({0:<.4g},{1:<.4g})</pre></html>".format(x, y))
         elif len(coord) == 3:
             x, y, z = coord
             self.pos_lbl.setText(
-                "<html><sup>(x,y,z)</sup>({0:<.4g},{1:<.4g},{2:<.4g})</html>".format(x, y, z))
+                "<html><pre><sup>(x,y,z)</sup>({0:<.4g},{1:<.4g},{2:<.4g})</pre></html>".format(x, y, z))
 
     @pyqtSlot()
     def zoom(self):
@@ -329,6 +330,11 @@ class MToolbar(QToolBar):
         else:
             self.selector.disconnect()
             self.selector.selectedIndicesReady.disconnect()
+
+    @pyqtSlot()
+    def about_info(self):
+        from ._info import get_pkg_info
+        QMessageBox.about(self, 'About mpl4qt', get_pkg_info())
 
     @pyqtSlot()
     def dock(self):
