@@ -228,7 +228,7 @@ def set_font(obj, font):
     """Update the font of *obj* with *font*.
 
     Parameters
-    ---------- 100i
+    ----------
     obj :
         Matplotlib object could be set font.
     font : QFont
