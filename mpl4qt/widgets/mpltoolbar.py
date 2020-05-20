@@ -183,11 +183,12 @@ class MToolbar(QToolBar):
         cross_act.setCheckable(True)
         cross_act.setToolTip("Coordinate locator")
 
-        cross_clear_act = QAction(QIcon(QPixmap(":/tools/clear.png")), "Clear", self)
-        cross_clear_act.setToolTip("Clear cross point rulers.")
-        cross_clear_act.triggered.connect(self.on_clear_crosses)
+        cross_hide_act = QAction(QIcon(QPixmap(":/tools/visibility_off.png")), "Hide", self)
+        cross_hide_act.setToolTip("Click to hide cross point rulers.")
+        cross_hide_act.triggered.connect(self.on_hide_crosses)
         menu = QMenu(self)
-        menu.addAction(cross_clear_act)
+        menu.setToolTipsVisible(True)
+        menu.addAction(cross_hide_act)
         cross_act.setMenu(menu)
 
         # info tool
@@ -269,8 +270,24 @@ class MToolbar(QToolBar):
             self.setStyleSheet(TBSTY_NONFLOATING.format(self._bgcolor))
 
     @pyqtSlot()
-    def on_clear_crosses(self):
-        print("Clear all crosses.")
+    def on_hide_crosses(self):
+        # hide
+        if self.parent._vline is None:
+            return
+        o = self.sender()
+        show_flag = o.text() == "Show"
+        self.parent.set_visible_hvlines(show_flag)
+        if show_flag:
+            icon = QIcon(QPixmap(":/tools/visibility_off.png"))
+            lbl = 'Hide'
+            tp = "Click to show cross point rulers."
+        else:
+            icon = QIcon(QPixmap(":/tools/visibility.png"))
+            lbl = 'Show'
+            tp = "Click to hide cross point rulers."
+        o.setIcon(icon)
+        o.setText(lbl)
+        o.setToolTip(tp)
 
     @pyqtSlot()
     def cross_ruler(self):
