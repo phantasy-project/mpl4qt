@@ -139,7 +139,7 @@ class BasePlotWidget(QWidget):
     def init_prop_settings(self):
         """Initial settings for properties.
         """
-        ## font:
+        ## fonts:
         # xy labels
         lbl = self.axes.xaxis.label
         self._fig_xylabel_font = mfont_to_qfont(lbl.get_fontproperties())
@@ -176,6 +176,12 @@ class BasePlotWidget(QWidget):
         # xylimits
         self._xlim_min, self._xlim_max = self.axes.get_xlim()
         self._ylim_min, self._ylim_max = self.axes.get_ylim()
+
+        # ticklabels visibility
+        xtklbl = self.axes.get_xticklabels()[0]
+        ytklbl = self.axes.get_yticklabels()[0]
+        self._fig_xticks_visible = xtklbl.get_visible()
+        self._fig_yticks_visible = ytklbl.get_visible()
 
     def on_scroll(self, e):
         if e.inaxes is None:
@@ -254,6 +260,14 @@ class BasePlotWidget(QWidget):
             color = self.sys_bg_color.getRgbF()
         all_lbls = self.axes.get_xticklabels() + self.axes.get_yticklabels()
         [lbl.set_color(color) for lbl in all_lbls]
+
+    def set_ticks_visible(self, visible, xoy="x"):
+        if getattr(self, "_fig_{}ticks_visible".format(xoy)):
+            tklbls = getattr(self.axes, 'get_{}ticklabels'.format(xoy))()
+            # !hiding cannot be reversed!
+            [i.set_visible(visible) for i in tklbls]
+        else:
+            getattr(self.axes, '{}axis'.format(xoy)).reset_ticks()
 
     def set_xticks(self, tks):
         self.axes.set_xticks(tks)
@@ -725,6 +739,47 @@ class BasePlotWidget(QWidget):
             self.update_figure()
 
     figureYLimitMax = pyqtProperty(float, getYLimitMax, setYLimitMax)
+
+    def getFigureXTicksVisible(self):
+        return self._fig_xticks_visible
+
+    @pyqtSlot(bool)
+    def setFigureXTicksVisible(self, f):
+        """Set xticklabels visible or not.
+
+        Parameters
+        ----------
+        f : bool
+            Object visible (True) or not (False).
+        """
+        self.set_ticks_visible(f, "x")
+        self.update_figure()
+        self._fig_xticks_visible = f
+
+    figureXTicksVisible = pyqtProperty(bool, getFigureXTicksVisible,
+                                       setFigureXTicksVisible)
+
+    def getFigureYTicksVisible(self):
+        return self._fig_yticks_visible
+
+    @pyqtSlot(bool)
+    def setFigureYTicksVisible(self, f):
+        """Set yticklabels visible or not.
+
+        Parameters
+        ----------
+        f : bool
+            Object visible (True) or not (False).
+        """
+        self.set_ticks_visible(f, "y")
+        self.update_figure()
+        self._fig_yticks_visible = f
+
+    figureYTicksVisible = pyqtProperty(bool, getFigureYTicksVisible,
+                                       setFigureYTicksVisible)
+
+
+
 
     def _get_default_xlim(self):
         """limit range from data
