@@ -11,10 +11,12 @@ from PyQt5.QtCore import QVariant
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtGui import QIcon
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QAction
 from PyQt5.QtWidgets import QLabel
+from PyQt5.QtWidgets import QMenu
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtWidgets import QToolBar
@@ -179,7 +181,14 @@ class MToolbar(QToolBar):
         # cross ruler tool
         cross_act = QAction(QIcon(QPixmap(":/tools/cross.png")), "Cross ruler", self)
         cross_act.setCheckable(True)
-        cross_act.setToolTip("Cross ruler for locating coordinate")
+        cross_act.setToolTip("Coordinate locator")
+
+        cross_clear_act = QAction(QIcon(QPixmap(":/tools/clear.png")), "Clear", self)
+        cross_clear_act.setToolTip("Clear cross point rulers.")
+        cross_clear_act.triggered.connect(self.on_clear_crosses)
+        menu = QMenu(self)
+        menu.addAction(cross_clear_act)
+        cross_act.setMenu(menu)
 
         # info tool
         info_act = QAction(QIcon(QPixmap(":/tools/info.png")), "About", self)
@@ -260,9 +269,16 @@ class MToolbar(QToolBar):
             self.setStyleSheet(TBSTY_NONFLOATING.format(self._bgcolor))
 
     @pyqtSlot()
+    def on_clear_crosses(self):
+        print("Clear all crosses.")
+
+    @pyqtSlot()
     def cross_ruler(self):
         # parent widget defines how to draw cross ruler.
-        self.parent._ruler_on = self.sender().isChecked()
+        is_checked = self.sender().isChecked()
+        self.parent._ruler_on = is_checked
+        if is_checked:
+            QGuiApplication.setOverrideCursor(Qt.CrossCursor)
 
     @pyqtSlot()
     def repos_toolbar(self):

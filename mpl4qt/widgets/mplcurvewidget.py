@@ -33,6 +33,7 @@ from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtGui import QIcon
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QAction
@@ -1249,6 +1250,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         if e.button == 1 and self._ruler_on:
             self.set_visible_hvlines(True)
             self.draw_hvlines(e.xdata, e.ydata)
+            QGuiApplication.restoreOverrideCursor()
         elif e.button == 2:
             self._pan_x0 = e.xdata
             self._pan_y0 = e.ydata
