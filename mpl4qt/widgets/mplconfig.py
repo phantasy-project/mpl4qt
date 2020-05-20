@@ -307,6 +307,9 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
 
         self.adjustSize()
 
+        # quick fix title font, size will be overriden.
+        self.parent.setFigureTitleFont(self.parent.getFigureTitleFont())
+
     def post_init_ui(self):
         self.figWidth_lineEdit.setText(str(self.parent.getFigureWidth()))
         self.figHeight_lineEdit.setText(str(self.parent.getFigureHeight()))
