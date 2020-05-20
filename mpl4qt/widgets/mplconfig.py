@@ -159,6 +159,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.bgcolorChanged.connect(self.parent.setFigureBgColor)
         self.bkgd_color_btn.clicked.connect(self.set_bkgdcolor)
         self.set_btn_color(self.bkgd_color_btn, self.parent.getFigureBgColor())
+
         # borders color
         self.figBorderColorChanged.connect(partial(self.set_btn_color, self.border_color_btn))
         self.figBorderColorChanged.connect(self.parent.setFigureBorderColor)
@@ -171,10 +172,11 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         # borders ls
         self.border_ls_cbb.currentTextChanged.connect(self.parent.setFigureBorderLineStyle)
         self.border_ls_cbb.setCurrentText(self.parent.getFigureBorderLineStyle())
-        # boders hide?
+        # borders hide?
         self.border_hide_chkbox.toggled.connect(
             lambda f: self.parent.setFigureBorderVisible(not f))
         self.border_hide_chkbox.setChecked(not self.parent.getFigureBorderVisible())
+
         # aspect ratio
         self.figAspect_cbb.currentTextChanged.connect(
             lambda s: self.parent.setFigureAspectRatio(s.lower()))
@@ -195,7 +197,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         # line opacity
         self.figLineAlphaChanged[float].connect(self.parent.setLineAlpha)
 
-        ## xy label
+        ## xy labels
         self.figXYlabelFontChanged[QFont].connect(
             self.parent.setFigureXYlabelFont)
         self.fig_xlabel_lineEdit.textChanged.connect(
@@ -214,7 +216,12 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.figXYticksColorChanged.connect(self.parent.setFigureXYticksColor)
         self.ticks_color_btn.clicked.connect(self.set_xyticks_color)
         self.set_btn_color(self.ticks_color_btn, self.parent.getFigureXYticksColor())
-        #
+        # visibility
+        self.ticks_hide_chkbox.toggled.connect(
+            lambda f: self.parent.setFigureXTicksVisible(not f))
+        self.ticks_hide_chkbox.toggled.connect(
+            lambda f: self.parent.setFigureYTicksVisible(not f))
+        self.ticks_hide_chkbox.setChecked(not self.parent.getFigureXTicksVisible())
 
         self.mticks_chkbox.stateChanged.connect(self.set_fig_mticks)
         self.figMTicksChanged[bool].connect(self.parent.setFigureMTicksToggle)
