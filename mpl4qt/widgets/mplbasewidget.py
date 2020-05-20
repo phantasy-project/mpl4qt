@@ -112,11 +112,12 @@ class BasePlotWidget(QWidget):
         self._handlers = {}
 
         # hvlines
-        self._hline = None  # h-ruler
-        self._vline = None  # v-ruler
-        self._cpoint = None  # cross-point of h,v rulers
+        self._hline = None        # h-ruler
+        self._vline = None        # v-ruler
+        self._cpoint = None       # cross-point of h,v rulers
         self._cpoint_text = None  # coord annote of cross-point
-        self._ruler_on = False  # default is not enabled
+        self._ruler_on = False    # default is not enabled
+        self._visible_hvlines = True  # default visibility
 
         # pan
         self._pan_on = False

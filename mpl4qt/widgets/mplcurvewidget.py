@@ -1248,7 +1248,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         if e.inaxes is None:
             return
         if e.button == 1 and self._ruler_on:
-            self.set_visible_hvlines(True)
+            self.set_visible_hvlines(self._visible_hvlines)
             self.draw_hvlines(e.xdata, e.ydata)
             QGuiApplication.restoreOverrideCursor()
         elif e.button == 2:
@@ -1312,6 +1312,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def set_visible_hvlines(self, flag=True):
         """Set hvlines visible (*flag* is True) or invisible (*flag* is False).
         """
+        self._visible_hvlines = flag
         for o in (self._hline, self._vline, self._cpoint, self._cpoint_text):
             if o is not None:
                 o.set_visible(flag)
