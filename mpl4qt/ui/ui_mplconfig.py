@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(700, 323)
+        Dialog.resize(847, 355)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -23,7 +23,6 @@ class Ui_Dialog(object):
         Dialog.setStyleSheet(
             " QToolButton#grid_color_btn, #ticks_color_btn, #border_color_btn, #bkgd_color_btn, #bar_color_btn, #ebline_color_btn, #line_color_btn, #mk_facecolor_btn, #mk_edgecolor_btn, #eb_line_color_btn, #eb_mk_facecolor_btn, #eb_mk_edgecolor_btn {\n"
             "    border-color: #F8F7F6;\n"
-            "    /*border-style: outset;*/\n"
             "    border-radius: 1px;\n"
             "    background-color: #888A85;\n"
             "    margin: 4px;\n"
