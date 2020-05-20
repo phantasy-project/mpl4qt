@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(847, 355)
+        Dialog.resize(839, 355)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -514,6 +514,7 @@ class Ui_Dialog(object):
         self.label_60.setObjectName("label_60")
         self.horizontalLayout_18.addWidget(self.label_60)
         self.xticks_rotation_sbox = QtWidgets.QDoubleSpinBox(self.style_tab)
+        self.xticks_rotation_sbox.setToolTip("")
         self.xticks_rotation_sbox.setDecimals(1)
         self.xticks_rotation_sbox.setMinimum(0.0)
         self.xticks_rotation_sbox.setMaximum(360.0)
@@ -540,16 +541,6 @@ class Ui_Dialog(object):
         self.yticks_rotation_sbox.setObjectName("yticks_rotation_sbox")
         self.horizontalLayout_18.addWidget(self.yticks_rotation_sbox)
         self.gridLayout_7.addLayout(self.horizontalLayout_18, 3, 1, 1, 1)
-        self.label_37 = QtWidgets.QLabel(self.style_tab)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_37.setFont(font)
-        self.label_37.setAlignment(QtCore.Qt.AlignRight
-                                   | QtCore.Qt.AlignTrailing
-                                   | QtCore.Qt.AlignVCenter)
-        self.label_37.setObjectName("label_37")
-        self.gridLayout_7.addWidget(self.label_37, 4, 0, 1, 1)
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_5.setSpacing(4)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
@@ -741,6 +732,9 @@ class Ui_Dialog(object):
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_7.setSpacing(4)
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
+        self.ticks_hide_chkbox = QtWidgets.QCheckBox(self.style_tab)
+        self.ticks_hide_chkbox.setObjectName("ticks_hide_chkbox")
+        self.horizontalLayout_7.addWidget(self.ticks_hide_chkbox)
         self.mticks_chkbox = QtWidgets.QCheckBox(self.style_tab)
         self.mticks_chkbox.setObjectName("mticks_chkbox")
         self.horizontalLayout_7.addWidget(self.mticks_chkbox)
@@ -806,16 +800,6 @@ class Ui_Dialog(object):
                                    | QtCore.Qt.AlignVCenter)
         self.label_66.setObjectName("label_66")
         self.gridLayout_7.addWidget(self.label_66, 6, 0, 1, 1)
-        self.label_7 = QtWidgets.QLabel(self.style_tab)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_7.setFont(font)
-        self.label_7.setAlignment(QtCore.Qt.AlignRight
-                                  | QtCore.Qt.AlignTrailing
-                                  | QtCore.Qt.AlignVCenter)
-        self.label_7.setObjectName("label_7")
-        self.gridLayout_7.addWidget(self.label_7, 2, 0, 1, 1)
         self.label_6 = QtWidgets.QLabel(self.style_tab)
         font = QtGui.QFont()
         font.setBold(True)
@@ -906,6 +890,16 @@ class Ui_Dialog(object):
                                             QtWidgets.QSizePolicy.Minimum,
                                             QtWidgets.QSizePolicy.Expanding)
         self.gridLayout_7.addItem(spacerItem5, 7, 1, 1, 1)
+        self.label_7 = QtWidgets.QLabel(self.style_tab)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_7.setFont(font)
+        self.label_7.setAlignment(QtCore.Qt.AlignRight
+                                  | QtCore.Qt.AlignTrailing
+                                  | QtCore.Qt.AlignVCenter)
+        self.label_7.setObjectName("label_7")
+        self.gridLayout_7.addWidget(self.label_7, 2, 0, 3, 1)
         self.config_tabWidget.addTab(self.style_tab, "")
         self.curve_tab = QtWidgets.QWidget()
         self.curve_tab.setObjectName("curve_tab")
@@ -2189,7 +2183,6 @@ class Ui_Dialog(object):
         self.xticks_rotation_sbox.setSuffix(_translate("Dialog", " degree"))
         self.label_61.setText(_translate("Dialog", "Y"))
         self.yticks_rotation_sbox.setSuffix(_translate("Dialog", " degree"))
-        self.label_37.setText(_translate("Dialog", "Tick Format"))
         self.label_12.setText(_translate("Dialog", "Width"))
         self.figWidth_lineEdit.setText(_translate("Dialog", "4"))
         self.figWidth_lineEdit.setPlaceholderText(_translate("Dialog", "4"))
@@ -2197,19 +2190,20 @@ class Ui_Dialog(object):
         self.figHeight_lineEdit.setText(_translate("Dialog", "3"))
         self.figHeight_lineEdit.setPlaceholderText(_translate("Dialog", "3"))
         self.label_15.setText(_translate("Dialog", "DPI"))
+        self.figDpi_lineEdit.setToolTip(
+            _translate("Dialog", "Set dot per inch property of the figure."))
         self.figDpi_lineEdit.setText(_translate("Dialog", "120"))
         self.figDpi_lineEdit.setPlaceholderText(_translate("Dialog", "120"))
         self.label_69.setText(_translate("Dialog", "Ratio"))
+        self.figAspect_cbb.setToolTip(
+            _translate("Dialog", "Set figure aspect."))
         self.figAspect_cbb.setItemText(0, _translate("Dialog", "Auto"))
         self.figAspect_cbb.setItemText(1, _translate("Dialog", "Equal"))
         self.label_62.setText(_translate("Dialog", "Background"))
         self.label_63.setText(_translate("Dialog", "Ticks"))
         self.label_64.setText(_translate("Dialog", "Grid"))
         self.enable_mathtext_chkbox.setToolTip(
-            _translate(
-                "Dialog",
-                "<html><head/><body><p>Show ticks as math style</p></body></html>"
-            ))
+            _translate("Dialog", "Show tick labels as math style."))
         self.enable_mathtext_chkbox.setText(_translate("Dialog", "Math Text"))
         self.label_38.setText(_translate("Dialog", "X"))
         self.xtick_formatter_cbb.setItemText(0, _translate("Dialog", "Auto"))
@@ -2217,7 +2211,7 @@ class Ui_Dialog(object):
         self.xtick_funcformatter_lineEdit.setToolTip(
             _translate(
                 "Dialog",
-                "<html><head/><body><p>Input c string format specifier, e.g. %1d, %.2f, %.2e, 10^%n, etc.</p></body></html>"
+                "Input c string format specifier, e.g. %1d, %.2f, %.2e, 10^%n, etc."
             ))
         self.xtick_funcformatter_lineEdit.setText(_translate("Dialog", "%g"))
         self.label_39.setText(_translate("Dialog", "Y"))
@@ -2226,28 +2220,44 @@ class Ui_Dialog(object):
         self.ytick_funcformatter_lineEdit.setToolTip(
             _translate(
                 "Dialog",
-                "<html><head/><body><p>Input c string format specifier, e.g. %1d, %.2f, %.3e, 10^%n, etc.</p></body></html>"
+                "Input c string format specifier, e.g. %1d, %.2f, %.3e, 10^%n, etc."
             ))
         self.ytick_funcformatter_lineEdit.setText(_translate("Dialog", "%g"))
         self.label_17.setText(_translate("Dialog", "Colors"))
+        self.ticks_hide_chkbox.setToolTip(
+            _translate("Dialog", "Check to hide ticks."))
+        self.ticks_hide_chkbox.setText(_translate("Dialog", "Hide"))
+        self.mticks_chkbox.setToolTip(
+            _translate("Dialog", "Check to show minor ticks."))
         self.mticks_chkbox.setText(_translate("Dialog", "Minor On"))
         self.xy_ticks_sample_lbl.setText(_translate("Dialog", "Sample"))
-        self.xy_ticks_font_btn.setToolTip(_translate("Dialog", "Change font."))
+        self.xy_ticks_font_btn.setToolTip(
+            _translate("Dialog", "Change tick labels font."))
         self.xy_ticks_font_btn.setText(_translate("Dialog", "Choose Font"))
         self.tightLayout_chkbox.setText(_translate("Dialog", "Tight"))
+        self.gridon_chkbox.setToolTip(
+            _translate("Dialog", "Check to show grid."))
         self.gridon_chkbox.setText(_translate("Dialog", "Grid On"))
         self.label_66.setText(_translate("Dialog", "Boundaries"))
-        self.label_7.setText(_translate("Dialog", "Ticks"))
         self.label_6.setText(_translate("Dialog", "Layout"))
+        self.border_hide_chkbox.setToolTip(
+            _translate("Dialog", "Check to hide figure border."))
         self.border_hide_chkbox.setText(_translate("Dialog", "Hide"))
         self.label_67.setText(_translate("Dialog", "Color"))
+        self.border_color_btn.setToolTip(
+            _translate("Dialog", "Change border color."))
         self.label_65.setText(_translate("Dialog", "Width"))
+        self.border_lw_sbox.setToolTip(
+            _translate("Dialog", "Change border width."))
         self.label_68.setText(_translate("Dialog", "Style"))
+        self.border_ls_cbb.setToolTip(
+            _translate("Dialog", "Change border line style."))
         self.border_ls_cbb.setItemText(0, _translate("Dialog", "solid"))
         self.border_ls_cbb.setItemText(1, _translate("Dialog", "dashed"))
         self.border_ls_cbb.setItemText(2, _translate("Dialog", "dashdot"))
         self.border_ls_cbb.setItemText(3, _translate("Dialog", "dotted"))
         self.label_16.setText(_translate("Dialog", "Figure Size"))
+        self.label_7.setText(_translate("Dialog", "Ticks"))
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.style_tab),
             _translate("Dialog", "Style"))
