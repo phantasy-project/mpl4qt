@@ -78,27 +78,6 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     figYminLimitChanged = pyqtSignal(float)
     figYmaxLimitChanged = pyqtSignal(float)
 
-    # line id
-    figLineIDChanged = pyqtSignal(int)
-
-    # line
-    figLineColorChanged = pyqtSignal(QColor)
-    figLineWidthChanged = pyqtSignal(float)
-    figLineVisibleChanged = pyqtSignal(bool)
-
-    # marker
-    figMkeColorChanged = pyqtSignal(QColor)
-    figMkfColorChanged = pyqtSignal(QColor)
-    figMkStyleChanged = pyqtSignal('QString')
-    figMkSizeChanged = pyqtSignal(float)
-    figMkWidthChanged = pyqtSignal(float)
-
-    # legend
-    figLegendToggleChanged = pyqtSignal(bool)
-
-    # color opacity
-    figLineAlphaChanged = pyqtSignal(float)
-
     # border color
     figBorderColorChanged = pyqtSignal(QColor)
     figBorderLineWidthChanged = pyqtSignal(float)
@@ -112,7 +91,8 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.setWindowTitle("Figure Configurations")
 
         # hide eb_tab and image_tab
-        for tab in (self.eb_tab, self.image_tab, self.barchart_tab):
+        for tab in (self.curve_tab, self.eb_tab,
+                    self.image_tab, self.barchart_tab):
             self.config_tabWidget.setTabEnabled(
                 self.config_tabWidget.indexOf(tab), False)
 
@@ -122,18 +102,11 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
                 QDoubleValidator(FIG_HEIGHT_MIN, FIG_HEIGHT_MAX, 6, self))
         self.figDpi_lineEdit.setValidator(
                 QDoubleValidator(FIG_DPI_MIN, FIG_DPI_MAX, 6, self))
-        self.line_width_lineEdit.setValidator(
-                QDoubleValidator(LINE_WIDTH_MIN, LINE_WIDTH_MAX, 1, self))
-        self.mk_size_lineEdit.setValidator(
-                QDoubleValidator(MK_SIZE_MIN, MK_SIZE_MAX, 1, self))
-        self.mk_width_lineEdit.setValidator(
-                QDoubleValidator(MK_WIDTH_MIN, MK_WIDTH_MAX, 1, self))
         for o in (self.xmin_lineEdit, self.xmax_lineEdit,
                   self.ymin_lineEdit, self.ymax_lineEdit,):
             o.setValidator(QDoubleValidator(self))
 
         # events
-
         self.figWidth_lineEdit.textChanged.connect(self.set_figsize_width)
         self.figHeight_lineEdit.textChanged.connect(self.set_figsize_height)
         self.figDpi_lineEdit.textChanged.connect(self.set_figdpi)
@@ -147,12 +120,6 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.xmax_lineEdit.textChanged.connect(self.set_xlimit_max)
         self.ymin_lineEdit.textChanged.connect(self.set_ylimit_min)
         self.ymax_lineEdit.textChanged.connect(self.set_ylimit_max)
-        # line visible
-        self.line_hide_chkbox.stateChanged.connect(self.set_line_visible)
-        # opacity
-        self.opacity_val_slider.valueChanged.connect(
-            lambda i: self.opacity_val_lbl.setText('{}%'.format(i)))
-        self.opacity_val_slider.valueChanged.connect(self.set_line_opacity)
 
         # background color
         self.bgcolorChanged.connect(partial(self.set_btn_color, self.bkgd_color_btn))
@@ -192,10 +159,6 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.figXmaxLimitChanged[float].connect(self.parent.setXLimitMax)
         self.figYminLimitChanged[float].connect(self.parent.setYLimitMin)
         self.figYmaxLimitChanged[float].connect(self.parent.setYLimitMax)
-        self.figLineVisibleChanged[bool].connect(self.parent.setLineVisible)
-
-        # line opacity
-        self.figLineAlphaChanged[float].connect(self.parent.setLineAlpha)
 
         ## xy labels
         self.figXYlabelFontChanged[QFont].connect(
@@ -254,50 +217,8 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.gridon_chkbox.stateChanged.connect(self.set_fig_grid)
         self.grid_color_btn.clicked.connect(self.set_grid_color)
 
-        # legend
-        self.legend_on_chkbox.stateChanged.connect(self.set_legend)
-        self.figLegendToggleChanged[bool].connect(self.parent.setLegendToggle)
-        self.legend_loc_cbb.currentIndexChanged[int].connect(
-            self.parent.setLegendLocation)
-
-        # line id, put after post_init_ui, elliminate cb initialization disturb
-        self.figLineIDChanged[int].connect(self.parent.setLineID)
-        self.line_id_cbb.currentIndexChanged[int].connect(
-            self.on_change_line_id)
-
         # post UI update
         self.post_init_ui()
-
-        # line color
-        self.figLineColorChanged.connect(partial(self.set_btn_color, self.line_color_btn))
-        self.figLineColorChanged.connect(self.parent.setLineColor)
-        self.line_color_btn.clicked.connect(self.set_line_color)
-        # line style
-        self.line_style_cbb.currentTextChanged['QString'].connect(
-            self.parent.setLineStyle)
-        # line width
-        self.line_width_lineEdit.textChanged.connect(self.set_line_width)
-        self.figLineWidthChanged[float].connect(self.parent.setLineWidth)
-        # line label
-        self.line_label_lineEdit.textChanged.connect(self.parent.setLineLabel)
-        # marker size
-        self.mk_size_lineEdit.textChanged.connect(self.set_marker_size)
-        self.figMkSizeChanged[float].connect(self.parent.setMarkerSize)
-        # marker thickness
-        self.mk_width_lineEdit.textChanged.connect(self.set_marker_thickness)
-        self.figMkWidthChanged[float].connect(self.parent.setMarkerThickness)
-        # marker style
-        self.figMkStyleChanged['QString'].connect(self.parent.setMarkerStyle)
-        self.mk_style_cbb.currentIndexChanged[int].connect(
-            self.set_marker_style)
-        # marker: mec
-        self.figMkeColorChanged.connect(partial(self.set_btn_color, self.mk_edgecolor_btn))
-        self.figMkeColorChanged.connect(self.parent.setMkEdgeColor)
-        self.mk_edgecolor_btn.clicked.connect(self.set_mec)
-        # marker: mfc
-        self.figMkfColorChanged.connect(partial(self.set_btn_color, self.mk_facecolor_btn))
-        self.figMkfColorChanged.connect(self.parent.setMkFaceColor)
-        self.mk_facecolor_btn.clicked.connect(self.set_mfc)
 
         # axis scale
         self.xaxis_scale_cbb.currentIndexChanged.connect(
@@ -326,47 +247,23 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.gridon_chkbox.setChecked(self.parent.getFigureGridToggle())
         self.set_btn_color(self.grid_color_btn, self.parent.getFigureGridColor())
         self.set_xylimits()
-        # marker style
-        self.mk_style_cbb.clear()
-        self.mk_style_cbb.addItems(MK_CODE)
 
-        # line id combo
-        if not self.parent.get_all_curves():  # is []
-            self.config_tabWidget.setTabEnabled(
-                self.config_tabWidget.indexOf(self.curve_tab), False)
-        else:
-            self.line_id_cbb.clear()
-            self.line_id_cbb.addItems(
-                [str(i) for i, l in enumerate(self.parent.get_all_curves())])
-            try:
-                current_line_id = self.parent.get_all_curves().index(self.parent._line)
-            except AttributeError:  # no _line attribute
-                current_line_id = 0
-            self.line_id_cbb.setCurrentIndex(current_line_id)
-            self.on_change_line_id(current_line_id)
+        # axis scale
+        self.xaxis_scale_cbb.clear()
+        self.xaxis_scale_cbb.addItems(SCALE_STY_KEYS)
+        self.xaxis_scale_cbb.setCurrentIndex(
+            SCALE_STY_VALS.index(self.parent.getFigureXScale()))
+        self.yaxis_scale_cbb.clear()
+        self.yaxis_scale_cbb.addItems(SCALE_STY_KEYS)
+        self.yaxis_scale_cbb.setCurrentIndex(
+            SCALE_STY_VALS.index(self.parent.getFigureYScale()))
 
-            # legend on/off
-            self.legend_on_chkbox.setChecked(self.parent.getLegendToggle())
-            self.legend_loc_cbb.setCurrentIndex(self.parent.getLegendLocation())
-            # line visible
-            self.line_hide_chkbox.setChecked(not self.parent.getLineVisible())
-
-            # axis scale
-            self.xaxis_scale_cbb.clear()
-            self.xaxis_scale_cbb.addItems(SCALE_STY_KEYS)
-            self.xaxis_scale_cbb.setCurrentIndex(
-                SCALE_STY_VALS.index(self.parent.getFigureXScale()))
-            self.yaxis_scale_cbb.clear()
-            self.yaxis_scale_cbb.addItems(SCALE_STY_KEYS)
-            self.yaxis_scale_cbb.setCurrentIndex(
-                SCALE_STY_VALS.index(self.parent.getFigureYScale()))
-
-            self.__set_cfmt()
-            # tick formatter
-            self.xtick_formatter_cbb.setCurrentText(self.parent._fig_xtick_formatter_type)
-            self.ytick_formatter_cbb.setCurrentText(self.parent._fig_ytick_formatter_type)
-            # apply math text to ticks indicator
-            self.enable_mathtext_chkbox.setChecked(self.parent._fig_ticks_enable_mathtext)
+        self.__set_cfmt()
+        # tick formatter
+        self.xtick_formatter_cbb.setCurrentText(self.parent._fig_xtick_formatter_type)
+        self.ytick_formatter_cbb.setCurrentText(self.parent._fig_ytick_formatter_type)
+        # apply math text to ticks indicator
+        self.enable_mathtext_chkbox.setChecked(self.parent._fig_ticks_enable_mathtext)
 
     def __set_cfmt(self):
         # set cfmt for ticks custom formatter
@@ -435,65 +332,9 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.ymin_lineEdit.setText('{0:3g}'.format(ymin))
         self.ymax_lineEdit.setText('{0:3g}'.format(ymax))
 
-    @pyqtSlot(int)
-    def set_marker_style(self, i):
-        self.figMkStyleChanged.emit(MK_SYMBOL[i])
-
-    @pyqtSlot(int)
-    def on_change_line_id(self, i):
-        self.figLineIDChanged.emit(i)
-        self._set_line_config_panel(self.parent.get_line_config())
-
-    def _set_line_config_panel(self, config):
-        """Update line config panel when line id is switched."""
-        # colors
-        self.set_btn_color(self.line_color_btn, QColor(mplcolor2hex(config['c'])))
-        self.set_btn_color(self.mk_edgecolor_btn, QColor(mplcolor2hex(config['mec'])))
-        self.set_btn_color(self.mk_facecolor_btn, QColor(mplcolor2hex(config['mfc'])))
-        # line style
-        self.line_style_cbb.setCurrentText(LINE_STY_DICT[config['ls']])
-        # marker style
-        self.mk_style_cbb.setCurrentIndex(MK_SYMBOL.index(config['marker']))
-        # line width
-        self.line_width_lineEdit.setText('{}'.format(config['lw']))
-        # marker size
-        self.mk_size_lineEdit.setText('{}'.format(config['ms']))
-        # mew
-        self.mk_width_lineEdit.setText('{}'.format(config['mew']))
-        # line label
-        self.line_label_lineEdit.setText('{}'.format(config['label']))
-        # line visible
-        self.line_hide_chkbox.setChecked(not config['visible'])
-        # opacity: alpha = opacity / 100
-        alpha = config['alpha']
-        opacity = 100 if alpha is None else alpha * 100
-        self.opacity_val_slider.setValue(opacity)
-
-    @pyqtSlot(int)
-    def set_line_opacity(self, i):
-        self.figLineAlphaChanged.emit(i / 100.0)
-
-    @pyqtSlot('QString')
-    def set_line_width(self, s):
-        if s == '': return
-        w = max(float(s), 0.05)
-        self.figLineWidthChanged.emit(w)
-
     @pyqtSlot(float)
     def set_border_lw(self, w):
         self.figBorderLineWidthChanged.emit(w)
-
-    @pyqtSlot('QString')
-    def set_marker_size(self, s):
-        if s == '': return
-        w = max(float(s), 1.0)
-        self.figMkSizeChanged.emit(w)
-
-    @pyqtSlot('QString')
-    def set_marker_thickness(self, s):
-        if s == '': return
-        w = max(float(s), 0.1)
-        self.figMkWidthChanged.emit(w)
 
     @pyqtSlot('QString')
     def set_xlimit_min(self, s):
@@ -530,24 +371,6 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
             self.figYmaxLimitChanged.emit(float(s))
 
     @pyqtSlot()
-    def set_line_color(self):
-        color = QColorDialog.getColor()
-        if color.isValid():
-            self.figLineColorChanged.emit(color)
-
-    @pyqtSlot()
-    def set_mec(self):
-        color = QColorDialog.getColor()
-        if color.isValid():
-            self.figMkeColorChanged.emit(color)
-
-    @pyqtSlot()
-    def set_mfc(self):
-        color = QColorDialog.getColor()
-        if color.isValid():
-            self.figMkfColorChanged.emit(color)
-
-    @pyqtSlot()
     def set_grid_color(self):
         color = QColorDialog.getColor()
         if color.isValid():
@@ -574,10 +397,6 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     @pyqtSlot(int)
     def set_fig_grid(self, state):
         self.figGridChanged.emit(state == Qt.Checked)
-
-    @pyqtSlot(int)
-    def set_legend(self, state):
-        self.figLegendToggleChanged.emit(state == Qt.Checked)
 
     @pyqtSlot(int)
     def set_fig_mticks(self, state):
@@ -668,15 +487,214 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     def set_fig_tightlayout(self, state):
         self.figTightLayoutChanged.emit(state == Qt.Checked)
 
-    @pyqtSlot(int)
-    def set_line_visible(self, state):
-        self.figLineVisibleChanged.emit(state == Qt.Unchecked)
-
     def sizeHint(self):
         return QSize(200, 100)
 
 
-class MatplotlibConfigErrorbarPanel(MatplotlibConfigPanel):
+class MatplotlibConfigCurvePanel(MatplotlibConfigPanel):
+
+    # line id
+    figLineIDChanged = pyqtSignal(int)
+
+    # line
+    figLineColorChanged = pyqtSignal(QColor)
+    figLineWidthChanged = pyqtSignal(float)
+    figLineVisibleChanged = pyqtSignal(bool)
+
+    # color opacity
+    figLineAlphaChanged = pyqtSignal(float)
+
+    # legend
+    figLegendToggleChanged = pyqtSignal(bool)
+
+    # marker
+    figMkeColorChanged = pyqtSignal(QColor)
+    figMkfColorChanged = pyqtSignal(QColor)
+    figMkStyleChanged = pyqtSignal('QString')
+    figMkSizeChanged = pyqtSignal(float)
+    figMkWidthChanged = pyqtSignal(float)
+
+    def __init__(self, parent=None):
+        super(MatplotlibConfigCurvePanel, self).__init__(parent)
+
+        # show curve_tab
+        self.config_tabWidget.setTabEnabled(
+            self.config_tabWidget.indexOf(self.curve_tab), True)
+
+        # line, mk
+        self.line_width_lineEdit.setValidator(
+                QDoubleValidator(LINE_WIDTH_MIN, LINE_WIDTH_MAX, 1, self))
+        self.mk_size_lineEdit.setValidator(
+                QDoubleValidator(MK_SIZE_MIN, MK_SIZE_MAX, 1, self))
+        self.mk_width_lineEdit.setValidator(
+                QDoubleValidator(MK_WIDTH_MIN, MK_WIDTH_MAX, 1, self))
+
+        # line visible
+        self.line_hide_chkbox.stateChanged.connect(self.set_line_visible)
+        # opacity
+        self.opacity_val_slider.valueChanged.connect(
+            lambda i: self.opacity_val_lbl.setText('{}%'.format(i)))
+        self.opacity_val_slider.valueChanged.connect(self.set_line_opacity)
+
+        #
+        self.figLineVisibleChanged[bool].connect(self.parent.setLineVisible)
+        # line opacity
+        self.figLineAlphaChanged[float].connect(self.parent.setLineAlpha)
+
+        # legend
+        self.legend_on_chkbox.stateChanged.connect(self.set_legend)
+        self.figLegendToggleChanged[bool].connect(self.parent.setLegendToggle)
+        self.legend_loc_cbb.currentIndexChanged[int].connect(
+            self.parent.setLegendLocation)
+
+        # line id, put after post_init_ui, elliminate cb initialization disturb
+        self.figLineIDChanged[int].connect(self.parent.setLineID)
+        self.line_id_cbb.currentIndexChanged[int].connect(
+            self.on_change_line_id)
+
+        self._post_init_ui()
+
+        # line color
+        self.figLineColorChanged.connect(partial(self.set_btn_color, self.line_color_btn))
+        self.figLineColorChanged.connect(self.parent.setLineColor)
+        self.line_color_btn.clicked.connect(self.set_line_color)
+        # line style
+        self.line_style_cbb.currentTextChanged['QString'].connect(
+            self.parent.setLineStyle)
+        # line width
+        self.line_width_lineEdit.textChanged.connect(self.set_line_width)
+        self.figLineWidthChanged[float].connect(self.parent.setLineWidth)
+        # line label
+        self.line_label_lineEdit.textChanged.connect(self.parent.setLineLabel)
+        # marker size
+        self.mk_size_lineEdit.textChanged.connect(self.set_marker_size)
+        self.figMkSizeChanged[float].connect(self.parent.setMarkerSize)
+        # marker thickness
+        self.mk_width_lineEdit.textChanged.connect(self.set_marker_thickness)
+        self.figMkWidthChanged[float].connect(self.parent.setMarkerThickness)
+        # marker style
+        self.figMkStyleChanged['QString'].connect(self.parent.setMarkerStyle)
+        self.mk_style_cbb.currentIndexChanged[int].connect(
+            self.set_marker_style)
+        # marker: mec
+        self.figMkeColorChanged.connect(partial(self.set_btn_color, self.mk_edgecolor_btn))
+        self.figMkeColorChanged.connect(self.parent.setMkEdgeColor)
+        self.mk_edgecolor_btn.clicked.connect(self.set_mec)
+        # marker: mfc
+        self.figMkfColorChanged.connect(partial(self.set_btn_color, self.mk_facecolor_btn))
+        self.figMkfColorChanged.connect(self.parent.setMkFaceColor)
+        self.mk_facecolor_btn.clicked.connect(self.set_mfc)
+
+    def _post_init_ui(self):
+        # marker style
+        self.mk_style_cbb.clear()
+        self.mk_style_cbb.addItems(MK_CODE)
+
+        # line id combo
+        if not self.parent.get_all_curves():  # is []
+            self.config_tabWidget.setTabEnabled(
+                self.config_tabWidget.indexOf(self.curve_tab), False)
+        else:
+            self.line_id_cbb.clear()
+            self.line_id_cbb.addItems(
+                [str(i) for i, l in enumerate(self.parent.get_all_curves())])
+            try:
+                current_line_id = self.parent.get_all_curves().index(self.parent._line)
+            except AttributeError:  # no _line attribute
+                current_line_id = 0
+            self.line_id_cbb.setCurrentIndex(current_line_id)
+            self.on_change_line_id(current_line_id)
+
+            # legend on/off
+            self.legend_on_chkbox.setChecked(self.parent.getLegendToggle())
+            self.legend_loc_cbb.setCurrentIndex(self.parent.getLegendLocation())
+            # line visible
+            self.line_hide_chkbox.setChecked(not self.parent.getLineVisible())
+
+    @pyqtSlot(int)
+    def set_marker_style(self, i):
+        self.figMkStyleChanged.emit(MK_SYMBOL[i])
+
+    @pyqtSlot(int)
+    def on_change_line_id(self, i):
+        self.figLineIDChanged.emit(i)
+        self._set_line_config_panel(self.parent.get_line_config())
+
+    def _set_line_config_panel(self, config):
+        """Update line config panel when line id is switched."""
+        # colors
+        self.set_btn_color(self.line_color_btn, QColor(mplcolor2hex(config['c'])))
+        self.set_btn_color(self.mk_edgecolor_btn, QColor(mplcolor2hex(config['mec'])))
+        self.set_btn_color(self.mk_facecolor_btn, QColor(mplcolor2hex(config['mfc'])))
+        # line style
+        self.line_style_cbb.setCurrentText(LINE_STY_DICT[config['ls']])
+        # marker style
+        self.mk_style_cbb.setCurrentIndex(MK_SYMBOL.index(config['marker']))
+        # line width
+        self.line_width_lineEdit.setText('{}'.format(config['lw']))
+        # marker size
+        self.mk_size_lineEdit.setText('{}'.format(config['ms']))
+        # mew
+        self.mk_width_lineEdit.setText('{}'.format(config['mew']))
+        # line label
+        self.line_label_lineEdit.setText('{}'.format(config['label']))
+        # line visible
+        self.line_hide_chkbox.setChecked(not config['visible'])
+        # opacity: alpha = opacity / 100
+        alpha = config['alpha']
+        opacity = 100 if alpha is None else alpha * 100
+        self.opacity_val_slider.setValue(opacity)
+
+    @pyqtSlot(int)
+    def set_line_opacity(self, i):
+        self.figLineAlphaChanged.emit(i / 100.0)
+
+    @pyqtSlot('QString')
+    def set_line_width(self, s):
+        if s == '': return
+        w = max(float(s), 0.05)
+        self.figLineWidthChanged.emit(w)
+
+    @pyqtSlot('QString')
+    def set_marker_size(self, s):
+        if s == '': return
+        w = max(float(s), 1.0)
+        self.figMkSizeChanged.emit(w)
+
+    @pyqtSlot('QString')
+    def set_marker_thickness(self, s):
+        if s == '': return
+        w = max(float(s), 0.1)
+        self.figMkWidthChanged.emit(w)
+
+    @pyqtSlot()
+    def set_line_color(self):
+        color = QColorDialog.getColor()
+        if color.isValid():
+            self.figLineColorChanged.emit(color)
+
+    @pyqtSlot()
+    def set_mec(self):
+        color = QColorDialog.getColor()
+        if color.isValid():
+            self.figMkeColorChanged.emit(color)
+
+    @pyqtSlot()
+    def set_mfc(self):
+        color = QColorDialog.getColor()
+        if color.isValid():
+            self.figMkfColorChanged.emit(color)
+
+    @pyqtSlot(int)
+    def set_legend(self, state):
+        self.figLegendToggleChanged.emit(state == Qt.Checked)
+
+    @pyqtSlot(int)
+    def set_line_visible(self, state):
+        self.figLineVisibleChanged.emit(state == Qt.Unchecked)
+
+
+class MatplotlibConfigErrorbarPanel(MatplotlibConfigCurvePanel):
     # eb line id
     figEbLineIDChanged = pyqtSignal(int)
 
