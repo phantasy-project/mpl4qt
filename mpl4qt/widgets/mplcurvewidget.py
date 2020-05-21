@@ -38,7 +38,6 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtWidgets import QMessageBox
 
-from mpl4qt.widgets.kbdhelpdialog import KbdHelpDialog
 from mpl4qt.widgets.mplbasewidget import BasePlotWidget
 from mpl4qt.widgets.utils import ALL_COLORMAPS
 from mpl4qt.widgets.utils import DEFAULT_MPL_SETTINGS
@@ -783,7 +782,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
                 o.set_visible(flag)
         self.update_figure()
 
-
     def dragEnterEvent(self, e):
         if e.mimeData().hasUrls():
             e.accept()
@@ -793,13 +791,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def dropEvent(self, e):
         path = e.mimeData().urls()[0].toLocalFile()
         self._import_mpl_settings(path)
-
-    def rotate_ticks(self, angle, axis):
-        """Rotate *axis* ticks by *angle* in degree.
-        """
-        lbls = getattr(self.axes, "get_{}ticklabels".format(axis))()
-        for o in lbls:
-            o.set_rotation(angle)
 
     def set_xlimit(self, *args):
         """Set xlimit with new limit, e.g. `set_xlimit(xmin, xmax)`.

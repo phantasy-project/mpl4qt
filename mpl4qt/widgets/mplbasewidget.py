@@ -500,6 +500,8 @@ class BasePlotWidget(QWidget):
             [i.set_visible(visible) for i in tklbls]
         else:
             getattr(self.axes, '{}axis'.format(xoy)).reset_ticks()
+            self.rotate_ticks(self._fig_xticks_angle, 'x')
+            self.rotate_ticks(self._fig_yticks_angle, 'y')
 
     def set_xticks(self, tks):
         self.axes.set_xticks(tks)
