@@ -783,46 +783,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
                 o.set_visible(flag)
         self.update_figure()
 
-    def process_keyshort_combo(self, k1, k2):
-        BasePlotWidget.process_keyshort_combo(self, k1, k2)
-        if k1 == 'a' and k2 == 'x':
-            # auto xscale
-            self.set_autoscale('x')
-        elif k1 == 'a' and k2 == 'y':
-            # auto yscale
-            self.set_autoscale('y')
-        elif k1 == 'shift' and k2 == '?':
-            # help msgbox
-            self.kbd_help()
-
-    def process_keyshort(self, k):
-        BasePlotWidget.process_keyshort(self, k)
-        if k == 'g':
-            # turn on/off grid
-            self.setFigureGridToggle(not self.getFigureGridToggle())
-        elif k == 'a' and self.widget_type != 'image':
-            # autoscale
-            self.set_autoscale()
-        elif k == 'm':
-            # turn on/off mticks
-            self.setFigureMTicksToggle(not self.getFigureMTicksToggle())
-        elif k == 't':
-            # turn on/off tightlayout
-            self.setTightLayoutToggle(not self.getTightLayoutToggle())
-        elif k == 'l':
-            # turn on/off legend
-            self.setLegendToggle(not self.getLegendToggle())
-        elif k == 'r':
-            # force refresh
-            self.force_update()
-        elif k == 's' and self.widget_type != 'image':
-            # circulate y-axis scale type
-            self.setFigureYScale(
-                cycle_list_next(SCALE_STY_VALS, self.getFigureYScale()))
-        elif k == 'c' and self.widget_type == 'image':
-            # circulate image colormap
-            self.setColorMap(
-                cycle_list_next(ALL_COLORMAPS, self.getColorMap()))
 
     def dragEnterEvent(self, e):
         if e.mimeData().hasUrls():
@@ -833,13 +793,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def dropEvent(self, e):
         path = e.mimeData().urls()[0].toLocalFile()
         self._import_mpl_settings(path)
-
-    def kbd_help(self, ):
-        """Help message box for keyboard shortcuts.
-        """
-        w = KbdHelpDialog(self)
-        w.setWindowTitle("Keyboard Shortcuts Help")
-        w.exec_()
 
     def rotate_ticks(self, angle, axis):
         """Rotate *axis* ticks by *angle* in degree.
@@ -866,11 +819,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
         setYLimitMin, setYLimitMax
         """
         self.axes.set_ylim(args)
-        self.update_figure()
-
-    def set_autoscale(self, axis='both'):
-        self.axes.relim()
-        self.axes.autoscale(axis=axis)
         self.update_figure()
 
     def update_figure(self):
