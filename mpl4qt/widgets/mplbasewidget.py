@@ -364,6 +364,8 @@ class BasePlotWidget(QWidget):
                                 "Export Data", menu)
         info_action = QAction(QIcon(QPixmap(":/tools/info.png")),
                                 "About", menu)
+        keyshort_action = QAction(QIcon(QPixmap(":/tools/keyshort.png")),
+                                "Shortcuts", menu)
 
         menu.addAction(config_action)
         menu.addAction(export_action)
@@ -374,6 +376,7 @@ class BasePlotWidget(QWidget):
         menu.addAction(fitting_action)
         menu.addAction(export_data_action)
         menu.addSeparator()
+        menu.addAction(keyshort_action)
         menu.addAction(info_action)
 
         menu.setStyleSheet('QMenu {margin: 2px;}')
@@ -386,6 +389,7 @@ class BasePlotWidget(QWidget):
         fitting_action.triggered.connect(self.on_fitting_data)
         export_data_action.triggered.connect(self.on_export_data)
         info_action.triggered.connect(self.on_info)
+        keyshort_action.triggered.connect(self.kbd_help)
 
         menu.exec_(self.mapToGlobal(evt.pos()))
 
