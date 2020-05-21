@@ -39,13 +39,10 @@ from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtWidgets import QMessageBox
 
 from mpl4qt.widgets.mplbasewidget import BasePlotWidget
-from mpl4qt.widgets.utils import ALL_COLORMAPS
 from mpl4qt.widgets.utils import DEFAULT_MPL_SETTINGS
 from mpl4qt.widgets.utils import LINE_STY_VALS
 from mpl4qt.widgets.utils import MK_SYMBOL
 from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
-from mpl4qt.widgets.utils import SCALE_STY_VALS
-from mpl4qt.widgets.utils import cycle_list_next
 from mpl4qt.widgets.utils import mplcolor2hex
 
 

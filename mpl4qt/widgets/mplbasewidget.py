@@ -56,11 +56,14 @@ from matplotlib.ticker import AutoMinorLocator
 from matplotlib.ticker import NullLocator
 
 from mpl4qt.widgets.mpltoolbar import MToolbar
+from mpl4qt.widgets.utils import ALL_COLORMAPS
 from mpl4qt.widgets.utils import AUTOFORMATTER
 from mpl4qt.widgets.utils import AUTOFORMATTER_MATHTEXT
 from mpl4qt.widgets.utils import BOOTSTRAP_BLUE
 from mpl4qt.widgets.utils import LINE_STY_VALS
 from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
+from mpl4qt.widgets.utils import SCALE_STY_VALS
+from mpl4qt.widgets.utils import cycle_list_next
 from mpl4qt.widgets.utils import mfont_to_qfont
 from mpl4qt.widgets.utils import mplcolor2hex
 from mpl4qt.widgets.utils import set_font
