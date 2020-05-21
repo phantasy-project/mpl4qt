@@ -173,6 +173,34 @@ class BasePlotWidget(QWidget):
         self._fig_width, self._fig_height = self.figure.get_size_inches()
         self._fig_dpi = self.figure.get_dpi()
 
+        # bg color
+        self._fig_bgcolor = self.sys_bg_color
+
+        # grid color
+        self._fig_grid_color = QColor('gray')
+        # grid toggle
+        self._fig_grid_toggle = False
+
+        # mticks toggle
+        self._fig_mticks_toggle = False
+
+        # legend toggle
+        self._legend_toggle = False
+
+        # legend location
+        self._legend_location = 0
+
+        # xyticks angle
+        self._fig_xticks_angle = 0
+        self._fig_yticks_angle = 0
+
+        # xyticks color
+        self._fig_ticks_color = self.sys_fg_color
+
+        # xy axis scale
+        self._fig_xscale = 'linear'
+        self._fig_yscale = 'linear'
+
         # xylimits
         self._xlim_min, self._xlim_max = self.axes.get_xlim()
         self._ylim_min, self._ylim_max = self.axes.get_ylim()
@@ -182,6 +210,9 @@ class BasePlotWidget(QWidget):
         ytklbl = self.axes.get_yticklabels()[0]
         self._fig_xticks_visible = xtklbl.get_visible()
         self._fig_yticks_visible = ytklbl.get_visible()
+
+        # auto scale
+        self._fig_auto_scale = False  # default disable autoscale
 
     def on_scroll(self, e):
         if e.inaxes is None:
@@ -370,6 +401,28 @@ class BasePlotWidget(QWidget):
     def set_border_visible(self, f):
         for _, o in self.axes.spines.items():
             o.set_visible(f)
+
+    def getFigureAutoScale(self):
+        return self._fig_auto_scale
+
+    @pyqtSlot(bool)
+    def setFigureAutoScale(self, f):
+        """Set xy limits as autoscale or not.
+
+        Parameters
+        ----------
+        f : bool
+            Toggle for the autoscale.
+        """
+        self._fig_auto_scale = f
+        if f:
+            self.axes.autoscale()
+            self.update_figure()
+        #
+        self.autoScaleOnUpdated.emit(f)
+
+    figureAutoScale = pyqtProperty(bool, getFigureAutoScale,
+                                   setFigureAutoScale)
 
     def getFigureBorderColor(self):
         return self._fig_border_color
@@ -778,8 +831,271 @@ class BasePlotWidget(QWidget):
     figureYTicksVisible = pyqtProperty(bool, getFigureYTicksVisible,
                                        setFigureYTicksVisible)
 
+    def getFigureBgColor(self):
+        return self._fig_bgcolor
 
+    @pyqtSlot(QColor)
+    def setFigureBgColor(self, color):
+        """Set figure background color.
 
+        Parameters
+        ----------
+        color : QColor
+            Color to set.
+        """
+        self._fig_bgcolor = color
+        self.set_figure_color(color.getRgbF())
+        self.update_figure()
+        self.bgColorChanged.emit(color)
+
+    figureBackgroundColor = pyqtProperty(QColor, getFigureBgColor,
+                                         setFigureBgColor)
+
+    def getFigureGridColor(self):
+        return self._fig_grid_color
+
+    @pyqtSlot(QColor)
+    def setFigureGridColor(self, c, **kws):
+        """Set color for the grid line.
+
+        Parameters
+        ----------
+        c : QColor
+            Color of the grid line.
+        """
+        self._fig_grid_color = c
+        self.toggle_grid(
+            toggle_checked=self._fig_grid_toggle,
+            color=c.getRgbF(),
+            **{
+                k: v
+                for k, v in kws.items() if k not in ('toggle_checked', 'color')
+            })
+        self.update_figure()
+
+    figureGridColor = pyqtProperty(QColor, getFigureGridColor,
+                                   setFigureGridColor)
+
+    def getFigureGridToggle(self):
+        return self._fig_grid_toggle
+
+    @pyqtSlot(bool)
+    def setFigureGridToggle(self, f, **kws):
+        """Toggle for the figure grid.
+
+        Parameters
+        ----------
+        f : bool
+            Figure grid toggle.
+        """
+        self._fig_grid_toggle = f
+        self.toggle_grid(
+            toggle_checked=f,
+            color=self._fig_grid_color.getRgbF(),
+            **{
+                k: v
+                for k, v in kws.items() if k not in ('toggle_checked', 'color')
+            })
+        self.update_figure()
+        #
+        self.gridOnUpdated.emit(f)
+
+    figureGridToggle = pyqtProperty(bool, getFigureGridToggle,
+                                    setFigureGridToggle)
+
+    def getFigureMTicksToggle(self):
+        return self._fig_mticks_toggle
+
+    @pyqtSlot(bool)
+    def setFigureMTicksToggle(self, f):
+        """Toggle for the minor ticks.
+
+        Note
+        ----
+        Before toggle on, be sure the axis scale is linear.
+
+        Parameters
+        ----------
+        f : bool
+            Minor ticks on/off toggle.
+        """
+        self._fig_mticks_toggle = f
+
+        xscale = self.getFigureXScale()
+        yscale = self.getFigureYScale()
+        if xscale != 'linear':
+            self.setFigureXScale('linear')
+        if yscale != 'linear':
+            self.setFigureYScale('linear')
+        self.toggle_mticks(f)
+        if xscale != 'linear':
+            self.setFigureXScale(xscale)
+        if yscale != 'linear':
+            self.setFigureYScale(yscale)
+
+        self.update_figure()
+
+    figureMTicksToggle = pyqtProperty(bool, getFigureMTicksToggle,
+                                      setFigureMTicksToggle)
+
+    def getLegendToggle(self):
+        return self._legend_toggle
+
+    @pyqtSlot(bool)
+    def setLegendToggle(self, f):
+        """Toggle for figure legend.
+
+        Parameters
+        ----------
+        f : bool
+            Figure legend on/off toggle.
+        """
+        self._legend_toggle = f
+        if f:
+            self._legend_box = self.axes.legend(loc=self._legend_location)
+        else:
+            try:
+                self._legend_box.set_visible(False)
+            except AttributeError:
+                pass
+        self.update_figure()
+        #
+        self.legendOnUpdated.emit(f)
+
+    figureLegendToggle = pyqtProperty(bool, getLegendToggle, setLegendToggle)
+
+    def getLegendLocation(self):
+        return self._legend_location
+
+    @pyqtSlot(int)
+    def setLegendLocation(self, i):
+        """Set legend location.
+
+        Parameters
+        ----------
+        i : int
+            Index number of legend location,
+            see `matplotlib.pyplot.legend <https://matplotlib.org/api/_as_gen/matplotlib.pyplot.legend.html>`_.
+        """
+        self._legend_location = i
+        if self._legend_toggle:
+            self._legend_box = self.axes.legend(loc=i)
+            self.update_figure()
+
+    figureLegendLocation = pyqtProperty(int, getLegendLocation,
+                                        setLegendLocation)
+
+    def getFigureXTicksAngle(self):
+        return self._fig_xticks_angle
+
+    @pyqtSlot(float)
+    def setFigureXTicksAngle(self, angle):
+        """Set rotation angle for the xtick labels.
+
+        Parameters
+        ----------
+        angle : float
+            Angle in degree to rotate.
+        """
+        self._fig_xticks_angle = angle
+        self.rotate_ticks(angle, 'x')
+        self.update_figure()
+
+    figureXTicksAngle = pyqtProperty(float, getFigureXTicksAngle,
+                                     setFigureXTicksAngle)
+
+    def getFigureYTicksAngle(self):
+        return self._fig_yticks_angle
+
+    @pyqtSlot(float)
+    def setFigureYTicksAngle(self, angle):
+        """Set rotation angle for the ytick labels.
+
+        Parameters
+        ----------
+        angle : float
+            Angle in degree to rotate.
+        """
+        self._fig_yticks_angle = angle
+        self.rotate_ticks(angle, 'y')
+        self.update_figure()
+
+    figureYTicksAngle = pyqtProperty(float, getFigureYTicksAngle,
+                                     setFigureYTicksAngle)
+
+    def getFigureXYticksFont(self):
+        return self._fig_xyticks_font
+
+    @pyqtSlot(QFont)
+    def setFigureXYticksFont(self, font):
+        """Set font for the tick labels.
+
+        Parameters
+        ----------
+        font : QFont
+            Font to set.
+        """
+        self._fig_xyticks_font = font
+        self.set_xyticks_font(font)
+        self.update_figure()
+
+    figureXYticksFont = pyqtProperty(QFont, getFigureXYticksFont,
+                                     setFigureXYticksFont)
+
+    def getFigureXYticksColor(self):
+        return self._fig_ticks_color
+
+    @pyqtSlot(QColor)
+    def setFigureXYticksColor(self, color):
+        """Set color for the ticks.
+
+        Parameters
+        ----------
+        color : QColor
+            Color to set.
+        """
+        self._fig_ticks_color = color
+        self.set_ticks_color(color.getRgbF())
+        self.update_figure()
+
+    figureXYticksColor = pyqtProperty(QColor, getFigureXYticksColor,
+                                      setFigureXYticksColor)
+
+    def getFigureXScale(self):
+        return self._fig_xscale
+
+    @pyqtSlot('QString')
+    def setFigureXScale(self, s):
+        """Set x-axis scale.
+
+        Parameters
+        ----------
+        s : str
+            Scale type, 'linear', 'log', 'symlog', 'logit', etc.
+        """
+        self._fig_xscale = s
+        self.axes.set_xscale(s)
+        self.update_figure()
+
+    figureXScale = pyqtProperty('QString', getFigureXScale, setFigureXScale)
+
+    def getFigureYScale(self):
+        return self._fig_yscale
+
+    @pyqtSlot('QString')
+    def setFigureYScale(self, s):
+        """Set y-axis scale.
+
+        Parameters
+        ----------
+        s : str
+            Scale type, 'linear', 'log', 'symlog', 'logit', etc.
+        """
+        self._fig_yscale = s
+        self.axes.set_yscale(s)
+        self.update_figure()
+
+    figureYScale = pyqtProperty('QString', getFigureYScale, setFigureYScale)
 
     def _get_default_xlim(self):
         """limit range from data
