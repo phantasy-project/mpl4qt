@@ -20,6 +20,14 @@ try:
 except NameError:
     basestring = str
 
+BOOTSTRAP_GREEN = "#28A745"
+BOOTSTRAP_RED = "#DC3545"
+BOOTSTRAP_BLUE = "#007BFF"
+BOOTSTRAP_YELLOW = "#FFC107"
+BOOTSTRAP_GRAY = "#6C757D"
+BOOTSTRAP_WHITE = "#F8F9FA"
+BOOTSTRAP_BLACK = "#343A40"
+
 # marker style
 MK_STY_DICT = {
     'none': {
