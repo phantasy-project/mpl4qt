@@ -45,7 +45,6 @@ from PyQt5.QtWidgets import QMessageBox
 from mpl4qt.widgets.kbdhelpdialog import KbdHelpDialog
 from mpl4qt.widgets.mplbasewidget import BasePlotWidget
 from mpl4qt.widgets.mplconfig import MatplotlibConfigPanel
-from mpl4qt.widgets.mpltoolbar import MToolbar
 from mpl4qt.widgets.utils import ALL_COLORMAPS
 from mpl4qt.widgets.utils import AUTOFORMATTER
 from mpl4qt.widgets.utils import AUTOFORMATTER_MATHTEXT
@@ -65,28 +64,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
     Provides a custom widget to draw curves with matplotlib, with properties
     and slots that can be used to customize its appearance.
     """
-    # indices list of points selected by lasso tool,
-    # ind: array, pts: array (selected)
-    # for i,idx in enumerate(ind): idx, pts[i]
-    selectedIndicesUpdated = pyqtSignal(QVariant, QVariant)
-
-    # xy pos, x,y or x,y,z
-    xyposUpdated = pyqtSignal(list)
-
-    # grid
-    gridOnUpdated = pyqtSignal(bool)
-
-    # legend
-    legendOnUpdated = pyqtSignal(bool)
-
-    # autoscale
-    autoScaleOnUpdated = pyqtSignal(bool)
-
-    # bg color
-    bgColorChanged = pyqtSignal(QColor)
-
-    # zoomed ROI changed
-    zoom_roi_changed = pyqtSignal(tuple, tuple)
 
     def __init__(self, parent=None):
         super(MatplotlibCurveWidget, self).__init__(parent)
@@ -118,11 +95,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
         # widget type
         self.widget_type = 'curve'
-
-        # tb_toggle
-        self._fig_tb_toggle = True
-        # show mpltool by default.
-        self.__show_mpl_tools()
 
     def add_curve(self, x_data=None, y_data=None, **kws):
         """Add one curve to figure, accepts all ``pyplot.plot`` keyword
@@ -771,7 +743,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
                                     "Successfully export data to {}".format(filepath),
                                     QMessageBox.Ok)
 
-
     def on_fitting_data(self):
         """Fitting data.
         """
@@ -791,27 +762,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     def show_mpl_tools(self, e):
         self.__show_mpl_tools()
-
-    def __show_mpl_tools(self):
-        if 'w_mpl_tools' in self._handlers:
-            w = self._handlers['w_mpl_tools']
-        else:
-            w = MToolbar(self.figure.canvas, self)
-            self._handlers['w_mpl_tools'] = w
-            w.selectedIndicesUpdated.connect(self.on_selected_indices)
-            w.zoom_roi_changed.connect(self.on_zoom_roi_changed)
-        w.show_toolbar()
-        w.floatable_changed.emit(False)
-        print("MPL Toolbar: ", id(w))
-
-    @pyqtSlot(QVariant, QVariant)
-    def on_selected_indices(self, ind, pts):
-        self.selectedIndicesUpdated.emit(ind, pts)
-
-    @pyqtSlot(tuple, tuple)
-    def on_zoom_roi_changed(self, xlim, ylim):
-        print("Zoomed Rect ROI: ", xlim, ylim)
-        self.zoom_roi_changed.emit(xlim, ylim)
 
     @pyqtSlot()
     def on_info(self):
@@ -1121,29 +1071,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
         x = self._x_data
         y = self._y_data
         return np.vstack([x, y]).T
-
-    def getToolbarToggle(self):
-        return self._fig_tb_toggle
-
-    @pyqtSlot(bool)
-    def setToolbarToggle(self, f):
-        """Toggle for the mpl toolbar.
-
-        Parameters
-        ----------
-        f : bool
-            Turn on/off mpl toolbar.
-        """
-        self._fig_tb_toggle = f
-        w = self._handlers.get('w_mpl_tools', None)
-        if w is not None and not f:
-            w.floatable_changed.emit(True)
-            w.close()
-        else:
-            self.__show_mpl_tools()
-        self.update_figure()
-
-    figureToolbarToggle = pyqtProperty(bool, getToolbarToggle, setToolbarToggle)
 
 
 if __name__ == "__main__":

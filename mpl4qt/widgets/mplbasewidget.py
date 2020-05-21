@@ -28,6 +28,7 @@ from functools import partial
 import matplotlib as mpl
 import numpy as np
 from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import QVariant
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import pyqtProperty
 from PyQt5.QtCore import pyqtSignal
@@ -45,11 +46,12 @@ from matplotlib.figure import Figure
 from matplotlib.ticker import AutoMinorLocator
 from matplotlib.ticker import NullLocator
 
-from .utils import LINE_STY_VALS
-from .utils import mfont_to_qfont
-from .utils import mplcolor2hex
-from .utils import set_font
-from .utils import is_cmap_valid
+from mpl4qt.widgets.mpltoolbar import MToolbar
+from mpl4qt.widgets.utils import LINE_STY_VALS
+from mpl4qt.widgets.utils import mfont_to_qfont
+from mpl4qt.widgets.utils import mplcolor2hex
+from mpl4qt.widgets.utils import set_font
+from mpl4qt.widgets.utils import is_cmap_valid
 
 MPL_VERSION = mpl.__version__
 DTMSEC = 500  # msec
@@ -60,7 +62,30 @@ class BasePlotWidget(QWidget):
     # combo keyshorts, keystring, timestamp
     keycombo_cached = pyqtSignal(str, float)
 
-    def __init__(self, parent=None, **kws):
+    # indices list of points selected by lasso tool,
+    # ind: array, pts: array (selected)
+    # for i,idx in enumerate(ind): idx, pts[i]
+    selectedIndicesUpdated = pyqtSignal(QVariant, QVariant)
+
+    # zoomed ROI changed
+    zoom_roi_changed = pyqtSignal(tuple, tuple)
+
+    # grid
+    gridOnUpdated = pyqtSignal(bool)
+
+    # legend
+    legendOnUpdated = pyqtSignal(bool)
+
+    # autoscale
+    autoScaleOnUpdated = pyqtSignal(bool)
+
+    # bg color
+    bgColorChanged = pyqtSignal(QColor)
+
+    # xy pos, x,y or x,y,z
+    xyposUpdated = pyqtSignal(list)
+
+    def __init__(self, parent=None, show_toolbar=True, **kws):
         super(BasePlotWidget, self).__init__(parent)
         self.figure = Figure()
         self.axes = self.figure.add_subplot(111)
@@ -125,6 +150,33 @@ class BasePlotWidget(QWidget):
         # keypress cache
         self.dq_keycombo = deque([], 2)
         self.keycombo_cached.connect(self.on_update_keycombo_cache)
+
+        # tb_toggle
+        self._fig_tb_toggle = show_toolbar
+        if self._fig_tb_toggle:
+            # show mpltool
+            self.__show_mpl_tools()
+
+    def __show_mpl_tools(self):
+        if 'w_mpl_tools' in self._handlers:
+            w = self._handlers['w_mpl_tools']
+        else:
+            w = MToolbar(self.figure.canvas, self)
+            self._handlers['w_mpl_tools'] = w
+            w.selectedIndicesUpdated.connect(self.on_selected_indices)
+            w.zoom_roi_changed.connect(self.on_zoom_roi_changed)
+        w.show_toolbar()
+        w.floatable_changed.emit(False)
+        print("MPL Toolbar: ", id(w))
+
+    @pyqtSlot(QVariant, QVariant)
+    def on_selected_indices(self, ind, pts):
+        self.selectedIndicesUpdated.emit(ind, pts)
+
+    @pyqtSlot(tuple, tuple)
+    def on_zoom_roi_changed(self, xlim, ylim):
+        print("Zoomed Rect ROI: ", xlim, ylim)
+        self.zoom_roi_changed.emit(xlim, ylim)
 
     def set_up_layout(self):
         self.vbox = QVBoxLayout()
@@ -1097,6 +1149,29 @@ class BasePlotWidget(QWidget):
 
     figureYScale = pyqtProperty('QString', getFigureYScale, setFigureYScale)
 
+    def getToolbarToggle(self):
+        return self._fig_tb_toggle
+
+    @pyqtSlot(bool)
+    def setToolbarToggle(self, f):
+        """Toggle for the mpl toolbar.
+
+        Parameters
+        ----------
+        f : bool
+            Turn on/off mpl toolbar.
+        """
+        self._fig_tb_toggle = f
+        w = self._handlers.get('w_mpl_tools', None)
+        if w is not None and not f:
+            w.floatable_changed.emit(True)
+            w.close()
+        else:
+            self.__show_mpl_tools()
+        self.update_figure()
+
+    figureToolbarToggle = pyqtProperty(bool, getToolbarToggle, setToolbarToggle)
+
     def _get_default_xlim(self):
         """limit range from data
         """
@@ -1132,7 +1207,7 @@ class MatplotlibBaseWidget(BasePlotWidget):
 
 class MatplotlibCMapWidget(BasePlotWidget):
     def __init__(self, parent=None):
-        super(MatplotlibCMapWidget, self).__init__(parent)
+        super(MatplotlibCMapWidget, self).__init__(parent, False)
         self.figure.set_size_inches((self.getFigureWidth(), 0.2))
         self.figure.set_tight_layout(True)
         self.figure.subplots_adjust(
