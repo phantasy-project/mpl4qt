@@ -132,6 +132,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.figBorderColorChanged.connect(self.parent.setFigureBorderColor)
         self.border_color_btn.clicked.connect(self.set_border_color)
         self.set_btn_color(self.border_color_btn, self.parent.getFigureBorderColor())
+        self.parent.autoScaleOnUpdated.connect(self.disable_border_style_controls)
         # borders lw
         self.figBorderLineWidthChanged.connect(self.parent.setFigureBorderLineWidth)
         self.border_lw_sbox.valueChanged.connect(self.set_border_lw)
@@ -153,6 +154,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.figHeightChanged[float].connect(self.parent.setFigureHeight)
         self.figDpiChanged[float].connect(self.parent.setFigureDpi)
         self.figAutoScaleChanged[bool].connect(self.parent.setFigureAutoScale)
+        self.figAutoScaleChanged[bool].connect(self.disable_border_style_controls)
         self.figTightLayoutChanged[bool].connect(
             self.parent.setTightLayoutToggle)
         self.figXminLimitChanged[float].connect(self.parent.setXLimitMin)
@@ -236,6 +238,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.figHeight_lineEdit.setText(str(self.parent.getFigureHeight()))
         self.figDpi_lineEdit.setText(str(self.parent.getFigureDpi()))
         self.autoScale_chkbox.setChecked(self.parent.getFigureAutoScale())
+        self.disable_border_style_controls(self.parent.getFigureAutoScale())
         self.tightLayout_chkbox.setChecked(self.parent.getTightLayoutToggle())
         self.fig_title_lineEdit.setText(self.parent.getFigureTitle())
         self.fig_xlabel_lineEdit.setText(self.parent.getFigureXlabel())
@@ -273,6 +276,15 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
             self.xtick_funcformatter_lineEdit.setText(x_cfmt)
         if y_cfmt != '':
             self.ytick_funcformatter_lineEdit.setText(y_cfmt)
+
+    @pyqtSlot(bool)
+    def disable_border_style_controls(self, disabled):
+        # Autoscale is enabled, disable border style controls, otherwise, enable.
+        hbox = self.border_style_hbox
+        for i in range(hbox.count()):
+            w = hbox.itemAt(i).widget()
+            if w is not None:
+                w.setDisabled(disabled)
 
     @pyqtSlot()
     def on_set_funcformatter(self, text, set_xticks=False, set_yticks=False):

@@ -58,6 +58,7 @@ from matplotlib.ticker import NullLocator
 from mpl4qt.widgets.mpltoolbar import MToolbar
 from mpl4qt.widgets.utils import AUTOFORMATTER
 from mpl4qt.widgets.utils import AUTOFORMATTER_MATHTEXT
+from mpl4qt.widgets.utils import BOOTSTRAP_BLUE
 from mpl4qt.widgets.utils import LINE_STY_VALS
 from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
 from mpl4qt.widgets.utils import mfont_to_qfont
@@ -171,6 +172,22 @@ class BasePlotWidget(QWidget):
             # show mpltool
             self.__show_mpl_tools()
 
+        #
+        self.autoScaleOnUpdated.connect(self.on_autoscale_toggled)
+
+    @pyqtSlot(bool)
+    def on_autoscale_toggled(self, auto_scale_enabled):
+        # if auto scale is enabled, border style could not be changed.
+        if auto_scale_enabled:
+            self._fig_border_color_as = self._fig_border_color
+            self._fig_border_lw_as = self._fig_border_lw
+            self.setFigureBorderColor(QColor(BOOTSTRAP_BLUE))
+            self.setFigureBorderLineWidth(2.0)
+        else:
+            self.setFigureBorderColor(self._fig_border_color_as)
+            self.setFigureBorderLineWidth(self._fig_border_lw_as)
+        self.update_figure()
+
     def __show_mpl_tools(self):
         if 'w_mpl_tools' in self._handlers:
             w = self._handlers['w_mpl_tools']
@@ -216,13 +233,16 @@ class BasePlotWidget(QWidget):
         title = self.axes.title
         self._fig_title_font = mfont_to_qfont(title.get_fontproperties())
 
-        ## border
+        ## border, if auto scale is enabled, style could not be changed.
         o = list(self.axes.spines.values())[0]
-        # c, lw, ls, vis
+        # c, lw, ls, vis,
         self._fig_border_color = QColor(mplcolor2hex(o.get_ec()))
         self._fig_border_lw = o.get_linewidth()
         self._fig_border_ls = o.get_linestyle()
         self._fig_border_visible = o.get_visible()
+        # autoscale copy
+        self._fig_border_color_as = self._fig_border_color
+        self._fig_border_lw_as = self._fig_border_lw
 
         # aspect
         self._fig_aspect = str(self.axes.get_aspect())
