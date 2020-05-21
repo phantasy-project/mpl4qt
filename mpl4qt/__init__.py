@@ -2,6 +2,7 @@
 
 import platform
 import matplotlib
+from .ui import resources_rc
 
 try:
     d, v, _ = platform.linux_distribution()
