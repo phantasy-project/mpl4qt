@@ -3,23 +3,33 @@
 """
 Navigation toolbar for matplotlib widgets
 """
-
 import numpy as np
+from functools import partial
+
 from PyQt5.QtCore import QObject
 from PyQt5.QtCore import QPoint
+from PyQt5.QtCore import QSize
 from PyQt5.QtCore import QVariant
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import pyqtSlot
+
 from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtGui import QIcon
 from PyQt5.QtGui import QPixmap
+
 from PyQt5.QtWidgets import QAction
+from PyQt5.QtWidgets import QHBoxLayout
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QMenu
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtWidgets import QSizePolicy
+from PyQt5.QtWidgets import QSpinBox
 from PyQt5.QtWidgets import QToolBar
+from PyQt5.QtWidgets import QToolButton
+from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidgetAction
+
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT
 from matplotlib.path import Path
 from matplotlib.widgets import LassoSelector
@@ -120,6 +130,7 @@ class MToolbar(QToolBar):
         self._floating = f
 
     def init_ui(self):
+        self._isize = self.iconSize().height()
         #
         self._floating = True
         self.floatable_changed.connect(self.on_floatable_changed)
@@ -197,7 +208,31 @@ class MToolbar(QToolBar):
 
         # exit tool
         exit_act = QAction(QIcon(QPixmap(":/tools/exit.png")), "Exit", self)
-        exit_act.setToolTip("Exit toolbar")
+        exit_act.setToolTip("Close toolbar")
+
+        # tb config tool
+        conf_act = QAction(QIcon(QPixmap(":/tools/preferences.png")), "Preferences", self)
+        conf_act.setToolTip("Preferences")
+        conf_isize_w = QWidget(self)
+        conf_isize_box = QHBoxLayout()
+        conf_isize_box.setContentsMargins(2, 0, 0, 0)
+        conf_isize_sbox = QSpinBox(self)
+        conf_isize_sbox.setToolTip("Adjust icon size")
+        conf_isize_sbox.setValue(self._isize)
+        conf_isize_sbox.setRange(6, 128)
+        conf_isize_btn = QToolButton(self)
+        conf_isize_btn.setToolTip("Reset icon size")
+        conf_isize_btn.setIcon(QIcon(QPixmap(":/icons/reset_btn.png")))
+        conf_isize_box.addWidget(QLabel("Icon Size", self))
+        conf_isize_box.addWidget(conf_isize_sbox, 1)
+        conf_isize_box.addWidget(conf_isize_btn)
+        conf_isize_w.setLayout(conf_isize_box)
+        conf_menu = QMenu(self)
+        conf_menu.setToolTipsVisible(True)
+        conf_isize_act = QWidgetAction(self)
+        conf_isize_act.setDefaultWidget(conf_isize_w)
+        conf_menu.addAction(conf_isize_act)
+        conf_act.setMenu(conf_menu)
 
         # dock tool
         dock_act = QAction(QIcon(QPixmap(":/tools/top_dock.png")), "Dock", self)
@@ -241,6 +276,7 @@ class MToolbar(QToolBar):
         self.addWidget(self.pos_lbl)
         self.addSeparator()
 
+        self.addAction(conf_act)
         self.addAction(info_act)
         self.addAction(exit_act)
 
@@ -260,9 +296,16 @@ class MToolbar(QToolBar):
         exit_act.triggered.connect(self.close)
         dock_act.triggered.connect(self.dock)
         info_act.triggered.connect(self.about_info)
+        conf_isize_sbox.valueChanged.connect(self.on_update_isize)
+        conf_isize_btn.clicked.connect(partial(self.on_update_isize, self._isize))
 
         #
         self.floatable_changed.emit(self._floating)
+
+    def on_update_isize(self, i):
+        """icon size
+        """
+        self.setIconSize(QSize(i, i))
 
     def update_bgcolor(self, color):
         if not self._floating:
