@@ -394,14 +394,15 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         """
         btn.setStyleSheet("QToolButton {\n"
                           "  margin: 4px;\n"
-                          "  border-color: #F8F7F6;\n"
-                          "  border-radius: 2px;\n"
+                          "  border: 1px solid gray;\n"
+                          "  border-radius: 1px;\n"
                           "  background-color: %s;\n" % color.name() + "}\n"
                           "QToolButton:pressed {\n"
                           "  background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #DADBDE, stop:1 #F6F7FA);\n"
                           "}\n"
                           "QToolButton:hover {\n"
                           "  border: 2px solid black;\n"
+                          "  border-radius: 2px;\n"
                           "  background-color: qradialgradient(cx:0.5, cy:0.5, radius:1, fx:0.5, fy:0.5, stop:0 %s, stop:1 #F6F7FA);\n" % color.name() +
                           "}")
         btn.setToolTip(color.name().upper())
