@@ -1435,6 +1435,9 @@ class BasePlotWidget(QWidget):
         elif k1 == 'a' and k2 == 'y':
             # auto yscale
             self.set_autoscale('y')
+        elif k1 == 'a' and k2 == 'a':
+            # turn on/off autoscale
+            self.setFigureAutoScale(not self.getFigureAutoScale())
         elif k1 == 'shift' and k2 == '?':
             # help msgbox
             self.kbd_help()
