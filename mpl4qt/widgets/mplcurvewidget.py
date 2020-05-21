@@ -34,27 +34,19 @@ from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QFont
 from PyQt5.QtGui import QGuiApplication
-from PyQt5.QtGui import QIcon
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QAction
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QFileDialog
-from PyQt5.QtWidgets import QMenu
 from PyQt5.QtWidgets import QMessageBox
 
 from mpl4qt.widgets.kbdhelpdialog import KbdHelpDialog
 from mpl4qt.widgets.mplbasewidget import BasePlotWidget
-from mpl4qt.widgets.mplconfig import MatplotlibConfigPanel
 from mpl4qt.widgets.utils import ALL_COLORMAPS
-from mpl4qt.widgets.utils import AUTOFORMATTER
-from mpl4qt.widgets.utils import AUTOFORMATTER_MATHTEXT
 from mpl4qt.widgets.utils import DEFAULT_MPL_SETTINGS
 from mpl4qt.widgets.utils import LINE_STY_VALS
 from mpl4qt.widgets.utils import MK_SYMBOL
 from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
 from mpl4qt.widgets.utils import SCALE_STY_VALS
 from mpl4qt.widgets.utils import cycle_list_next
-from mpl4qt.widgets.utils import generate_formatter
 from mpl4qt.widgets.utils import mplcolor2hex
 
 
@@ -67,13 +59,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     def __init__(self, parent=None):
         super(MatplotlibCurveWidget, self).__init__(parent)
-        self._fig_xtick_formatter_type = 'Auto'
-        self._fig_xtick_formatter = None  # placeholder only
-        self._fig_xtick_cfmt = ''  # c string format for FuncFormatter
-        self._fig_ytick_formatter_type = 'Auto'
-        self._fig_ytick_formatter = None  # placeholder only
-        self._fig_ytick_cfmt = ''  # c string format for FuncFormatter
-        self._fig_ticks_enable_mathtext = False  # use math text or not
+
         # x,y limits
         self.setXLimitMin()
         self.setXLimitMax()
@@ -95,6 +81,12 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
         # widget type
         self.widget_type = 'curve'
+
+    @pyqtSlot()
+    def on_config(self):
+        from .mplconfig import MatplotlibConfigCurvePanel
+        config_panel = MatplotlibConfigCurvePanel(self)
+        config_panel.exec_()
 
     def add_curve(self, x_data=None, y_data=None, **kws):
         """Add one curve to figure, accepts all ``pyplot.plot`` keyword
@@ -145,88 +137,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
         return QSize(1.1 * self._fig_width * self._fig_dpi,
                      1.1 * self._fig_height * self._fig_dpi)
 
-
-    @pyqtSlot('QString', 'QString')
-    def setXTickFormat(self, ftype, cfmt):
-        if ftype == 'Auto':
-            self._setXTickAutoFormat(ftype)
-        elif ftype == 'Custom':
-            self._setXTickCustomFormat(ftype, cfmt)
-
-    def _setXTickAutoFormat(self, ftype):
-        """Set x-axis ticks formatter with Auto style.
-
-        Parameters
-        ----------
-        ftype : str
-            Type of formatter, 'Auto'.
-        """
-        self._fig_xtick_formatter_type = ftype
-        if self._fig_ticks_enable_mathtext:
-            formatter = AUTOFORMATTER_MATHTEXT
-        else:
-            formatter = AUTOFORMATTER
-        self._fig_xtick_formatter = formatter
-        self.axes.xaxis.set_major_formatter(formatter)
-        self.update_figure()
-
-    def _setXTickCustomFormat(self, ftype, cfmt):
-        """Set x-axis ticks formatter with custom style.
-
-        Parameters
-        ----------
-        ftype : str
-            Type of formatter, 'Custom'.
-        cfmt : str
-            C style string specifier.
-        """
-        self._fig_xtick_formatter_type = ftype
-        self._fig_xtick_cfmt = cfmt
-        formatter = generate_formatter(cfmt, math_text=self._fig_ticks_enable_mathtext)
-        self._fig_xtick_formatter = formatter
-        self.axes.xaxis.set_major_formatter(formatter)
-        self.update_figure()
-
-    @pyqtSlot('QString', 'QString')
-    def setYTickFormat(self, ftype, cfmt):
-        if ftype == 'Auto':
-            self._setYTickAutoFormat(ftype)
-        elif ftype == 'Custom':
-            self._setYTickCustomFormat(ftype, cfmt)
-
-    def _setYTickAutoFormat(self, ftype):
-        """Set y-axis ticks formatter with Auto style.
-
-        Parameters
-        ----------
-        ftype : str
-            Type of formatter, 'Auto'.
-        """
-        self._fig_ytick_formatter_type = ftype
-        if self._fig_ticks_enable_mathtext:
-            formatter = AUTOFORMATTER_MATHTEXT
-        else:
-            formatter = AUTOFORMATTER
-        self._fig_ytick_formatter = formatter
-        self.axes.yaxis.set_major_formatter(formatter)
-        self.update_figure()
-
-    def _setYTickCustomFormat(self, ftype, cfmt):
-        """Set y-axis ticks formatter with custom style.
-
-        Parameters
-        ----------
-        ftype : str
-            Type of formatter, 'Custom'.
-        cfmt : str
-            C style string specifier.
-        """
-        self._fig_ytick_formatter_type = ftype
-        self._fig_ytick_cfmt = cfmt
-        formatter = generate_formatter(cfmt, math_text=self._fig_ticks_enable_mathtext)
-        self._fig_ytick_formatter = formatter
-        self.axes.yaxis.set_major_formatter(formatter)
-        self.update_figure()
 
     def getLineAlpha(self):
         return self._line_alpha
@@ -676,49 +586,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def get_ylim(self):
         return self.axes.get_ylim()
 
-    def contextMenuEvent(self, e):
-        menu = QMenu(self)
-        config_action = QAction(QIcon(QPixmap(":/tools/config.png")),
-                                "Config", menu)
-        export_action = QAction(QIcon(QPixmap(":/tools/export.png")),
-                                "Export", menu)
-        import_action = QAction(QIcon(QPixmap(":/tools/import.png")),
-                                "Import", menu)
-        reset_action = QAction(QIcon(QPixmap(":/tools/reset.png")),
-                               "Reset", menu)
-        tb_action = QAction(QIcon(QPixmap(":/tools/tools.png")),
-                            "Tools", menu)
-        fitting_action = QAction(QIcon(QPixmap(":/tools/fitting.png")),
-                                 "Fitting", menu)
-        export_data_action = QAction(QIcon(QPixmap(":/tools/export.png")),
-                                "Export Data", menu)
-        info_action = QAction(QIcon(QPixmap(":/tools/info.png")),
-                                "About", menu)
-
-        menu.addAction(config_action)
-        menu.addAction(export_action)
-        menu.addAction(import_action)
-        menu.addAction(reset_action)
-        menu.addSeparator()
-        menu.addAction(tb_action)
-        menu.addAction(fitting_action)
-        menu.addAction(export_data_action)
-        menu.addSeparator()
-        menu.addAction(info_action)
-
-        menu.setStyleSheet('QMenu {margin: 2px;}')
-
-        config_action.triggered.connect(self.on_config)
-        export_action.triggered.connect(self.on_export_config)
-        import_action.triggered.connect(self.on_import_config)
-        reset_action.triggered.connect(self.on_reset_config)
-        tb_action.triggered.connect(self.show_mpl_tools)
-        fitting_action.triggered.connect(self.on_fitting_data)
-        export_data_action.triggered.connect(self.on_export_data)
-        info_action.triggered.connect(self.on_info)
-
-        menu.exec_(self.mapToGlobal(e.pos()))
-
     def on_export_data(self):
         if self.widget_type != 'image':
             QMessageBox.warning(self, "Export Data",
@@ -759,59 +626,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
             w.init_data()
         else:
             print("To be implemented")
-
-    def show_mpl_tools(self, e):
-        self.__show_mpl_tools()
-
-    @pyqtSlot()
-    def on_info(self):
-        from ._info import get_pkg_info
-        QMessageBox.about(self, 'About mpl4qt', get_pkg_info())
-
-    def on_config(self):
-        config_panel = MatplotlibConfigPanel(self)
-        config_panel.exec_()
-
-    def on_export_config(self):
-        filepath, _ = QFileDialog.getSaveFileName(self,
-                                                  "Save Settings",
-                                                  "./mpl_settings.json",
-                                                  "JSON Files (*.json)")
-        if not filepath:
-            return
-        try:
-            s = self.get_mpl_settings()
-            s.write(filepath)
-        except:
-            QMessageBox.warning(self, "Warning",
-                                "Cannot export settings to {}".format(filepath),
-                                QMessageBox.Ok)
-        else:
-            QMessageBox.information(self, "Information",
-                                    "Successfully export settings to {}".format(filepath),
-                                    QMessageBox.Ok)
-
-    def on_import_config(self):
-        filepath, _ = QFileDialog.getOpenFileName(self,
-                                                  "Open Settings",
-                                                  "./mpl_settings.json",
-                                                  "JSON Files (*.json)")
-        if not filepath:
-            return
-        self._import_mpl_settings(filepath)
-
-    def _import_mpl_settings(self, filepath):
-        try:
-            s = MatplotlibCurveWidgetSettings(filepath)
-            self.apply_mpl_settings(s)
-        except:
-            QMessageBox.warning(self, "Warning",
-                                "Cannot import&apply settings with {}".format(filepath),
-                                QMessageBox.Ok)
-        else:
-            QMessageBox.information(self, "Information",
-                                    "Successfully import&apply settings with {}".format(filepath),
-                                    QMessageBox.Ok)
 
     def on_reset_config(self):
         # apply default settings

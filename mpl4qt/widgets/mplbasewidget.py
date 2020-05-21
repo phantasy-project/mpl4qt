@@ -22,35 +22,48 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 """
 
 import time
+import numpy as np
 from collections import deque
 from functools import partial
 
-import matplotlib as mpl
-import numpy as np
 from PyQt5.QtCore import QTimer
 from PyQt5.QtCore import QVariant
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import pyqtProperty
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import pyqtSlot
+
 from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QFont
 from PyQt5.QtGui import QFontDatabase
+from PyQt5.QtGui import QIcon
 from PyQt5.QtGui import QPalette
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtGui import QResizeEvent
+
+from PyQt5.QtWidgets import QAction
+from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QMenu
+from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QWidget
+
+import matplotlib as mpl
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib.ticker import AutoMinorLocator
 from matplotlib.ticker import NullLocator
 
 from mpl4qt.widgets.mpltoolbar import MToolbar
+from mpl4qt.widgets.utils import AUTOFORMATTER
+from mpl4qt.widgets.utils import AUTOFORMATTER_MATHTEXT
 from mpl4qt.widgets.utils import LINE_STY_VALS
+from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
 from mpl4qt.widgets.utils import mfont_to_qfont
 from mpl4qt.widgets.utils import mplcolor2hex
 from mpl4qt.widgets.utils import set_font
+from mpl4qt.widgets.utils import generate_formatter
 from mpl4qt.widgets.utils import is_cmap_valid
 
 MPL_VERSION = mpl.__version__
@@ -87,6 +100,7 @@ class BasePlotWidget(QWidget):
 
     def __init__(self, parent=None, show_toolbar=True, **kws):
         super(BasePlotWidget, self).__init__(parent)
+        self.widget_type = '__BasePlotWidget'
         self.figure = Figure()
         self.axes = self.figure.add_subplot(111)
         self.init_figure()
@@ -249,6 +263,15 @@ class BasePlotWidget(QWidget):
         # xyticks color
         self._fig_ticks_color = self.sys_fg_color
 
+        # tick format
+        self._fig_xtick_formatter_type = 'Auto'
+        self._fig_xtick_formatter = None  # placeholder only
+        self._fig_xtick_cfmt = ''  # c string format for FuncFormatter
+        self._fig_ytick_formatter_type = 'Auto'
+        self._fig_ytick_formatter = None  # placeholder only
+        self._fig_ytick_cfmt = ''  # c string format for FuncFormatter
+        self._fig_ticks_enable_mathtext = False  # use math text or not
+
         # xy axis scale
         self._fig_xscale = 'linear'
         self._fig_yscale = 'linear'
@@ -322,6 +345,128 @@ class BasePlotWidget(QWidget):
 
     def update_figure(self):
         self.canvas.draw_idle()
+
+    def contextMenuEvent(self, evt):
+        menu = QMenu(self)
+        config_action = QAction(QIcon(QPixmap(":/tools/config.png")),
+                                "Config", menu)
+        export_action = QAction(QIcon(QPixmap(":/tools/export.png")),
+                                "Export", menu)
+        import_action = QAction(QIcon(QPixmap(":/tools/import.png")),
+                                "Import", menu)
+        reset_action = QAction(QIcon(QPixmap(":/tools/reset.png")),
+                               "Reset", menu)
+        tb_action = QAction(QIcon(QPixmap(":/tools/tools.png")),
+                            "Tools", menu)
+        fitting_action = QAction(QIcon(QPixmap(":/tools/fitting.png")),
+                                 "Fitting", menu)
+        export_data_action = QAction(QIcon(QPixmap(":/tools/export.png")),
+                                "Export Data", menu)
+        info_action = QAction(QIcon(QPixmap(":/tools/info.png")),
+                                "About", menu)
+
+        menu.addAction(config_action)
+        menu.addAction(export_action)
+        menu.addAction(import_action)
+        menu.addAction(reset_action)
+        menu.addSeparator()
+        menu.addAction(tb_action)
+        menu.addAction(fitting_action)
+        menu.addAction(export_data_action)
+        menu.addSeparator()
+        menu.addAction(info_action)
+
+        menu.setStyleSheet('QMenu {margin: 2px;}')
+
+        config_action.triggered.connect(self.on_config)
+        export_action.triggered.connect(self.on_export_config)
+        import_action.triggered.connect(self.on_import_config)
+        reset_action.triggered.connect(self.on_reset_config)
+        tb_action.triggered.connect(self.show_mpl_tools)
+        fitting_action.triggered.connect(self.on_fitting_data)
+        export_data_action.triggered.connect(self.on_export_data)
+        info_action.triggered.connect(self.on_info)
+
+        menu.exec_(self.mapToGlobal(evt.pos()))
+
+    @pyqtSlot()
+    def on_fitting_data(self):
+        """Fitting data.
+        """
+        raise NotImplementedError("Fitting data is to be implemented.")
+
+    @pyqtSlot()
+    def on_export_data(self):
+        raise NotImplementedError("Export data is to be implemented.")
+
+    @pyqtSlot()
+    def on_info(self):
+        from ._info import get_pkg_info
+        QMessageBox.about(self, 'About mpl4qt', get_pkg_info())
+
+    @pyqtSlot()
+    def show_mpl_tools(self):
+        self.__show_mpl_tools()
+
+    @pyqtSlot()
+    def on_reset_config(self):
+        # apply default settings
+        raise NotImplementedError("Reset config is to be implemented.")
+
+    @pyqtSlot()
+    def on_config(self):
+        raise NotImplementedError("Config panel is to be implemented.")
+
+    @pyqtSlot()
+    def on_export_config(self):
+        filepath, _ = QFileDialog.getSaveFileName(self,
+                                                  "Save Settings",
+                                                  "./mpl_settings.json",
+                                                  "JSON Files (*.json)")
+        if not filepath:
+            return
+        try:
+            s = self.get_mpl_settings()
+            s.write(filepath)
+        except:
+            QMessageBox.warning(self, "Warning",
+                                "Cannot export settings to {}".format(filepath),
+                                QMessageBox.Ok)
+        else:
+            QMessageBox.information(self, "Information",
+                                    "Successfully export settings to {}".format(filepath),
+                                    QMessageBox.Ok)
+
+    @pyqtSlot()
+    def on_import_config(self):
+        filepath, _ = QFileDialog.getOpenFileName(self,
+                                                  "Open Settings",
+                                                  "./mpl_settings.json",
+                                                  "JSON Files (*.json)")
+        if not filepath:
+            return
+        self._import_mpl_settings(filepath)
+
+    def apply_mpl_settings(self, settings):
+        pass
+
+    def _import_mpl_settings(self, filepath):
+        try:
+            s = MatplotlibCurveWidgetSettings(filepath)
+            self.apply_mpl_settings(s)
+        except:
+            QMessageBox.warning(self, "Warning",
+                                "Cannot import&apply settings with {}".format(filepath),
+                                QMessageBox.Ok)
+        else:
+            QMessageBox.information(self, "Information",
+                                    "Successfully import&apply settings with {}".format(filepath),
+                                    QMessageBox.Ok)
+
+    def get_mpl_settings(self):
+        """Return all the settings for the current figure.
+        """
+        pass
 
     def resize_figure(self):
         """Must be triggered for set fig size.
@@ -1192,6 +1337,94 @@ class BasePlotWidget(QWidget):
     def get_ylim(self):
         return self.axes.get_ylim()
 
+    @pyqtSlot('QString', 'QString')
+    def setXTickFormat(self, ftype, cfmt):
+        if ftype == 'Auto':
+            self._setXTickAutoFormat(ftype)
+        elif ftype == 'Custom':
+            self._setXTickCustomFormat(ftype, cfmt)
+
+    def _setXTickAutoFormat(self, ftype):
+        """Set x-axis ticks formatter with Auto style.
+
+        Parameters
+        ----------
+        ftype : str
+            Type of formatter, 'Auto'.
+        """
+        self._fig_xtick_formatter_type = ftype
+        if self._fig_ticks_enable_mathtext:
+            formatter = AUTOFORMATTER_MATHTEXT
+        else:
+            formatter = AUTOFORMATTER
+        self._fig_xtick_formatter = formatter
+        self.axes.xaxis.set_major_formatter(formatter)
+        self.update_figure()
+
+    def _setXTickCustomFormat(self, ftype, cfmt):
+        """Set x-axis ticks formatter with custom style.
+
+        Parameters
+        ----------
+        ftype : str
+            Type of formatter, 'Custom'.
+        cfmt : str
+            C style string specifier.
+        """
+        self._fig_xtick_formatter_type = ftype
+        self._fig_xtick_cfmt = cfmt
+        formatter = generate_formatter(cfmt, math_text=self._fig_ticks_enable_mathtext)
+        self._fig_xtick_formatter = formatter
+        self.axes.xaxis.set_major_formatter(formatter)
+        self.update_figure()
+
+    @pyqtSlot('QString', 'QString')
+    def setYTickFormat(self, ftype, cfmt):
+        if ftype == 'Auto':
+            self._setYTickAutoFormat(ftype)
+        elif ftype == 'Custom':
+            self._setYTickCustomFormat(ftype, cfmt)
+
+    def _setYTickAutoFormat(self, ftype):
+        """Set y-axis ticks formatter with Auto style.
+
+        Parameters
+        ----------
+        ftype : str
+            Type of formatter, 'Auto'.
+        """
+        self._fig_ytick_formatter_type = ftype
+        if self._fig_ticks_enable_mathtext:
+            formatter = AUTOFORMATTER_MATHTEXT
+        else:
+            formatter = AUTOFORMATTER
+        self._fig_ytick_formatter = formatter
+        self.axes.yaxis.set_major_formatter(formatter)
+        self.update_figure()
+
+    def _setYTickCustomFormat(self, ftype, cfmt):
+        """Set y-axis ticks formatter with custom style.
+
+        Parameters
+        ----------
+        ftype : str
+            Type of formatter, 'Custom'.
+        cfmt : str
+            C style string specifier.
+        """
+        self._fig_ytick_formatter_type = ftype
+        self._fig_ytick_cfmt = cfmt
+        formatter = generate_formatter(cfmt, math_text=self._fig_ticks_enable_mathtext)
+        self._fig_ytick_formatter = formatter
+        self.axes.yaxis.set_major_formatter(formatter)
+        self.update_figure()
+
+    def rotate_ticks(self, angle, axis):
+        """Rotate *axis* ticks by *angle* in degree.
+        """
+        lbls = getattr(self.axes, "get_{}ticklabels".format(axis))()
+        for o in lbls:
+            o.set_rotation(angle)
 
 
 class MatplotlibBaseWidget(BasePlotWidget):
@@ -1200,9 +1433,16 @@ class MatplotlibBaseWidget(BasePlotWidget):
 
     def __init__(self, parent=None):
         super(MatplotlibBaseWidget, self).__init__(parent)
+        self.widget_type = 'base'
 
     def init_figure(self):
         pass
+
+    @pyqtSlot()
+    def on_config(self):
+        from .mplconfig import MatplotlibConfigPanel
+        config_panel = MatplotlibConfigPanel(self)
+        config_panel.exec_()
 
 
 class MatplotlibCMapWidget(BasePlotWidget):
