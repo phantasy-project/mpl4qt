@@ -930,7 +930,7 @@ class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
         self.reverse_cmap_chkbox.toggled.connect(self.parent.setReverseCMapToggle)
 
         # autoclim
-        self.auto_clim_chkbox.toggled.connect(self.parent.setAutoColorLimit)
+        self.auto_clim_chkbox.toggled.connect(self.on_toggle_auto_clim)
 
         # colorbar toggle
         self.show_colorbar_chkbox.toggled.connect(self.parent.setColorBarToggle)
@@ -948,6 +948,13 @@ class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
         self.cr_min_dSpinBox.valueChanged.connect(self.parent.setColorRangeMin)
         self.cr_max_dSpinBox.valueChanged.connect(self.parent.setColorRangeMax)
         self.cr_reset_tbtn.clicked.connect(self.reset_color_range)
+
+    @pyqtSlot(bool)
+    def on_toggle_auto_clim(self, auto_clim_enabled):
+        self.parent.setAutoColorLimit(auto_clim_enabled)
+        if not auto_clim_enabled:
+            # apply current input [cmin, cmax]
+            self.cr_min_dSpinBox.valueChanged.emit(self.cr_min_dSpinBox.value())
 
     @pyqtSlot()
     def reset_color_range(self):
