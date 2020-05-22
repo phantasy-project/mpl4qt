@@ -900,7 +900,7 @@ class MatplotlibConfigErrorbarPanel(MatplotlibConfigCurvePanel):
         self.set_btn_color(self.eb_line_color_btn, color)
 
 
-class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
+class MatplotlibConfigImagePanel(MatplotlibConfigCurvePanel):
     def __init__(self, parent=None):
         super(MatplotlibConfigImagePanel, self).__init__(parent)
 
@@ -1059,7 +1059,7 @@ class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
         self.cm_image.set_reverse_cmap(f)
 
 
-class MatplotlibConfigBarPanel(MatplotlibConfigPanel):
+class MatplotlibConfigBarPanel(MatplotlibConfigCurvePanel):
     # eb color
     figEbLineColorChanged = pyqtSignal(QColor)
     # eb alpha
