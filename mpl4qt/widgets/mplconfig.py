@@ -293,7 +293,8 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         formatter, the same applies to *set_yticks*.
         """
         if text == '':
-            QMessageBox.warning(self, "", "Empty input is not valid.", QMessageBox.Ok)
+            QMessageBox.warning(self, "Customize Tick Format",
+                    "Empty input is not valid.", QMessageBox.Ok)
             self.sender().setText("%g")
             return
         if set_xticks:
@@ -945,8 +946,8 @@ class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
         # connect: cmap_cbb -> parent.setColorMap
         self.cmap_cbb.currentTextChanged.connect(self.parent.setColorMap)
         # color range spinboxes
-        self.cr_min_dSpinBox.valueChanged.connect(self.parent.setColorRangeMin)
-        self.cr_max_dSpinBox.valueChanged.connect(self.parent.setColorRangeMax)
+        self.cr_min_dSpinBox.valueChanged.connect(self.on_update_crmin)
+        self.cr_max_dSpinBox.valueChanged.connect(self.on_update_crmax)
         self.cr_reset_tbtn.clicked.connect(self.reset_color_range)
 
     @pyqtSlot(bool)
@@ -955,6 +956,34 @@ class MatplotlibConfigImagePanel(MatplotlibConfigPanel):
         if not auto_clim_enabled:
             # apply current input [cmin, cmax]
             self.cr_min_dSpinBox.valueChanged.emit(self.cr_min_dSpinBox.value())
+
+    @pyqtSlot(float)
+    def on_update_crmin(self, x):
+        crmax = self.cr_max_dSpinBox.value()
+        try:
+            assert x <= crmax
+        except AssertionError:
+            QMessageBox.warning(self, "Input Color Range",
+                    "Color range input is invalid: {0:.3f} !<= {1:.3f}, reset it to {2:.3f}.".format(x, crmax, crmax),
+                    QMessageBox.Ok)
+            self.sender().setValue(crmax)
+            return
+        else:
+            self.parent.setColorRangeMin(x)
+
+    @pyqtSlot(float)
+    def on_update_crmax(self, x):
+        crmin = self.cr_min_dSpinBox.value()
+        try:
+            assert crmin <= x
+        except AssertionError:
+            QMessageBox.warning(self, "Input Color Range",
+                    "Color range input is invalid: {0:.3f} !<= {1:.3f}, reset it to {2:.3f}.".format(crmin, x, crmin),
+                    QMessageBox.Ok)
+            self.sender().setValue(crmin)
+            return
+        else:
+            self.parent.setColorRangeMax(x)
 
     @pyqtSlot()
     def reset_color_range(self):
