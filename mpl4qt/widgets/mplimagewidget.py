@@ -65,6 +65,9 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
         self._rcmap_toggle = False
         self.setReverseCMapToggle(self._rcmap_toggle)
 
+        # auto xyscale
+        self.set_autoscale()
+
     def getColorMap(self):
         return self._cmap
 
