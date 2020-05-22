@@ -528,10 +528,12 @@ class BasePlotWidget(QWidget):
 
     def set_xticks(self, tks):
         self.axes.set_xticks(tks)
+        [set_font(lbl, self._fig_xyticks_font) for lbl in self.axes.get_xticklabels()]
         self.update_figure()
 
     def set_yticks(self, tks):
         self.axes.set_yticks(tks)
+        [set_font(lbl, self._fig_xyticks_font) for lbl in self.axes.get_yticklabels()]
         self.update_figure()
 
     def set_xticklabels(self, tklbls):
@@ -785,6 +787,7 @@ class BasePlotWidget(QWidget):
         """
         self._fig_xlabel = s
         self.axes.set_xlabel(s)
+        set_font(self.axes.xaxis.label, self._fig_xylabel_font)
         self.update_figure()
 
     figureXlabel = pyqtProperty('QString', getFigureXlabel, setFigureXlabel)
@@ -803,6 +806,7 @@ class BasePlotWidget(QWidget):
         """
         self._fig_ylabel = s
         self.axes.set_ylabel(s)
+        set_font(self.axes.yaxis.label, self._fig_xylabel_font)
         self.update_figure()
 
     figureYlabel = pyqtProperty('QString', getFigureYlabel, setFigureYlabel)
@@ -821,6 +825,7 @@ class BasePlotWidget(QWidget):
         """
         self._fig_title = s
         self.axes.set_title(s)
+        set_font(self.axes.title, self._fig_title_font)
         self.update_figure()
 
     figureTitle = pyqtProperty('QString', getFigureTitle, setFigureTitle)
