@@ -4,7 +4,6 @@
 Navigation toolbar for matplotlib widgets
 """
 import numpy as np
-from functools import partial
 
 from PyQt5.QtCore import QObject
 from PyQt5.QtCore import QPoint
@@ -297,7 +296,7 @@ class MToolbar(QToolBar):
         dock_act.triggered.connect(self.dock)
         info_act.triggered.connect(self.about_info)
         conf_isize_sbox.valueChanged.connect(self.on_update_isize)
-        conf_isize_btn.clicked.connect(partial(self.on_update_isize, self._isize))
+        conf_isize_btn.clicked.connect(lambda:conf_isize_sbox.setValue(self._isize))
 
         #
         self.floatable_changed.emit(self._floating)
