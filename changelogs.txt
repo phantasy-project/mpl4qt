@@ -1,62 +1,87 @@
-2.6.4
+2.6.5, 2020-05-22
+  * Fix figure title font set issue.
+  * Fix xy limit configure issue for image widget.
+  * Fully support Windows OS, 'run_designer' could be used to develop PyQt
+    applications.
+  * Migrate base properties from MatplotlibCurveWidget to BasePlotWidget,
+    consolidate the inheritance pattern.
+    - Base widget supports context menu and toolbar, and configuration widget.
+  * Configuration widget
+    - Create a new configuration panel class to consolidate the inheritance
+      pattern for configuration widgets.
+    - Update the UI for configuration widget.
+    - Auto update tooltips for all color buttons.
+    - Fix image color range switching between auto and manual mode.
+    - Add control of the tick labels visibility.
+  * Change figure border style when auto scale is enabled.
+  * Toolbar system
+    - Update toolbar system style.
+    - Add new tools to control style, show app info.
+    - Fix coordinate locator tool.
+  * Add a new keyboard shortcut 'a,a' to enable/disble auto scale mode.
+  * Add new menu items to the context menu
+    - Show keyboard shortcuts help window.
+    - Show package info.
+
+2.6.4, 2020-04-16
   * Update examples and tutorials documentation page.
   * Add support to configure bar chart widget annotation style.
   * Add support to reposition bar chart annotation with mouse.
 
-2.6.3
+2.6.3, 2020-01-30
   * Update tooltip of point coordinate.
   * Fix font weight conversion error.
   * Add heat view from image widget, retain colormap.
 
-2.6.2
+2.6.2, 2019-08-19
   * Fix clim cannot be calculated when data has nan for Imagewidget.
   * Add 'Fitting' action to context menu.
   * Add support to pass .ui files to run_designer command.
   * Update icons.
 
-2.6.1
+2.6.1, 2019-06-05
   * Update mplconfig style and fix the widget size issue.
   * Move attributes figure width, height and dpi to BasePlotWidget.
 
-2.6.0
+2.6.0, 2019-05-20
   * Add controls to on/off mpltoolbar in Qt-designer.
   * Move some attributes from curvewidget to basewidget.
   * New attributes, auto clim, aspect ratio, etc.
   * Slots for extent and image data for imagewidget.
 
-2.5.0
+2.5.0, 2019-04-04
   * Resolve matplotlib version isseu on Debian.
   * Mpltoolbar supports floating/embeded/close modes.
   * Update fonts initialization.
   * Zoom in/out by mouse.
 
-2.4.0
+2.4.0, 2019-03-15
   * New widget for barchart dataviz.
   * New tag for barchart config in mplwidget.
   * Add controls for ticks angle.
 
-2.3.3
+2.3.3, 2019-03-01
   * Return line2D object from add_curve() method of mplcurvewidget.
   * Add slot to update image for mplimagewidget.
 
-2.3.2
+2.3.2, 2019-02-10
   * Update UI
 
-2.3.1
+2.3.1, 2019-02-04
   * Update UI
   * And new signals to mplcurvewidget
   * Enforce ndarray data type for update_curve()
 
-2.3.0
+2.3.0, 2019-01-11
   * Create a new widget for image plot.
   * Bug fixes.
 
-2.2.1
+2.2.1, 2018-11-02
   * Set all buttons autodefault/default false.
   * Show/hide cross-ruler.
   * Fix minor bugs.
 
-2.2.0
+2.2.0, 2018-10-26
   * Implement mpltoolbar (MToolbar) with QToolbar.
   * New tools, lasso-selector, cross-ruler, reposition, xy coords display.
   * Implement xy coords tracking as a tool of MToolbar.
@@ -69,27 +94,27 @@
   * Fix other bugs.
   * Update HTML doc.
 
-2.1.0
+2.1.0, 2018-10-12
   * Fix issue, cannot locate current selected font.
   * Fix issue, crashes of on_motion of MatplotlibBaseWidget.
   * New DataViz widget, MatplotlibBaseWidget.
   * MatplotlibErrorbarWidget, implement 'add_curve' and 'update_curve'.
   * Update doc.
 
-2.0.0
+2.0.0, 2018-09-26
   * Update mplconfig with errorbar config tab.
   * Create a new widget called MatplotlibErrorbarWidget
 
-1.4.0
+1.4.0, 2018-09-18
   * Line visibility could be controlled via Config menu.
   * Create a new dialog for matplotlib toolbar.
   * New context menu action 'Show Tools'.
   * Fix bugs.
 
-1.3.1
+1.3.1, 2018-09-14
   * Fix MatplotlibCurveWidgetSettings inheritance bug.
 
-1.3.0
+1.3.0, 2018-09-12
   * Featuring Import/Export/Reset settings of the figure configuration.
   * New command 'mplcurve_default_settings' to generate default settings.
   * Create a new class MatplotlibCurveWidgetSettings.
@@ -106,19 +131,19 @@
   * New help message window for keyboard shortcuts.
   * Update HTML documentation.
 
-1.2.3
+1.2.3, 2018-09-04
   * Update config panel UI.
 
-1.2.2
+1.2.2, 2018-09-04
   * Update HTML doc.
   * Use 'xyann' instead of 'xytext' (deprecated).
   * Make config dialog size fixed.
   * Enforce using 'Qt5Agg', applies for earlier matplotlib (e.g. 1.4.2).
 
-1.2.1
+1.2.1, 2018-08-31
   * Add HTML documentation
 
-1.2.0
+1.2.0, 2018-08-31
   * Updated documentation
   * Run example app by "python -m mpl4qt.examples.app1 -c "app1.main()"
   * Standard data plotting widget for Qt-designer
