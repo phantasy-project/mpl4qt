@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(839, 355)
+        Dialog.resize(696, 311)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -26,6 +26,7 @@ class Ui_Dialog(object):
             "    border-radius: 1px;\n"
             "    background-color: #888A85;\n"
             "    margin: 4px;\n"
+            "    qproperty-iconSize: 12px;\n"
             "}\n"
             "QToolButton#grid_color_btn:pressed, QToolButton#ticks_color_btn:pressed,\n"
             "QToolButton#border_color_btn:pressed,\n"
@@ -38,11 +39,10 @@ class Ui_Dialog(object):
             "QToolButton#eb_mk_edgecolor_btn:pressed,\n"
             "QToolButton#eb_mk_facecolor_btn:pressed,\n"
             "QToolButton#eb_line_color_btn:pressed {\n"
-            "    /*background-color: white;*/\n"
             "    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #DADBDE, stop: 1 #F6F7FA);\n"
             "}\n"
             "\n"
-            "QTabBar::tab::disabled {width: 0; height: 0; margin: 0; padding: 0; border: none;} "
+            "QTabBar::tab::disabled {width: 0; height: 0; margin: 0; padding: 0; border: none;}"
         )
         Dialog.setSizeGripEnabled(True)
         Dialog.setModal(False)
@@ -232,7 +232,7 @@ class Ui_Dialog(object):
         self.gridLayout_6.addWidget(self.label_10, 1, 0, 1, 1)
         self.label = QtWidgets.QLabel(self.figure_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Expanding)
+                                           QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
@@ -810,17 +810,17 @@ class Ui_Dialog(object):
                                   | QtCore.Qt.AlignVCenter)
         self.label_6.setObjectName("label_6")
         self.gridLayout_7.addWidget(self.label_6, 5, 0, 1, 1)
-        self.horizontalLayout_19 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_19.setSpacing(4)
-        self.horizontalLayout_19.setObjectName("horizontalLayout_19")
+        self.border_style_hbox = QtWidgets.QHBoxLayout()
+        self.border_style_hbox.setSpacing(4)
+        self.border_style_hbox.setObjectName("border_style_hbox")
         self.border_hide_chkbox = QtWidgets.QCheckBox(self.style_tab)
         self.border_hide_chkbox.setObjectName("border_hide_chkbox")
-        self.horizontalLayout_19.addWidget(self.border_hide_chkbox)
+        self.border_style_hbox.addWidget(self.border_hide_chkbox)
         self.line_2 = QtWidgets.QFrame(self.style_tab)
         self.line_2.setFrameShape(QtWidgets.QFrame.VLine)
         self.line_2.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_2.setObjectName("line_2")
-        self.horizontalLayout_19.addWidget(self.line_2)
+        self.border_style_hbox.addWidget(self.line_2)
         self.label_67 = QtWidgets.QLabel(self.style_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Preferred)
@@ -830,12 +830,12 @@ class Ui_Dialog(object):
             self.label_67.sizePolicy().hasHeightForWidth())
         self.label_67.setSizePolicy(sizePolicy)
         self.label_67.setObjectName("label_67")
-        self.horizontalLayout_19.addWidget(self.label_67)
+        self.border_style_hbox.addWidget(self.label_67)
         self.border_color_btn = QtWidgets.QToolButton(self.style_tab)
         self.border_color_btn.setStyleSheet("")
         self.border_color_btn.setText("")
         self.border_color_btn.setObjectName("border_color_btn")
-        self.horizontalLayout_19.addWidget(self.border_color_btn)
+        self.border_style_hbox.addWidget(self.border_color_btn)
         self.label_65 = QtWidgets.QLabel(self.style_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Preferred)
@@ -845,13 +845,13 @@ class Ui_Dialog(object):
             self.label_65.sizePolicy().hasHeightForWidth())
         self.label_65.setSizePolicy(sizePolicy)
         self.label_65.setObjectName("label_65")
-        self.horizontalLayout_19.addWidget(self.label_65)
+        self.border_style_hbox.addWidget(self.label_65)
         self.border_lw_sbox = QtWidgets.QDoubleSpinBox(self.style_tab)
         self.border_lw_sbox.setDecimals(1)
         self.border_lw_sbox.setMaximum(10.0)
         self.border_lw_sbox.setSingleStep(0.1)
         self.border_lw_sbox.setObjectName("border_lw_sbox")
-        self.horizontalLayout_19.addWidget(self.border_lw_sbox)
+        self.border_style_hbox.addWidget(self.border_lw_sbox)
         self.label_68 = QtWidgets.QLabel(self.style_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Fixed)
@@ -861,7 +861,7 @@ class Ui_Dialog(object):
             self.label_68.sizePolicy().hasHeightForWidth())
         self.label_68.setSizePolicy(sizePolicy)
         self.label_68.setObjectName("label_68")
-        self.horizontalLayout_19.addWidget(self.label_68)
+        self.border_style_hbox.addWidget(self.label_68)
         self.border_ls_cbb = QtWidgets.QComboBox(self.style_tab)
         self.border_ls_cbb.setSizeAdjustPolicy(
             QtWidgets.QComboBox.AdjustToContentsOnFirstShow)
@@ -870,12 +870,12 @@ class Ui_Dialog(object):
         self.border_ls_cbb.addItem("")
         self.border_ls_cbb.addItem("")
         self.border_ls_cbb.addItem("")
-        self.horizontalLayout_19.addWidget(self.border_ls_cbb)
+        self.border_style_hbox.addWidget(self.border_ls_cbb)
         spacerItem4 = QtWidgets.QSpacerItem(40, 20,
                                             QtWidgets.QSizePolicy.Expanding,
                                             QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_19.addItem(spacerItem4)
-        self.gridLayout_7.addLayout(self.horizontalLayout_19, 6, 1, 1, 1)
+        self.border_style_hbox.addItem(spacerItem4)
+        self.gridLayout_7.addLayout(self.border_style_hbox, 6, 1, 1, 1)
         self.label_16 = QtWidgets.QLabel(self.style_tab)
         font = QtGui.QFont()
         font.setBold(True)
@@ -2073,39 +2073,35 @@ class Ui_Dialog(object):
         self.retranslateUi(Dialog)
         self.config_tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
-        Dialog.setTabOrder(self.xmin_lineEdit, self.ymin_lineEdit)
+        Dialog.setTabOrder(self.config_tabWidget, self.fig_title_lineEdit)
+        Dialog.setTabOrder(self.fig_title_lineEdit, self.title_font_btn)
+        Dialog.setTabOrder(self.title_font_btn, self.fig_xlabel_lineEdit)
+        Dialog.setTabOrder(self.fig_xlabel_lineEdit, self.fig_ylabel_lineEdit)
+        Dialog.setTabOrder(self.fig_ylabel_lineEdit, self.xy_label_font_btn)
+        Dialog.setTabOrder(self.xy_label_font_btn, self.autoScale_chkbox)
+        Dialog.setTabOrder(self.autoScale_chkbox, self.xmin_lineEdit)
+        Dialog.setTabOrder(self.xmin_lineEdit, self.xmax_lineEdit)
+        Dialog.setTabOrder(self.xmax_lineEdit, self.ymin_lineEdit)
         Dialog.setTabOrder(self.ymin_lineEdit, self.ymax_lineEdit)
         Dialog.setTabOrder(self.ymax_lineEdit, self.legend_on_chkbox)
         Dialog.setTabOrder(self.legend_on_chkbox, self.legend_loc_cbb)
         Dialog.setTabOrder(self.legend_loc_cbb, self.xaxis_scale_cbb)
         Dialog.setTabOrder(self.xaxis_scale_cbb, self.yaxis_scale_cbb)
-        Dialog.setTabOrder(self.yaxis_scale_cbb, self.line_id_cbb)
-        Dialog.setTabOrder(self.line_id_cbb, self.line_hide_chkbox)
-        Dialog.setTabOrder(self.line_hide_chkbox, self.line_style_cbb)
-        Dialog.setTabOrder(self.line_style_cbb, self.line_color_btn)
-        Dialog.setTabOrder(self.line_color_btn, self.line_width_lineEdit)
-        Dialog.setTabOrder(self.line_width_lineEdit, self.mk_style_cbb)
-        Dialog.setTabOrder(self.mk_style_cbb, self.mk_facecolor_btn)
-        Dialog.setTabOrder(self.mk_facecolor_btn, self.mk_edgecolor_btn)
-        Dialog.setTabOrder(self.mk_edgecolor_btn, self.mk_size_lineEdit)
-        Dialog.setTabOrder(self.mk_size_lineEdit, self.mk_width_lineEdit)
-        Dialog.setTabOrder(self.mk_width_lineEdit, self.line_label_lineEdit)
-        Dialog.setTabOrder(self.line_label_lineEdit, self.cmap_class_cbb)
-        Dialog.setTabOrder(self.cmap_class_cbb, self.cmap_cbb)
-        Dialog.setTabOrder(self.cmap_cbb, self.add_to_fav_btn)
-        Dialog.setTabOrder(self.add_to_fav_btn, self.del_from_fav_btn)
-        Dialog.setTabOrder(self.del_from_fav_btn, self.reverse_cmap_chkbox)
-        Dialog.setTabOrder(self.reverse_cmap_chkbox, self.cr_reset_tbtn)
-        Dialog.setTabOrder(self.cr_reset_tbtn, self.cr_min_dSpinBox)
-        Dialog.setTabOrder(self.cr_min_dSpinBox, self.cr_max_dSpinBox)
-        Dialog.setTabOrder(self.cr_max_dSpinBox, self.show_colorbar_chkbox)
-        Dialog.setTabOrder(self.show_colorbar_chkbox, self.cb_orientation_cbb)
-        Dialog.setTabOrder(self.cb_orientation_cbb, self.figWidth_lineEdit)
+        Dialog.setTabOrder(self.yaxis_scale_cbb, self.figWidth_lineEdit)
         Dialog.setTabOrder(self.figWidth_lineEdit, self.figHeight_lineEdit)
         Dialog.setTabOrder(self.figHeight_lineEdit, self.figDpi_lineEdit)
-        Dialog.setTabOrder(self.figDpi_lineEdit, self.mticks_chkbox)
+        Dialog.setTabOrder(self.figDpi_lineEdit, self.figAspect_cbb)
+        Dialog.setTabOrder(self.figAspect_cbb, self.bkgd_color_btn)
+        Dialog.setTabOrder(self.bkgd_color_btn, self.ticks_color_btn)
+        Dialog.setTabOrder(self.ticks_color_btn, self.grid_color_btn)
+        Dialog.setTabOrder(self.grid_color_btn, self.ticks_hide_chkbox)
+        Dialog.setTabOrder(self.ticks_hide_chkbox, self.mticks_chkbox)
         Dialog.setTabOrder(self.mticks_chkbox, self.xy_ticks_font_btn)
-        Dialog.setTabOrder(self.xy_ticks_font_btn, self.enable_mathtext_chkbox)
+        Dialog.setTabOrder(self.xy_ticks_font_btn, self.xticks_rotation_sbox)
+        Dialog.setTabOrder(self.xticks_rotation_sbox,
+                           self.yticks_rotation_sbox)
+        Dialog.setTabOrder(self.yticks_rotation_sbox,
+                           self.enable_mathtext_chkbox)
         Dialog.setTabOrder(self.enable_mathtext_chkbox,
                            self.xtick_formatter_cbb)
         Dialog.setTabOrder(self.xtick_formatter_cbb,
@@ -2117,6 +2113,63 @@ class Ui_Dialog(object):
         Dialog.setTabOrder(self.ytick_funcformatter_lineEdit,
                            self.tightLayout_chkbox)
         Dialog.setTabOrder(self.tightLayout_chkbox, self.gridon_chkbox)
+        Dialog.setTabOrder(self.gridon_chkbox, self.border_hide_chkbox)
+        Dialog.setTabOrder(self.border_hide_chkbox, self.border_color_btn)
+        Dialog.setTabOrder(self.border_color_btn, self.border_lw_sbox)
+        Dialog.setTabOrder(self.border_lw_sbox, self.border_ls_cbb)
+        Dialog.setTabOrder(self.border_ls_cbb, self.line_id_cbb)
+        Dialog.setTabOrder(self.line_id_cbb, self.line_hide_chkbox)
+        Dialog.setTabOrder(self.line_hide_chkbox, self.line_style_cbb)
+        Dialog.setTabOrder(self.line_style_cbb, self.line_color_btn)
+        Dialog.setTabOrder(self.line_color_btn, self.line_width_lineEdit)
+        Dialog.setTabOrder(self.line_width_lineEdit, self.mk_style_cbb)
+        Dialog.setTabOrder(self.mk_style_cbb, self.mk_facecolor_btn)
+        Dialog.setTabOrder(self.mk_facecolor_btn, self.mk_edgecolor_btn)
+        Dialog.setTabOrder(self.mk_edgecolor_btn, self.mk_size_lineEdit)
+        Dialog.setTabOrder(self.mk_size_lineEdit, self.mk_width_lineEdit)
+        Dialog.setTabOrder(self.mk_width_lineEdit, self.opacity_val_slider)
+        Dialog.setTabOrder(self.opacity_val_slider, self.line_label_lineEdit)
+        Dialog.setTabOrder(self.line_label_lineEdit,
+                           self.show_smooth_line_chkbox)
+        Dialog.setTabOrder(self.show_smooth_line_chkbox,
+                           self.smooth_method_cbb)
+        Dialog.setTabOrder(self.smooth_method_cbb, self.eb_line_id_cbb)
+        Dialog.setTabOrder(self.eb_line_id_cbb, self.eb_line_hide_chkbox)
+        Dialog.setTabOrder(self.eb_line_hide_chkbox, self.eb_line_style_cbb)
+        Dialog.setTabOrder(self.eb_line_style_cbb, self.eb_line_color_btn)
+        Dialog.setTabOrder(self.eb_line_color_btn, self.eb_line_width_lineEdit)
+        Dialog.setTabOrder(self.eb_line_width_lineEdit, self.yeb_mk_style_cbb)
+        Dialog.setTabOrder(self.yeb_mk_style_cbb, self.eb_mk_facecolor_btn)
+        Dialog.setTabOrder(self.eb_mk_facecolor_btn, self.eb_mk_edgecolor_btn)
+        Dialog.setTabOrder(self.eb_mk_edgecolor_btn, self.eb_mk_size_lineEdit)
+        Dialog.setTabOrder(self.eb_mk_size_lineEdit, self.eb_mk_width_lineEdit)
+        Dialog.setTabOrder(self.eb_mk_width_lineEdit, self.xeb_mk_style_cbb)
+        Dialog.setTabOrder(self.xeb_mk_style_cbb, self.cmap_class_cbb)
+        Dialog.setTabOrder(self.cmap_class_cbb, self.cmap_cbb)
+        Dialog.setTabOrder(self.cmap_cbb, self.add_to_fav_btn)
+        Dialog.setTabOrder(self.add_to_fav_btn, self.del_from_fav_btn)
+        Dialog.setTabOrder(self.del_from_fav_btn, self.reverse_cmap_chkbox)
+        Dialog.setTabOrder(self.reverse_cmap_chkbox, self.auto_clim_chkbox)
+        Dialog.setTabOrder(self.auto_clim_chkbox, self.cr_reset_tbtn)
+        Dialog.setTabOrder(self.cr_reset_tbtn, self.cr_min_dSpinBox)
+        Dialog.setTabOrder(self.cr_min_dSpinBox, self.cr_max_dSpinBox)
+        Dialog.setTabOrder(self.cr_max_dSpinBox, self.show_colorbar_chkbox)
+        Dialog.setTabOrder(self.show_colorbar_chkbox, self.cb_orientation_cbb)
+        Dialog.setTabOrder(self.cb_orientation_cbb, self.bar_color_btn)
+        Dialog.setTabOrder(self.bar_color_btn, self.bar_width_lineEdit)
+        Dialog.setTabOrder(self.bar_width_lineEdit, self.ebline_color_btn)
+        Dialog.setTabOrder(self.ebline_color_btn, self.ebline_width_lineEdit)
+        Dialog.setTabOrder(self.ebline_width_lineEdit, self.ebline_style_cbb)
+        Dialog.setTabOrder(self.ebline_style_cbb, self.bar_opacity_slider)
+        Dialog.setTabOrder(self.bar_opacity_slider, self.ebline_opacity_slider)
+        Dialog.setTabOrder(self.ebline_opacity_slider, self.label_lineEdit)
+        Dialog.setTabOrder(self.label_lineEdit, self.annote_fontsize_sbox)
+        Dialog.setTabOrder(self.annote_fontsize_sbox, self.annote_angle_dsbox)
+        Dialog.setTabOrder(self.annote_angle_dsbox,
+                           self.annote_bbox_alpha_dsbox)
+        Dialog.setTabOrder(self.annote_bbox_alpha_dsbox,
+                           self.reset_annote_fmt_btn)
+        Dialog.setTabOrder(self.reset_annote_fmt_btn, self.annote_fmt_lineEdit)
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
