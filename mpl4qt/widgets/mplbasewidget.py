@@ -632,8 +632,7 @@ class BasePlotWidget(QWidget):
         """
         self._fig_auto_scale = f
         if f:
-            self.axes.autoscale()
-            self.update_figure()
+            self.set_autoscale()
         #
         self.autoScaleOnUpdated.emit(f)
 
@@ -1446,7 +1445,7 @@ class BasePlotWidget(QWidget):
             o.set_rotation(angle)
 
     def set_autoscale(self, axis='both'):
-        self.axes.relim()
+        self.axes.relim(visible_only=True)
         self.axes.autoscale(axis=axis)
         self.update_figure()
 
@@ -1474,7 +1473,7 @@ class BasePlotWidget(QWidget):
         if k == 'g':
             # turn on/off grid
             self.setFigureGridToggle(not self.getFigureGridToggle())
-        elif k == 'a' and self.widget_type != 'image':
+        elif k == 'a': # and self.widget_type != 'image':
             # autoscale
             self.set_autoscale()
         elif k == 'm':
