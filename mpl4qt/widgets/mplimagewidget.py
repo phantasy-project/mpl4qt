@@ -51,10 +51,10 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
         self._auto_clim = False
 
         # placeholders of xylim (not applicable)
-        self._xlim_min = 0
-        self._xlim_max = 1
-        self._ylim_min = 0
-        self._ylim_max = 1
+        #self._xlim_min = 0
+        #self._xlim_max = 1
+        #self._ylim_min = 0
+        #self._ylim_max = 1
 
         super(MatplotlibImageWidget, self).__init__(parent)
 
@@ -168,9 +168,9 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
     autoColorLimit = pyqtProperty(bool, getAutoColorLimit,
                                   setAutoColorLimit)
 
-    def set_autoscale(self, axis='both'):
-        self.axes.autoscale(axis)
-        self.update_figure()
+    #def set_autoscale(self, axis='both'):
+    #    self.axes.autoscale(axis)
+    #    self.update_figure()
 
     def get_all_curves(self):
         """Return all additional curves."""
@@ -196,21 +196,21 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
         self._x_data, self._y_data, self.z = x, y, z
         self.im = im
 
-    @pyqtSlot(float)
-    def setXLimitMin(self, x=None):
-        pass
-
-    @pyqtSlot(float)
-    def setXLimitMax(self, x=None):
-        pass
-
-    @pyqtSlot(float)
-    def setYLimitMin(self, y=None):
-        pass
-
-    @pyqtSlot(float)
-    def setYLimitMax(self, y=None):
-        pass
+#    @pyqtSlot(float)
+#    def setXLimitMin(self, x=None):
+#        pass
+#
+#    @pyqtSlot(float)
+#    def setXLimitMax(self, x=None):
+#        pass
+#
+#    @pyqtSlot(float)
+#    def setYLimitMin(self, y=None):
+#        pass
+#
+#    @pyqtSlot(float)
+#    def setYLimitMax(self, y=None):
+#        pass
 
     def on_config(self):
         config_panel = MatplotlibConfigImagePanel(self)
