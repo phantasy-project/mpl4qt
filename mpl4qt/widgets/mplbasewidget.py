@@ -367,6 +367,13 @@ class BasePlotWidget(QWidget):
         raise NotImplementedError
 
     def update_figure(self):
+        if self._fig_auto_scale:
+            try:
+                self.axes.relim()
+            except:
+                pass
+            else:
+                self.axes.autoscale()
         self.canvas.draw_idle()
 
     def contextMenuEvent(self, evt):

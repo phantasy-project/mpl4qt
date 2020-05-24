@@ -809,12 +809,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.axes.set_ylim(args)
         self.update_figure()
 
-    def update_figure(self):
-        if self.getFigureAutoScale():
-            self.axes.relim()
-            self.axes.autoscale()
-        BasePlotWidget.update_figure(self)
-
     def get_points(self):
         """Return array contains (x, y) coords on curve.
         """
