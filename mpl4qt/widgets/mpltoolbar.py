@@ -197,6 +197,7 @@ class MToolbar(QToolBar):
         cross_hide_act.setToolTip("Click to hide cross point rulers.")
         cross_hide_act.triggered.connect(self.on_hide_crosses)
 
+        self.snap_cursor = None
         cross_free_act = QAction("Free Hair", self)
         cross_free_act.setCheckable(True)
         cross_free_act.toggled.connect(self.on_enable_free_cross)
@@ -321,10 +322,11 @@ class MToolbar(QToolBar):
         """Enable free crosshair tool.
         """
         if enabled:
-            ax = self.parent.axes
-            xdata = self.parent._x_data
-            ydata = self.parent._y_data
-            self.snap_cursor = SnapCursor(ax, xdata, ydata)
+            if self.snap_cursor is None:
+                ax = self.parent.axes
+                xdata = self.parent._x_data
+                ydata = self.parent._y_data
+                self.snap_cursor = SnapCursor(ax, xdata, ydata)
             self.parent.xyposUpdated.connect(self.snap_cursor.on_move)
         else:
             self.parent.xyposUpdated.disconnect(self.snap_cursor.on_move)
