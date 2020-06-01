@@ -196,9 +196,14 @@ class MToolbar(QToolBar):
         cross_hide_act = QAction(QIcon(QPixmap(":/tools/visibility_off.png")), "Hide", self)
         cross_hide_act.setToolTip("Click to hide cross point rulers.")
         cross_hide_act.triggered.connect(self.on_hide_crosses)
+
+        cross_free_act = QAction("Free Hair", self)
+        cross_free_act.setCheckable(True)
+        cross_free_act.toggled.connect(self.on_enable_free_cross)
         menu = QMenu(self)
         menu.setToolTipsVisible(True)
         menu.addAction(cross_hide_act)
+        menu.addAction(cross_free_act)
         cross_act.setMenu(menu)
 
         # info tool
@@ -310,6 +315,19 @@ class MToolbar(QToolBar):
         if not self._floating:
             self._bgcolor = color.name()
             self.setStyleSheet(TBSTY_NONFLOATING.format(self._bgcolor))
+
+    @pyqtSlot(bool)
+    def on_enable_free_cross(self, enabled):
+        """Enable free crosshair tool.
+        """
+        if enabled:
+            ax = self.parent.axes
+            xdata = self.parent._x_data
+            ydata = self.parent._y_data
+            self.snap_cursor = SnapCursor(ax, xdata, ydata)
+            self.parent.xyposUpdated.connect(self.snap_cursor.on_move)
+        else:
+            self.parent.xyposUpdated.disconnect(self.snap_cursor.on_move)
 
     @pyqtSlot()
     def on_hide_crosses(self):
@@ -482,4 +500,41 @@ class SelectFromPoints(QObject):
 
     def disconnect(self):
         self.lasso.disconnect_events()
+        self.canvas.draw_idle()
+
+
+class SnapCursor(object):
+
+    def __init__(self, ax, xdata, ydata):
+        super(SnapCursor, self).__init__()
+        self.ax = ax
+        self.canvas = ax.figure.canvas
+        self.xdata = xdata
+        self.ydata = ydata
+        x0, y0 = xdata[0], ydata[0]
+        self._hline = ax.axhline(color='#343A40', alpha=0.95)
+        self._vline = ax.axvline(color='#343A40', alpha=0.95)
+        self._text_x = ax.annotate('', xy=(x0, 1.005), ha='center', va='bottom',
+                                   xycoords=('data', 'axes fraction'),
+                                   rotation=90, color='w',
+                                   bbox=dict(
+                                       boxstyle='larrow,pad=0.25',
+                                       fc='#007BFF', ec='b', lw=1.0, alpha=0.95))
+        self._text_y = ax.annotate('', xy=(1.005, y0), ha='left', va='center',
+                                   xycoords=('axes fraction', 'data'),
+                                   color='w',
+                                   bbox=dict(
+                                       boxstyle='larrow,pad=0.25',
+                                       fc='#007BFF', ec='b', lw=1.0, alpha=0.95))
+
+    def on_move(self, pos_tuple):
+        x, y = pos_tuple
+        idx = min(np.searchsorted(self.xdata, x), len(self.xdata) - 1)
+        x, y = self.xdata[idx], self.ydata[idx]
+        self._hline.set_ydata(y)
+        self._vline.set_xdata(x)
+        self._text_x.set_x(x)
+        self._text_y.set_y(y)
+        self._text_x.set_text("{0:.3f}".format(x))
+        self._text_y.set_text("{0:.3f}".format(y))
         self.canvas.draw_idle()

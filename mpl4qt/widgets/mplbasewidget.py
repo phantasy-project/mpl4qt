@@ -161,6 +161,8 @@ class BasePlotWidget(QWidget):
         self._cpoint_text = None  # coord annote of cross-point
         self._ruler_on = False    # default is not enabled
         self._visible_hvlines = True  # default visibility
+        # free cross
+        self._free_cross_enabled = False
 
         # pan
         self._pan_on = False
