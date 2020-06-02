@@ -92,6 +92,9 @@ class MToolbar(QToolBar):
     # zoomed ROI changed
     zoom_roi_changed = pyqtSignal(tuple, tuple)
 
+    # add marker tool is checked or not
+    marker_add_checked = pyqtSignal(bool)
+
     def __init__(self, canvas, parent=None):
         super(MToolbar, self).__init__()
         self.parent = parent
@@ -214,6 +217,7 @@ class MToolbar(QToolBar):
         cross_marker_act.setCheckable(True)
         cross_marker_act.setToolTip("Click to add a crosshair marker (CTRL + M)")
         cross_marker_act.toggled.connect(self.on_add_marker)
+        self.marker_add_checked.connect(self.parent.on_marker_add_checked)
 
         self.mk_view = None
         cross_show_mk_act = QAction(QIcon(QPixmap(":/icons/view_list.png")), "Show Markers", self)
@@ -410,6 +414,7 @@ class MToolbar(QToolBar):
     def on_add_marker(self, is_checked):
         # place a new cross marker if checked.
         self.parent._to_add_marker = is_checked
+        self.marker_add_checked.emit(is_checked)
         if is_checked:
             self.parent._added_marker = False
             self.parent._mk_name = 'M{}'.format(self.parent._marker_id)

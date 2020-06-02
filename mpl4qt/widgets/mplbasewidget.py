@@ -60,6 +60,7 @@ from mpl4qt.widgets.utils import ALL_COLORMAPS
 from mpl4qt.widgets.utils import AUTOFORMATTER
 from mpl4qt.widgets.utils import AUTOFORMATTER_MATHTEXT
 from mpl4qt.widgets.utils import BOOTSTRAP_GREEN
+from mpl4qt.widgets.utils import BOOTSTRAP_RED
 from mpl4qt.widgets.utils import LINE_STY_VALS
 from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
 from mpl4qt.widgets.utils import SCALE_STY_VALS
@@ -179,15 +180,19 @@ class BasePlotWidget(QWidget):
         self.as_ann = None
         self.autoScaleOnUpdated.connect(self.on_autoscale_toggled)
 
+        # add marker mpltool
+        self._mk_add_hint_ann = None
+
     @pyqtSlot(bool)
     def on_autoscale_toggled(self, auto_scale_enabled):
         # if auto scale is enabled, put text label
         if auto_scale_enabled:
             if self.as_ann is None:
-                self.as_ann = self.axes.annotate('AutoScale',
-                            xy=(0.95, 0.95),
-                            ha='center', va='center',
-                            xycoords=('figure fraction'),
+                self.as_ann = self.axes.annotate('AutoScale is Enabled',
+                            xy=(1.0, 1.01),
+                            ha='right', va='bottom',
+                            xycoords=('axes fraction'),
+                            color='w', fontweight='bold',
                             bbox=dict(
                                 boxstyle='round,pad=0.3',
                                 fc=BOOTSTRAP_GREEN, ec=BOOTSTRAP_GREEN,
@@ -198,6 +203,29 @@ class BasePlotWidget(QWidget):
             if self.as_ann is not None:
                 self.as_ann.set_visible(False)
         self.update_figure()
+
+    @pyqtSlot(bool)
+    def on_marker_add_checked(self, is_checked):
+        # Add marker tool is checked.
+        if is_checked:
+            if self._mk_add_hint_ann is None:
+                self._mk_add_hint_ann = self.axes.annotate("Adding Marker is Activated, Finish by CTRL+M\nStart New by CTRL+M",
+                            xy=(0, 1.01),
+                            ha='left', va='bottom',
+                            xycoords=('axes fraction'),
+                            color='w', fontweight='bold',
+                            bbox=dict(
+                                boxstyle='round,pad=0.3',
+                                fc=BOOTSTRAP_RED, ec=BOOTSTRAP_RED,
+                                lw=1.0, alpha=0.8))
+            else:
+                self._mk_add_hint_ann.set_visible(True)
+        else:
+            if self._mk_add_hint_ann is not None:
+                self._mk_add_hint_ann.set_visible(False)
+        self.update_figure()
+
+
 
     def __show_mpl_tools(self):
         if 'w_mpl_tools' in self._handlers:
