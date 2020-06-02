@@ -34,6 +34,7 @@ from matplotlib.path import Path
 from matplotlib.widgets import LassoSelector
 
 from mpl4qt.widgets.utils import COLOR_CYCLE
+from mpl4qt.widgets.markers_view import MarkersView
 
 TBSTY_FLOATING = """
 QToolBar {
@@ -210,11 +211,17 @@ class MToolbar(QToolBar):
         cross_marker_act.setToolTip("Click to add a crosshair marker.")
         cross_marker_act.toggled.connect(self.on_add_marker)
 
+        self.mk_view = None
+        cross_show_mk_act = QAction("Show Markers", self)
+        cross_show_mk_act.setToolTip("Show all markers.")
+        cross_show_mk_act.triggered.connect(self.on_show_mks)
+
         menu = QMenu(self)
         menu.setToolTipsVisible(True)
         menu.addAction(cross_marker_act)
         menu.addAction(cross_marker_text_act)
         menu.addAction(cross_hide_act)
+        menu.addAction(cross_show_mk_act)
         cross_act.setMenu(menu)
 
         # info tool
@@ -400,14 +407,35 @@ class MToolbar(QToolBar):
         self.parent._to_add_marker = is_checked
         if is_checked:
             self.parent._added_marker = False
-            self.parent._marker_id += 1
+            self.parent._mk_name = 'M{}'.format(self.parent._marker_id)
             self.parent._current_mc = next(COLOR_CYCLE)
             self.sender().setText("Adding Marker (click when done)")
             QGuiApplication.setOverrideCursor(Qt.CrossCursor)
         else:
             if not self.parent._added_marker:
                 self.parent._marker_id -= 1
+            else:
+                self.parent._marker_id += 1
             self.sender().setText("Add Marker")
+
+    @pyqtSlot('QString')
+    def on_remove_marker(self, mk_name):
+        # remove marker of the name *mk_name*, maintain marker_id/n_markers
+        for i, (hl, vl, cp, pt, _, name) in enumerate(self.parent._markers):
+            if name == mk_name:
+                self.parent._markers.pop(i)
+                [o.remove() for o in (hl, vl, cp, pt)]
+                self.parent.update_figure()
+
+    @pyqtSlot()
+    def on_show_mks(self):
+        # show all markers.
+        if self.mk_view is None:
+            self.mk_view = MarkersView(self.parent._markers, self)
+            self.mk_view.marker_removed.connect(self.on_remove_marker)
+            self.parent.markerUpdated.connect(self.mk_view.on_add_marker)
+        self.mk_view.adjustSize()
+        self.mk_view.show()
 
     @pyqtSlot()
     def repos_toolbar(self):
