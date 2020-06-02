@@ -167,10 +167,16 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
             self.parent.setFigureXlabel)
         self.fig_ylabel_lineEdit.textChanged.connect(
             self.parent.setFigureYlabel)
+        self.hide_xylabel_chkbox.setChecked(not self.parent.getFigureXYlabelVisible())
+        self.hide_xylabel_chkbox.toggled.connect(
+                lambda f: self.parent.setFigureXYlabelVisible(not f))
 
         ## title
         self.fig_title_lineEdit.textChanged.connect(self.parent.setFigureTitle)
         self.figTitleFontChanged.connect(self.parent.setFigureTitleFont)
+        self.hide_title_chkbox.setChecked(not self.parent.getFigureTitleVisible())
+        self.hide_title_chkbox.toggled.connect(
+                lambda f: self.parent.setFigureTitleVisible(not f))
 
         # xy ticks
         self.figXYticksFontChanged.connect(self.parent.setFigureXYticksFont)

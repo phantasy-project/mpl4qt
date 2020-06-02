@@ -237,12 +237,14 @@ class BasePlotWidget(QWidget):
         # xy labels
         lbl = self.axes.xaxis.label
         self._fig_xylabel_font = mfont_to_qfont(lbl.get_fontproperties())
+        self._fig_xylabel_visible = lbl.get_visible()
         # xy ticklabels
         tklbl = self.axes.get_xticklabels()[0]
         self._fig_xyticks_font = mfont_to_qfont(tklbl.get_fontproperties())
         # title
         title = self.axes.title
         self._fig_title_font = mfont_to_qfont(title.get_fontproperties())
+        self._fig_title_visible = title.get_visible()
 
         ## border, if auto scale is enabled, style could not be changed.
         o = list(self.axes.spines.values())[0]
@@ -822,6 +824,46 @@ class BasePlotWidget(QWidget):
         self.update_figure()
 
     figureYlabel = pyqtProperty('QString', getFigureYlabel, setFigureYlabel)
+
+
+    def getFigureXYlabelVisible(self):
+        return self._fig_xylabel_visible
+
+    @pyqtSlot(bool)
+    def setFigureXYlabelVisible(self, f):
+        """Set figure xylabels visible or not.
+
+        Parameters
+        ----------
+        f : bool
+            Figure xylabels visible or not.
+        """
+        self._fig_xylabel_visible = f
+        self.axes.xaxis.label.set_visible(f)
+        self.axes.yaxis.label.set_visible(f)
+        self.update_figure()
+
+    figureXYlabelVisible = pyqtProperty(bool, getFigureXYlabelVisible,
+                                        setFigureXYlabelVisible)
+
+    def getFigureTitleVisible(self):
+        return self._fig_title_visible
+
+    @pyqtSlot(bool)
+    def setFigureTitleVisible(self, f):
+        """Set figure title visible or not.
+
+        Parameters
+        ----------
+        f : bool
+            Figure title visible or not.
+        """
+        self._fig_title_visible = f
+        self.axes.title.set_visible(f)
+        self.update_figure()
+
+    figureTitleVisible = pyqtProperty(bool, getFigureTitleVisible,
+                                      setFigureTitleVisible)
 
     def getFigureTitle(self):
         return self._fig_title
