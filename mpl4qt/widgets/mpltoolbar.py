@@ -196,6 +196,7 @@ class MToolbar(QToolBar):
 
         cross_marker_text_act = QAction("Marker with (x, y)", self)
         cross_marker_text_act.setCheckable(True)
+        cross_marker_text_act.setToolTip("Check to mark with (x, y)")
         cross_marker_text_act.toggled.connect(self.on_marker_with_xy)
 
         cross_hide_act = QAction(QIcon(QPixmap(":/tools/visibility_off.png")), "Hide", self)
@@ -338,8 +339,10 @@ class MToolbar(QToolBar):
         for _, _, _, pt, (x, y), mk_name in self.parent._markers:
             if marker_with_xy:
                 pt.set_text('{0:g},{1:g}'.format(x,y))
+                self.sender().setToolTip("Uncheck to mark with literal names")
             else:
                 pt.set_text(mk_name)
+                self.sender().setToolTip("Check to mark with (x, y)")
         self.parent.update_figure()
 
     @pyqtSlot(bool)
