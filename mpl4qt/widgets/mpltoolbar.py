@@ -346,14 +346,29 @@ class MToolbar(QToolBar):
         """Enable free crosshair tool.
         """
         if enabled:
-            if self.snap_cursor is None:
-                ax = self.parent.axes
-                xdata = self.parent._x_data
-                ydata = self.parent._y_data
-                self.snap_cursor = SnapCursor(ax, xdata, ydata)
-            self.parent.xyposUpdated.connect(self.snap_cursor.on_move)
-            self.parent.dataChanged.connect(self.snap_cursor.set_xydata)
+            try:
+                if self.snap_cursor is None:
+                    xdata = self.parent._x_data
+                    ydata = self.parent._y_data
+                    if xdata.size == 0:
+                        raise SnapCursorNoDataProbe("No data to probe.")
+                    raise SnapCursorNotExist("SnapCursor does not exist.")
+                else:
+                    raise SnapCursorAlreadyExisted('SnapCursor is existed.')
+            except SnapCursorNoDataProbe as err:
+                QMessageBox.warning(self, 'Snap Cursor Tool',
+                                    str(err), QMessageBox.Ok)
+                self.sender().setChecked(False)
+            except SnapCursorAlreadyExisted:
+                self.parent.xyposUpdated.connect(self.snap_cursor.on_move)
+                self.parent.dataChanged.connect(self.snap_cursor.set_xydata)
+            except SnapCursorNotExist:
+                self.snap_cursor = SnapCursor(self.parent.axes, xdata, ydata)
+                self.parent.xyposUpdated.connect(self.snap_cursor.on_move)
+                self.parent.dataChanged.connect(self.snap_cursor.set_xydata)
         else:
+            if self.snap_cursor is None:
+                return
             self.parent.xyposUpdated.disconnect(self.snap_cursor.on_move)
             self.parent.dataChanged.disconnect(self.snap_cursor.set_xydata)
             self.snap_cursor.delete()
@@ -547,24 +562,30 @@ class SnapCursor(object):
         self.ax = ax
         self.canvas = ax.figure.canvas
         self.set_xydata(xdata, ydata)
-        x0, y0 = xdata[0], ydata[0]
-        self._hline = ax.axhline(color='#343A40', alpha=0.95)
-        self._vline = ax.axvline(color='#343A40', alpha=0.95)
-        self._text_x = ax.annotate('', xy=(x0, 1.005), ha='center', va='bottom',
-                                   xycoords=('data', 'axes fraction'),
-                                   rotation=90, color='w',
-                                   bbox=dict(
-                                       boxstyle='larrow,pad=0.25',
-                                       fc='#007BFF', ec='b', lw=1.0, alpha=0.95))
-        self._text_y = ax.annotate('', xy=(1.005, y0), ha='left', va='center',
-                                   xycoords=('axes fraction', 'data'),
-                                   color='w',
-                                   bbox=dict(
-                                       boxstyle='larrow,pad=0.25',
-                                       fc='#007BFF', ec='b', lw=1.0, alpha=0.95))
+        self.init_cursor()
+
+    def init_cursor(self):
+        x0, y0 = self.xdata[0], self.ydata[0]
+        self._hline = self.ax.axhline(color='#343A40', alpha=0.95)
+        self._vline = self.ax.axvline(color='#343A40', alpha=0.95)
+        self._text_x = self.ax.annotate('', xy=(x0, 1.005),
+                                        ha='center', va='bottom',
+                                        xycoords=('data', 'axes fraction'),
+                                        rotation=90, color='w',
+                                        bbox=dict(
+                                            boxstyle='larrow,pad=0.25',
+                                            fc='#007BFF', ec='b',
+                                            lw=1.0, alpha=0.95))
+        self._text_y = self.ax.annotate('', xy=(1.005, y0),
+                                        ha='left', va='center',
+                                        xycoords=('axes fraction', 'data'),
+                                        color='w',
+                                        bbox=dict(
+                                            boxstyle='larrow,pad=0.25',
+                                            fc='#007BFF', ec='b',
+                                            lw=1.0, alpha=0.95))
     def set_xydata(self, xdata, ydata):
         # set x y array data.
-        print("Update xydata.")
         ascend_data = np.asarray(sorted(zip(xdata, ydata), key=lambda i:i[0]))
         self.xdata = ascend_data[:, 0]
         self.ydata = ascend_data[:, 1]
@@ -586,3 +607,17 @@ class SnapCursor(object):
             o.remove()
         self.canvas.draw_idle()
 
+
+class SnapCursorNoDataProbe(Exception):
+    def __init__(self, *args, **kws):
+        super(self.__class__, self).__init__(*args, **kws)
+
+
+class SnapCursorNotExist(Exception):
+    def __init__(self, *args, **kws):
+        super(self.__class__, self).__init__(*args, **kws)
+
+
+class SnapCursorAlreadyExisted(Exception):
+    def __init__(self, *args, **kws):
+        super(self.__class__, self).__init__(*args, **kws)
