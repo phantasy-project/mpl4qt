@@ -212,7 +212,7 @@ class MToolbar(QToolBar):
         cross_marker_act.toggled.connect(self.on_add_marker)
 
         self.mk_view = None
-        cross_show_mk_act = QAction("Show Markers", self)
+        cross_show_mk_act = QAction(QIcon(QPixmap(":/icons/view_list.png")), "Show Markers", self)
         cross_show_mk_act.setToolTip("Show all markers.")
         cross_show_mk_act.triggered.connect(self.on_show_mks)
 
@@ -220,8 +220,8 @@ class MToolbar(QToolBar):
         menu.setToolTipsVisible(True)
         menu.addAction(cross_marker_act)
         menu.addAction(cross_marker_text_act)
-        menu.addAction(cross_hide_act)
         menu.addAction(cross_show_mk_act)
+        menu.addAction(cross_hide_act)
         cross_act.setMenu(menu)
 
         # info tool
