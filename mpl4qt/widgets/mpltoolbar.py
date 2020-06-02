@@ -190,6 +190,7 @@ class MToolbar(QToolBar):
         lasso_act.setToolTip("Select point(s) by lassoing")
 
         # cross ruler tool
+        self.snap_cursor = None
         cross_act = QAction(QIcon(QPixmap(":/tools/cross.png")), "Crosshair", self)
         cross_act.setCheckable(True)
         cross_act.setToolTip("Coordinate locator and marker")
@@ -199,14 +200,10 @@ class MToolbar(QToolBar):
         cross_marker_text_act.setToolTip("Check to mark with (x, y)")
         cross_marker_text_act.toggled.connect(self.on_marker_with_xy)
 
-        cross_hide_act = QAction(QIcon(QPixmap(":/tools/visibility_off.png")), "Hide", self)
+        cross_hide_act = QAction(QIcon(QPixmap(":/tools/visibility_off.png")), "Hide Markers", self)
         cross_hide_act.setToolTip("Click to hide crosshair markers.")
         cross_hide_act.triggered.connect(self.on_hide_crosses)
 
-        self.snap_cursor = None
-        cross_free_act = QAction("Free Hair", self)
-        cross_free_act.setCheckable(True)
-        cross_free_act.toggled.connect(self.on_enable_free_cross)
 
         cross_marker_act = QAction(QIcon(QPixmap(":/tools/add_marker.png")), "Add Marker", self)
         cross_marker_act.setCheckable(True)
@@ -218,7 +215,6 @@ class MToolbar(QToolBar):
         menu.addAction(cross_marker_act)
         menu.addAction(cross_marker_text_act)
         menu.addAction(cross_hide_act)
-        menu.addAction(cross_free_act)
         cross_act.setMenu(menu)
 
         # info tool
@@ -346,7 +342,7 @@ class MToolbar(QToolBar):
         self.parent.update_figure()
 
     @pyqtSlot(bool)
-    def on_enable_free_cross(self, enabled):
+    def cross_ruler(self, enabled):
         """Enable free crosshair tool.
         """
         if enabled:
@@ -356,8 +352,12 @@ class MToolbar(QToolBar):
                 ydata = self.parent._y_data
                 self.snap_cursor = SnapCursor(ax, xdata, ydata)
             self.parent.xyposUpdated.connect(self.snap_cursor.on_move)
+            self.parent.dataChanged.connect(self.snap_cursor.set_xydata)
         else:
             self.parent.xyposUpdated.disconnect(self.snap_cursor.on_move)
+            self.parent.dataChanged.disconnect(self.snap_cursor.set_xydata)
+            self.snap_cursor.delete()
+            self.snap_cursor = None
 
     @pyqtSlot()
     def on_hide_crosses(self):
@@ -365,27 +365,19 @@ class MToolbar(QToolBar):
         if not self.parent._markers:
             return
         o = self.sender()
-        show_flag = o.text() == "Show"
+        show_flag = o.text() == "Show Markers"
         self.parent.set_visible_hvlines(show_flag)
         if show_flag:
             icon = QIcon(QPixmap(":/tools/visibility_off.png"))
-            lbl = 'Hide'
+            lbl = 'Hide Markers'
             tp = "Click to show crosshair markers."
         else:
             icon = QIcon(QPixmap(":/tools/visibility.png"))
-            lbl = 'Show'
+            lbl = 'Show Markers'
             tp = "Click to hide crosshair markers."
         o.setIcon(icon)
         o.setText(lbl)
         o.setToolTip(tp)
-
-    @pyqtSlot()
-    def cross_ruler(self):
-        # parent widget defines how to draw cross ruler.
-        is_checked = self.sender().isChecked()
-        self.parent._ruler_on = is_checked
-        if is_checked:
-            QGuiApplication.setOverrideCursor(Qt.CrossCursor)
 
     @pyqtSlot(bool)
     def on_add_marker(self, is_checked):
@@ -395,10 +387,12 @@ class MToolbar(QToolBar):
             self.parent._added_marker = False
             self.parent._marker_id += 1
             self.parent._current_mc = next(COLOR_CYCLE)
+            self.sender().setText("Adding Marker (click when done)")
             QGuiApplication.setOverrideCursor(Qt.CrossCursor)
         else:
             if not self.parent._added_marker:
                 self.parent._marker_id -= 1
+            self.sender().setText("Add Marker")
 
     @pyqtSlot()
     def repos_toolbar(self):
@@ -552,8 +546,7 @@ class SnapCursor(object):
         super(SnapCursor, self).__init__()
         self.ax = ax
         self.canvas = ax.figure.canvas
-        self.xdata = xdata
-        self.ydata = ydata
+        self.set_xydata(xdata, ydata)
         x0, y0 = xdata[0], ydata[0]
         self._hline = ax.axhline(color='#343A40', alpha=0.95)
         self._vline = ax.axvline(color='#343A40', alpha=0.95)
@@ -569,6 +562,12 @@ class SnapCursor(object):
                                    bbox=dict(
                                        boxstyle='larrow,pad=0.25',
                                        fc='#007BFF', ec='b', lw=1.0, alpha=0.95))
+    def set_xydata(self, xdata, ydata):
+        # set x y array data.
+        print("Update xydata.")
+        ascend_data = np.asarray(sorted(zip(xdata, ydata), key=lambda i:i[0]))
+        self.xdata = ascend_data[:, 0]
+        self.ydata = ascend_data[:, 1]
 
     def on_move(self, pos_tuple):
         x, y = pos_tuple
@@ -581,3 +580,9 @@ class SnapCursor(object):
         self._text_x.set_text("{0:.3f}".format(x))
         self._text_y.set_text("{0:.3f}".format(y))
         self.canvas.draw_idle()
+
+    def delete(self):
+        for o in (self._hline, self._vline, self._text_x, self._text_y):
+            o.remove()
+        self.canvas.draw_idle()
+

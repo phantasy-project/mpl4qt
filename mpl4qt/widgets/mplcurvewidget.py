@@ -53,6 +53,9 @@ class MatplotlibCurveWidget(BasePlotWidget):
     and slots that can be used to customize its appearance.
     """
 
+    # xydata changed
+    dataChanged = pyqtSignal(np.ndarray, np.ndarray)
+
     def __init__(self, parent=None):
         super(MatplotlibCurveWidget, self).__init__(parent)
 
@@ -115,6 +118,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._line.set_data(x_data, y_data)
         self._x_data, self._y_data = x_data, y_data
         self.update_figure()
+        self.dataChanged.emit(x_data, y_data)
 
     def get_all_curves(self):
         """Return all curves."""
@@ -132,7 +136,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def sizeHint(self):
         return QSize(1.1 * self._fig_width * self._fig_dpi,
                      1.1 * self._fig_height * self._fig_dpi)
-
 
     def getLineAlpha(self):
         return self._line_alpha
