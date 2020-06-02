@@ -158,8 +158,7 @@ class BasePlotWidget(QWidget):
         self._markers = [] # list of [hl,vl,cp,pt,(x,y),mk_name]
         self._to_add_marker = False
         self._added_marker = False # if added or not
-        self._marker_id = -1
-        self._n_markers = 0
+        self._marker_id = 0 # initial marker id, always increase, even for deletion
         self._marker_with_xy = False  # anote with (x,y)
         self._visible_hvlines = True  # default visibility
 
