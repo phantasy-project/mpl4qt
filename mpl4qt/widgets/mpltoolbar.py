@@ -194,25 +194,30 @@ class MToolbar(QToolBar):
         self.snap_cursor = None
         cross_act = QAction(QIcon(QPixmap(":/tools/cross.png")), "Crosshair", self)
         cross_act.setCheckable(True)
-        cross_act.setToolTip("Coordinate locator and marker")
+        cross_act.setShortcut(Qt.CTRL + Qt.Key_R)
+        cross_act.setToolTip("Coordinate locator (CTRL + R) and marker")
 
         cross_marker_text_act = QAction("Marker with (x, y)", self)
         cross_marker_text_act.setCheckable(True)
+        cross_marker_text_act.setShortcut(Qt.SHIFT + Qt.Key_P)
         cross_marker_text_act.setToolTip("Check to mark with (x, y)")
         cross_marker_text_act.toggled.connect(self.on_marker_with_xy)
 
         cross_hide_act = QAction(QIcon(QPixmap(":/tools/visibility_off.png")), "Hide Markers", self)
+        cross_hide_act.setShortcut(Qt.CTRL + Qt.Key_H)
         cross_hide_act.setToolTip("Click to hide crosshair markers.")
         cross_hide_act.triggered.connect(self.on_hide_crosses)
 
 
         cross_marker_act = QAction(QIcon(QPixmap(":/tools/add_marker.png")), "Add Marker", self)
+        cross_marker_act.setShortcut(Qt.CTRL + Qt.Key_M)
         cross_marker_act.setCheckable(True)
-        cross_marker_act.setToolTip("Click to add a crosshair marker.")
+        cross_marker_act.setToolTip("Click to add a crosshair marker (CTRL + M)")
         cross_marker_act.toggled.connect(self.on_add_marker)
 
         self.mk_view = None
         cross_show_mk_act = QAction(QIcon(QPixmap(":/icons/view_list.png")), "Show Markers", self)
+        cross_show_mk_act.setShortcut(Qt.CTRL + Qt.Key_V)
         cross_show_mk_act.setToolTip("Show all markers.")
         cross_show_mk_act.triggered.connect(self.on_show_mks)
 
