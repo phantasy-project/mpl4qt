@@ -163,9 +163,6 @@ class BasePlotWidget(QWidget):
         self._marker_with_xy = False  # anote with (x,y)
         self._visible_hvlines = True  # default visibility
 
-        # free cross
-        self._free_cross_enabled = False
-
         # pan
         self._pan_on = False
 
