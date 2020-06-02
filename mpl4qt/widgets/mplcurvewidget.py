@@ -708,9 +708,10 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def on_press(self, e):
         if e.inaxes is None:
             return
-        if e.button == 1 and self._ruler_on:
+        if e.button == 1 and self._to_add_marker:
+            self.draw_hvlines(e.xdata, e.ydata, self._marker_id, self._current_mc)
             self.set_visible_hvlines(self._visible_hvlines)
-            self.draw_hvlines(e.xdata, e.ydata)
+            self._added_marker = True
             QGuiApplication.restoreOverrideCursor()
         elif e.button == 2:
             self._pan_x0 = e.xdata
@@ -734,48 +735,66 @@ class MatplotlibCurveWidget(BasePlotWidget):
             self.update_figure()
             self.unsetCursor()
 
-    def draw_hvlines(self, x0, y0):
-        if self._hline is None:
-            self._hline = self.axes.axhline(y0,
-                                            alpha=0.8, color='b', ls='--')
-            self._hline.set_label('H-Ruler')
-            self._lines.append(self._hline)
+    def draw_hvlines(self, x0, y0, marker_id, mc):
+        if marker_id == self._n_markers:
+            is_new_makers = True
+            self._n_markers += 1
+            imarker = marker_id + 1
+            hl, vl, cp, pt, mk_name = None, None, None, None, 'M{}'.format(imarker)
         else:
-            self._hline.set_ydata([y0, y0])
+            is_new_makers = False
+            hl, vl, cp, pt, _, mk_name = self._markers[marker_id]
 
-        if self._vline is None:
-            self._vline = self.axes.axvline(x0,
-                                            alpha=0.8, color='b', ls='--')
-            self._vline.set_label('V-Ruler')
-            self._lines.append(self._vline)
+        if hl is None:
+            hl = self.axes.axhline(y0,
+                                   alpha=0.8, color=mc, ls='--')
+            hl.set_label('H-Line#{}'.format(imarker))
+            self._lines.append(hl)
         else:
-            self._vline.set_xdata([x0, x0])
+            hl.set_ydata([y0, y0])
 
-        if self._cpoint is None:
-            self._cpoint, = self.axes.plot([x0], [y0], 'o',
-                                           mec='b', mfc='b')
-            self._cpoint.set_label('Cross-Point')
-            self._lines.append(self._cpoint)
-            text = '{0:g}, {1:g}'.format(x0, y0)
-            self._cpoint_text = self.axes.annotate(
-                text, xy=(x0, y0), xytext=(15, 15),
-                xycoords="data", textcoords="offset pixels",
-                bbox=dict(boxstyle="round", fc='w'))
-            self._cpoint_text.get_bbox_patch().set_alpha(0.5)
+        if vl is None:
+            vl = self.axes.axvline(x0,
+                                   alpha=0.8, color=mc, ls='--')
+            vl.set_label('V-Line#{}'.format(imarker))
+            self._lines.append(vl)
         else:
-            self._cpoint.set_data([x0], [y0])
-            self._cpoint_text.xy = (x0, y0)
-            text = '{0:g}, {1:g}'.format(x0, y0)
-            self._cpoint_text.set_text(text)
+            vl.set_xdata([x0, x0])
+
+        if cp is None:
+            cp, = self.axes.plot([x0], [y0], 'o',
+                                 mec=mc, mfc=mc)
+            cp.set_label('Cross-Point#{}'.format(imarker))
+            self._lines.append(cp)
+            if self._marker_with_xy:
+                text = '{0:g},{1:g}'.format(x0, y0)
+            else:
+                text = mk_name
+            pt = self.axes.annotate(
+                    text, xy=(x0, y0), xytext=(15, 15),
+                    xycoords="data", textcoords="offset pixels",
+                    bbox=dict(boxstyle="round", fc='w'))
+            pt.get_bbox_patch().set_alpha(0.5)
+        else:
+            cp.set_data([x0], [y0])
+            pt.xy = (x0, y0)
+            if self._marker_with_xy:
+                pt.set_text('{0:g},{1:g}'.format(x0, y0))
+            else:
+                pt.set_text(mk_name)
+            self._markers[marker_id][-2] = (x0, y0)
+
+        if is_new_makers:
+            self._markers.append([hl, vl, cp, pt, (x0, y0), mk_name])
 
         self.update_figure()
 
     def set_visible_hvlines(self, flag=True):
-        """Set hvlines visible (*flag* is True) or invisible (*flag* is False).
+        """Set all markers visible (*flag* is True) or invisible (*flag* is False).
         """
         self._visible_hvlines = flag
-        for o in (self._hline, self._vline, self._cpoint, self._cpoint_text):
-            if o is not None:
+        for (hl, vl, cp, pt, _, _) in self._markers:
+            for o in (hl, vl, cp, pt):
                 o.set_visible(flag)
         self.update_figure()
 

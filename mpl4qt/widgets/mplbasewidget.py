@@ -154,13 +154,15 @@ class BasePlotWidget(QWidget):
         # window/widget/dialog handlers
         self._handlers = {}
 
-        # hvlines
-        self._hline = None        # h-ruler
-        self._vline = None        # v-ruler
-        self._cpoint = None       # cross-point of h,v rulers
-        self._cpoint_text = None  # coord annote of cross-point
-        self._ruler_on = False    # default is not enabled
+        # cross markers
+        self._markers = [] # list of [hl,vl,cp,pt,(x,y),mk_name]
+        self._to_add_marker = False
+        self._added_marker = False # if added or not
+        self._marker_id = -1
+        self._n_markers = 0
+        self._marker_with_xy = False  # anote with (x,y)
         self._visible_hvlines = True  # default visibility
+
         # free cross
         self._free_cross_enabled = False
 

@@ -33,6 +33,7 @@ from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT
 from matplotlib.path import Path
 from matplotlib.widgets import LassoSelector
 
+from mpl4qt.widgets.utils import COLOR_CYCLE
 
 TBSTY_FLOATING = """
 QToolBar {
@@ -189,20 +190,32 @@ class MToolbar(QToolBar):
         lasso_act.setToolTip("Select point(s) by lassoing")
 
         # cross ruler tool
-        cross_act = QAction(QIcon(QPixmap(":/tools/cross.png")), "Cross ruler", self)
+        cross_act = QAction(QIcon(QPixmap(":/tools/cross.png")), "Crosshair", self)
         cross_act.setCheckable(True)
-        cross_act.setToolTip("Coordinate locator")
+        cross_act.setToolTip("Coordinate locator and marker")
+
+        cross_marker_text_act = QAction("Marker with (x, y)", self)
+        cross_marker_text_act.setCheckable(True)
+        cross_marker_text_act.toggled.connect(self.on_marker_with_xy)
 
         cross_hide_act = QAction(QIcon(QPixmap(":/tools/visibility_off.png")), "Hide", self)
-        cross_hide_act.setToolTip("Click to hide cross point rulers.")
+        cross_hide_act.setToolTip("Click to hide crosshair markers.")
         cross_hide_act.triggered.connect(self.on_hide_crosses)
 
         self.snap_cursor = None
         cross_free_act = QAction("Free Hair", self)
         cross_free_act.setCheckable(True)
         cross_free_act.toggled.connect(self.on_enable_free_cross)
+
+        cross_marker_act = QAction(QIcon(QPixmap(":/tools/add_marker.png")), "Add Marker", self)
+        cross_marker_act.setCheckable(True)
+        cross_marker_act.setToolTip("Click to add a crosshair marker.")
+        cross_marker_act.toggled.connect(self.on_add_marker)
+
         menu = QMenu(self)
         menu.setToolTipsVisible(True)
+        menu.addAction(cross_marker_act)
+        menu.addAction(cross_marker_text_act)
         menu.addAction(cross_hide_act)
         menu.addAction(cross_free_act)
         cross_act.setMenu(menu)
@@ -318,6 +331,18 @@ class MToolbar(QToolBar):
             self.setStyleSheet(TBSTY_NONFLOATING.format(self._bgcolor))
 
     @pyqtSlot(bool)
+    def on_marker_with_xy(self, marker_with_xy):
+        """Marker the markers with (x,y) or literally with `M{i}`.
+        """
+        self.parent._marker_with_xy = marker_with_xy
+        for _, _, _, pt, (x, y), mk_name in self.parent._markers:
+            if marker_with_xy:
+                pt.set_text('{0:g},{1:g}'.format(x,y))
+            else:
+                pt.set_text(mk_name)
+        self.parent.update_figure()
+
+    @pyqtSlot(bool)
     def on_enable_free_cross(self, enabled):
         """Enable free crosshair tool.
         """
@@ -333,8 +358,8 @@ class MToolbar(QToolBar):
 
     @pyqtSlot()
     def on_hide_crosses(self):
-        # hide
-        if self.parent._vline is None:
+        # hide/show all markers
+        if not self.parent._markers:
             return
         o = self.sender()
         show_flag = o.text() == "Show"
@@ -342,11 +367,11 @@ class MToolbar(QToolBar):
         if show_flag:
             icon = QIcon(QPixmap(":/tools/visibility_off.png"))
             lbl = 'Hide'
-            tp = "Click to show cross point rulers."
+            tp = "Click to show crosshair markers."
         else:
             icon = QIcon(QPixmap(":/tools/visibility.png"))
             lbl = 'Show'
-            tp = "Click to hide cross point rulers."
+            tp = "Click to hide crosshair markers."
         o.setIcon(icon)
         o.setText(lbl)
         o.setToolTip(tp)
@@ -358,6 +383,19 @@ class MToolbar(QToolBar):
         self.parent._ruler_on = is_checked
         if is_checked:
             QGuiApplication.setOverrideCursor(Qt.CrossCursor)
+
+    @pyqtSlot(bool)
+    def on_add_marker(self, is_checked):
+        # place a new cross marker if checked.
+        self.parent._to_add_marker = is_checked
+        if is_checked:
+            self.parent._added_marker = False
+            self.parent._marker_id += 1
+            self.parent._current_mc = next(COLOR_CYCLE)
+            QGuiApplication.setOverrideCursor(Qt.CrossCursor)
+        else:
+            if not self.parent._added_marker:
+                self.parent._marker_id -= 1
 
     @pyqtSlot()
     def repos_toolbar(self):
