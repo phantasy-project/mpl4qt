@@ -56,6 +56,9 @@ class MatplotlibCurveWidget(BasePlotWidget):
     # xydata changed
     dataChanged = pyqtSignal(np.ndarray, np.ndarray)
 
+    # marker updated, is_new_marker?, x, y, mk_name
+    markerUpdated = pyqtSignal(bool, float, float, 'QString')
+
     def __init__(self, parent=None):
         super(MatplotlibCurveWidget, self).__init__(parent)
 
@@ -712,7 +715,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         if e.inaxes is None:
             return
         if e.button == 1 and self._to_add_marker:
-            self.draw_hvlines(e.xdata, e.ydata, self._marker_id, self._current_mc)
+            self.draw_hvlines(e.xdata, e.ydata, self._mk_name, self._current_mc)
             self.set_visible_hvlines(self._visible_hvlines)
             self._added_marker = True
             QGuiApplication.restoreOverrideCursor()
@@ -738,20 +741,20 @@ class MatplotlibCurveWidget(BasePlotWidget):
             self.update_figure()
             self.unsetCursor()
 
-    def draw_hvlines(self, x0, y0, marker_id, mc):
-        if marker_id == self._n_markers:
-            is_new_makers = True
-            self._n_markers += 1
-            imarker = marker_id + 1
-            hl, vl, cp, pt, mk_name = None, None, None, None, 'M{}'.format(imarker)
+    def draw_hvlines(self, x0, y0, name, mc):
+        for idx, (_hl, _vl, _cp, _pt, _, mk_name) in enumerate(self._markers):
+            if mk_name == name:
+                is_new_marker = False
+                mid, hl, vl, cp, pt = idx, _hl, _vl, _cp, _pt
+                break
         else:
-            is_new_makers = False
-            hl, vl, cp, pt, _, mk_name = self._markers[marker_id]
+            is_new_marker = True
+            hl, vl, cp, pt, mk_name = None, None, None, None, name
 
         if hl is None:
             hl = self.axes.axhline(y0,
                                    alpha=0.8, color=mc, ls='--')
-            hl.set_label('H-Line#{}'.format(imarker))
+            hl.set_label('H-Line {}'.format(mk_name))
             self._lines.append(hl)
         else:
             hl.set_ydata([y0, y0])
@@ -759,7 +762,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         if vl is None:
             vl = self.axes.axvline(x0,
                                    alpha=0.8, color=mc, ls='--')
-            vl.set_label('V-Line#{}'.format(imarker))
+            vl.set_label('V-Line {}'.format(mk_name))
             self._lines.append(vl)
         else:
             vl.set_xdata([x0, x0])
@@ -767,7 +770,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         if cp is None:
             cp, = self.axes.plot([x0], [y0], 'o',
                                  mec=mc, mfc=mc)
-            cp.set_label('Cross-Point#{}'.format(imarker))
+            cp.set_label('Cross-Point {}'.format(mk_name))
             self._lines.append(cp)
             if self._marker_with_xy:
                 text = '{0:g},{1:g}'.format(x0, y0)
@@ -785,10 +788,12 @@ class MatplotlibCurveWidget(BasePlotWidget):
                 pt.set_text('{0:g},{1:g}'.format(x0, y0))
             else:
                 pt.set_text(mk_name)
-            self._markers[marker_id][-2] = (x0, y0)
+            self._markers[mid][-2] = (x0, y0)
 
-        if is_new_makers:
+        if is_new_marker:
             self._markers.append([hl, vl, cp, pt, (x0, y0), mk_name])
+
+        self.markerUpdated.emit(is_new_marker, x0, y0, mk_name)
 
         self.update_figure()
 
