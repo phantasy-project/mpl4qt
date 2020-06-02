@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(696, 282)
+        Dialog.resize(866, 332)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -203,6 +203,16 @@ class Ui_Dialog(object):
         self.fig_ylabel_lineEdit.setPlaceholderText("")
         self.fig_ylabel_lineEdit.setObjectName("fig_ylabel_lineEdit")
         self.horizontalLayout_20.addWidget(self.fig_ylabel_lineEdit)
+        self.hide_xylabel_chkbox = QtWidgets.QCheckBox(self.figure_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.hide_xylabel_chkbox.sizePolicy().hasHeightForWidth())
+        self.hide_xylabel_chkbox.setSizePolicy(sizePolicy)
+        self.hide_xylabel_chkbox.setObjectName("hide_xylabel_chkbox")
+        self.horizontalLayout_20.addWidget(self.hide_xylabel_chkbox)
         self.xy_label_font_btn = QtWidgets.QToolButton(self.figure_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
@@ -251,6 +261,16 @@ class Ui_Dialog(object):
         self.fig_title_lineEdit.setPlaceholderText("")
         self.fig_title_lineEdit.setObjectName("fig_title_lineEdit")
         self.horizontalLayout_2.addWidget(self.fig_title_lineEdit)
+        self.hide_title_chkbox = QtWidgets.QCheckBox(self.figure_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.hide_title_chkbox.sizePolicy().hasHeightForWidth())
+        self.hide_title_chkbox.setSizePolicy(sizePolicy)
+        self.hide_title_chkbox.setObjectName("hide_title_chkbox")
+        self.horizontalLayout_2.addWidget(self.hide_title_chkbox)
         self.title_font_btn = QtWidgets.QToolButton(self.figure_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
@@ -2203,9 +2223,11 @@ class Ui_Dialog(object):
         self.label_10.setText(_translate("Dialog", "Labels"))
         self.label_18.setText(_translate("Dialog", "X-Label"))
         self.label_11.setText(_translate("Dialog", "Y-Label"))
+        self.hide_xylabel_chkbox.setText(_translate("Dialog", "Hide"))
         self.xy_label_font_btn.setToolTip(_translate("Dialog", "Change font."))
         self.xy_label_font_btn.setText(_translate("Dialog", "Font"))
         self.label.setText(_translate("Dialog", "XY Range"))
+        self.hide_title_chkbox.setText(_translate("Dialog", "Hide"))
         self.title_font_btn.setToolTip(_translate("Dialog", "Change font."))
         self.title_font_btn.setText(_translate("Dialog", "Font"))
         self.label_25.setText(_translate("Dialog", "Legend"))
