@@ -59,7 +59,7 @@ from mpl4qt.widgets.mpltoolbar import MToolbar
 from mpl4qt.widgets.utils import ALL_COLORMAPS
 from mpl4qt.widgets.utils import AUTOFORMATTER
 from mpl4qt.widgets.utils import AUTOFORMATTER_MATHTEXT
-from mpl4qt.widgets.utils import BOOTSTRAP_BLUE
+from mpl4qt.widgets.utils import BOOTSTRAP_GREEN
 from mpl4qt.widgets.utils import LINE_STY_VALS
 from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
 from mpl4qt.widgets.utils import SCALE_STY_VALS
@@ -177,19 +177,27 @@ class BasePlotWidget(QWidget):
             self.__show_mpl_tools()
 
         #
+        self.as_ann = None
         self.autoScaleOnUpdated.connect(self.on_autoscale_toggled)
 
     @pyqtSlot(bool)
     def on_autoscale_toggled(self, auto_scale_enabled):
-        # if auto scale is enabled, border style could not be changed.
+        # if auto scale is enabled, put text label
         if auto_scale_enabled:
-            self._fig_border_color_as = self._fig_border_color
-            self._fig_border_lw_as = self._fig_border_lw
-            self.setFigureBorderColor(QColor(BOOTSTRAP_BLUE))
-            self.setFigureBorderLineWidth(2.0)
+            if self.as_ann is None:
+                self.as_ann = self.axes.annotate('AutoScale',
+                            xy=(0.95, 0.95),
+                            ha='center', va='center',
+                            xycoords=('figure fraction'),
+                            bbox=dict(
+                                boxstyle='round,pad=0.3',
+                                fc=BOOTSTRAP_GREEN, ec=BOOTSTRAP_GREEN,
+                                lw=1.0, alpha=0.8))
+            else:
+                self.as_ann.set_visible(True)
         else:
-            self.setFigureBorderColor(self._fig_border_color_as)
-            self.setFigureBorderLineWidth(self._fig_border_lw_as)
+            if self.as_ann is not None:
+                self.as_ann.set_visible(False)
         self.update_figure()
 
     def __show_mpl_tools(self):
@@ -244,9 +252,6 @@ class BasePlotWidget(QWidget):
         self._fig_border_lw = o.get_linewidth()
         self._fig_border_ls = o.get_linestyle()
         self._fig_border_visible = o.get_visible()
-        # autoscale copy
-        self._fig_border_color_as = self._fig_border_color
-        self._fig_border_lw_as = self._fig_border_lw
 
         # aspect
         self._fig_aspect = str(self.axes.get_aspect())
