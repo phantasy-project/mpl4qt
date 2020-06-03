@@ -101,7 +101,7 @@ class BasePlotWidget(QWidget):
     # bg color
     bgColorChanged = pyqtSignal(QColor)
 
-    # xy pos, x,y or x,y,z
+    # xy pos, x,y (default) or x,y,z
     xyposUpdated = pyqtSignal(list)
 
     # cross markers updated, is_new_marker?, x, y, mk_name
@@ -434,8 +434,11 @@ class BasePlotWidget(QWidget):
                             y0 + (y_up - y0) * factor))
         self.update_figure()
 
-    def on_motion(self, e):
-        pass
+    def on_motion(self, evt):
+        if evt.inaxes is None:
+            return
+        x_pos, y_pos = evt.xdata, evt.ydata
+        self.xyposUpdated.emit([x_pos, y_pos])
 
     def on_key_press(self, e):
         k, t = e.key, time.time()
