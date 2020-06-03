@@ -36,6 +36,7 @@ from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QColor
 from PyQt5.QtGui import QFont
 from PyQt5.QtGui import QFontDatabase
+from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtGui import QIcon
 from PyQt5.QtGui import QPalette
 from PyQt5.QtGui import QPixmap
@@ -102,6 +103,9 @@ class BasePlotWidget(QWidget):
 
     # xy pos, x,y or x,y,z
     xyposUpdated = pyqtSignal(list)
+
+    # cross markers updated, is_new_marker?, x, y, mk_name
+    markerUpdated = pyqtSignal(bool, float, float, 'QString')
 
     def __init__(self, parent=None, show_toolbar=True, **kws):
         super(BasePlotWidget, self).__init__(parent)
@@ -192,7 +196,7 @@ class BasePlotWidget(QWidget):
                             xy=(1.0, 1.01),
                             ha='right', va='bottom',
                             xycoords=('axes fraction'),
-                            color='w', fontweight='bold',
+                            color='w',
                             bbox=dict(
                                 boxstyle='round,pad=0.3',
                                 fc=BOOTSTRAP_GREEN, ec=BOOTSTRAP_GREEN,
@@ -213,7 +217,7 @@ class BasePlotWidget(QWidget):
                             xy=(0, 1.01),
                             ha='left', va='bottom',
                             xycoords=('axes fraction'),
-                            color='w', fontweight='bold',
+                            color='w',
                             bbox=dict(
                                 boxstyle='round,pad=0.3',
                                 fc=BOOTSTRAP_RED, ec=BOOTSTRAP_RED,
@@ -225,7 +229,70 @@ class BasePlotWidget(QWidget):
                 self._mk_add_hint_ann.set_visible(False)
         self.update_figure()
 
+    def draw_hvlines(self, x0, y0, name, mc):
+        for idx, (_hl, _vl, _cp, _pt, _, mk_name) in enumerate(self._markers):
+            if mk_name == name:
+                is_new_marker = False
+                mid, hl, vl, cp, pt = idx, _hl, _vl, _cp, _pt
+                break
+        else:
+            is_new_marker = True
+            hl, vl, cp, pt, mk_name = None, None, None, None, name
 
+        if hl is None:
+            hl = self.axes.axhline(y0,
+                                   alpha=0.8, color=mc, ls='--')
+            hl.set_label('H-Line {}'.format(mk_name))
+            # self._lines.append(hl)
+        else:
+            hl.set_ydata([y0, y0])
+
+        if vl is None:
+            vl = self.axes.axvline(x0,
+                                   alpha=0.8, color=mc, ls='--')
+            vl.set_label('V-Line {}'.format(mk_name))
+            # self._lines.append(vl)
+        else:
+            vl.set_xdata([x0, x0])
+
+        if cp is None:
+            cp, = self.axes.plot([x0], [y0], 'o',
+                                 mec=mc, mfc=mc)
+            cp.set_label('Cross-Point {}'.format(mk_name))
+            # self._lines.append(cp)
+            if self._marker_with_xy:
+                text = '{0:g},{1:g}'.format(x0, y0)
+            else:
+                text = mk_name
+            pt = self.axes.annotate(
+                    text, xy=(x0, y0), xytext=(15, 15),
+                    xycoords="data", textcoords="offset pixels",
+                    bbox=dict(boxstyle="round", fc='w'))
+            pt.get_bbox_patch().set_alpha(0.5)
+        else:
+            cp.set_data([x0], [y0])
+            pt.xy = (x0, y0)
+            if self._marker_with_xy:
+                pt.set_text('{0:g},{1:g}'.format(x0, y0))
+            else:
+                pt.set_text(mk_name)
+            self._markers[mid][-2] = (x0, y0)
+
+        if is_new_marker:
+            self._markers.append([hl, vl, cp, pt, (x0, y0), mk_name])
+
+        self.markerUpdated.emit(is_new_marker, x0, y0, mk_name)
+
+        self.update_figure()
+
+    def set_visible_hvlines(self, flag=True):
+        """Set all markers visible (*flag* is True) or invisible (*flag* is False).
+        """
+        self._visible_hvlines = flag
+        for (hl, vl, cp, pt, _, _) in self._markers:
+            for o in (hl, vl, cp, pt):
+                o.set_visible(flag)
+        self.update_figure()
 
     def __show_mpl_tools(self):
         if 'w_mpl_tools' in self._handlers:
@@ -387,7 +454,13 @@ class BasePlotWidget(QWidget):
         pass
 
     def on_press(self, e):
-        pass
+        if e.inaxes is None:
+            return
+        if e.button == 1 and self._to_add_marker:
+            self.draw_hvlines(e.xdata, e.ydata, self._mk_name, self._current_mc)
+            self.set_visible_hvlines(self._visible_hvlines)
+            self._added_marker = True
+            QGuiApplication.restoreOverrideCursor()
 
     def on_release(self, e):
         pass
