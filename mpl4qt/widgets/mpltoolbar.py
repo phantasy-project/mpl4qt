@@ -95,6 +95,9 @@ class MToolbar(QToolBar):
     # add marker tool is checked or not
     marker_add_checked = pyqtSignal(bool)
 
+    # snap enabled or not, xydata
+    snap_updated = pyqtSignal([bool], [bool, np.ndarray, np.ndarray])
+
     def __init__(self, canvas, parent=None):
         super(MToolbar, self).__init__()
         self.parent = parent
@@ -211,6 +214,13 @@ class MToolbar(QToolBar):
         cross_hide_act.setToolTip("Click to hide crosshair markers.")
         cross_hide_act.triggered.connect(self.on_hide_crosses)
 
+        cross_snap_act = QAction("Snap", self)
+        cross_snap_act.setShortcut(Qt.SHIFT + Qt.Key_S)
+        cross_snap_act.setCheckable(True)
+        cross_snap_act.setToolTip("Check to snap to point")
+        cross_snap_act.toggled.connect(self.on_snap_cross)
+        cross_snap_act.setChecked(True)
+        self._is_snap_point = True
 
         cross_marker_act = QAction(QIcon(QPixmap(":/tools/add_marker.png")), "Add Marker", self)
         cross_marker_act.setShortcut(Qt.CTRL + Qt.Key_M)
@@ -227,6 +237,7 @@ class MToolbar(QToolBar):
 
         menu = QMenu(self)
         menu.setToolTipsVisible(True)
+        menu.addAction(cross_snap_act)
         menu.addAction(cross_marker_act)
         menu.addAction(cross_marker_text_act)
         menu.addAction(cross_show_mk_act)
@@ -333,6 +344,16 @@ class MToolbar(QToolBar):
         #
         self.floatable_changed.emit(self._floating)
 
+    @pyqtSlot(bool)
+    def on_snap_cross(self, is_snap):
+        # snap to point or not
+        self._is_snap_point = is_snap
+        if is_snap:
+            self.snap_updated[bool, np.ndarray, np.ndarray].emit(
+                    True, self.parent.getXData(), self.parent.getYData())
+        else:
+            self.snap_updated[bool].emit(False)
+
     def on_update_isize(self, i):
         """icon size
         """
@@ -376,17 +397,25 @@ class MToolbar(QToolBar):
                                     str(err), QMessageBox.Ok)
                 self.sender().setChecked(False)
             except SnapCursorAlreadyExisted:
+                self.snap_cursor.is_snap = self._is_snap_point
                 self.parent.xyposUpdated.connect(self.snap_cursor.on_move)
                 self.parent.dataChanged.connect(self.snap_cursor.set_xydata)
+                self.snap_updated[bool].connect(self.snap_cursor.snap_disabled)
+                self.snap_updated[bool, np.ndarray, np.ndarray].connect(self.snap_cursor.snap_enabled)
             except SnapCursorNotExist:
-                self.snap_cursor = SnapCursor(self.parent.axes, xdata, ydata)
+                self.snap_cursor = SnapCursor(self.parent.axes, xdata, ydata,
+                                              self._is_snap_point)
                 self.parent.xyposUpdated.connect(self.snap_cursor.on_move)
                 self.parent.dataChanged.connect(self.snap_cursor.set_xydata)
+                self.snap_updated[bool].connect(self.snap_cursor.snap_disabled)
+                self.snap_updated[bool, np.ndarray, np.ndarray].connect(self.snap_cursor.snap_enabled)
+
         else:
             if self.snap_cursor is None:
                 return
             self.parent.xyposUpdated.disconnect(self.snap_cursor.on_move)
             self.parent.dataChanged.disconnect(self.snap_cursor.set_xydata)
+            self.snap_updated.disconnect()
             self.snap_cursor.delete()
             self.snap_cursor = None
 
@@ -593,17 +622,34 @@ class SelectFromPoints(QObject):
         self.canvas.draw_idle()
 
 
-class SnapCursor(object):
+class SnapCursor(QObject):
 
-    def __init__(self, ax, xdata, ydata):
+    snap_enabled = pyqtSignal(bool, np.ndarray, np.ndarray)
+    snap_disabled = pyqtSignal(bool)
+
+    def __init__(self, ax, xdata, ydata, is_snap=True):
         super(SnapCursor, self).__init__()
         self.ax = ax
         self.canvas = ax.figure.canvas
-        self.set_xydata(xdata, ydata)
+        self.is_snap = is_snap
+        if is_snap:
+            self.set_xydata(xdata, ydata)
         self.init_cursor()
+        self.snap_enabled.connect(self.on_enable_snap)
+        self.snap_disabled.connect(self.on_disable_snap)
+
+    @pyqtSlot(bool, np.ndarray, np.ndarray)
+    def on_enable_snap(self, is_snap, x, y):
+        # enable snap
+        self.is_snap = is_snap
+        self.set_xydata(x, y)
+
+    @pyqtSlot(bool)
+    def on_disable_snap(self, is_snap):
+        self.is_snap = is_snap
 
     def init_cursor(self):
-        x0, y0 = self.xdata[0], self.ydata[0]
+        x0, y0 = 0,0
         self._hline = self.ax.axhline(color='#343A40', alpha=0.95)
         self._vline = self.ax.axvline(color='#343A40', alpha=0.95)
         self._text_x = self.ax.annotate('', xy=(x0, 1.005),
@@ -622,6 +668,7 @@ class SnapCursor(object):
                                             boxstyle='larrow,pad=0.25',
                                             fc='#007BFF', ec='b',
                                             lw=1.0, alpha=0.95))
+
     def set_xydata(self, xdata, ydata):
         # set x y array data.
         ascend_data = np.asarray(sorted(zip(xdata, ydata), key=lambda i:i[0]))
@@ -630,8 +677,9 @@ class SnapCursor(object):
 
     def on_move(self, pos_tuple):
         x, y = pos_tuple
-        idx = min(np.searchsorted(self.xdata, x), len(self.xdata) - 1)
-        x, y = self.xdata[idx], self.ydata[idx]
+        if self.is_snap:
+            idx = min(np.searchsorted(self.xdata, x), len(self.xdata) - 1)
+            x, y = self.xdata[idx], self.ydata[idx]
         self._hline.set_ydata(y)
         self._vline.set_xdata(x)
         self._text_x.set_x(x)
