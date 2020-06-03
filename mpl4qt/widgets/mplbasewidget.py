@@ -304,7 +304,6 @@ class BasePlotWidget(QWidget):
             w.zoom_roi_changed.connect(self.on_zoom_roi_changed)
         w.show_toolbar()
         w.floatable_changed.emit(False)
-        print("MPL Toolbar: ", id(w))
 
     @pyqtSlot(QVariant, QVariant)
     def on_selected_indices(self, ind, pts):
@@ -312,7 +311,7 @@ class BasePlotWidget(QWidget):
 
     @pyqtSlot(tuple, tuple)
     def on_zoom_roi_changed(self, xlim, ylim):
-        print("Zoomed Rect ROI: ", xlim, ylim)
+        # print("Zoomed Rect ROI: ", xlim, ylim)
         self.zoom_roi_changed.emit(xlim, ylim)
 
     def set_up_layout(self):
@@ -1615,7 +1614,7 @@ class BasePlotWidget(QWidget):
     def process_keyshort_combo(self, k1, k2):
         """Override this method to define combo keyshorts.
         """
-        print("Capture key combo: ", k1, k2)
+        # print("Capture key combo: ", k1, k2)
         if k1 == 'a' and k2 == 'x':
             # auto xscale
             self.set_autoscale('x')
@@ -1632,7 +1631,7 @@ class BasePlotWidget(QWidget):
     def process_keyshort(self, k):
         """Override this method to define keyshorts.
         """
-        print("Capture key: ", k)
+        # print("Capture key: ", k)
         if k == 'g':
             # turn on/off grid
             self.setFigureGridToggle(not self.getFigureGridToggle())
