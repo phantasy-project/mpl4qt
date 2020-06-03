@@ -50,7 +50,7 @@ class MarkersView(QWidget, Ui_Form):
             self._reset_table()
             return
         self._preset_table()
-        for i, (_, _, _, _, (x, y), name) in enumerate(self.data):
+        for i, (name, (_, _, _, _, (x, y))) in enumerate(self.data.items()):
             self.set_row(i, x, y, name)
         self._postset_table()
 

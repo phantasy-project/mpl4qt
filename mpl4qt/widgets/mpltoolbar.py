@@ -373,7 +373,7 @@ class MToolbar(QToolBar):
         """Marker the markers with (x,y) or literally with `M{i}`.
         """
         self.parent._marker_with_xy = marker_with_xy
-        for _, _, _, pt, (x, y), mk_name in self.parent._markers:
+        for mk_name, (_, _, _, pt, (x, y)) in self.parent._markers.items():
             if marker_with_xy:
                 pt.set_text('{0:g},{1:g}'.format(x,y))
                 self.sender().setToolTip("Uncheck to mark with literal names")
@@ -470,11 +470,9 @@ class MToolbar(QToolBar):
     @pyqtSlot('QString')
     def on_remove_marker(self, mk_name):
         # remove marker of the name *mk_name*, maintain marker_id/n_markers
-        for i, (hl, vl, cp, pt, _, name) in enumerate(self.parent._markers):
-            if name == mk_name:
-                self.parent._markers.pop(i)
-                [o.remove() for o in (hl, vl, cp, pt)]
-                self.parent.update_figure()
+        hl, vl, cp, pt, _ = self.parent._markers.pop(mk_name)
+        [o.remove() for o in (hl, vl, cp, pt)]
+        self.parent.update_figure()
 
     @pyqtSlot()
     def on_show_mks(self):

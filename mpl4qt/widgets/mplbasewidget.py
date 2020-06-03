@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 import time
 import numpy as np
 from collections import deque
+from collections import OrderedDict
 from functools import partial
 
 from PyQt5.QtCore import QTimer
@@ -160,7 +161,7 @@ class BasePlotWidget(QWidget):
         self._handlers = {}
 
         # cross markers
-        self._markers = [] # list of [hl,vl,cp,pt,(x,y),mk_name]
+        self._markers = OrderedDict() # list of {mk_name: [hl,vl,cp,pt,(x,y)]}
         self._to_add_marker = False
         self._added_marker = False # if added or not
         self._marker_id = 0 # initial marker id, always increase, even for deletion
@@ -229,12 +230,28 @@ class BasePlotWidget(QWidget):
                 self._mk_add_hint_ann.set_visible(False)
         self.update_figure()
 
+    def get_crossmk_config(self, name):
+        # get cross marker (w/ lines, text) config by name
+        hl, _, cp, pt, _, = self._markers[name]
+        return {'ls': hl.get_ls(), 'lw': hl.get_lw(),
+                'c': hl.get_c(),
+                'line_visible': hl.get_visible(),
+                'line_alpha': hl.get_alpha(),
+                
+                'ms': cp.get_ms(), 'mk': cp.get_marker(),
+                'mew': cp.get_mew(), 'mec': cp.get_mec(),
+                'mk_visible': cp.get_visible(),
+                'mk_alpha': cp.get_alpha(),
+                
+                'text_visible': pt.get_visible(),
+                'text_alpha': pt.get_bbox_patch().get_alpha(),}
+
+        
+
     def draw_hvlines(self, x0, y0, name, mc):
-        for idx, (_hl, _vl, _cp, _pt, _, mk_name) in enumerate(self._markers):
-            if mk_name == name:
-                is_new_marker = False
-                mid, hl, vl, cp, pt = idx, _hl, _vl, _cp, _pt
-                break
+        if name in self._markers:
+            is_new_marker = False
+            hl, vl, cp, pt, _ = self._markers[name]
         else:
             is_new_marker = True
             hl, vl, cp, pt, mk_name = None, None, None, None, name
@@ -242,24 +259,21 @@ class BasePlotWidget(QWidget):
         if hl is None:
             hl = self.axes.axhline(y0,
                                    alpha=0.8, color=mc, ls='--')
-            hl.set_label('H-Line {}'.format(mk_name))
-            # self._lines.append(hl)
+            hl.set_label('_H-Line {}'.format(mk_name))
         else:
             hl.set_ydata([y0, y0])
 
         if vl is None:
             vl = self.axes.axvline(x0,
                                    alpha=0.8, color=mc, ls='--')
-            vl.set_label('V-Line {}'.format(mk_name))
-            # self._lines.append(vl)
+            vl.set_label('_V-Line {}'.format(mk_name))
         else:
             vl.set_xdata([x0, x0])
 
         if cp is None:
             cp, = self.axes.plot([x0], [y0], 'o',
-                                 mec=mc, mfc=mc)
-            cp.set_label('Cross-Point {}'.format(mk_name))
-            # self._lines.append(cp)
+                                 mec=mc, mfc=mc, alpha=0.95)
+            cp.set_label('_Cross-Point {}'.format(mk_name))
             if self._marker_with_xy:
                 text = '{0:g},{1:g}'.format(x0, y0)
             else:
@@ -276,10 +290,10 @@ class BasePlotWidget(QWidget):
                 pt.set_text('{0:g},{1:g}'.format(x0, y0))
             else:
                 pt.set_text(mk_name)
-            self._markers[mid][-2] = (x0, y0)
+            self._markers[name][-1] = (x0, y0)
 
         if is_new_marker:
-            self._markers.append([hl, vl, cp, pt, (x0, y0), mk_name])
+            self._markers[mk_name] = [hl, vl, cp, pt, (x0, y0)]
 
         self.markerUpdated.emit(is_new_marker, x0, y0, mk_name)
 
@@ -289,7 +303,7 @@ class BasePlotWidget(QWidget):
         """Set all markers visible (*flag* is True) or invisible (*flag* is False).
         """
         self._visible_hvlines = flag
-        for (hl, vl, cp, pt, _, _) in self._markers:
+        for name, (hl, vl, cp, pt, _,) in self._markers.items():
             for o in (hl, vl, cp, pt):
                 o.set_visible(flag)
         self.update_figure()
