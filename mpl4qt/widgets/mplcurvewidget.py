@@ -59,6 +59,9 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def __init__(self, parent=None):
         super(MatplotlibCurveWidget, self).__init__(parent)
 
+        # enable snap cross by default
+        self._handlers['w_mpl_tools'].cross_snap_act.setChecked(True)
+
         # x,y limits
         self.setXLimitMin()
         self.setXLimitMax()
@@ -701,12 +704,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def update_legend(self):
         # update legend if on
         self.setLegendToggle(self._legend_toggle)
-
-    def on_motion(self, event):
-        if event.inaxes is None:
-            return
-        x_pos, y_pos = event.xdata, event.ydata
-        self.xyposUpdated.emit([x_pos, y_pos])
 
     def on_press(self, e):
         if e.inaxes is None:
