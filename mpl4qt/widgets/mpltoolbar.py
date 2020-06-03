@@ -215,12 +215,16 @@ class MToolbar(QToolBar):
         cross_hide_act.triggered.connect(self.on_hide_crosses)
 
         cross_snap_act = QAction("Snap", self)
+        self.cross_snap_act = cross_snap_act
         cross_snap_act.setShortcut(Qt.SHIFT + Qt.Key_S)
         cross_snap_act.setCheckable(True)
         cross_snap_act.setToolTip("Check to snap to point")
         cross_snap_act.toggled.connect(self.on_snap_cross)
-        cross_snap_act.setChecked(True)
-        self._is_snap_point = True
+        if self.parent.widget_type == '__BasePlotWidget':
+            self._is_snap_point = False
+        else:
+            self._is_snap_point = True
+        cross_snap_act.setChecked(self._is_snap_point)
 
         cross_marker_act = QAction(QIcon(QPixmap(":/tools/add_marker.png")), "Add Marker", self)
         cross_marker_act.setShortcut(Qt.CTRL + Qt.Key_M)
@@ -385,10 +389,13 @@ class MToolbar(QToolBar):
         if enabled:
             try:
                 if self.snap_cursor is None:
-                    xdata = self.parent._x_data
-                    ydata = self.parent._y_data
-                    if xdata.size == 0:
-                        raise SnapCursorNoDataProbe("No data to probe.")
+                    if self._is_snap_point:
+                        xdata = self.parent._x_data
+                        ydata = self.parent._y_data
+                        if xdata.size == 0:
+                            raise SnapCursorNoDataProbe("No data to probe.")
+                    else:
+                        xdata = ydata = None
                     raise SnapCursorNotExist("SnapCursor does not exist.")
                 else:
                     raise SnapCursorAlreadyExisted('SnapCursor is existed.')
@@ -399,14 +406,16 @@ class MToolbar(QToolBar):
             except SnapCursorAlreadyExisted:
                 self.snap_cursor.is_snap = self._is_snap_point
                 self.parent.xyposUpdated.connect(self.snap_cursor.on_move)
-                self.parent.dataChanged.connect(self.snap_cursor.set_xydata)
+                if self.parent.widget_type != '__BasePlotWidget':
+                    self.parent.dataChanged.connect(self.snap_cursor.set_xydata)
                 self.snap_updated[bool].connect(self.snap_cursor.snap_disabled)
                 self.snap_updated[bool, np.ndarray, np.ndarray].connect(self.snap_cursor.snap_enabled)
             except SnapCursorNotExist:
                 self.snap_cursor = SnapCursor(self.parent.axes, xdata, ydata,
                                               self._is_snap_point)
                 self.parent.xyposUpdated.connect(self.snap_cursor.on_move)
-                self.parent.dataChanged.connect(self.snap_cursor.set_xydata)
+                if self.parent.widget_type != '__BasePlotWidget':
+                    self.parent.dataChanged.connect(self.snap_cursor.set_xydata)
                 self.snap_updated[bool].connect(self.snap_cursor.snap_disabled)
                 self.snap_updated[bool, np.ndarray, np.ndarray].connect(self.snap_cursor.snap_enabled)
 
@@ -414,7 +423,8 @@ class MToolbar(QToolBar):
             if self.snap_cursor is None:
                 return
             self.parent.xyposUpdated.disconnect(self.snap_cursor.on_move)
-            self.parent.dataChanged.disconnect(self.snap_cursor.set_xydata)
+            if self.parent.widget_type != '__BasePlotWidget':
+                self.parent.dataChanged.disconnect(self.snap_cursor.set_xydata)
             self.snap_updated.disconnect()
             self.snap_cursor.delete()
             self.snap_cursor = None
@@ -627,7 +637,7 @@ class SnapCursor(QObject):
     snap_enabled = pyqtSignal(bool, np.ndarray, np.ndarray)
     snap_disabled = pyqtSignal(bool)
 
-    def __init__(self, ax, xdata, ydata, is_snap=True):
+    def __init__(self, ax, xdata=None, ydata=None, is_snap=True):
         super(SnapCursor, self).__init__()
         self.ax = ax
         self.canvas = ax.figure.canvas
@@ -649,7 +659,7 @@ class SnapCursor(QObject):
         self.is_snap = is_snap
 
     def init_cursor(self):
-        x0, y0 = 0,0
+        x0, y0 = 0, 0
         self._hline = self.ax.axhline(color='#343A40', alpha=0.95)
         self._vline = self.ax.axvline(color='#343A40', alpha=0.95)
         self._text_x = self.ax.annotate('', xy=(x0, 1.005),
