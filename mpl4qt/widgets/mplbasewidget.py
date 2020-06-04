@@ -277,8 +277,8 @@ class BasePlotWidget(QWidget):
                 text = '{0:g},{1:g}'.format(x0, y0)
             else:
                 text = name
-            pt = self.axes.annotate(
-                    text, xy=(x0, y0), xytext=(15, 15),
+            pt = self.axes.annotate(text,
+                    color='#000000', xy=(x0, y0), xytext=(15, 15),
                     xycoords="data", textcoords="offset pixels",
                     bbox=dict(boxstyle="round", fc='w'))
             pt.get_bbox_patch().set_alpha(0.5)
