@@ -461,9 +461,7 @@ class MToolbar(QToolBar):
             self.sender().setText("Adding Marker (click when done)")
             QGuiApplication.setOverrideCursor(Qt.CrossCursor)
         else:
-            if not self.parent._added_marker:
-                self.parent._marker_id -= 1
-            else:
+            if self.parent._added_marker:
                 self.parent._marker_id += 1
             self.sender().setText("Add Marker")
 
