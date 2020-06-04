@@ -95,8 +95,8 @@ class MToolbar(QToolBar):
     # add marker tool is checked or not
     marker_add_checked = pyqtSignal(bool)
 
-    # snap enabled or not, xydata
-    snap_updated = pyqtSignal([bool], [bool, np.ndarray, np.ndarray])
+    # snap enabled or not, tuple of xy(z)data
+    snap_updated = pyqtSignal([bool], [bool, tuple])
 
     def __init__(self, canvas, parent=None):
         super(MToolbar, self).__init__()
@@ -353,8 +353,8 @@ class MToolbar(QToolBar):
         # snap to point or not
         self._is_snap_point = is_snap
         if is_snap:
-            self.snap_updated[bool, np.ndarray, np.ndarray].emit(
-                    True, self.parent.getXData(), self.parent.getYData())
+            self.snap_updated[bool, tuple].emit(
+                    True, self.parent.get_all_data())
         else:
             self.snap_updated[bool].emit(False)
 
@@ -390,12 +390,11 @@ class MToolbar(QToolBar):
             try:
                 if self.snap_cursor is None:
                     if self._is_snap_point:
-                        xdata = self.parent._x_data
-                        ydata = self.parent._y_data
-                        if xdata.size == 0:
+                        data_tuple = self.parent.get_all_data()
+                        if data_tuple[0].size == 0:
                             raise SnapCursorNoDataProbe("No data to probe.")
                     else:
-                        xdata = ydata = None
+                        data_tuple = None
                     raise SnapCursorNotExist("SnapCursor does not exist.")
                 else:
                     raise SnapCursorAlreadyExisted('SnapCursor is existed.')
@@ -407,24 +406,24 @@ class MToolbar(QToolBar):
                 self.snap_cursor.is_snap = self._is_snap_point
                 self.parent.xyposUpdated.connect(self.snap_cursor.on_move)
                 if self.parent.widget_type != '__BasePlotWidget':
-                    self.parent.dataChanged.connect(self.snap_cursor.set_xydata)
+                    self.parent.dataChanged.connect(self.snap_cursor.set_data)
                 self.snap_updated[bool].connect(self.snap_cursor.snap_disabled)
-                self.snap_updated[bool, np.ndarray, np.ndarray].connect(self.snap_cursor.snap_enabled)
+                self.snap_updated[bool, tuple].connect(self.snap_cursor.snap_enabled)
             except SnapCursorNotExist:
-                self.snap_cursor = SnapCursor(self.parent.axes, xdata, ydata,
+                self.snap_cursor = SnapCursor(self.parent.axes, data_tuple,
                                               self._is_snap_point)
                 self.parent.xyposUpdated.connect(self.snap_cursor.on_move)
                 if self.parent.widget_type != '__BasePlotWidget':
-                    self.parent.dataChanged.connect(self.snap_cursor.set_xydata)
+                    self.parent.dataChanged.connect(self.snap_cursor.set_data)
                 self.snap_updated[bool].connect(self.snap_cursor.snap_disabled)
-                self.snap_updated[bool, np.ndarray, np.ndarray].connect(self.snap_cursor.snap_enabled)
+                self.snap_updated[bool, tuple].connect(self.snap_cursor.snap_enabled)
 
         else:
             if self.snap_cursor is None:
                 return
             self.parent.xyposUpdated.disconnect(self.snap_cursor.on_move)
             if self.parent.widget_type != '__BasePlotWidget':
-                self.parent.dataChanged.disconnect(self.snap_cursor.set_xydata)
+                self.parent.dataChanged.disconnect(self.snap_cursor.set_data)
             self.snap_updated.disconnect()
             self.snap_cursor.delete()
             self.snap_cursor = None
@@ -630,25 +629,25 @@ class SelectFromPoints(QObject):
 
 class SnapCursor(QObject):
 
-    snap_enabled = pyqtSignal(bool, np.ndarray, np.ndarray)
+    snap_enabled = pyqtSignal(bool, tuple)
     snap_disabled = pyqtSignal(bool)
 
-    def __init__(self, ax, xdata=None, ydata=None, is_snap=True):
+    def __init__(self, ax, data_tuple=None, is_snap=True):
         super(SnapCursor, self).__init__()
         self.ax = ax
         self.canvas = ax.figure.canvas
         self.is_snap = is_snap
         if is_snap:
-            self.set_xydata(xdata, ydata)
+            self.set_data(data_tuple)
         self.init_cursor()
         self.snap_enabled.connect(self.on_enable_snap)
         self.snap_disabled.connect(self.on_disable_snap)
 
-    @pyqtSlot(bool, np.ndarray, np.ndarray)
-    def on_enable_snap(self, is_snap, x, y):
-        # enable snap
+    @pyqtSlot(bool, tuple)
+    def on_enable_snap(self, is_snap, t):
+        # enable snap, tuple of xy(z)data
         self.is_snap = is_snap
-        self.set_xydata(x, y)
+        self.set_data(t)
 
     @pyqtSlot(bool)
     def on_disable_snap(self, is_snap):
@@ -675,6 +674,14 @@ class SnapCursor(QObject):
                                             fc='#007BFF', ec='b',
                                             lw=1.0, alpha=0.95))
 
+    def set_data(self, t):
+        if len(t) == 2:
+            self.set_xydata(*t)
+        else:
+            x, y, self.z = t
+            xdata, ydata = x[0,:], y[:,0]
+            self.set_xydata(xdata, ydata)
+
     def set_xydata(self, xdata, ydata):
         # set x y array data.
         ascend_data = np.asarray(sorted(zip(xdata, ydata), key=lambda i:i[0]))
@@ -682,16 +689,29 @@ class SnapCursor(QObject):
         self.ydata = ascend_data[:, 1]
 
     def on_move(self, pos_tuple):
-        x, y = pos_tuple
-        if self.is_snap:
-            idx = min(np.searchsorted(self.xdata, x), len(self.xdata) - 1)
-            x, y = self.xdata[idx], self.ydata[idx]
+        if len(pos_tuple) == 2:
+            x, y = pos_tuple
+            if self.is_snap:
+                idx = min(np.searchsorted(self.xdata, x), len(self.xdata) - 1)
+                x, y = self.xdata[idx], self.ydata[idx]
+            xtext = "{0:g}".format(x)
+            ytext = "{0:g}".format(y)
+        else: # 3d
+            x, y, z = pos_tuple
+            if self.is_snap:
+                idx = min(np.searchsorted(self.xdata, x), len(self.xdata) - 1)
+                idy = min(np.searchsorted(self.ydata, y), len(self.ydata) - 1)
+                x, y, z = self.xdata[idx], self.ydata[idy], self.z[idy, idx]
+            xtext = "{0:g}".format(x)
+            ytext = "{0:g} [{1:g}]".format(y, z)
+
         self._hline.set_ydata(y)
         self._vline.set_xdata(x)
         self._text_x.set_x(x)
         self._text_y.set_y(y)
-        self._text_x.set_text("{0:.3f}".format(x))
-        self._text_y.set_text("{0:.3f}".format(y))
+        self._text_x.set_text(xtext)
+        self._text_y.set_text(ytext)
+
         self.canvas.draw_idle()
 
     def delete(self):
