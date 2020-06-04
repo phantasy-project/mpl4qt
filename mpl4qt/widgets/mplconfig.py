@@ -387,7 +387,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
 
     @pyqtSlot()
     def set_grid_color(self):
-        color = QColorDialog.getColor()
+        color = QColorDialog.getColor(self.parent.getFigureGridColor())
         if color.isValid():
             self.figGridColorChanged.emit(color)
 
@@ -430,19 +430,19 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
 
     @pyqtSlot()
     def set_bkgdcolor(self):
-        color = QColorDialog.getColor()
+        color = QColorDialog.getColor(self.parent.getFigureBgColor())
         if color.isValid():
             self.bgcolorChanged.emit(color)
 
     @pyqtSlot()
     def set_border_color(self):
-        color = QColorDialog.getColor()
+        color = QColorDialog.getColor(self.parent.getFigureBorderColor())
         if color.isValid():
             self.figBorderColorChanged.emit(color)
 
     @pyqtSlot()
     def set_xyticks_color(self):
-        color = QColorDialog.getColor()
+        color = QColorDialog.getColor(self.parent.getFigureXYticksColor())
         if color.isValid():
             self.figXYticksColorChanged.emit(color)
 
@@ -604,10 +604,10 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     @pyqtSlot()
     def on_change_cross_textc(self):
         # change cross marker text color
-        c = QColorDialog.getColor()
+        o = self.get_cross_obj_by_name(self._current_mk_name, 'text')[0]
+        c = QColorDialog.getColor(QColor(mplcolor2hex(o.get_color())))
         if c.isValid():
-            for o in self.get_cross_obj_by_name(self._current_mk_name, 'text'):
-                o.set_color(c.getRgbF())
+            o.set_color(c.getRgbF())
             self.parent.update_figure()
             self.set_btn_color(self.sender(), c)
 
@@ -627,19 +627,19 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
 
     @pyqtSlot()
     def on_change_cross_mfc(self):
-        c = QColorDialog.getColor()
+        o = self.get_cross_obj_by_name(self._current_mk_name, 'point')[0]
+        c = QColorDialog.getColor(QColor(mplcolor2hex(o.get_mfc())))
         if c.isValid():
-            for o in self.get_cross_obj_by_name(self._current_mk_name, 'point'):
-                o.set_mfc(c.getRgbF())
+            o.set_mfc(c.getRgbF())
             self.parent.update_figure()
             self.set_btn_color(self.sender(), c)
 
     @pyqtSlot()
     def on_change_cross_mec(self):
-        c = QColorDialog.getColor()
+        o = self.get_cross_obj_by_name(self._current_mk_name, 'point')[0]
+        c = QColorDialog.getColor(QColor(mplcolor2hex(o.get_mec())))
         if c.isValid():
-            for o in self.get_cross_obj_by_name(self._current_mk_name, 'point'):
-                o.set_mec(c.getRgbF())
+            o.set_mec(c.getRgbF())
             self.parent.update_figure()
             self.set_btn_color(self.sender(), c)
 
@@ -653,10 +653,10 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
 
     @pyqtSlot()
     def on_change_cross_lc(self):
-        c = QColorDialog.getColor()
+        o = self.get_cross_obj_by_name(self._current_mk_name)
+        c = QColorDialog.getColor(QColor(mplcolor2hex(o[0].get_color())))
         if c.isValid():
-            for o in self.get_cross_obj_by_name(self._current_mk_name):
-                o.set_color(c.getRgbF())
+            [i.set_color(c.getRgbF()) for i in o]
             self.parent.update_figure()
             self.set_btn_color(self.sender(), c)
 
@@ -914,19 +914,19 @@ class MatplotlibConfigCurvePanel(MatplotlibConfigPanel):
 
     @pyqtSlot()
     def set_line_color(self):
-        color = QColorDialog.getColor()
+        color = QColorDialog.getColor(self.parent.getLineColor())
         if color.isValid():
             self.figLineColorChanged.emit(color)
 
     @pyqtSlot()
     def set_mec(self):
-        color = QColorDialog.getColor()
+        color = QColorDialog.getColor(self.parent.getMkEdgeColor())
         if color.isValid():
             self.figMkeColorChanged.emit(color)
 
     @pyqtSlot()
     def set_mfc(self):
-        color = QColorDialog.getColor()
+        color = QColorDialog.getColor(self.parent.getMkFaceColor())
         if color.isValid():
             self.figMkfColorChanged.emit(color)
 
@@ -1060,7 +1060,7 @@ class MatplotlibConfigErrorbarPanel(MatplotlibConfigCurvePanel):
 
     @pyqtSlot()
     def set_eb_mec(self):
-        color = QColorDialog.getColor()
+        color = QColorDialog.getColor(self.parent.getEbMkEdgeColor())
         if color.isValid():
             self.figEbMkeColorChanged.emit(color)
 
@@ -1070,7 +1070,7 @@ class MatplotlibConfigErrorbarPanel(MatplotlibConfigCurvePanel):
 
     @pyqtSlot()
     def set_eb_mfc(self):
-        color = QColorDialog.getColor()
+        color = QColorDialog.getColor(self.parent.getEbMkFaceColor())
         if color.isValid():
             self.figEbMkfColorChanged.emit(color)
 
@@ -1122,7 +1122,7 @@ class MatplotlibConfigErrorbarPanel(MatplotlibConfigCurvePanel):
 
     @pyqtSlot()
     def set_eb_line_color(self):
-        color = QColorDialog.getColor()
+        color = QColorDialog.getColor(self.parent.getEbLineColor())
         if color.isValid():
             self.figEbLineColorChanged.emit(color)
 
@@ -1427,13 +1427,13 @@ class MatplotlibConfigBarPanel(MatplotlibConfigCurvePanel):
 
     @pyqtSlot()
     def set_ebline_color(self):
-        color = QColorDialog.getColor()
+        color = QColorDialog.getColor(self.parent.getEbLineColor())
         if color.isValid():
             self.figEbLineColorChanged.emit(color)
 
     @pyqtSlot()
     def set_bar_color(self):
-        color = QColorDialog.getColor()
+        color = QColorDialog.getColor(self.parent.getBarColor())
         if color.isValid():
             self.figBarColorChanged.emit(color)
 
