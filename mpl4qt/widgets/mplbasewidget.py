@@ -237,16 +237,15 @@ class BasePlotWidget(QWidget):
                 'c': hl.get_c(),
                 'line_visible': hl.get_visible(),
                 'line_alpha': hl.get_alpha(),
-                
                 'ms': cp.get_ms(), 'mk': cp.get_marker(),
                 'mew': cp.get_mew(), 'mec': cp.get_mec(),
+                'mfc': cp.get_mfc(),
                 'mk_visible': cp.get_visible(),
                 'mk_alpha': cp.get_alpha(),
-                
                 'text_visible': pt.get_visible(),
+                'text_color': pt.get_color(),
+                'text_content': pt.get_text(),
                 'text_alpha': pt.get_bbox_patch().get_alpha(),}
-
-        
 
     def draw_hvlines(self, x0, y0, name, mc):
         if name in self._markers:
