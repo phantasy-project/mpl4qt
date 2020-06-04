@@ -22,6 +22,7 @@ from mpl4qt.ui.ui_mplconfig import Ui_Dialog
 from mpl4qt.widgets.utils import get_array_range
 from mpl4qt.widgets.utils import COLORMAPS_DICT
 from mpl4qt.widgets.utils import LINE_STY_DICT
+from mpl4qt.widgets.utils import LINE_STY_VALS
 from mpl4qt.widgets.utils import MK_CODE
 from mpl4qt.widgets.utils import MK_SYMBOL
 from mpl4qt.widgets.utils import SCALE_STY_KEYS
@@ -91,10 +92,17 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.setWindowTitle("Figure Configurations")
 
         # hide eb_tab and image_tab
-        for tab in (self.curve_tab, self.eb_tab,
+        for tab in (self.cross_tab, self.curve_tab, self.eb_tab,
                     self.image_tab, self.barchart_tab):
             self.config_tabWidget.setTabEnabled(
                 self.config_tabWidget.indexOf(tab), False)
+
+        # cross mks
+        if self.parent._markers:
+            self.config_tabWidget.setTabEnabled(
+                self.config_tabWidget.indexOf(self.cross_tab), True)
+            self.set_up_cross_tab()
+        #
 
         self.figWidth_lineEdit.setValidator(
                 QDoubleValidator(FIG_WIDTH_MIN, FIG_WIDTH_MAX, 6, self))
@@ -497,6 +505,186 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
 
     def sizeHint(self):
         return QSize(200, 100)
+
+    def set_up_cross_tab(self):
+        # set up configurations for cross markers.
+        self.cross_line_width_lineEdit.setValidator(
+                QDoubleValidator(LINE_WIDTH_MIN, LINE_WIDTH_MAX, 1, self))
+        self.cross_mk_size_lineEdit.setValidator(
+                QDoubleValidator(MK_SIZE_MIN, MK_SIZE_MAX, 1, self))
+        self.cross_mk_width_lineEdit.setValidator(
+                QDoubleValidator(MK_WIDTH_MIN, MK_WIDTH_MAX, 1, self))
+
+        self.cross_mk_style_cbb.addItems(MK_CODE)
+        self.cross_cbb.addItems(self.parent._markers.keys())
+        self.cross_cbb.currentTextChanged.connect(self.on_current_mkname_changed)
+        self.cross_cbb.currentTextChanged.emit(self.cross_cbb.currentText())
+        self.cross_line_hide_chkbox.toggled.connect(self.on_hide_cross_line)
+        self.cross_mk_hide_chkbox.toggled.connect(self.on_hide_cross_mk)
+        self.cross_text_hide_chkbox.toggled.connect(self.on_hide_cross_text)
+        self.cross_line_style_cbb.currentTextChanged.connect(self.on_change_cross_ls)
+        self.cross_line_width_lineEdit.textChanged.connect(self.on_change_cross_lw)
+        self.cross_line_color_btn.clicked.connect(self.on_change_cross_lc)
+        self.cross_mk_size_lineEdit.textChanged.connect(self.on_change_cross_mksize)
+        self.cross_mk_width_lineEdit.textChanged.connect(self.on_change_cross_mew)
+        self.cross_mk_edgecolor_btn.clicked.connect(self.on_change_cross_mec)
+        self.cross_mk_facecolor_btn.clicked.connect(self.on_change_cross_mfc)
+        self.cross_mk_style_cbb.currentIndexChanged.connect(self.on_change_mkstyle)
+        self.cross_text_color_btn.clicked.connect(self.on_change_cross_textc)
+        self.cross_literal_name_lineEdit.returnPressed.connect(self.on_change_cross_name)
+
+    def get_cross_obj_by_name(self, name, otype='line'):
+        # get artists from cross markers, otype: line, point, text as a list.
+        if otype == 'line':
+            hl, vl, _, _, _ = self.parent._markers[name]
+            r = [hl, vl]
+        elif otype == 'point':
+            _, _, cp, _, _ = self.parent._markers[name]
+            r = [cp]
+        elif otype == 'text':
+            _, _, _, pt, _ = self.parent._markers[name]
+            r = [pt]
+        return r
+
+    @pyqtSlot()
+    def on_change_cross_name(self):
+        # rename cross marker
+        new_name = self.cross_literal_name_lineEdit.text()
+        if new_name == '':
+            return
+        for o in self.get_cross_obj_by_name(self._current_mk_name, 'text'):
+            o.set_text(new_name)
+        self.parent.update_figure()
+        self.parent._markers.setdefault(new_name,
+                self.parent._markers.pop(self.cross_cbb.currentText()))
+        self.cross_cbb.setItemText(self.cross_cbb.currentIndex(), new_name)
+
+    @pyqtSlot()
+    def on_change_cross_textc(self):
+        # change cross marker text color
+        c = QColorDialog.getColor()
+        if c.isValid():
+            for o in self.get_cross_obj_by_name(self._current_mk_name, 'text'):
+                o.set_color(c.getRgbF())
+            self.parent.update_figure()
+            self.set_btn_color(self.sender(), c)
+
+    @pyqtSlot(int)
+    def on_change_mkstyle(self, i):
+        for o in self.get_cross_obj_by_name(self._current_mk_name, 'point'):
+            o.set_marker(MK_SYMBOL[i])
+        self.parent.update_figure()
+
+    @pyqtSlot('QString')
+    def on_change_cross_mksize(self, s):
+        if s == '': return
+        w = max(float(s), 1.0)
+        for o in self.get_cross_obj_by_name(self._current_mk_name, 'point'):
+            o.set_ms(w)
+        self.parent.update_figure()
+
+    @pyqtSlot()
+    def on_change_cross_mfc(self):
+        c = QColorDialog.getColor()
+        if c.isValid():
+            for o in self.get_cross_obj_by_name(self._current_mk_name, 'point'):
+                o.set_mfc(c.getRgbF())
+            self.parent.update_figure()
+            self.set_btn_color(self.sender(), c)
+
+    @pyqtSlot()
+    def on_change_cross_mec(self):
+        c = QColorDialog.getColor()
+        if c.isValid():
+            for o in self.get_cross_obj_by_name(self._current_mk_name, 'point'):
+                o.set_mec(c.getRgbF())
+            self.parent.update_figure()
+            self.set_btn_color(self.sender(), c)
+
+    @pyqtSlot('QString')
+    def on_change_cross_mew(self, s):
+        if s == '': return
+        w = max(float(s), 0.1)
+        for o in self.get_cross_obj_by_name(self._current_mk_name, 'point'):
+            o.set_mew(w)
+        self.parent.update_figure()
+
+    @pyqtSlot()
+    def on_change_cross_lc(self):
+        c = QColorDialog.getColor()
+        if c.isValid():
+            for o in self.get_cross_obj_by_name(self._current_mk_name):
+                o.set_color(c.getRgbF())
+            self.parent.update_figure()
+            self.set_btn_color(self.sender(), c)
+
+    @pyqtSlot('QString')
+    def on_change_cross_lw(self, s):
+        if s == '': return
+        w = max(float(s), 0.05)
+        for o in self.get_cross_obj_by_name(self._current_mk_name):
+            o.set_lw(w)
+        self.parent.update_figure()
+
+    @pyqtSlot('QString')
+    def on_change_cross_ls(self, s):
+        if s not in LINE_STY_VALS:
+            return
+        for o in self.get_cross_obj_by_name(self._current_mk_name):
+            o.set_ls(s)
+        self.parent.update_figure()
+
+    @pyqtSlot(bool)
+    def on_hide_cross_text(self, hide):
+        # hide current cross text
+        for o in self.get_cross_obj_by_name(self._current_mk_name, 'text'):
+            o.set_visible(not hide)
+        self.parent.update_figure()
+
+    @pyqtSlot(bool)
+    def on_hide_cross_mk(self, hide):
+        # hide current cross mk
+        for o in self.get_cross_obj_by_name(self._current_mk_name, 'point'):
+            o.set_visible(not hide)
+        self.parent.update_figure()
+
+    @pyqtSlot(bool)
+    def on_hide_cross_line(self, hide):
+        # hide current cross line
+        for o in self.get_cross_obj_by_name(self._current_mk_name):
+            o.set_visible(not hide)
+        self.parent.update_figure()
+
+    @pyqtSlot('QString')
+    def on_current_mkname_changed(self, mk_name):
+        # current mk_name is changed.
+        self._current_mk_name = mk_name
+        conf = self.parent.get_crossmk_config(mk_name)
+        # literal name (text),color,vis
+        self.cross_literal_name_lineEdit.setText(mk_name)
+        self.set_btn_color(self.cross_text_color_btn, QColor(mplcolor2hex(conf['text_color'])))
+        self.cross_text_hide_chkbox.setChecked(not conf['text_visible'])
+
+        # line color
+        self.set_btn_color(self.cross_line_color_btn, QColor(mplcolor2hex(conf['c'])))
+        # ls
+        self.cross_line_style_cbb.setCurrentText(LINE_STY_DICT[conf['ls']])
+        # lw
+        self.cross_line_width_lineEdit.setText('{}'.format(conf['lw']))
+        # line vis
+        self.cross_line_hide_chkbox.setChecked(not conf['line_visible'])
+        # mk
+        self.cross_mk_style_cbb.setCurrentIndex(MK_SYMBOL.index(conf['mk']))
+        # ms
+        self.cross_mk_size_lineEdit.setText('{}'.format(conf['ms']))
+        # mec,mfc
+        self.set_btn_color(self.cross_mk_edgecolor_btn, QColor(mplcolor2hex(conf['mec'])))
+        self.set_btn_color(self.cross_mk_facecolor_btn, QColor(mplcolor2hex(conf['mfc'])))
+        # mew
+        self.cross_mk_width_lineEdit.setText('{}'.format(conf['mew']))
+        # mk vis
+        self.cross_mk_hide_chkbox.setChecked(not conf['mk_visible'])
+
 
 
 class MatplotlibConfigCurvePanel(MatplotlibConfigPanel):
