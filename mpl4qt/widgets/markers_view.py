@@ -116,7 +116,10 @@ class MarkersView(QWidget, Ui_Form):
     @pyqtSlot()
     def on_selection_changed(self):
         # selection changed.
-        self.sel_dq.append(self.tw.currentItem().row())
+        cit = self.tw.currentItem()
+        if cit is None:
+            return
+        self.sel_dq.append(cit.row())
         self.update_row_selection()
         self.update_stats()
 
