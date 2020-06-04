@@ -518,6 +518,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         for o in (self.cross_line_hide_chkbox, self.cross_mk_hide_chkbox,
                   self.cross_text_hide_chkbox):
             o.stateChanged.connect(self.on_update_cross_hide_state)
+        self.cross_hide_chkbox.stateChanged.connect(self.on_hide_cross)
         self.cross_mk_style_cbb.addItems(MK_CODE)
         self.cross_cbb.addItems(self.parent._markers.keys())
         self.cross_cbb.currentTextChanged.connect(self.on_current_mkname_changed)
@@ -535,8 +536,6 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.cross_mk_style_cbb.currentIndexChanged.connect(self.on_change_mkstyle)
         self.cross_text_color_btn.clicked.connect(self.on_change_cross_textc)
         self.cross_literal_name_lineEdit.returnPressed.connect(self.on_change_cross_name)
-        self.cross_hide_chkbox.stateChanged.connect(self.on_hide_cross)
-        self.cross_line_hide_chkbox.stateChanged.emit(self.cross_line_hide_chkbox.checkState())
 
     def on_update_cross_hide_state(self, state):
         self.cross_hide_chkbox.stateChanged.disconnect(self.on_hide_cross)
@@ -551,7 +550,6 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         else:
             self.cross_hide_chkbox.setCheckState(Qt.PartiallyChecked)
             self._cross_partial_hide_states[self._current_mk_name] = states
-            print("Update partial states: ", self._cross_partial_hide_states)
 
         self.cross_hide_chkbox.stateChanged.connect(self.on_hide_cross)
 
@@ -734,6 +732,7 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         for o in (self.cross_line_hide_chkbox, self.cross_mk_hide_chkbox,
                   self.cross_text_hide_chkbox):
             o.stateChanged.connect(self.on_update_cross_hide_state)
+        self.on_update_cross_hide_state(None)
 
 
 class MatplotlibConfigCurvePanel(MatplotlibConfigPanel):
