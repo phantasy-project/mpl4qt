@@ -24,9 +24,6 @@ class Ui_Form(object):
         self.gridLayout.setSpacing(6)
         self.gridLayout.setObjectName("gridLayout")
         self.tableWidget = QtWidgets.QTableWidget(self.groupBox)
-        font = QtGui.QFont()
-        font.setFamily("Monospace")
-        self.tableWidget.setFont(font)
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(0)
@@ -47,7 +44,6 @@ class Ui_Form(object):
         self.mid_point_lbl.setStyleSheet("QLabel {\n"
                                          "    border: 1px solid gray;\n"
                                          "    color: rgb(0, 85, 255);\n"
-                                         "    padding: 0px 0px 0px 10px;\n"
                                          "}")
         self.mid_point_lbl.setText("")
         self.mid_point_lbl.setTextInteractionFlags(
@@ -61,7 +57,6 @@ class Ui_Form(object):
         self.distance_lbl.setStyleSheet("QLabel {\n"
                                         "    border: 1px solid gray;\n"
                                         "    color: rgb(0, 85, 255);\n"
-                                        "    padding: 0px 0px 0px 10px;\n"
                                         "}")
         self.distance_lbl.setText("")
         self.distance_lbl.setTextInteractionFlags(
