@@ -514,7 +514,10 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
                 QDoubleValidator(MK_SIZE_MIN, MK_SIZE_MAX, 1, self))
         self.cross_mk_width_lineEdit.setValidator(
                 QDoubleValidator(MK_WIDTH_MIN, MK_WIDTH_MAX, 1, self))
-
+        self._cross_partial_hide_states = {}
+        for o in (self.cross_line_hide_chkbox, self.cross_mk_hide_chkbox,
+                  self.cross_text_hide_chkbox):
+            o.stateChanged.connect(self.on_update_cross_hide_state)
         self.cross_mk_style_cbb.addItems(MK_CODE)
         self.cross_cbb.addItems(self.parent._markers.keys())
         self.cross_cbb.currentTextChanged.connect(self.on_current_mkname_changed)
@@ -532,6 +535,43 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.cross_mk_style_cbb.currentIndexChanged.connect(self.on_change_mkstyle)
         self.cross_text_color_btn.clicked.connect(self.on_change_cross_textc)
         self.cross_literal_name_lineEdit.returnPressed.connect(self.on_change_cross_name)
+        self.cross_hide_chkbox.stateChanged.connect(self.on_hide_cross)
+        self.cross_line_hide_chkbox.stateChanged.emit(self.cross_line_hide_chkbox.checkState())
+
+    def on_update_cross_hide_state(self, state):
+        self.cross_hide_chkbox.stateChanged.disconnect(self.on_hide_cross)
+
+        states = (self.cross_line_hide_chkbox.isChecked(),
+                  self.cross_mk_hide_chkbox.isChecked(),
+                  self.cross_text_hide_chkbox.isChecked(),)
+        if all(states):
+            self.cross_hide_chkbox.setCheckState(Qt.Checked)
+        elif not any(states):
+            self.cross_hide_chkbox.setCheckState(Qt.Unchecked)
+        else:
+            self.cross_hide_chkbox.setCheckState(Qt.PartiallyChecked)
+            self._cross_partial_hide_states[self._current_mk_name] = states
+            print("Update partial states: ", self._cross_partial_hide_states)
+
+        self.cross_hide_chkbox.stateChanged.connect(self.on_hide_cross)
+
+    def on_hide_cross(self, state):
+        hide_chkboxes = (self.cross_line_hide_chkbox,
+                         self.cross_mk_hide_chkbox,
+                         self.cross_text_hide_chkbox,)
+        for o in hide_chkboxes:
+            o.stateChanged.disconnect(self.on_update_cross_hide_state)
+
+        if state == Qt.PartiallyChecked:
+            for o, s in zip(hide_chkboxes,
+                            self._cross_partial_hide_states.setdefault(self._current_mk_name, [])):
+                o.setChecked(s)
+        else:
+            for o in hide_chkboxes:
+                o.setCheckState(state)
+
+        for o in hide_chkboxes:
+            o.stateChanged.connect(self.on_update_cross_hide_state)
 
     def get_cross_obj_by_name(self, name, otype='line'):
         # get artists from cross markers, otype: line, point, text as a list.
@@ -557,6 +597,8 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.parent.update_figure()
         self.parent._markers.setdefault(new_name,
                 self.parent._markers.pop(self.cross_cbb.currentText()))
+        self._cross_partial_hide_states.setdefault(new_name,
+                self._cross_partial_hide_states.pop(self.cross_cbb.currentText()))
         self.cross_cbb.setItemText(self.cross_cbb.currentIndex(), new_name)
 
     @pyqtSlot()
@@ -658,6 +700,10 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     @pyqtSlot('QString')
     def on_current_mkname_changed(self, mk_name):
         # current mk_name is changed.
+        for o in (self.cross_line_hide_chkbox, self.cross_mk_hide_chkbox,
+                  self.cross_text_hide_chkbox):
+            o.stateChanged.disconnect(self.on_update_cross_hide_state)
+
         self._current_mk_name = mk_name
         conf = self.parent.get_crossmk_config(mk_name)
         # literal name (text),color,vis
@@ -685,6 +731,9 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         # mk vis
         self.cross_mk_hide_chkbox.setChecked(not conf['mk_visible'])
 
+        for o in (self.cross_line_hide_chkbox, self.cross_mk_hide_chkbox,
+                  self.cross_text_hide_chkbox):
+            o.stateChanged.connect(self.on_update_cross_hide_state)
 
 
 class MatplotlibConfigCurvePanel(MatplotlibConfigPanel):
