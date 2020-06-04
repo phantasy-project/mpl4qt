@@ -253,30 +253,30 @@ class BasePlotWidget(QWidget):
             hl, vl, cp, pt, _ = self._markers[name]
         else:
             is_new_marker = True
-            hl, vl, cp, pt, mk_name = None, None, None, None, name
+            hl, vl, cp, pt = None, None, None, None
 
         if hl is None:
             hl = self.axes.axhline(y0,
                                    alpha=0.8, color=mc, ls='--')
-            hl.set_label('_H-Line {}'.format(mk_name))
+            hl.set_label('_H-Line {}'.format(name))
         else:
             hl.set_ydata([y0, y0])
 
         if vl is None:
             vl = self.axes.axvline(x0,
                                    alpha=0.8, color=mc, ls='--')
-            vl.set_label('_V-Line {}'.format(mk_name))
+            vl.set_label('_V-Line {}'.format(name))
         else:
             vl.set_xdata([x0, x0])
 
         if cp is None:
             cp, = self.axes.plot([x0], [y0], 'o',
                                  mec=mc, mfc=mc, alpha=0.95)
-            cp.set_label('_Cross-Point {}'.format(mk_name))
+            cp.set_label('_Cross-Point {}'.format(name))
             if self._marker_with_xy:
                 text = '{0:g},{1:g}'.format(x0, y0)
             else:
-                text = mk_name
+                text = name
             pt = self.axes.annotate(
                     text, xy=(x0, y0), xytext=(15, 15),
                     xycoords="data", textcoords="offset pixels",
@@ -288,14 +288,13 @@ class BasePlotWidget(QWidget):
             if self._marker_with_xy:
                 pt.set_text('{0:g},{1:g}'.format(x0, y0))
             else:
-                pt.set_text(mk_name)
+                pt.set_text(name)
             self._markers[name][-1] = (x0, y0)
 
         if is_new_marker:
-            self._markers[mk_name] = [hl, vl, cp, pt, (x0, y0)]
+            self._markers[name] = [hl, vl, cp, pt, (x0, y0)]
 
-        self.markerUpdated.emit(is_new_marker, x0, y0, mk_name)
-
+        self.markerUpdated.emit(is_new_marker, x0, y0, name)
         self.update_figure()
 
     def set_visible_hvlines(self, flag=True):
