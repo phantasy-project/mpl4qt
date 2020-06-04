@@ -499,9 +499,14 @@ class BasePlotWidget(QWidget):
         self.canvas.draw_idle()
 
     def contextMenuEvent(self, evt):
+        self._create_ctxtmenu().exec_(self.mapToGlobal(evt.pos()))
+
+    def _create_ctxtmenu(self):
         menu = QMenu(self)
         config_action = QAction(QIcon(QPixmap(":/tools/config.png")),
                                 "Config", menu)
+        config_action.setShortcut("c,c")
+        config_action.setObjectName('config_action')
         export_action = QAction(QIcon(QPixmap(":/tools/export.png")),
                                 "Export", menu)
         import_action = QAction(QIcon(QPixmap(":/tools/import.png")),
@@ -543,7 +548,7 @@ class BasePlotWidget(QWidget):
         info_action.triggered.connect(self.on_info)
         keyshort_action.triggered.connect(self.kbd_help)
 
-        menu.exec_(self.mapToGlobal(evt.pos()))
+        return menu
 
     @pyqtSlot()
     def on_fitting_data(self):
@@ -1639,6 +1644,8 @@ class BasePlotWidget(QWidget):
         elif k1 == 'shift' and k2 == '?':
             # help msgbox
             self.kbd_help()
+        elif k1 == 'c' and k2 == 'c':
+            self._create_ctxtmenu().findChild(QAction, 'config_action').triggered.emit()
 
     def process_keyshort(self, k):
         """Override this method to define keyshorts.
