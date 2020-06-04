@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(866, 332)
+        Dialog.resize(937, 332)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -418,6 +418,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.xmin_lineEdit.sizePolicy().hasHeightForWidth())
         self.xmin_lineEdit.setSizePolicy(sizePolicy)
+        self.xmin_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
         self.xmin_lineEdit.setObjectName("xmin_lineEdit")
         self.gridLayout_5.addWidget(self.xmin_lineEdit, 0, 1, 1, 1)
         self.xmax_lbl = QtWidgets.QLabel(self.figure_tab)
@@ -439,6 +440,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.xmax_lineEdit.sizePolicy().hasHeightForWidth())
         self.xmax_lineEdit.setSizePolicy(sizePolicy)
+        self.xmax_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
         self.xmax_lineEdit.setObjectName("xmax_lineEdit")
         self.gridLayout_5.addWidget(self.xmax_lineEdit, 0, 3, 1, 1)
         self.ymin_lbl = QtWidgets.QLabel(self.figure_tab)
@@ -460,6 +462,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.ymin_lineEdit.sizePolicy().hasHeightForWidth())
         self.ymin_lineEdit.setSizePolicy(sizePolicy)
+        self.ymin_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
         self.ymin_lineEdit.setObjectName("ymin_lineEdit")
         self.gridLayout_5.addWidget(self.ymin_lineEdit, 1, 1, 1, 1)
         self.ymax_lbl = QtWidgets.QLabel(self.figure_tab)
@@ -481,6 +484,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.ymax_lineEdit.sizePolicy().hasHeightForWidth())
         self.ymax_lineEdit.setSizePolicy(sizePolicy)
+        self.ymax_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
         self.ymax_lineEdit.setObjectName("ymax_lineEdit")
         self.gridLayout_5.addWidget(self.ymax_lineEdit, 1, 3, 1, 1)
         self.horizontalLayout_3.addLayout(self.gridLayout_5)
@@ -505,7 +509,8 @@ class Ui_Dialog(object):
         self.horizontalLayout_5.setSpacing(4)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.label_12 = QtWidgets.QLabel(self.style_tab)
-        self.label_12.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_12.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft
+                                   | QtCore.Qt.AlignVCenter)
         self.label_12.setObjectName("label_12")
         self.horizontalLayout_5.addWidget(self.label_12)
         self.figWidth_lineEdit = QtWidgets.QLineEdit(self.style_tab)
@@ -520,7 +525,8 @@ class Ui_Dialog(object):
         self.figWidth_lineEdit.setObjectName("figWidth_lineEdit")
         self.horizontalLayout_5.addWidget(self.figWidth_lineEdit)
         self.label_14 = QtWidgets.QLabel(self.style_tab)
-        self.label_14.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_14.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft
+                                   | QtCore.Qt.AlignVCenter)
         self.label_14.setObjectName("label_14")
         self.horizontalLayout_5.addWidget(self.label_14)
         self.figHeight_lineEdit = QtWidgets.QLineEdit(self.style_tab)
@@ -535,7 +541,8 @@ class Ui_Dialog(object):
         self.figHeight_lineEdit.setObjectName("figHeight_lineEdit")
         self.horizontalLayout_5.addWidget(self.figHeight_lineEdit)
         self.label_15 = QtWidgets.QLabel(self.style_tab)
-        self.label_15.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_15.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft
+                                   | QtCore.Qt.AlignVCenter)
         self.label_15.setObjectName("label_15")
         self.horizontalLayout_5.addWidget(self.label_15)
         self.figDpi_lineEdit = QtWidgets.QLineEdit(self.style_tab)
@@ -550,6 +557,8 @@ class Ui_Dialog(object):
         self.figDpi_lineEdit.setObjectName("figDpi_lineEdit")
         self.horizontalLayout_5.addWidget(self.figDpi_lineEdit)
         self.label_69 = QtWidgets.QLabel(self.style_tab)
+        self.label_69.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft
+                                   | QtCore.Qt.AlignVCenter)
         self.label_69.setObjectName("label_69")
         self.horizontalLayout_5.addWidget(self.label_69)
         self.figAspect_cbb = QtWidgets.QComboBox(self.style_tab)
@@ -922,6 +931,255 @@ class Ui_Dialog(object):
                                             QtWidgets.QSizePolicy.Expanding)
         self.gridLayout_7.addItem(spacerItem5, 7, 1, 1, 1)
         self.config_tabWidget.addTab(self.style_tab, "")
+        self.cross_tab = QtWidgets.QWidget()
+        self.cross_tab.setObjectName("cross_tab")
+        self.gridLayout_27 = QtWidgets.QGridLayout(self.cross_tab)
+        self.gridLayout_27.setContentsMargins(6, 12, 6, 6)
+        self.gridLayout_27.setSpacing(4)
+        self.gridLayout_27.setObjectName("gridLayout_27")
+        self.label_173 = QtWidgets.QLabel(self.cross_tab)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_173.setFont(font)
+        self.label_173.setAlignment(QtCore.Qt.AlignRight
+                                    | QtCore.Qt.AlignTrailing
+                                    | QtCore.Qt.AlignVCenter)
+        self.label_173.setObjectName("label_173")
+        self.gridLayout_27.addWidget(self.label_173, 0, 0, 1, 1)
+        self.cross_hide_chkbox = QtWidgets.QCheckBox(self.cross_tab)
+        self.cross_hide_chkbox.setTristate(True)
+        self.cross_hide_chkbox.setObjectName("cross_hide_chkbox")
+        self.gridLayout_27.addWidget(self.cross_hide_chkbox, 0, 5, 1, 1)
+        self.label_164 = QtWidgets.QLabel(self.cross_tab)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_164.setFont(font)
+        self.label_164.setAlignment(QtCore.Qt.AlignRight
+                                    | QtCore.Qt.AlignTrailing
+                                    | QtCore.Qt.AlignVCenter)
+        self.label_164.setObjectName("label_164")
+        self.gridLayout_27.addWidget(self.label_164, 1, 0, 1, 1)
+        self.gridLayout_26 = QtWidgets.QGridLayout()
+        self.gridLayout_26.setSpacing(4)
+        self.gridLayout_26.setObjectName("gridLayout_26")
+        self.cross_mk_style_cbb = QtWidgets.QComboBox(self.cross_tab)
+        self.cross_mk_style_cbb.setObjectName("cross_mk_style_cbb")
+        self.gridLayout_26.addWidget(self.cross_mk_style_cbb, 1, 1, 1, 1)
+        self.cross_mk_facecolor_btn = QtWidgets.QToolButton(self.cross_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.cross_mk_facecolor_btn.sizePolicy().hasHeightForWidth())
+        self.cross_mk_facecolor_btn.setSizePolicy(sizePolicy)
+        self.cross_mk_facecolor_btn.setToolTip("")
+        self.cross_mk_facecolor_btn.setText("")
+        self.cross_mk_facecolor_btn.setObjectName("cross_mk_facecolor_btn")
+        self.gridLayout_26.addWidget(self.cross_mk_facecolor_btn, 1, 3, 1, 1)
+        self.cross_mk_width_lineEdit = QtWidgets.QLineEdit(self.cross_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.cross_mk_width_lineEdit.sizePolicy().hasHeightForWidth())
+        self.cross_mk_width_lineEdit.setSizePolicy(sizePolicy)
+        self.cross_mk_width_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
+        self.cross_mk_width_lineEdit.setObjectName("cross_mk_width_lineEdit")
+        self.gridLayout_26.addWidget(self.cross_mk_width_lineEdit, 1, 9, 1, 1)
+        self.label_169 = QtWidgets.QLabel(self.cross_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_169.sizePolicy().hasHeightForWidth())
+        self.label_169.setSizePolicy(sizePolicy)
+        self.label_169.setObjectName("label_169")
+        self.gridLayout_26.addWidget(self.label_169, 0, 2, 1, 1)
+        self.label_170 = QtWidgets.QLabel(self.cross_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_170.sizePolicy().hasHeightForWidth())
+        self.label_170.setSizePolicy(sizePolicy)
+        self.label_170.setObjectName("label_170")
+        self.gridLayout_26.addWidget(self.label_170, 1, 0, 1, 1)
+        self.label_166 = QtWidgets.QLabel(self.cross_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_166.sizePolicy().hasHeightForWidth())
+        self.label_166.setSizePolicy(sizePolicy)
+        self.label_166.setObjectName("label_166")
+        self.gridLayout_26.addWidget(self.label_166, 1, 6, 1, 1)
+        self.cross_line_color_btn = QtWidgets.QToolButton(self.cross_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.cross_line_color_btn.sizePolicy().hasHeightForWidth())
+        self.cross_line_color_btn.setSizePolicy(sizePolicy)
+        self.cross_line_color_btn.setText("")
+        self.cross_line_color_btn.setObjectName("cross_line_color_btn")
+        self.gridLayout_26.addWidget(self.cross_line_color_btn, 0, 3, 1, 1)
+        self.cross_mk_edgecolor_btn = QtWidgets.QToolButton(self.cross_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.cross_mk_edgecolor_btn.sizePolicy().hasHeightForWidth())
+        self.cross_mk_edgecolor_btn.setSizePolicy(sizePolicy)
+        self.cross_mk_edgecolor_btn.setText("")
+        self.cross_mk_edgecolor_btn.setObjectName("cross_mk_edgecolor_btn")
+        self.gridLayout_26.addWidget(self.cross_mk_edgecolor_btn, 1, 5, 1, 1)
+        self.label_165 = QtWidgets.QLabel(self.cross_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_165.sizePolicy().hasHeightForWidth())
+        self.label_165.setSizePolicy(sizePolicy)
+        self.label_165.setObjectName("label_165")
+        self.gridLayout_26.addWidget(self.label_165, 1, 8, 1, 1)
+        self.label_167 = QtWidgets.QLabel(self.cross_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_167.sizePolicy().hasHeightForWidth())
+        self.label_167.setSizePolicy(sizePolicy)
+        self.label_167.setObjectName("label_167")
+        self.gridLayout_26.addWidget(self.label_167, 0, 8, 1, 1)
+        self.label_171 = QtWidgets.QLabel(self.cross_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_171.sizePolicy().hasHeightForWidth())
+        self.label_171.setSizePolicy(sizePolicy)
+        self.label_171.setObjectName("label_171")
+        self.gridLayout_26.addWidget(self.label_171, 1, 2, 1, 1)
+        self.label_172 = QtWidgets.QLabel(self.cross_tab)
+        self.label_172.setObjectName("label_172")
+        self.gridLayout_26.addWidget(self.label_172, 1, 4, 1, 1)
+        self.label_168 = QtWidgets.QLabel(self.cross_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_168.sizePolicy().hasHeightForWidth())
+        self.label_168.setSizePolicy(sizePolicy)
+        self.label_168.setObjectName("label_168")
+        self.gridLayout_26.addWidget(self.label_168, 0, 0, 1, 1)
+        self.cross_line_style_cbb = QtWidgets.QComboBox(self.cross_tab)
+        self.cross_line_style_cbb.setSizeAdjustPolicy(
+            QtWidgets.QComboBox.AdjustToContentsOnFirstShow)
+        self.cross_line_style_cbb.setObjectName("cross_line_style_cbb")
+        self.cross_line_style_cbb.addItem("")
+        self.cross_line_style_cbb.addItem("")
+        self.cross_line_style_cbb.addItem("")
+        self.cross_line_style_cbb.addItem("")
+        self.cross_line_style_cbb.addItem("")
+        self.gridLayout_26.addWidget(self.cross_line_style_cbb, 0, 1, 1, 1)
+        self.cross_mk_size_lineEdit = QtWidgets.QLineEdit(self.cross_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.cross_mk_size_lineEdit.sizePolicy().hasHeightForWidth())
+        self.cross_mk_size_lineEdit.setSizePolicy(sizePolicy)
+        self.cross_mk_size_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
+        self.cross_mk_size_lineEdit.setObjectName("cross_mk_size_lineEdit")
+        self.gridLayout_26.addWidget(self.cross_mk_size_lineEdit, 1, 7, 1, 1)
+        self.cross_line_width_lineEdit = QtWidgets.QLineEdit(self.cross_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.cross_line_width_lineEdit.sizePolicy().hasHeightForWidth())
+        self.cross_line_width_lineEdit.setSizePolicy(sizePolicy)
+        self.cross_line_width_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
+        self.cross_line_width_lineEdit.setObjectName(
+            "cross_line_width_lineEdit")
+        self.gridLayout_26.addWidget(self.cross_line_width_lineEdit, 0, 9, 1,
+                                     1)
+        self.cross_line_hide_chkbox = QtWidgets.QCheckBox(self.cross_tab)
+        self.cross_line_hide_chkbox.setObjectName("cross_line_hide_chkbox")
+        self.gridLayout_26.addWidget(self.cross_line_hide_chkbox, 0, 10, 1, 1)
+        self.cross_mk_hide_chkbox = QtWidgets.QCheckBox(self.cross_tab)
+        self.cross_mk_hide_chkbox.setObjectName("cross_mk_hide_chkbox")
+        self.gridLayout_26.addWidget(self.cross_mk_hide_chkbox, 1, 10, 1, 1)
+        self.gridLayout_27.addLayout(self.gridLayout_26, 1, 1, 2, 5)
+        self.label_163 = QtWidgets.QLabel(self.cross_tab)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_163.setFont(font)
+        self.label_163.setAlignment(QtCore.Qt.AlignRight
+                                    | QtCore.Qt.AlignTrailing
+                                    | QtCore.Qt.AlignVCenter)
+        self.label_163.setObjectName("label_163")
+        self.gridLayout_27.addWidget(self.label_163, 2, 0, 1, 1)
+        self.label_174 = QtWidgets.QLabel(self.cross_tab)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_174.setFont(font)
+        self.label_174.setAlignment(QtCore.Qt.AlignRight
+                                    | QtCore.Qt.AlignTrailing
+                                    | QtCore.Qt.AlignVCenter)
+        self.label_174.setObjectName("label_174")
+        self.gridLayout_27.addWidget(self.label_174, 3, 0, 1, 1)
+        self.cross_rename_chkbox = QtWidgets.QCheckBox(self.cross_tab)
+        self.cross_rename_chkbox.setObjectName("cross_rename_chkbox")
+        self.gridLayout_27.addWidget(self.cross_rename_chkbox, 3, 1, 1, 1)
+        self.cross_literal_name_lineEdit = QtWidgets.QLineEdit(self.cross_tab)
+        self.cross_literal_name_lineEdit.setEnabled(False)
+        self.cross_literal_name_lineEdit.setObjectName(
+            "cross_literal_name_lineEdit")
+        self.gridLayout_27.addWidget(self.cross_literal_name_lineEdit, 3, 2, 1,
+                                     1)
+        self.label_176 = QtWidgets.QLabel(self.cross_tab)
+        self.label_176.setObjectName("label_176")
+        self.gridLayout_27.addWidget(self.label_176, 3, 3, 1, 1)
+        self.cross_text_color_btn = QtWidgets.QToolButton(self.cross_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.cross_text_color_btn.sizePolicy().hasHeightForWidth())
+        self.cross_text_color_btn.setSizePolicy(sizePolicy)
+        self.cross_text_color_btn.setText("")
+        self.cross_text_color_btn.setObjectName("cross_text_color_btn")
+        self.gridLayout_27.addWidget(self.cross_text_color_btn, 3, 4, 1, 1)
+        self.cross_text_hide_chkbox = QtWidgets.QCheckBox(self.cross_tab)
+        self.cross_text_hide_chkbox.setObjectName("cross_text_hide_chkbox")
+        self.gridLayout_27.addWidget(self.cross_text_hide_chkbox, 3, 5, 1, 1)
+        spacerItem6 = QtWidgets.QSpacerItem(20, 40,
+                                            QtWidgets.QSizePolicy.Minimum,
+                                            QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_27.addItem(spacerItem6, 4, 1, 1, 1)
+        self.cross_cbb = QtWidgets.QComboBox(self.cross_tab)
+        self.cross_cbb.setObjectName("cross_cbb")
+        self.gridLayout_27.addWidget(self.cross_cbb, 0, 1, 1, 4)
+        self.config_tabWidget.addTab(self.cross_tab, "")
         self.curve_tab = QtWidgets.QWidget()
         self.curve_tab.setObjectName("curve_tab")
         self.gridLayout_12 = QtWidgets.QGridLayout(self.curve_tab)
@@ -987,6 +1245,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.line_width_lineEdit.sizePolicy().hasHeightForWidth())
         self.line_width_lineEdit.setSizePolicy(sizePolicy)
+        self.line_width_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
         self.line_width_lineEdit.setObjectName("line_width_lineEdit")
         self.gridLayout.addWidget(self.line_width_lineEdit, 0, 9, 1, 1)
         self.label_20 = QtWidgets.QLabel(self.curve_tab)
@@ -1037,6 +1296,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.mk_size_lineEdit.sizePolicy().hasHeightForWidth())
         self.mk_size_lineEdit.setSizePolicy(sizePolicy)
+        self.mk_size_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
         self.mk_size_lineEdit.setObjectName("mk_size_lineEdit")
         self.gridLayout.addWidget(self.mk_size_lineEdit, 1, 7, 1, 1)
         self.mk_width_lineEdit = QtWidgets.QLineEdit(self.curve_tab)
@@ -1047,6 +1307,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.mk_width_lineEdit.sizePolicy().hasHeightForWidth())
         self.mk_width_lineEdit.setSizePolicy(sizePolicy)
+        self.mk_width_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
         self.mk_width_lineEdit.setObjectName("mk_width_lineEdit")
         self.gridLayout.addWidget(self.mk_width_lineEdit, 1, 9, 1, 1)
         self.label_5 = QtWidgets.QLabel(self.curve_tab)
@@ -1255,10 +1516,10 @@ class Ui_Dialog(object):
                                    | QtCore.Qt.AlignVCenter)
         self.label_26.setObjectName("label_26")
         self.gridLayout_12.addWidget(self.label_26, 3, 0, 1, 1)
-        spacerItem6 = QtWidgets.QSpacerItem(20, 40,
+        spacerItem7 = QtWidgets.QSpacerItem(20, 40,
                                             QtWidgets.QSizePolicy.Minimum,
                                             QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_12.addItem(spacerItem6, 6, 1, 1, 1)
+        self.gridLayout_12.addItem(spacerItem7, 6, 1, 1, 1)
         self.config_tabWidget.addTab(self.curve_tab, "")
         self.eb_tab = QtWidgets.QWidget()
         self.eb_tab.setObjectName("eb_tab")
@@ -1371,6 +1632,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.eb_line_width_lineEdit.sizePolicy().hasHeightForWidth())
         self.eb_line_width_lineEdit.setSizePolicy(sizePolicy)
+        self.eb_line_width_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
         self.eb_line_width_lineEdit.setObjectName("eb_line_width_lineEdit")
         self.gridLayout_2.addWidget(self.eb_line_width_lineEdit, 0, 9, 1, 1)
         self.xeb_mk_style_cbb = QtWidgets.QComboBox(self.eb_tab)
@@ -1384,6 +1646,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.eb_mk_size_lineEdit.sizePolicy().hasHeightForWidth())
         self.eb_mk_size_lineEdit.setSizePolicy(sizePolicy)
+        self.eb_mk_size_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
         self.eb_mk_size_lineEdit.setObjectName("eb_mk_size_lineEdit")
         self.gridLayout_2.addWidget(self.eb_mk_size_lineEdit, 1, 7, 1, 1)
         self.eb_line_style_cbb = QtWidgets.QComboBox(self.eb_tab)
@@ -1414,6 +1677,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.eb_mk_width_lineEdit.sizePolicy().hasHeightForWidth())
         self.eb_mk_width_lineEdit.setSizePolicy(sizePolicy)
+        self.eb_mk_width_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
         self.eb_mk_width_lineEdit.setObjectName("eb_mk_width_lineEdit")
         self.gridLayout_2.addWidget(self.eb_mk_width_lineEdit, 1, 9, 1, 1)
         self.yeb_mk_style_cbb = QtWidgets.QComboBox(self.eb_tab)
@@ -1485,10 +1749,10 @@ class Ui_Dialog(object):
         self.eb_line_id_cbb.setSizePolicy(sizePolicy)
         self.eb_line_id_cbb.setObjectName("eb_line_id_cbb")
         self.gridLayout_13.addWidget(self.eb_line_id_cbb, 0, 1, 1, 1)
-        spacerItem7 = QtWidgets.QSpacerItem(20, 40,
+        spacerItem8 = QtWidgets.QSpacerItem(20, 40,
                                             QtWidgets.QSizePolicy.Minimum,
                                             QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_13.addItem(spacerItem7, 4, 1, 1, 1)
+        self.gridLayout_13.addItem(spacerItem8, 4, 1, 1, 1)
         self.config_tabWidget.addTab(self.eb_tab, "")
         self.image_tab = QtWidgets.QWidget()
         self.image_tab.setObjectName("image_tab")
@@ -1636,10 +1900,10 @@ class Ui_Dialog(object):
         self.cb_orientation_cbb.addItem("")
         self.cb_orientation_cbb.addItem("")
         self.horizontalLayout_17.addWidget(self.cb_orientation_cbb)
-        spacerItem8 = QtWidgets.QSpacerItem(40, 20,
+        spacerItem9 = QtWidgets.QSpacerItem(40, 20,
                                             QtWidgets.QSizePolicy.Expanding,
                                             QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_17.addItem(spacerItem8)
+        self.horizontalLayout_17.addItem(spacerItem9)
         self.gridLayout_8.addLayout(self.horizontalLayout_17, 2, 1, 1, 1)
         self.label_43 = QtWidgets.QLabel(self.image_tab)
         font = QtGui.QFont()
@@ -1661,10 +1925,10 @@ class Ui_Dialog(object):
                                    | QtCore.Qt.AlignVCenter)
         self.label_44.setObjectName("label_44")
         self.gridLayout_8.addWidget(self.label_44, 1, 0, 1, 1)
-        spacerItem9 = QtWidgets.QSpacerItem(20, 40,
-                                            QtWidgets.QSizePolicy.Minimum,
-                                            QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_8.addItem(spacerItem9, 3, 1, 1, 1)
+        spacerItem10 = QtWidgets.QSpacerItem(20, 40,
+                                             QtWidgets.QSizePolicy.Minimum,
+                                             QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_8.addItem(spacerItem10, 3, 1, 1, 1)
         self.config_tabWidget.addTab(self.image_tab, "")
         self.barchart_tab = QtWidgets.QWidget()
         self.barchart_tab.setObjectName("barchart_tab")
@@ -1922,6 +2186,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.bar_width_lineEdit.sizePolicy().hasHeightForWidth())
         self.bar_width_lineEdit.setSizePolicy(sizePolicy)
+        self.bar_width_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
         self.bar_width_lineEdit.setObjectName("bar_width_lineEdit")
         self.gridLayout_10.addWidget(self.bar_width_lineEdit, 0, 3, 1, 1)
         self.label_58 = QtWidgets.QLabel(self.barchart_tab)
@@ -1937,6 +2202,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.ebline_width_lineEdit.sizePolicy().hasHeightForWidth())
         self.ebline_width_lineEdit.setSizePolicy(sizePolicy)
+        self.ebline_width_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
         self.ebline_width_lineEdit.setObjectName("ebline_width_lineEdit")
         self.gridLayout_10.addWidget(self.ebline_width_lineEdit, 1, 3, 1, 1)
         self.ebline_style_cbb = QtWidgets.QComboBox(self.barchart_tab)
@@ -1989,14 +2255,14 @@ class Ui_Dialog(object):
         self.label_53.setAlignment(QtCore.Qt.AlignCenter)
         self.label_53.setObjectName("label_53")
         self.gridLayout_10.addWidget(self.label_53, 1, 4, 1, 1)
-        spacerItem10 = QtWidgets.QSpacerItem(40, 20,
-                                             QtWidgets.QSizePolicy.Expanding,
-                                             QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_10.addItem(spacerItem10, 1, 6, 1, 1)
         spacerItem11 = QtWidgets.QSpacerItem(40, 20,
                                              QtWidgets.QSizePolicy.Expanding,
                                              QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_10.addItem(spacerItem11, 0, 6, 1, 1)
+        self.gridLayout_10.addItem(spacerItem11, 1, 6, 1, 1)
+        spacerItem12 = QtWidgets.QSpacerItem(40, 20,
+                                             QtWidgets.QSizePolicy.Expanding,
+                                             QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_10.addItem(spacerItem12, 0, 6, 1, 1)
         self.gridLayout_11.addLayout(self.gridLayout_10, 0, 1, 2, 1)
         self.gridLayout_4 = QtWidgets.QGridLayout()
         self.gridLayout_4.setSpacing(4)
@@ -2057,10 +2323,10 @@ class Ui_Dialog(object):
         self.horizontalLayout_14 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_14.setSpacing(4)
         self.horizontalLayout_14.setObjectName("horizontalLayout_14")
-        spacerItem12 = QtWidgets.QSpacerItem(40, 20,
+        spacerItem13 = QtWidgets.QSpacerItem(40, 20,
                                              QtWidgets.QSizePolicy.Preferred,
                                              QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_14.addItem(spacerItem12)
+        self.horizontalLayout_14.addItem(spacerItem13)
         self.reset_annote_fmt_btn = QtWidgets.QToolButton(self.barchart_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
@@ -2076,10 +2342,10 @@ class Ui_Dialog(object):
         self.label_76 = QtWidgets.QLabel(self.barchart_tab)
         self.label_76.setObjectName("label_76")
         self.gridLayout_4.addWidget(self.label_76, 2, 0, 1, 1)
-        spacerItem13 = QtWidgets.QSpacerItem(40, 20,
+        spacerItem14 = QtWidgets.QSpacerItem(40, 20,
                                              QtWidgets.QSizePolicy.Expanding,
                                              QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_4.addItem(spacerItem13, 1, 7, 1, 1)
+        self.gridLayout_4.addItem(spacerItem14, 1, 7, 1, 1)
         self.gridLayout_11.addLayout(self.gridLayout_4, 4, 1, 1, 1)
         self.label_55 = QtWidgets.QLabel(self.barchart_tab)
         font = QtGui.QFont()
@@ -2091,17 +2357,18 @@ class Ui_Dialog(object):
                                    | QtCore.Qt.AlignVCenter)
         self.label_55.setObjectName("label_55")
         self.gridLayout_11.addWidget(self.label_55, 2, 0, 1, 1)
-        spacerItem14 = QtWidgets.QSpacerItem(20, 40,
+        spacerItem15 = QtWidgets.QSpacerItem(20, 40,
                                              QtWidgets.QSizePolicy.Minimum,
                                              QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_11.addItem(spacerItem14, 5, 1, 1, 1)
+        self.gridLayout_11.addItem(spacerItem15, 5, 1, 1, 1)
         self.config_tabWidget.addTab(self.barchart_tab, "")
-        self.gridLayout_3.addWidget(self.config_tabWidget, 0, 0, 1, 1)
+        self.gridLayout_3.addWidget(self.config_tabWidget, 1, 0, 1, 1)
 
         self.retranslateUi(Dialog)
         self.config_tabWidget.setCurrentIndex(0)
+        self.cross_rename_chkbox.toggled['bool'].connect(
+            self.cross_literal_name_lineEdit.setEnabled)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
-        Dialog.setTabOrder(self.config_tabWidget, self.fig_title_lineEdit)
         Dialog.setTabOrder(self.fig_title_lineEdit, self.title_font_btn)
         Dialog.setTabOrder(self.title_font_btn, self.fig_xlabel_lineEdit)
         Dialog.setTabOrder(self.fig_xlabel_lineEdit, self.fig_ylabel_lineEdit)
@@ -2342,6 +2609,35 @@ class Ui_Dialog(object):
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.style_tab),
             _translate("Dialog", "Style"))
+        self.label_173.setText(_translate("Dialog", "Cross"))
+        self.cross_hide_chkbox.setText(_translate("Dialog", "Hide"))
+        self.label_164.setText(_translate("Dialog", "Lines"))
+        self.label_169.setText(_translate("Dialog", "Color"))
+        self.label_170.setText(_translate("Dialog", "Style"))
+        self.label_166.setText(_translate("Dialog", "Size"))
+        self.label_165.setText(_translate("Dialog", "Width"))
+        self.label_167.setText(_translate("Dialog", "Width"))
+        self.label_171.setText(_translate("Dialog", "Face Color"))
+        self.label_172.setText(_translate("Dialog", "Edge Color"))
+        self.label_168.setText(_translate("Dialog", "Style"))
+        self.cross_line_style_cbb.setItemText(0, _translate("Dialog", "solid"))
+        self.cross_line_style_cbb.setItemText(1,
+                                              _translate("Dialog", "dashed"))
+        self.cross_line_style_cbb.setItemText(2,
+                                              _translate("Dialog", "dashdot"))
+        self.cross_line_style_cbb.setItemText(3,
+                                              _translate("Dialog", "dotted"))
+        self.cross_line_style_cbb.setItemText(4, _translate("Dialog", "None"))
+        self.cross_line_hide_chkbox.setText(_translate("Dialog", "Hide"))
+        self.cross_mk_hide_chkbox.setText(_translate("Dialog", "Hide"))
+        self.label_163.setText(_translate("Dialog", "Marker"))
+        self.label_174.setText(_translate("Dialog", "Text"))
+        self.cross_rename_chkbox.setText(_translate("Dialog", "Rename"))
+        self.label_176.setText(_translate("Dialog", "Color"))
+        self.cross_text_hide_chkbox.setText(_translate("Dialog", "Hide"))
+        self.config_tabWidget.setTabText(
+            self.config_tabWidget.indexOf(self.cross_tab),
+            _translate("Dialog", "Cross"))
         self.label_4.setText(_translate("Dialog", "Marker"))
         self.label_22.setText(_translate("Dialog", "Width"))
         self.label_20.setText(_translate("Dialog", "Size"))
