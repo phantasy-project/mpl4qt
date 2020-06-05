@@ -26,6 +26,9 @@ class MarkersView(QWidget, Ui_Form):
     # named marker is to remove.
     marker_removed = pyqtSignal('QString')
 
+    # relocate marker, mk_name
+    relocate_marker = pyqtSignal('QString')
+
     def __init__(self, markers, parent=None):
         super(MarkersView, self).__init__()
         self.parent = parent
@@ -42,6 +45,7 @@ class MarkersView(QWidget, Ui_Form):
         self.show_data()
 
     def set_row(self, irow, x, y, name):
+        # name, x, y, del, repos
         item0 = QTableWidgetItem(name)
         self.tw.setItem(irow, 0, item0)
         item1 = QTableWidgetItem("{0:g}".format(x))
@@ -53,6 +57,12 @@ class MarkersView(QWidget, Ui_Form):
         del_btn.setToolTip("Delete current marker")
         del_btn.clicked.connect(partial(self.on_delete, name))
         self.tw.setCellWidget(irow, 3, del_btn)
+
+        repos_btn = QToolButton(self)
+        repos_btn.setIcon(QIcon(QPixmap(":/tools/edit_marker.png")))
+        repos_btn.setToolTip("Relocate current marker")
+        repos_btn.clicked.connect(partial(self.on_relocate, name))
+        self.tw.setCellWidget(irow, 4, repos_btn)
 
     def show_data(self):
         if self.data == []:
@@ -69,6 +79,11 @@ class MarkersView(QWidget, Ui_Form):
         for i in self.tw.findItems(mk_name, Qt.MatchExactly):
             self.marker_removed.emit(i.text())
             self.tw.removeRow(i.row())
+
+    @pyqtSlot()
+    def on_relocate(self, mk_name):
+        # relocate marker.
+        self.relocate_marker.emit(mk_name)
 
     @pyqtSlot(bool, float, float, 'QString')
     def on_add_marker(self, is_new_marker, x, y, mk_name):
@@ -91,7 +106,7 @@ class MarkersView(QWidget, Ui_Form):
     def _preset_table(self):
         """Set horizontal header labels, row/column size.
         """
-        header = ['Name', 'X', 'Y', '']
+        header = ['Name', 'X', 'Y', '', '']
         self.tw.setColumnCount(len(header))
         self.tw.setRowCount(len(self.data))
         self.tw.setHorizontalHeaderLabels(header)

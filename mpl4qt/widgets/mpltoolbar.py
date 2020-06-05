@@ -227,6 +227,7 @@ class MToolbar(QToolBar):
         cross_snap_act.setChecked(self._is_snap_point)
 
         cross_marker_act = QAction(QIcon(QPixmap(":/tools/add_marker.png")), "Add Marker", self)
+        self.cross_marker_act = cross_marker_act
         cross_marker_act.setShortcut(Qt.CTRL + Qt.Key_M)
         cross_marker_act.setCheckable(True)
         cross_marker_act.setToolTip("Click to add a crosshair marker (CTRL + M)")
@@ -449,15 +450,20 @@ class MToolbar(QToolBar):
         o.setToolTip(tp)
 
     @pyqtSlot(bool)
-    def on_add_marker(self, is_checked):
+    def on_add_marker(self, is_checked, mk_name=None):
         # place a new cross marker if checked.
         self.parent._to_add_marker = is_checked
         self.marker_add_checked.emit(is_checked)
         if is_checked:
+            if mk_name is None: # new cross marker
+                self.parent._mk_name = 'M{}'.format(self.parent._marker_id)
+                self.parent._current_mc = next(COLOR_CYCLE)
+            else: # update mk_name marker
+                hl, _, _, _, _ = self.parent._markers[mk_name]
+                self.parent._mk_name = mk_name
+                self.parent._current_mc = hl.get_color()
             self.parent._added_marker = False
-            self.parent._mk_name = 'M{}'.format(self.parent._marker_id)
-            self.parent._current_mc = next(COLOR_CYCLE)
-            self.sender().setText("Adding Marker (click when done)")
+            self.cross_marker_act.setText("Add/Update Marker (click when done)")
             QGuiApplication.setOverrideCursor(Qt.CrossCursor)
         else:
             if self.parent._added_marker:
@@ -471,12 +477,18 @@ class MToolbar(QToolBar):
         [o.remove() for o in (hl, vl, cp, pt)]
         self.parent.update_figure()
 
+    @pyqtSlot('QString')
+    def on_relocate_marker(self, mk_name):
+        # relocate marker with the name *mk_name*
+        self.on_add_marker(True, mk_name)
+
     @pyqtSlot()
     def on_show_mks(self):
         # show all markers.
         if self.mk_view is None:
             self.mk_view = MarkersView(self.parent._markers, self)
             self.mk_view.marker_removed.connect(self.on_remove_marker)
+            self.mk_view.relocate_marker.connect(self.on_relocate_marker)
             self.parent.markerUpdated.connect(self.mk_view.on_add_marker)
         self.mk_view.adjustSize()
         self.mk_view.show()
