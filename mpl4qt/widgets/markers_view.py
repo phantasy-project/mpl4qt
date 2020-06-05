@@ -100,6 +100,7 @@ class MarkersView(QWidget, Ui_Form):
             self.tw.item(item0.row(), 1).setText("{0:g}".format(x))
             self.tw.item(item0.row(), 2).setText("{0:g}".format(y))
         self._postset_table()
+        self.update_stats()
 
     def _postset_table(self):
         self.tw.resizeColumnsToContents()
@@ -166,12 +167,16 @@ class MarkersView(QWidget, Ui_Form):
             pt_array[i][0] = float(self.tw.item(irow, 1).text())
             pt_array[i][1] = float(self.tw.item(irow, 2).text())
         pt_mean = pt_array.mean(axis=0)
-        pt_dis = np.sqrt((pt_array[0, 0] - pt_array[1, 0]) ** 2.0 +
-                         (pt_array[0, 1] - pt_array[1, 1]) ** 2.0)
+        dx = pt_array[0, 0] - pt_array[1, 0]
+        dy = pt_array[0, 1] - pt_array[1, 1]
+        area = abs(dx * dy)
+        pt_dis = np.sqrt(dx ** 2.0 + dy ** 2.0)
         self.selected_pts_lbl_1.setText(', '.join(sel_namelist) + ' is')
         self.selected_pts_lbl_2.setText(', '.join(sel_namelist) + ' is')
-        self.mid_point_lbl.setText('x = {a[0]:g}, y = {a[1]:g}'.format(a=pt_mean))
-        self.distance_lbl.setText('{0:g}'.format(pt_dis))
+        self.mid_point_lbl.setText("<pre>x = {a[0]:g}, y = {a[1]:g}</pre>".format(a=pt_mean))
+        self.distance_lbl.setText(
+                "<pre>&Delta;l = {0:g}, &Delta;x = {1:g}, &Delta;y = {2:g}, Area = {3:g}</pre>".format(
+                    pt_dis, dx, dy, area))
 
     def sizeHint(self):
         return QSize(300, 400)
