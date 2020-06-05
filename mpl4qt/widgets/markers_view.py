@@ -12,6 +12,7 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtWidgets import QAbstractItemView
+from PyQt5.QtWidgets import QHeaderView
 from PyQt5.QtWidgets import QToolButton
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QTableWidgetItem
@@ -39,6 +40,8 @@ class MarkersView(QWidget, Ui_Form):
         self.setWindowTitle("Markers")
         self.tw = self.tableWidget
         self.set_data(markers)
+
+        self.adjustSize()
 
     def set_data(self, markers):
         self.data = markers
@@ -99,9 +102,9 @@ class MarkersView(QWidget, Ui_Form):
         self._postset_table()
 
     def _postset_table(self):
-        self.tw.horizontalHeader().setStretchLastSection(False)
         self.tw.resizeColumnsToContents()
-        self.tw.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.hheader.setSectionResizeMode(1, QHeaderView.Stretch)
+        self.hheader.setSectionResizeMode(2, QHeaderView.Stretch)
 
     def _preset_table(self):
         """Set horizontal header labels, row/column size.
@@ -111,6 +114,9 @@ class MarkersView(QWidget, Ui_Form):
         self.tw.setRowCount(len(self.data))
         self.tw.setHorizontalHeaderLabels(header)
         self.tw.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.tw.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.hheader = self.tw.horizontalHeader()
+        self.hheader.setStretchLastSection(False)
 
     def _reset_table(self):
         """Reset table without data.
