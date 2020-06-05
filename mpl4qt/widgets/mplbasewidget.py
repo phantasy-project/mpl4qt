@@ -209,12 +209,17 @@ class BasePlotWidget(QWidget):
                 self.as_ann.set_visible(False)
         self.update_figure()
 
-    @pyqtSlot(bool)
-    def on_marker_add_checked(self, is_checked):
+    @pyqtSlot(bool, 'QString', bool)
+    def on_marker_add_checked(self, is_checked, mk_name, update_flag):
         # Add marker tool is checked.
+        if update_flag:
+            text = "Updating Marker ({}) is Activated, Finish by CTRL+M\nStart New by CTRL+M".format(mk_name)
+        else:
+            text = "Adding Marker ({}) is Activated, Finish by CTRL+M\nStart New by CTRL+M".format(mk_name)
         if is_checked:
             if self._mk_add_hint_ann is None:
-                self._mk_add_hint_ann = self.axes.annotate("Adding Marker is Activated, Finish by CTRL+M\nStart New by CTRL+M",
+                self._mk_add_hint_ann = self.axes.annotate(
+                            text,
                             xy=(0, 1.01),
                             ha='left', va='bottom',
                             xycoords=('axes fraction'),
@@ -224,6 +229,7 @@ class BasePlotWidget(QWidget):
                                 fc=BOOTSTRAP_RED, ec=BOOTSTRAP_RED,
                                 lw=1.0, alpha=0.8))
             else:
+                self._mk_add_hint_ann.set_text(text)
                 self._mk_add_hint_ann.set_visible(True)
         else:
             if self._mk_add_hint_ann is not None:

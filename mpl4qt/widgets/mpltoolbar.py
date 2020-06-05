@@ -92,8 +92,8 @@ class MToolbar(QToolBar):
     # zoomed ROI changed
     zoom_roi_changed = pyqtSignal(tuple, tuple)
 
-    # add marker tool is checked or not
-    marker_add_checked = pyqtSignal(bool)
+    # add marker tool is checked or not, with mk_name, update/new flag
+    marker_add_checked = pyqtSignal(bool, 'QString', bool)
 
     # snap enabled or not, tuple of xy(z)data
     snap_updated = pyqtSignal([bool], [bool, tuple])
@@ -453,12 +453,13 @@ class MToolbar(QToolBar):
     def on_add_marker(self, is_checked, mk_name=None):
         # place a new cross marker if checked.
         self.parent._to_add_marker = is_checked
-        self.marker_add_checked.emit(is_checked)
+        update_flag = False
         if is_checked:
             if mk_name is None: # new cross marker
                 self.parent._mk_name = 'M{}'.format(self.parent._marker_id)
                 self.parent._current_mc = next(COLOR_CYCLE)
             else: # update mk_name marker
+                update_flag = True
                 hl, _, _, _, _ = self.parent._markers[mk_name]
                 self.parent._mk_name = mk_name
                 self.parent._current_mc = hl.get_color()
@@ -469,6 +470,7 @@ class MToolbar(QToolBar):
             if self.parent._added_marker:
                 self.parent._marker_id += 1
             self.sender().setText("Add Marker")
+        self.marker_add_checked.emit(is_checked, self.parent._mk_name, update_flag)
 
     @pyqtSlot('QString')
     def on_remove_marker(self, mk_name):
@@ -490,7 +492,6 @@ class MToolbar(QToolBar):
             self.mk_view.marker_removed.connect(self.on_remove_marker)
             self.mk_view.relocate_marker.connect(self.on_relocate_marker)
             self.parent.markerUpdated.connect(self.mk_view.on_add_marker)
-        self.mk_view.adjustSize()
         self.mk_view.show()
 
     @pyqtSlot()
