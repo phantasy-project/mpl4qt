@@ -521,6 +521,8 @@ class BasePlotWidget(QWidget):
                                "Reset", menu)
         tb_action = QAction(QIcon(QPixmap(":/tools/tools.png")),
                             "Tools", menu)
+        tb_action.setObjectName('tb_action')
+        tb_action.setShortcut("t,t")
         fitting_action = QAction(QIcon(QPixmap(":/tools/fitting.png")),
                                  "Fitting", menu)
         export_data_action = QAction(QIcon(QPixmap(":/tools/export.png")),
@@ -548,7 +550,7 @@ class BasePlotWidget(QWidget):
         export_action.triggered.connect(self.on_export_config)
         import_action.triggered.connect(self.on_import_config)
         reset_action.triggered.connect(self.on_reset_config)
-        tb_action.triggered.connect(self.show_mpl_tools)
+        tb_action.triggered.connect(self.toggle_mpl_tools)
         fitting_action.triggered.connect(self.on_fitting_data)
         export_data_action.triggered.connect(self.on_export_data)
         info_action.triggered.connect(self.on_info)
@@ -572,8 +574,8 @@ class BasePlotWidget(QWidget):
         QMessageBox.about(self, 'About mpl4qt', get_pkg_info())
 
     @pyqtSlot()
-    def show_mpl_tools(self):
-        self.__show_mpl_tools()
+    def toggle_mpl_tools(self):
+        self.setToolbarToggle(not self.getToolbarToggle())
 
     @pyqtSlot()
     def on_reset_config(self):
@@ -1652,6 +1654,8 @@ class BasePlotWidget(QWidget):
             self.kbd_help()
         elif k1 == 'c' and k2 == 'c':
             self._create_ctxtmenu().findChild(QAction, 'config_action').triggered.emit()
+        elif k1 == 't' and k2 == 't':
+            self._create_ctxtmenu().findChild(QAction, 'tb_action').triggered.emit()
 
     def process_keyshort(self, k):
         """Override this method to define keyshorts.
