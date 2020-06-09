@@ -253,7 +253,7 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
             self.on_auto_clim()
         else:
             self.update_figure()
-        self.dataChanged.emit((self._xdata, self._y_data, zdata))
+        self.dataChanged.emit((self._x_data, self._y_data, zdata))
 
     def setXData(self, xdata):
         self._x_data = xdata
