@@ -470,8 +470,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
         x : list or array
             Array of x data.
         """
-        self._x_data = x
-        self._line.set_xdata(x)
+        self._x_data = np.asarray(x)
+        self._line.set_xdata(self._x_data)
         self.update_figure()
 
     def getXData(self):
@@ -486,8 +486,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
         x : list or array
             Array of y data.
         """
-        self._y_data = x
-        self._line.set_ydata(x)
+        self._y_data = np.asarray(x)
+        self._line.set_ydata(self._y_data)
         self.update_figure()
 
     def getYData(self):
