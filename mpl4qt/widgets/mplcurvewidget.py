@@ -110,6 +110,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
             l, = self.axes.plot([], [], **kws)
         else:
             l, = self.axes.plot(x_data, y_data, **kws)
+        l.set_picker(True)
+        l.set_pickradius(2)
         self._lines.append(l)
         self.update_legend()
         self.update_figure()
@@ -132,6 +134,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._x_data = x = np.linspace(-4, 4, 300)
         self._y_data = y = np.sin(10 * x) / x
         self._lines = self.axes.plot(x, y, 'r-')
+        self._lines[0].set_picker(True)
+        self._lines[0].set_pickradius(2)
 
         # set current line
         self.setLineID(0)

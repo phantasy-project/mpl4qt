@@ -53,7 +53,9 @@ from PyQt5.QtWidgets import QWidget
 
 import matplotlib as mpl
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.axes import Axes
 from matplotlib.figure import Figure
+from matplotlib.lines import Line2D
 from matplotlib.ticker import AutoMinorLocator
 from matplotlib.ticker import NullLocator
 
@@ -113,6 +115,7 @@ class BasePlotWidget(QWidget):
         self.widget_type = '__BasePlotWidget'
         self.figure = Figure()
         self.axes = self.figure.add_subplot(111)
+        self.axes.set_picker(True)
         self.init_figure()
         self.canvas = FigureCanvas(self.figure)
         self.setParent(parent)
@@ -187,6 +190,8 @@ class BasePlotWidget(QWidget):
 
         # add marker mpltool
         self._mk_add_hint_ann = None
+
+        self._last_sel_line = None
 
     @pyqtSlot(bool)
     def on_autoscale_toggled(self, auto_scale_enabled):
@@ -470,8 +475,20 @@ class BasePlotWidget(QWidget):
         if t2 - t1 < DTSEC:
             self.process_keyshort_combo(k1, k2)
 
-    def on_pick(self, e):
-        pass
+    def on_pick(self, evt):
+        if isinstance(evt.artist, Line2D):
+            self._last_sel_line = l = evt.artist
+            x, y = l.get_data()
+            self._last_sel_lw = lw0 = l.get_lw()
+            self._last_sel_mw = mw0 = l.get_mew()
+            self._last_sel_line.set_lw(lw0 * 2)
+            self._last_sel_line.set_mew(mw0 * 2)
+            self.update_figure()
+        elif isinstance(evt.artist, Axes):
+            if self._last_sel_line is not None:
+                self._last_sel_line.set_lw(self._last_sel_lw)
+                self._last_sel_line.set_mew(self._last_sel_mw)
+                self.update_figure()
 
     def on_press(self, e):
         if e.inaxes is None:

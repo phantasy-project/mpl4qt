@@ -113,7 +113,8 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
                 ecolor=self.eb_markercolor,
                 capsize=self.eb_markersize,
                 capthick=self.eb_mew)
-
+        self._avgline.set_picker(True)
+        self._avgline.set_pickradius(2)
         # update lines
         # average line
         self._lines.append(self._avgline)
@@ -163,6 +164,8 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
                 elinewidth=self.eb_lw,
                 capsize=self.eb_markersize,
                 capthick=self.eb_mew)
+        avgline.set_picker(True)
+        avgline.set_pickradius(2)
         self._lines.append(avgline)
         self._eb_lines.append({
             'xerr': (ebmks[0:2], eblines[0]),
