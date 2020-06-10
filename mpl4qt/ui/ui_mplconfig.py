@@ -1195,10 +1195,7 @@ class Ui_Dialog(object):
                                   | QtCore.Qt.AlignTrailing
                                   | QtCore.Qt.AlignVCenter)
         self.label_4.setObjectName("label_4")
-        self.gridLayout_12.addWidget(self.label_4, 2, 0, 1, 1)
-        self.line_label_lineEdit = QtWidgets.QLineEdit(self.curve_tab)
-        self.line_label_lineEdit.setObjectName("line_label_lineEdit")
-        self.gridLayout_12.addWidget(self.line_label_lineEdit, 4, 1, 1, 2)
+        self.gridLayout_12.addWidget(self.label_4, 3, 0, 1, 1)
         self.gridLayout = QtWidgets.QGridLayout()
         self.gridLayout.setSpacing(4)
         self.gridLayout.setObjectName("gridLayout")
@@ -1355,7 +1352,7 @@ class Ui_Dialog(object):
         self.label_37 = QtWidgets.QLabel(self.curve_tab)
         self.label_37.setObjectName("label_37")
         self.gridLayout.addWidget(self.label_37, 1, 4, 1, 1)
-        self.gridLayout_12.addLayout(self.gridLayout, 1, 1, 2, 2)
+        self.gridLayout_12.addLayout(self.gridLayout, 2, 1, 2, 2)
         self.horizontalLayout_12 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_12.setSpacing(4)
         self.horizontalLayout_12.setObjectName("horizontalLayout_12")
@@ -1394,7 +1391,7 @@ class Ui_Dialog(object):
         self.smooth_method_cbb.addItem("")
         self.smooth_method_cbb.addItem("")
         self.horizontalLayout_13.addWidget(self.smooth_method_cbb)
-        self.gridLayout_12.addLayout(self.horizontalLayout_13, 5, 1, 1, 2)
+        self.gridLayout_12.addLayout(self.horizontalLayout_13, 6, 1, 1, 2)
         self.label_70 = QtWidgets.QLabel(self.curve_tab)
         self.label_70.setEnabled(False)
         font = QtGui.QFont()
@@ -1405,7 +1402,7 @@ class Ui_Dialog(object):
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
         self.label_70.setObjectName("label_70")
-        self.gridLayout_12.addWidget(self.label_70, 5, 0, 1, 1)
+        self.gridLayout_12.addWidget(self.label_70, 6, 0, 1, 1)
         self.label_2 = QtWidgets.QLabel(self.curve_tab)
         font = QtGui.QFont()
         font.setBold(True)
@@ -1479,23 +1476,13 @@ class Ui_Dialog(object):
         self.opacity_val_slider.setOrientation(QtCore.Qt.Horizontal)
         self.opacity_val_slider.setTickPosition(QtWidgets.QSlider.NoTicks)
         self.opacity_val_slider.setObjectName("opacity_val_slider")
-        self.gridLayout_12.addWidget(self.opacity_val_slider, 3, 1, 1, 1)
+        self.gridLayout_12.addWidget(self.opacity_val_slider, 4, 1, 1, 1)
         self.opacity_val_lbl = QtWidgets.QLabel(self.curve_tab)
         self.opacity_val_lbl.setAlignment(QtCore.Qt.AlignRight
                                           | QtCore.Qt.AlignTrailing
                                           | QtCore.Qt.AlignVCenter)
         self.opacity_val_lbl.setObjectName("opacity_val_lbl")
-        self.gridLayout_12.addWidget(self.opacity_val_lbl, 3, 2, 1, 1)
-        self.label_23 = QtWidgets.QLabel(self.curve_tab)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_23.setFont(font)
-        self.label_23.setAlignment(QtCore.Qt.AlignRight
-                                   | QtCore.Qt.AlignTrailing
-                                   | QtCore.Qt.AlignVCenter)
-        self.label_23.setObjectName("label_23")
-        self.gridLayout_12.addWidget(self.label_23, 4, 0, 1, 1)
+        self.gridLayout_12.addWidget(self.opacity_val_lbl, 4, 2, 1, 1)
         self.label_3 = QtWidgets.QLabel(self.curve_tab)
         font = QtGui.QFont()
         font.setBold(True)
@@ -1505,7 +1492,7 @@ class Ui_Dialog(object):
                                   | QtCore.Qt.AlignTrailing
                                   | QtCore.Qt.AlignVCenter)
         self.label_3.setObjectName("label_3")
-        self.gridLayout_12.addWidget(self.label_3, 1, 0, 1, 1)
+        self.gridLayout_12.addWidget(self.label_3, 2, 0, 1, 1)
         self.label_26 = QtWidgets.QLabel(self.curve_tab)
         font = QtGui.QFont()
         font.setBold(True)
@@ -1515,11 +1502,24 @@ class Ui_Dialog(object):
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
         self.label_26.setObjectName("label_26")
-        self.gridLayout_12.addWidget(self.label_26, 3, 0, 1, 1)
+        self.gridLayout_12.addWidget(self.label_26, 4, 0, 1, 1)
         spacerItem7 = QtWidgets.QSpacerItem(20, 40,
                                             QtWidgets.QSizePolicy.Minimum,
                                             QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_12.addItem(spacerItem7, 6, 1, 1, 1)
+        self.gridLayout_12.addItem(spacerItem7, 7, 1, 1, 1)
+        self.label_23 = QtWidgets.QLabel(self.curve_tab)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_23.setFont(font)
+        self.label_23.setAlignment(QtCore.Qt.AlignRight
+                                   | QtCore.Qt.AlignTrailing
+                                   | QtCore.Qt.AlignVCenter)
+        self.label_23.setObjectName("label_23")
+        self.gridLayout_12.addWidget(self.label_23, 1, 0, 1, 1)
+        self.line_label_lineEdit = QtWidgets.QLineEdit(self.curve_tab)
+        self.line_label_lineEdit.setObjectName("line_label_lineEdit")
+        self.gridLayout_12.addWidget(self.line_label_lineEdit, 1, 1, 1, 2)
         self.config_tabWidget.addTab(self.curve_tab, "")
         self.eb_tab = QtWidgets.QWidget()
         self.eb_tab.setObjectName("eb_tab")
@@ -2423,8 +2423,7 @@ class Ui_Dialog(object):
         Dialog.setTabOrder(self.mk_edgecolor_btn, self.mk_size_lineEdit)
         Dialog.setTabOrder(self.mk_size_lineEdit, self.mk_width_lineEdit)
         Dialog.setTabOrder(self.mk_width_lineEdit, self.opacity_val_slider)
-        Dialog.setTabOrder(self.opacity_val_slider, self.line_label_lineEdit)
-        Dialog.setTabOrder(self.line_label_lineEdit,
+        Dialog.setTabOrder(self.opacity_val_slider,
                            self.show_smooth_line_chkbox)
         Dialog.setTabOrder(self.show_smooth_line_chkbox,
                            self.smooth_method_cbb)
@@ -2666,9 +2665,9 @@ class Ui_Dialog(object):
         self.label_70.setText(_translate("Dialog", "Smooth"))
         self.label_2.setText(_translate("Dialog", "Line ID"))
         self.opacity_val_lbl.setText(_translate("Dialog", "100%"))
-        self.label_23.setText(_translate("Dialog", "Label"))
         self.label_3.setText(_translate("Dialog", "Line"))
         self.label_26.setText(_translate("Dialog", "Opacity"))
+        self.label_23.setText(_translate("Dialog", "Label"))
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.curve_tab),
             _translate("Dialog", "Curve"))

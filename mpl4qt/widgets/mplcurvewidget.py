@@ -28,6 +28,7 @@ import numpy as np
 from PyQt5.QtCore import QSize
 from PyQt5.QtCore import QVariant
 from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QTimer
 from PyQt5.QtCore import pyqtProperty
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import pyqtSlot
@@ -56,11 +57,17 @@ class MatplotlibCurveWidget(BasePlotWidget):
     # xy(z)data changed, tuple of x,y,(z) array
     dataChanged = pyqtSignal(tuple)
 
+    #
+    lineIDChanged = pyqtSignal(int)
+
     def __init__(self, parent=None):
         super(MatplotlibCurveWidget, self).__init__(parent)
 
         # enable snap cross by default
         self._handlers['w_mpl_tools'].cross_snap_act.setChecked(True)
+
+        #
+        self.lineIDChanged.connect(self.on_line_id_changed)
 
         # x,y limits
         self.setXLimitMin()
@@ -83,6 +90,13 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
         # widget type
         self.widget_type = 'curve'
+
+    @pyqtSlot(int)
+    def on_line_id_changed(self, i):
+        """Line ID is changed.
+        """
+        self._line_id = i
+        self._line = self._lines[i]
 
     @pyqtSlot()
     def on_config(self):
@@ -364,10 +378,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
         --------
         add_curve
         """
-        lines = self.get_all_curves()
-        if i < lines.__len__():
-            self._line_id = i
-            self._line = lines[i]
+        if i < len(self._lines):
+            self.lineIDChanged.emit(i)
 
     def get_line_config(self, line=None):
         """Get line config for *ls*, *lw*, *c*, *marker*, *ms*, *mew*,
