@@ -855,6 +855,16 @@ class MatplotlibConfigCurvePanel(MatplotlibConfigPanel):
             # line visible
             self.line_hide_chkbox.setChecked(not self.parent.getLineVisible())
 
+            # has selected line?
+            for lbl, (o, lw0, mw0) in self.parent._last_sel_lines.items():
+                lnid = self.parent.get_line_id_by_label(lbl)
+                o.set_lw(lw0)
+                o.set_mew(mw0)
+                self.config_tabWidget.setCurrentIndex(
+                        self.config_tabWidget.indexOf(self.curve_tab))
+                self.line_id_cbb.setCurrentIndex(lnid)
+                self.on_change_line_id(lnid)
+
     @pyqtSlot(int)
     def set_marker_style(self, i):
         self.figMkStyleChanged.emit(MK_SYMBOL[i])
