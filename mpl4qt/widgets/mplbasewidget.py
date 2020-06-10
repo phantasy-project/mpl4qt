@@ -191,7 +191,8 @@ class BasePlotWidget(QWidget):
         # add marker mpltool
         self._mk_add_hint_ann = None
 
-        self._last_sel_line = None
+        #
+        self._last_sel_lines = {}
 
     @pyqtSlot(bool)
     def on_autoscale_toggled(self, auto_scale_enabled):
@@ -476,19 +477,21 @@ class BasePlotWidget(QWidget):
             self.process_keyshort_combo(k1, k2)
 
     def on_pick(self, evt):
-        if isinstance(evt.artist, Line2D):
-            self._last_sel_line = l = evt.artist
-            x, y = l.get_data()
-            self._last_sel_lw = lw0 = l.get_lw()
-            self._last_sel_mw = mw0 = l.get_mew()
-            self._last_sel_line.set_lw(lw0 * 2)
-            self._last_sel_line.set_mew(mw0 * 2)
+        o = evt.artist
+        if isinstance(o, Line2D):
+            lw0, mw0 = o.get_lw(), o.get_mew()
+            self._last_sel_lines.setdefault(o.get_label(), (o, lw0, mw0))
+            x, y = o.get_data()
+            o.set_lw(lw0 * 2)
+            o.set_mew(mw0 * 2)
             self.update_figure()
         elif isinstance(evt.artist, Axes):
-            if self._last_sel_line is not None:
-                self._last_sel_line.set_lw(self._last_sel_lw)
-                self._last_sel_line.set_mew(self._last_sel_mw)
+            if self._last_sel_lines:
+                for lbl, (o, lw0, mw0) in self._last_sel_lines.items():
+                    o.set_lw(lw0)
+                    o.set_mew(mw0)
                 self.update_figure()
+                self._last_sel_lines = {}
 
     def on_press(self, e):
         if e.inaxes is None:
