@@ -864,6 +864,7 @@ class MatplotlibConfigCurvePanel(MatplotlibConfigPanel):
                         self.config_tabWidget.indexOf(self.curve_tab))
                 self.line_id_cbb.setCurrentIndex(lnid)
                 self.on_change_line_id(lnid)
+            self.parent._last_sel_lines = {}
 
     @pyqtSlot(int)
     def set_marker_style(self, i):
