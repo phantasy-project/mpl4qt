@@ -391,8 +391,15 @@ class MToolbar(QToolBar):
             try:
                 if self.snap_cursor is None:
                     if self._is_snap_point:
-                        data_tuple = self.parent.get_all_data()
-                        if data_tuple[0].size == 0:
+                        if self.parent.widget_type == 'image':
+                            data_tuple = self.parent.im, *self.parent.get_all_data()
+                        else:
+                            if self.parent._last_sel_lines == {}:
+                                lobj = self.parent._lines[0]
+                            else:
+                                lobj = list(self.parent._last_sel_lines.values())[0][0]
+                            data_tuple = lobj, *self.parent.get_all_data(lobj)
+                        if data_tuple[1].size == 0:
                             raise SnapCursorNoDataProbe("No data to probe.")
                     else:
                         data_tuple = None
@@ -408,6 +415,7 @@ class MToolbar(QToolBar):
                 self.parent.xyposUpdated.connect(self.snap_cursor.on_move)
                 if self.parent.widget_type != '__BasePlotWidget':
                     self.parent.dataChanged.connect(self.snap_cursor.set_data)
+                    self.parent.selectedLineChanged.connect(self.snap_cursor.on_change_gobj)
                 self.snap_updated[bool].connect(self.snap_cursor.snap_disabled)
                 self.snap_updated[bool, tuple].connect(self.snap_cursor.snap_enabled)
             except SnapCursorNotExist:
@@ -416,6 +424,7 @@ class MToolbar(QToolBar):
                 self.parent.xyposUpdated.connect(self.snap_cursor.on_move)
                 if self.parent.widget_type != '__BasePlotWidget':
                     self.parent.dataChanged.connect(self.snap_cursor.set_data)
+                    self.parent.selectedLineChanged.connect(self.snap_cursor.on_change_gobj)
                 self.snap_updated[bool].connect(self.snap_cursor.snap_disabled)
                 self.snap_updated[bool, tuple].connect(self.snap_cursor.snap_enabled)
 
@@ -647,6 +656,7 @@ class SnapCursor(QObject):
 
     def __init__(self, ax, data_tuple=None, is_snap=True):
         super(SnapCursor, self).__init__()
+        self.gobj = None
         self.ax = ax
         self.canvas = ax.figure.canvas
         self.is_snap = is_snap
@@ -656,9 +666,13 @@ class SnapCursor(QObject):
         self.snap_enabled.connect(self.on_enable_snap)
         self.snap_disabled.connect(self.on_disable_snap)
 
+    def on_change_gobj(self, o):
+        self.gobj = o
+        self.set_data((o, *o.get_data()))
+
     @pyqtSlot(bool, tuple)
     def on_enable_snap(self, is_snap, t):
-        # enable snap, tuple of xy(z)data
+        # enable snap, tuple of gobj,xy(z)data
         self.is_snap = is_snap
         self.set_data(t)
 
@@ -688,12 +702,16 @@ class SnapCursor(QObject):
                                             lw=1.0, alpha=0.95))
 
     def set_data(self, t):
-        if len(t) == 2:
-            self.set_xydata(*t)
-        else:
-            x, y, self.z = t
-            xdata, ydata = x[0,:], y[:,0]
-            self.set_xydata(xdata, ydata)
+        gobj, *tdata = t
+        if self.gobj is None:
+            self.gobj = gobj
+        if gobj == self.gobj:
+            if len(tdata) == 2:
+                self.set_xydata(*tdata)
+            else:
+                x, y, self.z = tdata
+                xdata, ydata = x[0,:], y[:,0]
+                self.set_xydata(xdata, ydata)
 
     def set_xydata(self, xdata, ydata):
         # set x y array data.

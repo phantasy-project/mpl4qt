@@ -54,7 +54,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
     and slots that can be used to customize its appearance.
     """
 
-    # xy(z)data changed, tuple of x,y,(z) array
+    # xy(z)data changed, tuple of gobj,x,y,(z) array
     dataChanged = pyqtSignal(tuple)
 
     def __init__(self, parent=None):
@@ -124,7 +124,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._line.set_data(x_data, y_data)
         self._x_data, self._y_data = x_data, y_data
         self.update_figure()
-        self.dataChanged.emit((x_data, y_data))
+        self.dataChanged.emit((self._line, x_data, y_data))
 
     def get_all_curves(self):
         """Return all curves."""
@@ -785,8 +785,11 @@ class MatplotlibCurveWidget(BasePlotWidget):
         y = self._y_data
         return np.vstack([x, y]).T
 
-    def get_all_data(self):
-        return self._x_data, self._y_data
+    def get_all_data(self, lobj=None):
+        if lobj is None:
+            return self._x_data, self._y_data
+        else:
+            return lobj.get_data()
 
 
 if __name__ == "__main__":

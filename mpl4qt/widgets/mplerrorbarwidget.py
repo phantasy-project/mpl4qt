@@ -477,14 +477,13 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
         self._y_data = y_data
         adjust_errorbar(self._line, self._eb_line, x_data, y_data, xerr_data, yerr_data)
         self.update_figure()
-        self.dataChanged.emit((x_data, y_data))
+        self.dataChanged.emit((self._line, x_data, y_data))
 
     def clear_data(self):
         """Set with empty canvas, clear curve w/ eb.
         """
         empty_arr = np.asarray([])
         self.update_curve(empty_arr, empty_arr, empty_arr, empty_arr)
-
 
 
 def adjust_errorbar(line_obj, ebline_obj, x, y, xerr, yerr):
