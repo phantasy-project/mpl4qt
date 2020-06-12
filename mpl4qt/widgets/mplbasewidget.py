@@ -110,8 +110,9 @@ class BasePlotWidget(QWidget):
     # cross markers updated, is_new_marker?, x, y, mk_name
     markerUpdated = pyqtSignal(bool, float, float, 'QString')
 
-    # selected point
+    # selected point/line
     selectedPointChanged = pyqtSignal(float, float)
+    selectedLineChanged = pyqtSignal(Line2D)
 
     def __init__(self, parent=None, show_toolbar=True, **kws):
         super(BasePlotWidget, self).__init__(parent)
@@ -492,6 +493,7 @@ class BasePlotWidget(QWidget):
                     o.get_label(),
                     (o, lw0, mw0))
             self.selectedPointChanged.emit(x0, y0)
+            self.selectedLineChanged.emit(o)
             self.update_figure()
         elif isinstance(evt.artist, Axes):
             if self._last_sel_lines:
