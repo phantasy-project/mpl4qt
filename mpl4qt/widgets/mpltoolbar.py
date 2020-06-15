@@ -101,6 +101,9 @@ class MToolbar(QToolBar):
     # snap enabled or not, tuple of xy(z)data
     snap_updated = pyqtSignal([bool], [bool, tuple])
 
+    # shaded area xylims
+    shaded_area_updated = pyqtSignal(tuple, tuple)
+
     def __init__(self, canvas, parent=None):
         super(MToolbar, self).__init__()
         self.parent = parent
@@ -509,11 +512,12 @@ class MToolbar(QToolBar):
     @pyqtSlot('QString', 'QString', bool)
     def on_shade_marked_area(self, mk_name1, mk_name2, is_shade):
         # shade marked rect (m1, m2) or not.
-        _, _, _, _, p1 = self.parent._markers[mk_name1]
-        _, _, _, _, p2 = self.parent._markers[mk_name2]
+        _, _, _, _, (x1, y1) = self.parent._markers[mk_name1]
+        _, _, _, _, (x2, y2) = self.parent._markers[mk_name2]
         if is_shade:
             if 'mk_area' not in self.parent._patches:
-                self.parent.draw_shade_area(p1, p2, alpha=0.5, color="#D3D7CF")
+                self.parent.draw_shade_area((x1, y1), (x2, y2), alpha=0.5, color="#D3D7CF")
+                self.shaded_area_updated.emit(tuple(sorted((x1, x2))), tuple(sorted((y1, y2))))
         else:
             p = self.parent._patches.pop('mk_area', None)
             if p is not None:

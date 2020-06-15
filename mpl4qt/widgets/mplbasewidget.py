@@ -114,6 +114,9 @@ class BasePlotWidget(QWidget):
     selectedPointChanged = pyqtSignal(float, float)
     selectedLineChanged = pyqtSignal(Line2D)
 
+    # shaded area updated (mpltoolbar)
+    shaded_area_updated = pyqtSignal(tuple, tuple)
+
     def __init__(self, parent=None, show_toolbar=True, **kws):
         super(BasePlotWidget, self).__init__(parent)
         self.widget_type = '__BasePlotWidget'
@@ -351,12 +354,17 @@ class BasePlotWidget(QWidget):
             self._handlers['w_mpl_tools'] = w
             w.selectedIndicesUpdated.connect(self.on_selected_indices)
             w.zoom_roi_changed.connect(self.on_zoom_roi_changed)
+            w.shaded_area_updated.connect(self.on_shaded_area_updated)
         w.show_toolbar()
         w.floatable_changed.emit(False)
 
     @pyqtSlot(QVariant, QVariant)
     def on_selected_indices(self, ind, pts):
         self.selectedIndicesUpdated.emit(ind, pts)
+
+    @pyqtSlot(tuple, tuple)
+    def on_shaded_area_updated(self, xlim, ylim):
+        self.shaded_area_updated.emit(xlim, ylim)
 
     @pyqtSlot(tuple, tuple)
     def on_zoom_roi_changed(self, xlim, ylim):
