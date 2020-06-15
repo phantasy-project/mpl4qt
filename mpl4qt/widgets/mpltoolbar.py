@@ -506,6 +506,20 @@ class MToolbar(QToolBar):
         # relocate marker with the name *mk_name*
         self.on_add_marker(True, mk_name)
 
+    @pyqtSlot('QString', 'QString', bool)
+    def on_shade_marked_area(self, mk_name1, mk_name2, is_shade):
+        # shade marked rect (m1, m2) or not.
+        _, _, _, _, p1 = self.parent._markers[mk_name1]
+        _, _, _, _, p2 = self.parent._markers[mk_name2]
+        if is_shade:
+            if 'mk_area' not in self.parent._patches:
+                self.parent.draw_shade_area(p1, p2, alpha=0.5, color="#D3D7CF")
+        else:
+            p = self.parent._patches.pop('mk_area', None)
+            if p is not None:
+                p.remove()
+                self.parent.update_figure()
+
     @pyqtSlot()
     def on_show_mks(self):
         # show all markers.
@@ -515,6 +529,7 @@ class MToolbar(QToolBar):
             self.mk_view.relocate_marker['QString'].connect(self.on_relocate_marker)
             self.mk_view.relocate_marker['QString', float, float].connect(self.on_repos_marker)
             self.mk_view.reset_marker_pos.connect(self.on_reset_marker_pos)
+            self.mk_view.shade_area_changed.connect(self.on_shade_marked_area)
             self.reset_marker_pos.connect(self.mk_view.on_add_marker)
             self.parent.markerUpdated.connect(self.mk_view.on_add_marker)
         self.mk_view.show()

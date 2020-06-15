@@ -33,6 +33,9 @@ class MarkersView(QWidget, Ui_Form):
     # reset marker pos
     reset_marker_pos = pyqtSignal('QString')
 
+    # shade area, mk1, mk2, is_shade
+    shade_area_changed = pyqtSignal('QString', 'QString', bool)
+
     def __init__(self, markers, parent=None):
         super(MarkersView, self).__init__()
         self.parent = parent
@@ -40,7 +43,7 @@ class MarkersView(QWidget, Ui_Form):
         self.sel_dq = deque([], MAX_N_SELECT)
 
         self.setupUi(self)
-        self.setWindowTitle("Markers")
+        self.setWindowTitle("Cross Markers")
         self.tw = self.tableWidget
         self.set_data(markers)
 
@@ -127,6 +130,8 @@ class MarkersView(QWidget, Ui_Form):
 
     def _postset_table(self):
         self.tw.resizeColumnsToContents()
+        self.hheader.setSectionResizeMode(1, QHeaderView.Stretch)
+        self.hheader.setSectionResizeMode(2, QHeaderView.Stretch)
 
     def _preset_table(self):
         """Set horizontal header labels, row/column size.
@@ -138,8 +143,6 @@ class MarkersView(QWidget, Ui_Form):
         self.tw.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.hheader = self.tw.horizontalHeader()
         self.hheader.setStretchLastSection(False)
-        self.hheader.setSectionResizeMode(1, QHeaderView.Stretch)
-        self.hheader.setSectionResizeMode(2, QHeaderView.Stretch)
 
     def _reset_table(self):
         """Reset table without data.
@@ -193,12 +196,25 @@ class MarkersView(QWidget, Ui_Form):
         dy = pt_array[0, 1] - pt_array[1, 1]
         area = abs(dx * dy)
         pt_dis = np.sqrt(dx ** 2.0 + dy ** 2.0)
-        self.selected_pts_lbl_1.setText(', '.join(sel_namelist) + ' is')
-        self.selected_pts_lbl_2.setText(', '.join(sel_namelist) + ' is')
-        self.mid_point_lbl.setText("<pre>x = {a[0]:g}, y = {a[1]:g}</pre>".format(a=pt_mean))
-        self.distance_lbl.setText(
-                "<pre>&Delta;l = {0:g}, &Delta;x = {1:g}, &Delta;y = {2:g}, Area = {3:g}</pre>".format(
-                    pt_dis, dx, dy, area))
+        for i in range(1, 6):
+            getattr(self, 'selected_pts_lbl_{}'.format(i)).setText(', '.join(sel_namelist) + ' is')
+        self.mid_point_lbl.setText("<pre>X = {a[0]:g}, Y = {a[1]:g}</pre>".format(a=pt_mean))
+        self.dx_lbl.setText("<pre>&Delta;X = {0:g}</pre>".format(dx))
+        self.dy_lbl.setText("<pre>&Delta;Y = {0:g}</pre>".format(dy))
+        self.distance_lbl.setText("<pre>&Delta;L = {0:g}</pre>".format(pt_dis))
+        self.area_lbl.setText("<pre>Area = {0:g}</pre>".format(area))
+        # area shade?
+        if self.shade_area_chkbox.isChecked():
+            self.shade_area_chkbox.setChecked(False)
+            self.shade_area_chkbox.setChecked(True)
 
     def sizeHint(self):
-        return QSize(300, 400)
+        return QSize(400, 600)
+
+    @pyqtSlot(bool)
+    def on_shade_area(self, is_shade):
+        # shade area or not.
+        if len(self.sel_dq) < MAX_N_SELECT or self.tw.rowCount() < len(self.sel_dq):
+            return
+        mk_name1, mk_name2 = [self.tw.item(i, 0).text() for i in self.sel_dq]
+        self.shade_area_changed.emit(mk_name1, mk_name2, is_shade)

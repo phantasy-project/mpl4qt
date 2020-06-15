@@ -161,6 +161,10 @@ class BasePlotWidget(QWidget):
         self.canvas.setFocusPolicy(Qt.ClickFocus)
         self.canvas.setFocus()
 
+        # patches container: mk_area,
+        # see draw_shade_area()
+        self._patches = {}
+
         # dnd
         self.setAcceptDrops(True)
 
@@ -197,6 +201,20 @@ class BasePlotWidget(QWidget):
 
         # [(lbl, (o,lw,mw))]
         self._last_sel_lines = {}
+
+    def draw_shade_area(self, p1, p2, **kws):
+        # see markers view
+        from matplotlib.patches import Rectangle
+        def f(p1, p2):
+            x1, y1 = p1
+            x2, y2 = p2
+            pts = sorted([[x1, y1], [x2, y2], [x1, y2], [x2, y1]])
+            p1, p4 = pts[0], pts[-1]
+            return p1, p4[0] - p1[0], p4[1] - p1[1]
+        p = Rectangle(*f(p1, p2), **kws)
+        self._patches['mk_area'] = p
+        self.axes.add_patch(p)
+        self.update_figure()
 
     @pyqtSlot(bool)
     def on_autoscale_toggled(self, auto_scale_enabled):
@@ -290,7 +308,7 @@ class BasePlotWidget(QWidget):
 
         if cp is None:
             cp, = self.axes.plot([x0], [y0], 'o',
-                                 mec=mc, mfc=mc, alpha=0.95)
+                                 mec=mc, mfc='w', mew=2.0, alpha=0.9)
             cp.set_label('_Cross-Point {}'.format(name))
             if self._marker_with_xy:
                 text = '{0:g},{1:g}'.format(x0, y0)
