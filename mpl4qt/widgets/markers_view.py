@@ -180,7 +180,7 @@ class MarkersView(QWidget, Ui_Form):
 
     def update_stats(self):
         # update stats.
-        if len(self.sel_dq) < MAX_N_SELECT:
+        if len(self.sel_dq) < MAX_N_SELECT or self.tw.rowCount() < len(self.sel_dq):
             return
         pt_array = np.zeros((2, 2))
         sel_namelist = ['', '']
