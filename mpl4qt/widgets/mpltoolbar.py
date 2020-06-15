@@ -95,6 +95,9 @@ class MToolbar(QToolBar):
     # add marker tool is checked or not, with mk_name, update/new flag
     marker_add_checked = pyqtSignal(bool, 'QString', bool)
 
+    # reset marker pos,false, x, y, mk_name
+    reset_marker_pos = pyqtSignal(bool, float, float, 'QString')
+
     # snap enabled or not, tuple of xy(z)data
     snap_updated = pyqtSignal([bool], [bool, tuple])
 
@@ -488,6 +491,16 @@ class MToolbar(QToolBar):
         [o.remove() for o in (hl, vl, cp, pt)]
         self.parent.update_figure()
 
+    @pyqtSlot('QString', float, float)
+    def on_repos_marker(self, mk_name, x, y):
+        # repos marker with (x, y)
+        self.parent.draw_hvlines(x, y, mk_name)
+
+    @pyqtSlot('QString')
+    def on_reset_marker_pos(self, mk_name):
+        _, _, _, _, (x, y) = self.parent._markers[mk_name]
+        self.reset_marker_pos.emit(False, x, y, mk_name)
+
     @pyqtSlot('QString')
     def on_relocate_marker(self, mk_name):
         # relocate marker with the name *mk_name*
@@ -499,7 +512,10 @@ class MToolbar(QToolBar):
         if self.mk_view is None:
             self.mk_view = MarkersView(self.parent._markers, self)
             self.mk_view.marker_removed.connect(self.on_remove_marker)
-            self.mk_view.relocate_marker.connect(self.on_relocate_marker)
+            self.mk_view.relocate_marker['QString'].connect(self.on_relocate_marker)
+            self.mk_view.relocate_marker['QString', float, float].connect(self.on_repos_marker)
+            self.mk_view.reset_marker_pos.connect(self.on_reset_marker_pos)
+            self.reset_marker_pos.connect(self.mk_view.on_add_marker)
             self.parent.markerUpdated.connect(self.mk_view.on_add_marker)
         self.mk_view.show()
 
