@@ -263,13 +263,16 @@ class BasePlotWidget(QWidget):
                 'text_content': pt.get_text(),
                 'text_alpha': pt.get_bbox_patch().get_alpha(),}
 
-    def draw_hvlines(self, x0, y0, name, mc):
+    def draw_hvlines(self, x0, y0, name, mc=None):
         if name in self._markers:
             is_new_marker = False
             hl, vl, cp, pt, _ = self._markers[name]
+            if mc is None:
+                mc = hl.get_color()
         else:
             is_new_marker = True
             hl, vl, cp, pt = None, None, None, None
+            assert mc is not None # mc must be given
 
         if hl is None:
             hl = self.axes.axhline(y0,
