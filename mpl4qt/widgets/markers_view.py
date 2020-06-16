@@ -49,6 +49,15 @@ class MarkersView(QWidget, Ui_Form):
 
         self.adjustSize()
 
+    def _show(self):
+        if self.tw.rowCount() < 2:
+            pass
+        else:
+            self.shade_area_chkbox.setChecked(True)
+            for i in range(2):
+                self.tw.selectRow(i)
+        self.show()
+
     def set_data(self, markers):
         self.data = markers
         self.show_data()
@@ -140,7 +149,8 @@ class MarkersView(QWidget, Ui_Form):
         self.tw.setColumnCount(len(header))
         self.tw.setRowCount(len(self.data))
         self.tw.setHorizontalHeaderLabels(header)
-        self.tw.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.tw.setSelectionMode(QAbstractItemView.MultiSelection)
+        self.tw.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.hheader = self.tw.horizontalHeader()
         self.hheader.setStretchLastSection(False)
 
@@ -166,19 +176,19 @@ class MarkersView(QWidget, Ui_Form):
         cit = self.tw.currentItem()
         if cit is None:
             return
-        self.sel_dq.append(cit.row())
+        irow = cit.row()
+        if irow in self.sel_dq:
+            self.sel_dq.remove(irow)
+        else:
+            self.sel_dq.append(irow)
         self.update_row_selection()
         self.update_stats()
 
     def update_row_selection(self):
         self.tw.itemSelectionChanged.disconnect()
-        for i in range(self.tw.rowCount()):
-            if i in self.sel_dq:
-                selected = True
-            else:
-                selected = False
-            for j in range(3):
-                self.tw.item(i, j).setSelected(selected)
+        self.tw.clearSelection()
+        for i in self.sel_dq:
+            self.tw.selectRow(i)
         self.tw.itemSelectionChanged.connect(self.on_selection_changed)
 
     def update_stats(self):

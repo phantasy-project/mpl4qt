@@ -536,7 +536,7 @@ class MToolbar(QToolBar):
             self.mk_view.shade_area_changed.connect(self.on_shade_marked_area)
             self.reset_marker_pos.connect(self.mk_view.on_add_marker)
             self.parent.markerUpdated.connect(self.mk_view.on_add_marker)
-        self.mk_view.show()
+        self.mk_view._show()
 
     @pyqtSlot()
     def repos_toolbar(self):
