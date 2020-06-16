@@ -181,6 +181,7 @@ class BasePlotWidget(QWidget):
         self._marker_id = 1 # initial marker id, always increase, even for deletion
         self._marker_with_xy = False  # anote with (x,y)
         self._visible_hvlines = True  # default visibility
+        self.markerUpdated.connect(self.on_cross_markers_update)
 
         # pan
         self._pan_on = False
@@ -204,6 +205,15 @@ class BasePlotWidget(QWidget):
 
         # [(lbl, (o,lw,mw))]
         self._last_sel_lines = {}
+
+    def on_cross_markers_update(self):
+        # cross markers updated.
+        if len(self._markers) == 2:
+            w = self._handlers.get('w_mpl_tools', None)
+            if w is None:
+                return  # usually is not None
+            w.on_show_mks()
+            w.mk_view.close()
 
     def draw_shade_area(self, p1, p2, **kws):
         # see markers view

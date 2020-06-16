@@ -176,11 +176,7 @@ class MarkersView(QWidget, Ui_Form):
         cit = self.tw.currentItem()
         if cit is None:
             return
-        irow = cit.row()
-        if irow in self.sel_dq:
-            self.sel_dq.remove(irow)
-        else:
-            self.sel_dq.append(irow)
+        self.sel_dq.append(cit.row())
         self.update_row_selection()
         self.update_stats()
 
