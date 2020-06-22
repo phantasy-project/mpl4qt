@@ -176,15 +176,15 @@ class MToolbar(QToolBar):
 
         # auto scale tool
         auto_scale_act = QAction(QIcon(QPixmap(":/tools/auto-scale.png")), "Auto Scale", self)
-        auto_scale_act.setToolTip("Auto Scale")
+        auto_scale_act.setToolTip("Auto Scale (a)")
 
         # auto xscale tool
         auto_xscale_act = QAction(QIcon(QPixmap(":/tools/auto-xscale.png")), "Auto X-Scale", self)
-        auto_xscale_act.setToolTip("Auto X-Scale")
+        auto_xscale_act.setToolTip("Auto X-Scale (a,x)")
 
         # auto yscale tool
         auto_yscale_act = QAction(QIcon(QPixmap(":/tools/auto-yscale.png")), "Auto Y-Scale", self)
-        auto_yscale_act.setToolTip("Auto Y-Scale")
+        auto_yscale_act.setToolTip("Auto Y-Scale (a,y)")
 
         # pan tool
         pan_act = QAction(QIcon(QPixmap(":/tools/pan.png")), "Pan", self)
@@ -206,8 +206,8 @@ class MToolbar(QToolBar):
         self.snap_cursor = None
         cross_act = QAction(QIcon(QPixmap(":/tools/cross.png")), "Crosshair", self)
         cross_act.setCheckable(True)
-        cross_act.setShortcut(Qt.CTRL + Qt.Key_R)
-        cross_act.setToolTip("Coordinate locator (CTRL + R) and marker")
+        cross_act.setShortcut(Qt.SHIFT + Qt.Key_R)
+        cross_act.setToolTip("Coordinate locator (Shift + R) and marker")
 
         cross_marker_text_act = QAction("Marker with (x, y)", self)
         cross_marker_text_act.setCheckable(True)
@@ -236,7 +236,7 @@ class MToolbar(QToolBar):
         self.cross_marker_act = cross_marker_act
         cross_marker_act.setShortcut(Qt.CTRL + Qt.Key_M)
         cross_marker_act.setCheckable(True)
-        cross_marker_act.setToolTip("Click to add a crosshair marker (CTRL + M)")
+        cross_marker_act.setToolTip("Click to add a crosshair marker.")
         cross_marker_act.toggled.connect(self.on_add_marker)
         self.marker_add_checked.connect(self.parent.on_marker_add_checked)
 
