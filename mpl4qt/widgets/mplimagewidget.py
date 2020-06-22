@@ -134,6 +134,7 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
                                            orientation=self._cb_orientation,
                                            aspect=20, shrink=0.95, pad=0.08,
                                            fraction=0.05)
+            self.cb.ax.zorder = -1
         if not f and self.cb is not None:
             self.cb.remove()
             self.cb = None
