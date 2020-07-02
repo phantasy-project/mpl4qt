@@ -1,3 +1,28 @@
+2.7.0, 2020-07-02
+  * Toolbar enhancement
+    - Comprehensive crosshair/marker system
+    - About info tool
+    - Preference tool, change icon size
+    - Updated tool icons
+  * Updated keyboard shortcuts
+    - t,t to turn on/off toolbar
+    - c,c to launch configuration dialog
+    - Shift + R, crosshair tool
+    - Shift + S, enable/disable snap crosshair
+    - Ctrl + M, add/update crossmarker
+    - Shift + P, show marker label(s) as coordinator(s) or literal name(s)
+    - Ctrl + V, show marker info window, for post actions
+    - Ctrl + H, hide/show crossmarkers
+  * Annotations on the widget
+    - Show 'AutoScale is Enabled' when xy auto scale is on (keyshort: a,a)
+    - Show note when a crossmarker is waiting to be added or updated
+  * Add support to select curve
+    - Crosshair tool will probe the selected curve which is bolded.
+    - c,c will directly lead to the configuration for current selected curve
+  * Initialize with current color on the QColorDialog when changing color
+  * Update the qstyle for color buttons
+  * Refine tooltips
+
 2.6.5, 2020-05-22
   * Fix figure title font set issue.
   * Fix xy limit configure issue for image widget.
