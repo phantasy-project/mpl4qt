@@ -12,7 +12,7 @@ def read_license():
         return f.read()
 
 app_name = "mpl4qt"
-app_description = 'Matplotlib widget for PyQt'
+app_description = "Data visualization widgets for PyQt5"
 app_long_description = readme() + '\n\n'
 app_platform = ["Linux"]
 app_author = "Tong Zhang"
@@ -22,12 +22,12 @@ app_url = "https://archman.github.io/mpl4qt/"
 app_keywords = "widgets Qt designer PyQt matplotlib"
 installrequires = [
     'matplotlib',
-    #'PyQt5',
+    'PyQt5',
 ]
 
 setup(
     name=app_name,
-    version="2.6.5",
+    version="2.7.0",
     description=app_description,
     long_description=app_long_description,
     author=app_author,
@@ -46,10 +46,10 @@ setup(
         ],
     },
     classifiers=[
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3'
         'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: Software Development :: User Interfaces',
+        'Topic :: Scientific/Engineering :: Visualization'
     ],
     install_requires=installrequires,
 )
