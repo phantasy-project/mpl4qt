@@ -588,15 +588,24 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
     def on_change_cross_name(self):
         # rename cross marker
         new_name = self.cross_literal_name_lineEdit.text()
-        if new_name == '':
+        if not new_name.isidentifier():
+            QMessageBox.warning(self, "Change the name of cross marker",
+                                "Name is not valid!", QMessageBox.Ok)
             return
+        if new_name in self.parent._markers:
+            QMessageBox.warning(self, "Change the name of cross marker",
+                                "Name is using, change another one!", QMessageBox.Ok)
+            return
+
         for o in self.get_cross_obj_by_name(self._current_mk_name, 'text'):
             o.set_text(new_name)
         self.parent.update_figure()
         self.parent._markers.setdefault(new_name,
                 self.parent._markers.pop(self.cross_cbb.currentText()))
-        self._cross_partial_hide_states.setdefault(new_name,
-                self._cross_partial_hide_states.pop(self.cross_cbb.currentText()))
+        #
+        if self._cross_partial_hide_states:
+            self._cross_partial_hide_states.setdefault(new_name,
+                    self._cross_partial_hide_states.pop(self.cross_cbb.currentText()))
         self.cross_cbb.setItemText(self.cross_cbb.currentIndex(), new_name)
 
     @pyqtSlot()
