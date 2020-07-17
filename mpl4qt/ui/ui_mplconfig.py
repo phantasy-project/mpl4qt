@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_mplconfig.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.14.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(937, 332)
+        Dialog.resize(953, 332)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -1018,6 +1018,9 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.label_166.sizePolicy().hasHeightForWidth())
         self.label_166.setSizePolicy(sizePolicy)
+        self.label_166.setAlignment(QtCore.Qt.AlignRight
+                                    | QtCore.Qt.AlignTrailing
+                                    | QtCore.Qt.AlignVCenter)
         self.label_166.setObjectName("label_166")
         self.gridLayout_26.addWidget(self.label_166, 1, 6, 1, 1)
         self.cross_line_color_btn = QtWidgets.QToolButton(self.cross_tab)
@@ -1186,6 +1189,131 @@ class Ui_Dialog(object):
         self.gridLayout_12.setContentsMargins(6, 12, 6, 6)
         self.gridLayout_12.setSpacing(4)
         self.gridLayout_12.setObjectName("gridLayout_12")
+        self.horizontalLayout_12 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_12.setSpacing(4)
+        self.horizontalLayout_12.setObjectName("horizontalLayout_12")
+        self.line_id_cbb = QtWidgets.QComboBox(self.curve_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.line_id_cbb.sizePolicy().hasHeightForWidth())
+        self.line_id_cbb.setSizePolicy(sizePolicy)
+        self.line_id_cbb.setObjectName("line_id_cbb")
+        self.horizontalLayout_12.addWidget(self.line_id_cbb)
+        self.line_hide_chkbox = QtWidgets.QCheckBox(self.curve_tab)
+        self.line_hide_chkbox.setObjectName("line_hide_chkbox")
+        self.horizontalLayout_12.addWidget(self.line_hide_chkbox)
+        self.gridLayout_12.addLayout(self.horizontalLayout_12, 0, 1, 1, 2)
+        spacerItem7 = QtWidgets.QSpacerItem(20, 40,
+                                            QtWidgets.QSizePolicy.Minimum,
+                                            QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_12.addItem(spacerItem7, 6, 1, 1, 1)
+        self.label_3 = QtWidgets.QLabel(self.curve_tab)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_3.setFont(font)
+        self.label_3.setAlignment(QtCore.Qt.AlignRight
+                                  | QtCore.Qt.AlignTrailing
+                                  | QtCore.Qt.AlignVCenter)
+        self.label_3.setObjectName("label_3")
+        self.gridLayout_12.addWidget(self.label_3, 2, 0, 1, 1)
+        self.opacity_val_slider = QtWidgets.QSlider(self.curve_tab)
+        self.opacity_val_slider.setStyleSheet(
+            "QSlider::groove:horizontal {\n"
+            "border: 1px solid #bbb;\n"
+            "background: white;\n"
+            "height: 12px;\n"
+            "border-radius: 4px;\n"
+            "}\n"
+            "\n"
+            "QSlider::sub-page:horizontal {\n"
+            "background: qlineargradient(x1: 0, y1: 0,    x2: 0, y2: 1,\n"
+            "    stop: 0 #F57900, stop: 1 #FCAF3E);\n"
+            "background: qlineargradient(x1: 0, y1: 0.2, x2: 1, y2: 1,\n"
+            "    stop: 0 #FCAF3E, stop: 1 #F57900);\n"
+            "border: 1px solid #777;\n"
+            "height: 10px;\n"
+            "border-radius: 4px;\n"
+            "}\n"
+            "\n"
+            "QSlider::add-page:horizontal {\n"
+            "background: #fff;\n"
+            "border: 1px solid #777;\n"
+            "height: 10px;\n"
+            "border-radius: 4px;\n"
+            "}\n"
+            "\n"
+            "QSlider::handle:horizontal {\n"
+            "background: qlineargradient(x1:0, y1:0, x2:1, y2:1,\n"
+            "    stop:0 #eee, stop:1 #ccc);\n"
+            "border: 1px solid #777;\n"
+            "width: 15px;\n"
+            "margin-top: -2px;\n"
+            "margin-bottom: -2px;\n"
+            "border-radius: 4px;\n"
+            "}\n"
+            "\n"
+            "QSlider::handle:horizontal:hover {\n"
+            "background: qlineargradient(x1:0, y1:0, x2:1, y2:1,\n"
+            "    stop:0 #fff, stop:1 #ddd);\n"
+            "border: 1px solid #444;\n"
+            "border-radius: 4px;\n"
+            "}\n"
+            "\n"
+            "QSlider::sub-page:horizontal:disabled {\n"
+            "background: #bbb;\n"
+            "border-color: #999;\n"
+            "}\n"
+            "\n"
+            "QSlider::add-page:horizontal:disabled {\n"
+            "background: #eee;\n"
+            "border-color: #999;\n"
+            "}\n"
+            "\n"
+            "QSlider::handle:horizontal:disabled {\n"
+            "background: #eee;\n"
+            "border: 1px solid #aaa;\n"
+            "border-radius: 4px;\n"
+            "}")
+        self.opacity_val_slider.setMaximum(100)
+        self.opacity_val_slider.setProperty("value", 100)
+        self.opacity_val_slider.setOrientation(QtCore.Qt.Horizontal)
+        self.opacity_val_slider.setTickPosition(QtWidgets.QSlider.NoTicks)
+        self.opacity_val_slider.setObjectName("opacity_val_slider")
+        self.gridLayout_12.addWidget(self.opacity_val_slider, 4, 1, 1, 1)
+        self.label_2 = QtWidgets.QLabel(self.curve_tab)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_2.setFont(font)
+        self.label_2.setAlignment(QtCore.Qt.AlignRight
+                                  | QtCore.Qt.AlignTrailing
+                                  | QtCore.Qt.AlignVCenter)
+        self.label_2.setObjectName("label_2")
+        self.gridLayout_12.addWidget(self.label_2, 0, 0, 1, 1)
+        self.label_26 = QtWidgets.QLabel(self.curve_tab)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_26.setFont(font)
+        self.label_26.setAlignment(QtCore.Qt.AlignRight
+                                   | QtCore.Qt.AlignTrailing
+                                   | QtCore.Qt.AlignVCenter)
+        self.label_26.setObjectName("label_26")
+        self.gridLayout_12.addWidget(self.label_26, 4, 0, 1, 1)
+        self.label_23 = QtWidgets.QLabel(self.curve_tab)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_23.setFont(font)
+        self.label_23.setAlignment(QtCore.Qt.AlignRight
+                                   | QtCore.Qt.AlignTrailing
+                                   | QtCore.Qt.AlignVCenter)
+        self.label_23.setObjectName("label_23")
+        self.gridLayout_12.addWidget(self.label_23, 1, 0, 1, 1)
         self.label_4 = QtWidgets.QLabel(self.curve_tab)
         font = QtGui.QFont()
         font.setBold(True)
@@ -1253,6 +1381,9 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.label_20.sizePolicy().hasHeightForWidth())
         self.label_20.setSizePolicy(sizePolicy)
+        self.label_20.setAlignment(QtCore.Qt.AlignRight
+                                   | QtCore.Qt.AlignTrailing
+                                   | QtCore.Qt.AlignVCenter)
         self.label_20.setObjectName("label_20")
         self.gridLayout.addWidget(self.label_20, 1, 6, 1, 1)
         self.label_9 = QtWidgets.QLabel(self.curve_tab)
@@ -1352,171 +1483,23 @@ class Ui_Dialog(object):
         self.label_37 = QtWidgets.QLabel(self.curve_tab)
         self.label_37.setObjectName("label_37")
         self.gridLayout.addWidget(self.label_37, 1, 4, 1, 1)
-        self.gridLayout_12.addLayout(self.gridLayout, 2, 1, 2, 2)
-        self.horizontalLayout_12 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_12.setSpacing(4)
-        self.horizontalLayout_12.setObjectName("horizontalLayout_12")
-        self.line_id_cbb = QtWidgets.QComboBox(self.curve_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.line_id_cbb.sizePolicy().hasHeightForWidth())
-        self.line_id_cbb.setSizePolicy(sizePolicy)
-        self.line_id_cbb.setObjectName("line_id_cbb")
-        self.horizontalLayout_12.addWidget(self.line_id_cbb)
-        self.line_hide_chkbox = QtWidgets.QCheckBox(self.curve_tab)
-        self.line_hide_chkbox.setObjectName("line_hide_chkbox")
-        self.horizontalLayout_12.addWidget(self.line_hide_chkbox)
-        self.gridLayout_12.addLayout(self.horizontalLayout_12, 0, 1, 1, 2)
-        self.horizontalLayout_13 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_13.setSpacing(4)
-        self.horizontalLayout_13.setObjectName("horizontalLayout_13")
-        self.show_smooth_line_chkbox = QtWidgets.QCheckBox(self.curve_tab)
-        self.show_smooth_line_chkbox.setEnabled(False)
-        self.show_smooth_line_chkbox.setObjectName("show_smooth_line_chkbox")
-        self.horizontalLayout_13.addWidget(self.show_smooth_line_chkbox)
-        self.label_71 = QtWidgets.QLabel(self.curve_tab)
-        self.label_71.setEnabled(False)
-        self.label_71.setObjectName("label_71")
-        self.horizontalLayout_13.addWidget(self.label_71)
-        self.smooth_method_cbb = QtWidgets.QComboBox(self.curve_tab)
-        self.smooth_method_cbb.setEnabled(False)
-        self.smooth_method_cbb.setObjectName("smooth_method_cbb")
-        self.smooth_method_cbb.addItem("")
-        self.smooth_method_cbb.addItem("")
-        self.smooth_method_cbb.addItem("")
-        self.smooth_method_cbb.addItem("")
-        self.smooth_method_cbb.addItem("")
-        self.smooth_method_cbb.addItem("")
-        self.horizontalLayout_13.addWidget(self.smooth_method_cbb)
-        self.gridLayout_12.addLayout(self.horizontalLayout_13, 6, 1, 1, 2)
         self.label_70 = QtWidgets.QLabel(self.curve_tab)
-        self.label_70.setEnabled(False)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_70.setFont(font)
-        self.label_70.setAlignment(QtCore.Qt.AlignRight
-                                   | QtCore.Qt.AlignTrailing
-                                   | QtCore.Qt.AlignVCenter)
         self.label_70.setObjectName("label_70")
-        self.gridLayout_12.addWidget(self.label_70, 6, 0, 1, 1)
-        self.label_2 = QtWidgets.QLabel(self.curve_tab)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_2.setFont(font)
-        self.label_2.setAlignment(QtCore.Qt.AlignRight
-                                  | QtCore.Qt.AlignTrailing
-                                  | QtCore.Qt.AlignVCenter)
-        self.label_2.setObjectName("label_2")
-        self.gridLayout_12.addWidget(self.label_2, 0, 0, 1, 1)
-        self.opacity_val_slider = QtWidgets.QSlider(self.curve_tab)
-        self.opacity_val_slider.setStyleSheet(
-            "QSlider::groove:horizontal {\n"
-            "border: 1px solid #bbb;\n"
-            "background: white;\n"
-            "height: 12px;\n"
-            "border-radius: 4px;\n"
-            "}\n"
-            "\n"
-            "QSlider::sub-page:horizontal {\n"
-            "background: qlineargradient(x1: 0, y1: 0,    x2: 0, y2: 1,\n"
-            "    stop: 0 #F57900, stop: 1 #FCAF3E);\n"
-            "background: qlineargradient(x1: 0, y1: 0.2, x2: 1, y2: 1,\n"
-            "    stop: 0 #FCAF3E, stop: 1 #F57900);\n"
-            "border: 1px solid #777;\n"
-            "height: 10px;\n"
-            "border-radius: 4px;\n"
-            "}\n"
-            "\n"
-            "QSlider::add-page:horizontal {\n"
-            "background: #fff;\n"
-            "border: 1px solid #777;\n"
-            "height: 10px;\n"
-            "border-radius: 4px;\n"
-            "}\n"
-            "\n"
-            "QSlider::handle:horizontal {\n"
-            "background: qlineargradient(x1:0, y1:0, x2:1, y2:1,\n"
-            "    stop:0 #eee, stop:1 #ccc);\n"
-            "border: 1px solid #777;\n"
-            "width: 15px;\n"
-            "margin-top: -2px;\n"
-            "margin-bottom: -2px;\n"
-            "border-radius: 4px;\n"
-            "}\n"
-            "\n"
-            "QSlider::handle:horizontal:hover {\n"
-            "background: qlineargradient(x1:0, y1:0, x2:1, y2:1,\n"
-            "    stop:0 #fff, stop:1 #ddd);\n"
-            "border: 1px solid #444;\n"
-            "border-radius: 4px;\n"
-            "}\n"
-            "\n"
-            "QSlider::sub-page:horizontal:disabled {\n"
-            "background: #bbb;\n"
-            "border-color: #999;\n"
-            "}\n"
-            "\n"
-            "QSlider::add-page:horizontal:disabled {\n"
-            "background: #eee;\n"
-            "border-color: #999;\n"
-            "}\n"
-            "\n"
-            "QSlider::handle:horizontal:disabled {\n"
-            "background: #eee;\n"
-            "border: 1px solid #aaa;\n"
-            "border-radius: 4px;\n"
-            "}")
-        self.opacity_val_slider.setMaximum(100)
-        self.opacity_val_slider.setProperty("value", 100)
-        self.opacity_val_slider.setOrientation(QtCore.Qt.Horizontal)
-        self.opacity_val_slider.setTickPosition(QtWidgets.QSlider.NoTicks)
-        self.opacity_val_slider.setObjectName("opacity_val_slider")
-        self.gridLayout_12.addWidget(self.opacity_val_slider, 4, 1, 1, 1)
+        self.gridLayout.addWidget(self.label_70, 0, 4, 1, 1)
+        self.line_ds_cbb = QtWidgets.QComboBox(self.curve_tab)
+        self.line_ds_cbb.setObjectName("line_ds_cbb")
+        self.line_ds_cbb.addItem("")
+        self.line_ds_cbb.addItem("")
+        self.line_ds_cbb.addItem("")
+        self.line_ds_cbb.addItem("")
+        self.gridLayout.addWidget(self.line_ds_cbb, 0, 5, 1, 2)
+        self.gridLayout_12.addLayout(self.gridLayout, 2, 1, 2, 2)
         self.opacity_val_lbl = QtWidgets.QLabel(self.curve_tab)
         self.opacity_val_lbl.setAlignment(QtCore.Qt.AlignRight
                                           | QtCore.Qt.AlignTrailing
                                           | QtCore.Qt.AlignVCenter)
         self.opacity_val_lbl.setObjectName("opacity_val_lbl")
         self.gridLayout_12.addWidget(self.opacity_val_lbl, 4, 2, 1, 1)
-        self.label_3 = QtWidgets.QLabel(self.curve_tab)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_3.setFont(font)
-        self.label_3.setAlignment(QtCore.Qt.AlignRight
-                                  | QtCore.Qt.AlignTrailing
-                                  | QtCore.Qt.AlignVCenter)
-        self.label_3.setObjectName("label_3")
-        self.gridLayout_12.addWidget(self.label_3, 2, 0, 1, 1)
-        self.label_26 = QtWidgets.QLabel(self.curve_tab)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_26.setFont(font)
-        self.label_26.setAlignment(QtCore.Qt.AlignRight
-                                   | QtCore.Qt.AlignTrailing
-                                   | QtCore.Qt.AlignVCenter)
-        self.label_26.setObjectName("label_26")
-        self.gridLayout_12.addWidget(self.label_26, 4, 0, 1, 1)
-        spacerItem7 = QtWidgets.QSpacerItem(20, 40,
-                                            QtWidgets.QSizePolicy.Minimum,
-                                            QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_12.addItem(spacerItem7, 7, 1, 1, 1)
-        self.label_23 = QtWidgets.QLabel(self.curve_tab)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_23.setFont(font)
-        self.label_23.setAlignment(QtCore.Qt.AlignRight
-                                   | QtCore.Qt.AlignTrailing
-                                   | QtCore.Qt.AlignVCenter)
-        self.label_23.setObjectName("label_23")
-        self.gridLayout_12.addWidget(self.label_23, 1, 0, 1, 1)
         self.line_label_lineEdit = QtWidgets.QLineEdit(self.curve_tab)
         self.line_label_lineEdit.setObjectName("line_label_lineEdit")
         self.gridLayout_12.addWidget(self.line_label_lineEdit, 1, 1, 1, 2)
@@ -1622,6 +1605,9 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.label_32.sizePolicy().hasHeightForWidth())
         self.label_32.setSizePolicy(sizePolicy)
+        self.label_32.setAlignment(QtCore.Qt.AlignRight
+                                   | QtCore.Qt.AlignTrailing
+                                   | QtCore.Qt.AlignVCenter)
         self.label_32.setObjectName("label_32")
         self.gridLayout_2.addWidget(self.label_32, 1, 6, 1, 1)
         self.eb_line_width_lineEdit = QtWidgets.QLineEdit(self.eb_tab)
@@ -2423,11 +2409,7 @@ class Ui_Dialog(object):
         Dialog.setTabOrder(self.mk_edgecolor_btn, self.mk_size_lineEdit)
         Dialog.setTabOrder(self.mk_size_lineEdit, self.mk_width_lineEdit)
         Dialog.setTabOrder(self.mk_width_lineEdit, self.opacity_val_slider)
-        Dialog.setTabOrder(self.opacity_val_slider,
-                           self.show_smooth_line_chkbox)
-        Dialog.setTabOrder(self.show_smooth_line_chkbox,
-                           self.smooth_method_cbb)
-        Dialog.setTabOrder(self.smooth_method_cbb, self.eb_line_id_cbb)
+        Dialog.setTabOrder(self.opacity_val_slider, self.eb_line_id_cbb)
         Dialog.setTabOrder(self.eb_line_id_cbb, self.eb_line_hide_chkbox)
         Dialog.setTabOrder(self.eb_line_hide_chkbox, self.eb_line_style_cbb)
         Dialog.setTabOrder(self.eb_line_style_cbb, self.eb_line_color_btn)
@@ -2637,6 +2619,13 @@ class Ui_Dialog(object):
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.cross_tab),
             _translate("Dialog", "Cross"))
+        self.line_id_cbb.setToolTip(
+            _translate("Dialog", "Select line to configure"))
+        self.line_hide_chkbox.setText(_translate("Dialog", "Hide"))
+        self.label_3.setText(_translate("Dialog", "Line"))
+        self.label_2.setText(_translate("Dialog", "Line ID"))
+        self.label_26.setText(_translate("Dialog", "Opacity"))
+        self.label_23.setText(_translate("Dialog", "Label"))
         self.label_4.setText(_translate("Dialog", "Marker"))
         self.label_22.setText(_translate("Dialog", "Width"))
         self.label_20.setText(_translate("Dialog", "Size"))
@@ -2651,23 +2640,12 @@ class Ui_Dialog(object):
         self.label_19.setText(_translate("Dialog", "Style"))
         self.label_21.setText(_translate("Dialog", "Face Color"))
         self.label_37.setText(_translate("Dialog", "Edge Color"))
-        self.line_id_cbb.setToolTip(
-            _translate("Dialog", "Select line to configure"))
-        self.line_hide_chkbox.setText(_translate("Dialog", "Hide"))
-        self.show_smooth_line_chkbox.setText(_translate("Dialog", "Show"))
-        self.label_71.setText(_translate("Dialog", "Method"))
-        self.smooth_method_cbb.setItemText(0, _translate("Dialog", "Linear"))
-        self.smooth_method_cbb.setItemText(1, _translate("Dialog", "Nearest"))
-        self.smooth_method_cbb.setItemText(2, _translate("Dialog", "Spline-0"))
-        self.smooth_method_cbb.setItemText(3, _translate("Dialog", "Spline-1"))
-        self.smooth_method_cbb.setItemText(4, _translate("Dialog", "Spline-2"))
-        self.smooth_method_cbb.setItemText(5, _translate("Dialog", "Spline-3"))
-        self.label_70.setText(_translate("Dialog", "Smooth"))
-        self.label_2.setText(_translate("Dialog", "Line ID"))
+        self.label_70.setText(_translate("Dialog", "Draw As"))
+        self.line_ds_cbb.setItemText(0, _translate("Dialog", "Line"))
+        self.line_ds_cbb.setItemText(1, _translate("Dialog", "Steps"))
+        self.line_ds_cbb.setItemText(2, _translate("Dialog", "Mid-Steps"))
+        self.line_ds_cbb.setItemText(3, _translate("Dialog", "Post-Steps"))
         self.opacity_val_lbl.setText(_translate("Dialog", "100%"))
-        self.label_3.setText(_translate("Dialog", "Line"))
-        self.label_26.setText(_translate("Dialog", "Opacity"))
-        self.label_23.setText(_translate("Dialog", "Label"))
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.curve_tab),
             _translate("Dialog", "Curve"))
