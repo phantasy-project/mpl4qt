@@ -42,6 +42,8 @@ from PyQt5.QtWidgets import QMessageBox
 from mpl4qt.widgets.mplbasewidget import BasePlotWidget
 from mpl4qt.widgets.utils import DEFAULT_MPL_SETTINGS
 from mpl4qt.widgets.utils import LINE_STY_VALS
+from mpl4qt.widgets.utils import LINE_DS_VALS
+from mpl4qt.widgets.utils import LINE_DS_DICT_R
 from mpl4qt.widgets.utils import MK_SYMBOL
 from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
 from mpl4qt.widgets.utils import mplcolor2hex
@@ -78,6 +80,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self._mec, self._mfc = QColor('red'), QColor('red')
         self._mew = 1.0
         self._line_style = 'solid'
+        self._line_ds = 'default'
         self._marker_style = ''
         self._marker_size = 6.0
         self._line_label = '_line0'
@@ -236,6 +239,26 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     figureLineStyle = pyqtProperty('QString', getLineStyle, setLineStyle)
 
+    def getLineDrawStyle(self):
+        return self._line_ds
+
+    @pyqtSlot('QString')
+    def setLineDrawStyle(self, s):
+        """Set line draw style for the current curve.
+
+        Parameters
+        ----------
+        s : str
+            String for the line draw style, see `line draw style <https://matplotlib.org/api/_as_gen/matplotlib.lines.Line2D.html#matplotlib.lines.Line2D>`_.
+        """
+        if s not in LINE_DS_VALS:
+            return
+        self._line_ds = s
+        self._line.set_ds(s)
+        self.update_figure()
+
+    figureLineDrawStyle = pyqtProperty('QString', getLineDrawStyle, setLineDrawStyle)
+
     def getMarkerStyle(self):
         return self._marker_style
 
@@ -377,16 +400,15 @@ class MatplotlibCurveWidget(BasePlotWidget):
         else:
             return None
 
-
     def get_line_config(self, line=None):
-        """Get line config for *ls*, *lw*, *c*, *marker*, *ms*, *mew*,
+        """Get line config for *ls*, *ds*, *lw*, *c*, *marker*, *ms*, *mew*,
         *mec*, *mfc*, *label*, *visible*, *alpha*.
         """
         line = self._line if line is None else line
         lconf = {
             p: getattr(line, 'get_' + p)()
             for p in ('ls', 'lw', 'c', 'ms', 'mew', 'mec', 'mfc', 'marker',
-                      'label', 'visible', 'alpha')
+                      'label', 'visible', 'alpha', 'ds')
         }
         return lconf
 
@@ -397,68 +419,69 @@ class MatplotlibCurveWidget(BasePlotWidget):
         s.update(s.default_settings())
 
         # figure
-        s['figure']['title'].update({
-            'value': self.getFigureTitle(),
-            'font': self.getFigureTitleFont().toString()
-        })
-        s['figure']['labels'].update({
-            'xlabel': self.getFigureXlabel(),
-            'ylabel': self.getFigureYlabel(),
-            'font': self.getFigureXYlabelFont().toString()
-        })
-        s['figure']['xy_range'].update({
-            'auto_scale': self.getFigureAutoScale(),
-            'xmin': self.getXLimitMin(),
-            'xmax': self.getXLimitMax(),
-            'ymin': self.getYLimitMin(),
-            'ymax': self.getYLimitMax(),
-        })
-        s['figure']['legend'].update({
-            'show': self.getLegendToggle() is True,
-            'location': self.getLegendLocation()
-        })
+        s['figure']['title'].update([
+            ('value', self.getFigureTitle()),
+            ('font', self.getFigureTitleFont().toString())
+            ])
+        s['figure']['labels'].update([
+            ('xlabel', self.getFigureXlabel()),
+            ('ylabel', self.getFigureYlabel()),
+            ('font', self.getFigureXYlabelFont().toString())
+            ])
+        s['figure']['xy_range'].update([
+            ('auto_scale', self.getFigureAutoScale()),
+            ('xmin', self.getXLimitMin()),
+            ('xmax', self.getXLimitMax()),
+            ('ymin', self.getYLimitMin()),
+            ('ymax', self.getYLimitMax()),
+            ])
+        s['figure']['legend'].update([
+            ('show', self.getLegendToggle() is True),
+            ('location', self.getLegendLocation())
+            ])
         # curve
         curve_settings = []
         for line_id, line in enumerate(self.get_all_curves()):
             config = self.get_line_config(line)
             curve_setting = OrderedDict()
-            curve_setting.update({
-                'line': {
-                    'style': config['ls'],
-                    'color': mplcolor2hex(config['c']),
-                    'width': config['lw'],
-                },
-                'marker': {
-                    'style': config['marker'],
-                    'edgecolor': mplcolor2hex(config['mec']),
-                    'facecolor': mplcolor2hex(config['mfc']),
-                    'size': config['ms'],
-                    'width': config['mew'],
-                },
-                'label': config['label'],
-                'line_id': line_id,
-            })
+            curve_setting.update([
+                ('label', config['label']),
+                ('line_id', line_id),
+                ('line', dict([
+                    ('style', config['ls']),
+                    ('drawstyle', LINE_DS_DICT_R[config['ds']]),
+                    ('color', mplcolor2hex(config['c'])),
+                    ('width', config['lw']),
+                    ])),
+                ('marker', dict([
+                    ('style', config['marker']),
+                    ('edgecolor', mplcolor2hex(config['mec'])),
+                    ('facecolor', mplcolor2hex(config['mfc'])),
+                    ('size', config['ms']),
+                    ('width', config['mew']),
+                    ])),
+                ])
             curve_settings.append(curve_setting)
         s.update({'curve': curve_settings})
         # style
-        s['style']['figsize'].update({
-            'width': self.getFigureWidth(),
-            'height': self.getFigureHeight(),
-            'dpi': self.getFigureDpi(),
-        })
-        s['style']['background'].update({
-            'color': self.getFigureBgColor().name(),
-        })
-        s['style']['ticks'].update({
-            'mticks_on': self.getFigureMTicksToggle() is True,
-            'font': self.getFigureXYticksFont().toString(),
-            'color': self.getFigureXYticksColor().name(),
-        })
-        s['style']['layout'].update({
-            'tight_on': self.getTightLayoutToggle() is True,
-            'grid_on': self.getFigureGridToggle() is True,
-            'grid_color': self.getFigureGridColor().name(),
-        })
+        s['style']['figsize'].update([
+            ('width', self.getFigureWidth()),
+            ('height', self.getFigureHeight()),
+            ('dpi', self.getFigureDpi()),
+            ])
+        s['style']['background'].update([
+            ('color', self.getFigureBgColor().name().upper()),
+            ])
+        s['style']['ticks'].update([
+            ('mticks_on', self.getFigureMTicksToggle() is True),
+            ('font', self.getFigureXYticksFont().toString()),
+            ('color', self.getFigureXYticksColor().name().upper()),
+            ])
+        s['style']['layout'].update([
+            ('tight_on', self.getTightLayoutToggle() is True),
+            ('grid_on', self.getFigureGridToggle() is True),
+            ('grid_color', self.getFigureGridColor().name()),
+            ])
         return s
 
     @pyqtSlot(QVariant)
