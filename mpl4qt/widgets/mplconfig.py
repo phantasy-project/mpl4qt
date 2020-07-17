@@ -40,6 +40,8 @@ from mpl4qt.widgets.utils import MK_SIZE_MIN
 from mpl4qt.widgets.utils import MK_SIZE_MAX
 from mpl4qt.widgets.utils import MK_WIDTH_MIN
 from mpl4qt.widgets.utils import MK_WIDTH_MAX
+from mpl4qt.widgets.utils import LINE_DS_DICT
+from mpl4qt.widgets.utils import LINE_DS_DICT_R
 
 
 class MatplotlibConfigPanel(QDialog, Ui_Dialog):
@@ -814,6 +816,9 @@ class MatplotlibConfigCurvePanel(MatplotlibConfigPanel):
         # line style
         self.line_style_cbb.currentTextChanged['QString'].connect(
             self.parent.setLineStyle)
+        # line ds
+        self.line_ds_cbb.currentTextChanged['QString'].connect(
+            lambda s:self.parent.setLineDrawStyle(LINE_DS_DICT[s]))
         # line width
         self.line_width_lineEdit.textChanged.connect(self.set_line_width)
         self.figLineWidthChanged[float].connect(self.parent.setLineWidth)
@@ -892,6 +897,8 @@ class MatplotlibConfigCurvePanel(MatplotlibConfigPanel):
         self.set_btn_color(self.mk_facecolor_btn, QColor(mplcolor2hex(config['mfc'])))
         # line style
         self.line_style_cbb.setCurrentText(LINE_STY_DICT[config['ls']])
+        # line ds
+        self.line_ds_cbb.setCurrentText(LINE_DS_DICT_R[config['ds']])
         # marker style
         self.mk_style_cbb.setCurrentIndex(MK_SYMBOL.index(config['marker']))
         # line width
