@@ -41,9 +41,10 @@ from PyQt5.QtWidgets import QMessageBox
 
 from mpl4qt.widgets.mplbasewidget import BasePlotWidget
 from mpl4qt.widgets.utils import DEFAULT_MPL_SETTINGS
-from mpl4qt.widgets.utils import LINE_STY_VALS
-from mpl4qt.widgets.utils import LINE_DS_VALS
+from mpl4qt.widgets.utils import LINE_DS_DICT
 from mpl4qt.widgets.utils import LINE_DS_DICT_R
+from mpl4qt.widgets.utils import LINE_DS_VALS
+from mpl4qt.widgets.utils import LINE_STY_VALS
 from mpl4qt.widgets.utils import MK_SYMBOL
 from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
 from mpl4qt.widgets.utils import mplcolor2hex
@@ -691,6 +692,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
             self.setLineLabel(config['label'])
             self.setLineColor(QColor(config['line']['color']))
             self.setLineStyle(config['line']['style'])
+            self.setLineDrawStyle(LINE_DS_DICT[config['line']['drawstyle']])
             self.setLineWidth(config['line']['width'])
             self.setMarkerStyle(config['marker']['style'])
             self.setMarkerSize(config['marker']['size'])
