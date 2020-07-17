@@ -665,7 +665,7 @@ class BasePlotWidget(QWidget):
             return
         try:
             s = self.get_mpl_settings()
-            s.write(filepath)
+            s.write(filepath, sort_keys=False)
         except:
             QMessageBox.warning(self, "Warning",
                                 "Cannot export settings to {}".format(filepath),
