@@ -116,6 +116,17 @@ LINE_STY_DICT = {
 LINE_STY_VALS = set(LINE_STY_DICT)
 LINE_STY_VALS.update(LINE_STY_DICT.values())
 
+# line draw style
+LINE_DS_DICT = {
+    'Line': 'default',
+    'Steps': 'steps',
+    'Mid-Steps': 'steps-mid',
+    'Post-Steps': 'steps-post',
+}
+LINE_DS_VALS = set(LINE_DS_DICT.values())
+LINE_DS_DICT_R = {v: k for k,v in LINE_DS_DICT.items()}
+LINE_DS_DICT_R['steps-pre'] = 'Steps'
+
 # axis scale mapping
 SCALE_STY_DICT = OrderedDict([
     ('Linear Scale', 'linear'),
@@ -141,6 +152,7 @@ DEFAULT_LEGEND_SHOW = False
 DEFAULT_LEGEND_LOC = 0
 DEFAULT_LINE_ID = 0
 DEFAULT_LINE_STYLE = "--"
+DEFAULT_LINE_DRAWSTYLE = "Line"
 DEFAULT_LINE_COLOR = "#FF0000"
 DEFAULT_LINE_WIDTH = 1.0
 DEFAULT_MK_STYLE = 'o'
@@ -407,12 +419,12 @@ class MatplotlibCurveWidgetSettings(OrderedDict):
         s.update(deepcopy(list(self.items()), memo))
         return s
 
-    def write(self, path=None):
+    def write(self, path=None, sort_keys=True):
         """Write settings into a JSON file, if path is not defined
         """
         path = 'mplcurve_default_settings.json' if path is None else path
         with open(path, 'w') as fp:
-            json.dump(self, fp, indent=2, sort_keys=True)
+            json.dump(self, fp, indent=2, sort_keys=sort_keys)
 
     @staticmethod
     def default_settings():
@@ -422,49 +434,46 @@ class MatplotlibCurveWidgetSettings(OrderedDict):
 
         # figure tab
         sfig = OrderedDict()
-        sfig.update({'title': {'value': DEFAULT_TITLE, 'font': DEFAULT_TITLE_FONT}})
-        sfig.update({'labels': {'xlabel': DEFAULT_XLABEL, 'ylabel': DEFAULT_YLABEL,
-                                'font': DEFAULT_LABELS_FONT}})
-        sfig.update({'xy_range': {'auto_scale': DEFAULT_AUTOSCALE,
-                                  'xmin': DEFAULT_XMIN, 'xmax': DEFAULT_XMAX,
-                                  'ymin': DEFAULT_YMIN, 'ymax': DEFAULT_YMAX}})
-        sfig.update({'legend': {'show': DEFAULT_LEGEND_SHOW,
-                                'location': DEFAULT_LEGEND_LOC}})
-        s.update({'figure': sfig})
+        sfig.update([('title', OrderedDict({'value': DEFAULT_TITLE, 'font': DEFAULT_TITLE_FONT}))])
+        sfig.update([('labels', OrderedDict({'xlabel': DEFAULT_XLABEL, 'ylabel': DEFAULT_YLABEL,
+                                             'font': DEFAULT_LABELS_FONT}))])
+        sfig.update([('xy_range', OrderedDict({'auto_scale': DEFAULT_AUTOSCALE,
+                                               'xmin': DEFAULT_XMIN, 'xmax': DEFAULT_XMAX,
+                                               'ymin': DEFAULT_YMIN, 'ymax': DEFAULT_YMAX}))])
+        sfig.update([('legend', OrderedDict({'show': DEFAULT_LEGEND_SHOW,
+                                             'location': DEFAULT_LEGEND_LOC}))])
+        s.update([('figure', sfig)])
 
         # curve tab (single curve)
         scurve = OrderedDict()
-        scurve.update({'line': {'style': DEFAULT_LINE_STYLE,
-                                'color': DEFAULT_LINE_COLOR,
-                                'width': DEFAULT_LINE_WIDTH}})
-        scurve.update({'marker': {'style': DEFAULT_MK_STYLE,
-                                  'edgecolor': DEFAULT_MEC,
-                                  'facecolor': DEFAULT_MFC,
-                                  'size': DEFAULT_MK_SIZE,
-                                  'width': DEFAULT_MK_WIDTH}})
         scurve.update({'label': DEFAULT_LINE_LABEL})
         scurve.update({'line_id': DEFAULT_LINE_ID})
+        scurve.update([('line', OrderedDict({'style': DEFAULT_LINE_STYLE,
+                                             'drawstyle': DEFAULT_LINE_DRAWSTYLE,
+                                             'color': DEFAULT_LINE_COLOR,
+                                             'width': DEFAULT_LINE_WIDTH}))])
+        scurve.update([('marker', OrderedDict({'style': DEFAULT_MK_STYLE,
+                                               'edgecolor': DEFAULT_MEC,
+                                               'facecolor': DEFAULT_MFC,
+                                               'size': DEFAULT_MK_SIZE,
+                                               'width': DEFAULT_MK_WIDTH}))])
 
         s.update({'curve': [scurve]})
 
         # style tab
         sstyle = OrderedDict()
-        sstyle.update({'figsize': {
-            'width': DEFAULT_FIG_WIDTH,
-            'height': DEFAULT_FIG_HEIGHT,
-            'dpi': DEFAULT_FIG_DPI}})
-        sstyle.update({'background': {
-            'color': DEFAULT_BKGD_COLOR}})
-        sstyle.update({'ticks': {
+        sstyle.update([('figsize', OrderedDict({'width': DEFAULT_FIG_WIDTH,
+                                                'height': DEFAULT_FIG_HEIGHT,
+                                                'dpi': DEFAULT_FIG_DPI}))])
+        sstyle.update([('background', {'color': DEFAULT_BKGD_COLOR})])
+        sstyle.update([('ticks', OrderedDict({
             'mticks_on': DEFAULT_MTICKS_ON,
             'font': DEFAULT_MTICKS_FONT,
-            'color': DEFAULT_MTICKS_COLOR,
-        }})
-        sstyle.update({'layout': {
+            'color': DEFAULT_MTICKS_COLOR}))])
+        sstyle.update([('layout', OrderedDict({
             'tight_on': DEFAULT_LAYOUT_TIGHT_ON,
             'grid_on': DEFAULT_LAYOUT_GRID_ON,
-            'grid_color': DEFAULT_LAYOUT_GRID_COLOR,
-        }})
+            'grid_color': DEFAULT_LAYOUT_GRID_COLOR}))])
 
         s.update({'style': sstyle})
 
