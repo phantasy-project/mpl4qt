@@ -66,6 +66,7 @@ from mpl4qt.widgets.utils import AUTOFORMATTER_MATHTEXT
 from mpl4qt.widgets.utils import BOOTSTRAP_GREEN
 from mpl4qt.widgets.utils import BOOTSTRAP_RED
 from mpl4qt.widgets.utils import LINE_STY_VALS
+from mpl4qt.widgets.utils import LINE_DS_VALS
 from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
 from mpl4qt.widgets.utils import SCALE_STY_VALS
 from mpl4qt.widgets.utils import cycle_list_next
@@ -1725,6 +1726,10 @@ class BasePlotWidget(QWidget):
             self._create_ctxtmenu().findChild(QAction, 'config_action').triggered.emit()
         elif k1 == 't' and k2 == 't':
             self._create_ctxtmenu().findChild(QAction, 'tb_action').triggered.emit()
+        elif k1 == 'd' and k2 == 's' and self.widget_type in ('curve', 'errorbar'):
+            # circulate curve drawstyle
+            self.setLineDrawStyle(
+                cycle_list_next(list(LINE_DS_VALS), self.getLineDrawStyle()))
 
     def process_keyshort(self, k):
         """Override this method to define keyshorts.
