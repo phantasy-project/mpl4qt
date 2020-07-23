@@ -22,11 +22,11 @@ class KbdHelpDialog(QDialog, Ui_Dialog):
         # UI
         self.setupUi(self)
         # self.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)
-        if platform.system() == "Linux":
-            self.setAttribute(Qt.WA_TranslucentBackground)
-        else:
-            self.setWindowOpacity(0.8)
-            self.setStyleSheet("QDialog{background:#000000;}")
+        #if platform.system() == "Linux":
+        #    self.setAttribute(Qt.WA_TranslucentBackground)
+        #else:
+        #    self.setWindowOpacity(0.8)
+        #    self.setStyleSheet("QDialog{background:#000000;}")
         self.adjustSize()
 
     def paintEvent(self, e):

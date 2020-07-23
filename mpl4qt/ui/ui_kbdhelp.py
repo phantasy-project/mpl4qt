@@ -12,223 +12,162 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(269, 491)
-        self.gridLayout = QtWidgets.QGridLayout(Dialog)
-        self.gridLayout.setContentsMargins(6, 6, 6, 6)
-        self.gridLayout.setSpacing(4)
-        self.gridLayout.setObjectName("gridLayout")
-        self.label_14 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_14.sizePolicy().hasHeightForWidth())
-        self.label_14.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setItalic(False)
-        self.label_14.setFont(font)
-        self.label_14.setStyleSheet("")
-        self.label_14.setObjectName("label_14")
-        self.gridLayout.addWidget(self.label_14, 20, 1, 1, 1)
-        self.label_2 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_2.sizePolicy().hasHeightForWidth())
-        self.label_2.setSizePolicy(sizePolicy)
-        self.label_2.setStyleSheet(
-            "QLabel {\n"
-            "    padding:0.1em 0.5em;\n"
-            "    font-family:Arial,Helvetica,sans-serif;\n"
-            "    background-color:#F7F7F7;\n"
-            "    color:#333;    \n"
-            "    border-radius:2px;\n"
-            "    border: 1px solid gray;\n"
-            "    margin:0 0.1em;\n"
-            "    line-height: 1.4;\n"
-            "}")
-        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_2.setObjectName("label_2")
-        self.gridLayout.addWidget(self.label_2, 12, 0, 1, 1)
-        self.label_25 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_25.sizePolicy().hasHeightForWidth())
-        self.label_25.setSizePolicy(sizePolicy)
-        self.label_25.setStyleSheet(
-            "QLabel {\n"
-            "    padding:0.1em 0.5em;\n"
-            "    font-family:Arial,Helvetica,sans-serif;\n"
-            "    background-color:#F7F7F7;\n"
-            "    color:#333;    \n"
-            "    border-radius:2px;\n"
-            "    border: 1px solid gray;\n"
-            "    margin:0 0.1em;\n"
-            "    line-height: 1.4;\n"
-            "}")
-        self.label_25.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_25.setObjectName("label_25")
-        self.gridLayout.addWidget(self.label_25, 6, 0, 1, 1)
-        self.line_2 = QtWidgets.QFrame(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.line_2.sizePolicy().hasHeightForWidth())
-        self.line_2.setSizePolicy(sizePolicy)
-        self.line_2.setFrameShape(QtWidgets.QFrame.HLine)
-        self.line_2.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line_2.setObjectName("line_2")
-        self.gridLayout.addWidget(self.line_2, 1, 1, 1, 1)
-        self.label_22 = QtWidgets.QLabel(Dialog)
-        font = QtGui.QFont()
-        font.setItalic(False)
-        self.label_22.setFont(font)
-        self.label_22.setObjectName("label_22")
-        self.gridLayout.addWidget(self.label_22, 8, 1, 1, 1)
-        self.label_19 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_19.sizePolicy().hasHeightForWidth())
-        self.label_19.setSizePolicy(sizePolicy)
-        self.label_19.setStyleSheet(
-            "QLabel {\n"
-            "    padding:0.1em 0.5em;\n"
-            "    font-family:Arial,Helvetica,sans-serif;\n"
-            "    background-color:#F7F7F7;\n"
-            "    color:#333;    \n"
-            "    border-radius:2px;\n"
-            "    border: 1px solid gray;\n"
-            "    margin:0 0.1em;\n"
-            "    line-height: 1.4;\n"
-            "}")
-        self.label_19.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_19.setObjectName("label_19")
-        self.gridLayout.addWidget(self.label_19, 14, 0, 1, 1)
-        self.label_6 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_6.sizePolicy().hasHeightForWidth())
-        self.label_6.setSizePolicy(sizePolicy)
-        self.label_6.setStyleSheet(
-            "QLabel {\n"
-            "    padding:0.1em 0.5em;\n"
-            "    font-family:Arial,Helvetica,sans-serif;\n"
-            "    background-color:#F7F7F7;\n"
-            "    color:#333;    \n"
-            "    border-radius:2px;\n"
-            "    border: 1px solid gray;\n"
-            "    margin:0 0.1em;\n"
-            "    line-height: 1.4;\n"
-            "}")
-        self.label_6.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_6.setObjectName("label_6")
-        self.gridLayout.addWidget(self.label_6, 13, 0, 1, 1)
-        self.label_3 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_3.sizePolicy().hasHeightForWidth())
-        self.label_3.setSizePolicy(sizePolicy)
-        self.label_3.setStyleSheet(
-            "QLabel {\n"
-            "    padding:0.1em 0.5em;\n"
-            "    font-family:Arial,Helvetica,sans-serif;\n"
-            "    background-color:#F7F7F7;\n"
-            "    color:#333;    \n"
-            "    border-radius:2px;\n"
-            "    border: 1px solid gray;\n"
-            "    margin:0 0.1em;\n"
-            "    line-height: 1.4;\n"
-            "}")
-        self.label_3.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_3.setObjectName("label_3")
-        self.gridLayout.addWidget(self.label_3, 2, 0, 1, 1)
-        self.label_24 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_24.sizePolicy().hasHeightForWidth())
-        self.label_24.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setItalic(False)
-        self.label_24.setFont(font)
-        self.label_24.setStyleSheet("")
-        self.label_24.setObjectName("label_24")
-        self.gridLayout.addWidget(self.label_24, 4, 1, 1, 1)
+        Dialog.resize(1372, 638)
+        Dialog.setStyleSheet("QToolButton {\n" "    border: 0px;\n" "}")
+        self.gridLayout_9 = QtWidgets.QGridLayout(Dialog)
+        self.gridLayout_9.setObjectName("gridLayout_9")
+        self.gridLayout_10 = QtWidgets.QGridLayout()
+        self.gridLayout_10.setContentsMargins(-1, 0, -1, -1)
+        self.gridLayout_10.setObjectName("gridLayout_10")
         self.label = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy)
-        self.label.setStyleSheet(
-            "QLabel {\n"
-            "    padding:0.1em 0.5em;\n"
-            "    font-family:Arial,Helvetica,sans-serif;\n"
-            "    background-color:#F7F7F7;\n"
-            "    color:#333;    \n"
-            "    border-radius:2px;\n"
-            "    border: 1px solid gray;\n"
-            "    margin:0 0.1em;\n"
-            "    line-height: 1.4;\n"
-            "}")
-        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label.setFont(font)
         self.label.setObjectName("label")
-        self.gridLayout.addWidget(self.label, 10, 0, 1, 1)
-        self.label_13 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_13.sizePolicy().hasHeightForWidth())
-        self.label_13.setSizePolicy(sizePolicy)
+        self.gridLayout_10.addWidget(self.label, 0, 0, 1, 1)
+        self.gridLayout_11 = QtWidgets.QGridLayout()
+        self.gridLayout_11.setContentsMargins(-1, 0, -1, -1)
+        self.gridLayout_11.setObjectName("gridLayout_11")
+        self.toolButton_26 = QtWidgets.QToolButton(Dialog)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/keys/keys/s.png"), QtGui.QIcon.Normal,
+                       QtGui.QIcon.Off)
+        self.toolButton_26.setIcon(icon)
+        self.toolButton_26.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_26.setObjectName("toolButton_26")
+        self.gridLayout_11.addWidget(self.toolButton_26, 2, 1, 1, 1)
+        self.label_17 = QtWidgets.QLabel(Dialog)
+        self.label_17.setStyleSheet("QLabel {\n"
+                                    "    padding: 0.1em 1.0em;\n"
+                                    "}")
+        self.label_17.setObjectName("label_17")
+        self.gridLayout_11.addWidget(self.label_17, 6, 2, 1, 1)
+        self.toolButton_34 = QtWidgets.QToolButton(Dialog)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/keys/keys/p.png"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
+        self.toolButton_34.setIcon(icon1)
+        self.toolButton_34.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_34.setObjectName("toolButton_34")
+        self.gridLayout_11.addWidget(self.toolButton_34, 3, 1, 1, 1)
+        self.toolButton_31 = QtWidgets.QToolButton(Dialog)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(":/keys/keys/ctrl.png"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.toolButton_31.setIcon(icon2)
+        self.toolButton_31.setIconSize(QtCore.QSize(58, 48))
+        self.toolButton_31.setObjectName("toolButton_31")
+        self.gridLayout_11.addWidget(self.toolButton_31, 6, 0, 1, 1)
+        self.label_6 = QtWidgets.QLabel(Dialog)
+        self.label_6.setStyleSheet("QLabel {\n"
+                                   "    padding: 0.1em 1.0em;\n"
+                                   "}")
+        self.label_6.setObjectName("label_6")
+        self.gridLayout_11.addWidget(self.label_6, 4, 2, 1, 1)
+        self.toolButton_21 = QtWidgets.QToolButton(Dialog)
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(":/keys/keys/shift.png"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.toolButton_21.setIcon(icon3)
+        self.toolButton_21.setIconSize(QtCore.QSize(108, 48))
+        self.toolButton_21.setObjectName("toolButton_21")
+        self.gridLayout_11.addWidget(self.toolButton_21, 1, 0, 1, 1)
+        self.label_19 = QtWidgets.QLabel(Dialog)
+        self.label_19.setStyleSheet("QLabel {\n"
+                                    "    padding: 0.1em 1.0em;\n"
+                                    "}")
+        self.label_19.setObjectName("label_19")
+        self.gridLayout_11.addWidget(self.label_19, 3, 2, 1, 1)
+        self.label_5 = QtWidgets.QLabel(Dialog)
+        self.label_5.setStyleSheet("QLabel {\n"
+                                   "    padding: 0.1em 1.0em;\n"
+                                   "}")
+        self.label_5.setObjectName("label_5")
+        self.gridLayout_11.addWidget(self.label_5, 2, 2, 1, 1)
+        self.toolButton_24 = QtWidgets.QToolButton(Dialog)
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap(":/keys/keys/r.png"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
+        self.toolButton_24.setIcon(icon4)
+        self.toolButton_24.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_24.setObjectName("toolButton_24")
+        self.gridLayout_11.addWidget(self.toolButton_24, 1, 1, 1, 1)
+        self.toolButton_30 = QtWidgets.QToolButton(Dialog)
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap(":/keys/keys/v.png"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
+        self.toolButton_30.setIcon(icon5)
+        self.toolButton_30.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_30.setObjectName("toolButton_30")
+        self.gridLayout_11.addWidget(self.toolButton_30, 5, 1, 1, 1)
+        self.toolButton_32 = QtWidgets.QToolButton(Dialog)
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap(":/keys/keys/h.png"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
+        self.toolButton_32.setIcon(icon6)
+        self.toolButton_32.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_32.setObjectName("toolButton_32")
+        self.gridLayout_11.addWidget(self.toolButton_32, 6, 1, 1, 1)
+        self.toolButton_29 = QtWidgets.QToolButton(Dialog)
+        self.toolButton_29.setIcon(icon2)
+        self.toolButton_29.setIconSize(QtCore.QSize(58, 48))
+        self.toolButton_29.setObjectName("toolButton_29")
+        self.gridLayout_11.addWidget(self.toolButton_29, 5, 0, 1, 1)
+        self.label_7 = QtWidgets.QLabel(Dialog)
+        self.label_7.setStyleSheet("QLabel {\n"
+                                   "    padding: 0.1em 1.0em;\n"
+                                   "}")
+        self.label_7.setObjectName("label_7")
+        self.gridLayout_11.addWidget(self.label_7, 5, 2, 1, 1)
+        self.label_4 = QtWidgets.QLabel(Dialog)
+        self.label_4.setStyleSheet("QLabel {\n"
+                                   "    padding: 0.1em 1.0em;\n"
+                                   "}")
+        self.label_4.setObjectName("label_4")
+        self.gridLayout_11.addWidget(self.label_4, 1, 2, 1, 1)
+        self.toolButton_33 = QtWidgets.QToolButton(Dialog)
+        self.toolButton_33.setIcon(icon3)
+        self.toolButton_33.setIconSize(QtCore.QSize(108, 48))
+        self.toolButton_33.setObjectName("toolButton_33")
+        self.gridLayout_11.addWidget(self.toolButton_33, 3, 0, 1, 1)
+        self.toolButton_25 = QtWidgets.QToolButton(Dialog)
+        self.toolButton_25.setIcon(icon3)
+        self.toolButton_25.setIconSize(QtCore.QSize(108, 48))
+        self.toolButton_25.setObjectName("toolButton_25")
+        self.gridLayout_11.addWidget(self.toolButton_25, 2, 0, 1, 1)
+        self.toolButton_27 = QtWidgets.QToolButton(Dialog)
+        self.toolButton_27.setIcon(icon2)
+        self.toolButton_27.setIconSize(QtCore.QSize(58, 48))
+        self.toolButton_27.setObjectName("toolButton_27")
+        self.gridLayout_11.addWidget(self.toolButton_27, 4, 0, 1, 1)
+        self.toolButton_28 = QtWidgets.QToolButton(Dialog)
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap(":/keys/keys/m.png"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
+        self.toolButton_28.setIcon(icon7)
+        self.toolButton_28.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_28.setObjectName("toolButton_28")
+        self.gridLayout_11.addWidget(self.toolButton_28, 4, 1, 1, 1)
+        self.gridLayout_10.addLayout(self.gridLayout_11, 1, 0, 1, 1)
+        spacerItem = QtWidgets.QSpacerItem(20, 40,
+                                           QtWidgets.QSizePolicy.Minimum,
+                                           QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_10.addItem(spacerItem, 2, 0, 1, 1)
+        self.gridLayout_9.addLayout(self.gridLayout_10, 0, 1, 4, 1)
+        self.gridLayout_5 = QtWidgets.QGridLayout()
+        self.gridLayout_5.setObjectName("gridLayout_5")
+        self.label_15 = QtWidgets.QLabel(Dialog)
         font = QtGui.QFont()
-        font.setItalic(False)
-        self.label_13.setFont(font)
-        self.label_13.setStyleSheet("")
-        self.label_13.setObjectName("label_13")
-        self.gridLayout.addWidget(self.label_13, 13, 1, 1, 1)
-        self.label_26 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_26.sizePolicy().hasHeightForWidth())
-        self.label_26.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setItalic(False)
-        self.label_26.setFont(font)
-        self.label_26.setStyleSheet("")
-        self.label_26.setObjectName("label_26")
-        self.gridLayout.addWidget(self.label_26, 6, 1, 1, 1)
-        self.label_18 = QtWidgets.QLabel(Dialog)
-        font = QtGui.QFont()
-        font.setItalic(False)
-        self.label_18.setFont(font)
-        self.label_18.setObjectName("label_18")
-        self.gridLayout.addWidget(self.label_18, 21, 1, 1, 1)
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_15.setFont(font)
+        self.label_15.setObjectName("label_15")
+        self.gridLayout_5.addWidget(self.label_15, 0, 0, 1, 1)
+        self.gridLayout = QtWidgets.QGridLayout()
+        self.gridLayout.setObjectName("gridLayout")
         self.label_12 = QtWidgets.QLabel(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
@@ -240,217 +179,11 @@ class Ui_Dialog(object):
         font = QtGui.QFont()
         font.setItalic(False)
         self.label_12.setFont(font)
-        self.label_12.setStyleSheet("")
+        self.label_12.setStyleSheet("QLabel {\n"
+                                    "    padding: 0.1em 1.0em;\n"
+                                    "}")
         self.label_12.setObjectName("label_12")
-        self.gridLayout.addWidget(self.label_12, 15, 1, 1, 1)
-        self.label_10 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_10.sizePolicy().hasHeightForWidth())
-        self.label_10.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setItalic(False)
-        self.label_10.setFont(font)
-        self.label_10.setStyleSheet("")
-        self.label_10.setObjectName("label_10")
-        self.gridLayout.addWidget(self.label_10, 2, 1, 1, 1)
-        self.label_8 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_8.sizePolicy().hasHeightForWidth())
-        self.label_8.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setItalic(False)
-        self.label_8.setFont(font)
-        self.label_8.setStyleSheet("")
-        self.label_8.setObjectName("label_8")
-        self.gridLayout.addWidget(self.label_8, 10, 1, 1, 1)
-        self.label_9 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_9.sizePolicy().hasHeightForWidth())
-        self.label_9.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setItalic(False)
-        self.label_9.setFont(font)
-        self.label_9.setStyleSheet("")
-        self.label_9.setObjectName("label_9")
-        self.gridLayout.addWidget(self.label_9, 12, 1, 1, 1)
-        self.label_28 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_28.sizePolicy().hasHeightForWidth())
-        self.label_28.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setItalic(False)
-        self.label_28.setFont(font)
-        self.label_28.setStyleSheet("")
-        self.label_28.setObjectName("label_28")
-        self.gridLayout.addWidget(self.label_28, 7, 1, 1, 1)
-        self.label_27 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_27.sizePolicy().hasHeightForWidth())
-        self.label_27.setSizePolicy(sizePolicy)
-        self.label_27.setStyleSheet(
-            "QLabel {\n"
-            "    padding:0.1em 0.5em;\n"
-            "    font-family:Arial,Helvetica,sans-serif;\n"
-            "    background-color:#F7F7F7;\n"
-            "    color:#333;    \n"
-            "    border-radius:2px;\n"
-            "    border: 1px solid gray;\n"
-            "    margin:0 0.1em;\n"
-            "    line-height: 1.4;\n"
-            "}")
-        self.label_27.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_27.setObjectName("label_27")
-        self.gridLayout.addWidget(self.label_27, 7, 0, 1, 1)
-        self.label_11 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_11.sizePolicy().hasHeightForWidth())
-        self.label_11.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setItalic(False)
-        self.label_11.setFont(font)
-        self.label_11.setStyleSheet("")
-        self.label_11.setObjectName("label_11")
-        self.gridLayout.addWidget(self.label_11, 11, 1, 1, 1)
-        self.label_21 = QtWidgets.QLabel(Dialog)
-        self.label_21.setStyleSheet(
-            "QLabel {\n"
-            "    padding:0.1em 0.5em;\n"
-            "    font-family:Arial,Helvetica,sans-serif;\n"
-            "    background-color:#F7F7F7;\n"
-            "    color:#333;    \n"
-            "    border-radius:2px;\n"
-            "    border: 1px solid gray;\n"
-            "    margin:0 0.1em;\n"
-            "    line-height: 1.4;\n"
-            "}")
-        self.label_21.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_21.setObjectName("label_21")
-        self.gridLayout.addWidget(self.label_21, 8, 0, 1, 1)
-        self.label_15 = QtWidgets.QLabel(Dialog)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_15.setFont(font)
-        self.label_15.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_15.setObjectName("label_15")
-        self.gridLayout.addWidget(self.label_15, 0, 0, 1, 1)
-        self.label_16 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_16.sizePolicy().hasHeightForWidth())
-        self.label_16.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_16.setFont(font)
-        self.label_16.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft
-                                   | QtCore.Qt.AlignVCenter)
-        self.label_16.setObjectName("label_16")
-        self.gridLayout.addWidget(self.label_16, 0, 1, 1, 1)
-        self.line = QtWidgets.QFrame(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.line.sizePolicy().hasHeightForWidth())
-        self.line.setSizePolicy(sizePolicy)
-        self.line.setFrameShape(QtWidgets.QFrame.HLine)
-        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line.setObjectName("line")
-        self.gridLayout.addWidget(self.line, 1, 0, 1, 1)
-        self.label_4 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_4.sizePolicy().hasHeightForWidth())
-        self.label_4.setSizePolicy(sizePolicy)
-        self.label_4.setStyleSheet(
-            "QLabel {\n"
-            "    padding:0.1em 0.5em;\n"
-            "    font-family:Arial,Helvetica,sans-serif;\n"
-            "    background-color:#F7F7F7;\n"
-            "    color:#333;    \n"
-            "    border-radius:2px;\n"
-            "    border: 1px solid gray;\n"
-            "    margin:0 0.1em;\n"
-            "    line-height: 1.4;\n"
-            "}")
-        self.label_4.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_4.setObjectName("label_4")
-        self.gridLayout.addWidget(self.label_4, 11, 0, 1, 1)
-        self.label_5 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_5.sizePolicy().hasHeightForWidth())
-        self.label_5.setSizePolicy(sizePolicy)
-        self.label_5.setStyleSheet(
-            "QLabel {\n"
-            "    padding:0.1em 0.5em;\n"
-            "    font-family:Arial,Helvetica,sans-serif;\n"
-            "    background-color:#F7F7F7;\n"
-            "    color:#333;    \n"
-            "    border-radius:2px;\n"
-            "    border: 1px solid gray;\n"
-            "    margin:0 0.1em;\n"
-            "    line-height: 1.4;\n"
-            "}")
-        self.label_5.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_5.setObjectName("label_5")
-        self.gridLayout.addWidget(self.label_5, 15, 0, 1, 1)
-        self.label_17 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_17.sizePolicy().hasHeightForWidth())
-        self.label_17.setSizePolicy(sizePolicy)
-        self.label_17.setStyleSheet(
-            "QLabel {\n"
-            "    padding:0.1em 0.5em;\n"
-            "    font-family:Arial,Helvetica,sans-serif;\n"
-            "    background-color:#F7F7F7;\n"
-            "    color:#333;    \n"
-            "    border-radius:2px;\n"
-            "    border: 1px solid gray;\n"
-            "    margin:0 0.1em;\n"
-            "    line-height: 1.4;\n"
-            "}")
-        self.label_17.setObjectName("label_17")
-        self.gridLayout.addWidget(self.label_17, 21, 0, 1, 1)
+        self.gridLayout.addWidget(self.label_12, 4, 2, 1, 1)
         self.label_20 = QtWidgets.QLabel(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
@@ -462,89 +195,392 @@ class Ui_Dialog(object):
         font = QtGui.QFont()
         font.setItalic(False)
         self.label_20.setFont(font)
-        self.label_20.setStyleSheet("")
+        self.label_20.setStyleSheet("QLabel {\n"
+                                    "    padding: 0.1em 1.0em;\n"
+                                    "}")
         self.label_20.setObjectName("label_20")
-        self.gridLayout.addWidget(self.label_20, 14, 1, 1, 1)
-        self.label_23 = QtWidgets.QLabel(Dialog)
+        self.gridLayout.addWidget(self.label_20, 5, 2, 1, 1)
+        self.label_26 = QtWidgets.QLabel(Dialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setHorizontalStretch(1)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.label_23.sizePolicy().hasHeightForWidth())
-        self.label_23.setSizePolicy(sizePolicy)
-        self.label_23.setStyleSheet(
-            "QLabel {\n"
-            "    padding:0.1em 0.5em;\n"
-            "    font-family:Arial,Helvetica,sans-serif;\n"
-            "    background-color:#F7F7F7;\n"
-            "    color:#333;    \n"
-            "    border-radius:2px;\n"
-            "    border: 1px solid gray;\n"
-            "    margin:0 0.1em;\n"
-            "    line-height: 1.4;\n"
-            "}")
-        self.label_23.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_23.setObjectName("label_23")
-        self.gridLayout.addWidget(self.label_23, 4, 0, 1, 1)
+            self.label_26.sizePolicy().hasHeightForWidth())
+        self.label_26.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setItalic(False)
+        self.label_26.setFont(font)
+        self.label_26.setStyleSheet("QLabel {\n"
+                                    "    padding: 0.1em 1.0em;\n"
+                                    "}")
+        self.label_26.setObjectName("label_26")
+        self.gridLayout.addWidget(self.label_26, 2, 2, 1, 1)
+        self.toolButton_7 = QtWidgets.QToolButton(Dialog)
+        icon8 = QtGui.QIcon()
+        icon8.addPixmap(QtGui.QPixmap(":/keys/keys/a.png"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
+        self.toolButton_7.setIcon(icon8)
+        self.toolButton_7.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_7.setObjectName("toolButton_7")
+        self.gridLayout.addWidget(self.toolButton_7, 3, 1, 1, 1)
+        self.label_11 = QtWidgets.QLabel(Dialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_11.sizePolicy().hasHeightForWidth())
+        self.label_11.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setItalic(False)
+        self.label_11.setFont(font)
+        self.label_11.setStyleSheet("QLabel {\n"
+                                    "    padding: 0.1em 1.0em;\n"
+                                    "}")
+        self.label_11.setObjectName("label_11")
+        self.gridLayout.addWidget(self.label_11, 7, 2, 1, 1)
+        self.label_28 = QtWidgets.QLabel(Dialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_28.sizePolicy().hasHeightForWidth())
+        self.label_28.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setItalic(False)
+        self.label_28.setFont(font)
+        self.label_28.setStyleSheet("QLabel {\n"
+                                    "    padding: 0.1em 1.0em;\n"
+                                    "}")
+        self.label_28.setObjectName("label_28")
+        self.gridLayout.addWidget(self.label_28, 3, 2, 1, 1)
+        self.toolButton_5 = QtWidgets.QToolButton(Dialog)
+        icon9 = QtGui.QIcon()
+        icon9.addPixmap(QtGui.QPixmap(":/keys/keys/y.png"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
+        self.toolButton_5.setIcon(icon9)
+        self.toolButton_5.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_5.setObjectName("toolButton_5")
+        self.gridLayout.addWidget(self.toolButton_5, 2, 1, 1, 1)
+        self.toolButton = QtWidgets.QToolButton(Dialog)
+        self.toolButton.setIcon(icon8)
+        self.toolButton.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton.setObjectName("toolButton")
+        self.gridLayout.addWidget(self.toolButton, 0, 0, 1, 1)
+        self.label_24 = QtWidgets.QLabel(Dialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_24.sizePolicy().hasHeightForWidth())
+        self.label_24.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setItalic(False)
+        self.label_24.setFont(font)
+        self.label_24.setStyleSheet("QLabel {\n"
+                                    "    padding: 0.1em 1.0em;\n"
+                                    "}")
+        self.label_24.setObjectName("label_24")
+        self.gridLayout.addWidget(self.label_24, 1, 2, 1, 1)
+        self.toolButton_6 = QtWidgets.QToolButton(Dialog)
+        self.toolButton_6.setIcon(icon8)
+        self.toolButton_6.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_6.setObjectName("toolButton_6")
+        self.gridLayout.addWidget(self.toolButton_6, 3, 0, 1, 1)
+        self.toolButton_3 = QtWidgets.QToolButton(Dialog)
+        icon10 = QtGui.QIcon()
+        icon10.addPixmap(QtGui.QPixmap(":/keys/keys/x.png"),
+                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.toolButton_3.setIcon(icon10)
+        self.toolButton_3.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_3.setObjectName("toolButton_3")
+        self.gridLayout.addWidget(self.toolButton_3, 1, 1, 1, 1)
+        self.label_13 = QtWidgets.QLabel(Dialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_13.sizePolicy().hasHeightForWidth())
+        self.label_13.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setItalic(False)
+        self.label_13.setFont(font)
+        self.label_13.setStyleSheet("QLabel {\n"
+                                    "    padding: 0.1em 1.0em;\n"
+                                    "}")
+        self.label_13.setObjectName("label_13")
+        self.gridLayout.addWidget(self.label_13, 9, 2, 1, 1)
+        self.label_10 = QtWidgets.QLabel(Dialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_10.sizePolicy().hasHeightForWidth())
+        self.label_10.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setItalic(False)
+        self.label_10.setFont(font)
+        self.label_10.setStyleSheet("QLabel {\n"
+                                    "    padding: 0.1em 1.0em;\n"
+                                    "}")
+        self.label_10.setObjectName("label_10")
+        self.gridLayout.addWidget(self.label_10, 0, 2, 1, 1)
+        self.toolButton_4 = QtWidgets.QToolButton(Dialog)
+        self.toolButton_4.setIcon(icon8)
+        self.toolButton_4.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_4.setObjectName("toolButton_4")
+        self.gridLayout.addWidget(self.toolButton_4, 2, 0, 1, 1)
+        self.toolButton_12 = QtWidgets.QToolButton(Dialog)
+        self.toolButton_12.setIcon(icon7)
+        self.toolButton_12.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_12.setObjectName("toolButton_12")
+        self.gridLayout.addWidget(self.toolButton_12, 8, 0, 1, 1)
+        self.toolButton_10 = QtWidgets.QToolButton(Dialog)
+        self.toolButton_10.setIcon(icon9)
+        self.toolButton_10.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_10.setObjectName("toolButton_10")
+        self.gridLayout.addWidget(self.toolButton_10, 5, 0, 1, 1)
+        self.label_8 = QtWidgets.QLabel(Dialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_8.sizePolicy().hasHeightForWidth())
+        self.label_8.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setItalic(False)
+        self.label_8.setFont(font)
+        self.label_8.setStyleSheet("QLabel {\n"
+                                   "    padding: 0.1em 1.0em;\n"
+                                   "}")
+        self.label_8.setObjectName("label_8")
+        self.gridLayout.addWidget(self.label_8, 6, 2, 1, 1)
+        self.toolButton_8 = QtWidgets.QToolButton(Dialog)
+        icon11 = QtGui.QIcon()
+        icon11.addPixmap(QtGui.QPixmap(":/keys/keys/t.png"),
+                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.toolButton_8.setIcon(icon11)
+        self.toolButton_8.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_8.setObjectName("toolButton_8")
+        self.gridLayout.addWidget(self.toolButton_8, 4, 0, 1, 1)
+        self.toolButton_2 = QtWidgets.QToolButton(Dialog)
+        self.toolButton_2.setIcon(icon8)
+        self.toolButton_2.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_2.setObjectName("toolButton_2")
+        self.gridLayout.addWidget(self.toolButton_2, 1, 0, 1, 1)
+        self.toolButton_9 = QtWidgets.QToolButton(Dialog)
+        icon12 = QtGui.QIcon()
+        icon12.addPixmap(QtGui.QPixmap(":/keys/keys/g.png"),
+                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.toolButton_9.setIcon(icon12)
+        self.toolButton_9.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_9.setObjectName("toolButton_9")
+        self.gridLayout.addWidget(self.toolButton_9, 6, 0, 1, 1)
+        self.label_9 = QtWidgets.QLabel(Dialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_9.sizePolicy().hasHeightForWidth())
+        self.label_9.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setItalic(False)
+        self.label_9.setFont(font)
+        self.label_9.setStyleSheet("QLabel {\n"
+                                   "    padding: 0.1em 1.0em;\n"
+                                   "}")
+        self.label_9.setObjectName("label_9")
+        self.gridLayout.addWidget(self.label_9, 8, 2, 1, 1)
+        self.toolButton_11 = QtWidgets.QToolButton(Dialog)
+        icon13 = QtGui.QIcon()
+        icon13.addPixmap(QtGui.QPixmap(":/keys/keys/l.png"),
+                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.toolButton_11.setIcon(icon13)
+        self.toolButton_11.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_11.setObjectName("toolButton_11")
+        self.gridLayout.addWidget(self.toolButton_11, 7, 0, 1, 1)
+        self.toolButton_13 = QtWidgets.QToolButton(Dialog)
+        self.toolButton_13.setIcon(icon4)
+        self.toolButton_13.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_13.setObjectName("toolButton_13")
+        self.gridLayout.addWidget(self.toolButton_13, 9, 0, 1, 1)
+        self.gridLayout_5.addLayout(self.gridLayout, 1, 0, 1, 1)
+        self.gridLayout_9.addLayout(self.gridLayout_5, 0, 0, 4, 1)
+        self.gridLayout_8 = QtWidgets.QGridLayout()
+        self.gridLayout_8.setObjectName("gridLayout_8")
+        self.label_34 = QtWidgets.QLabel(Dialog)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_34.setFont(font)
+        self.label_34.setObjectName("label_34")
+        self.gridLayout_8.addWidget(self.label_34, 0, 0, 1, 1)
+        self.gridLayout_4 = QtWidgets.QGridLayout()
+        self.gridLayout_4.setObjectName("gridLayout_4")
+        self.label_18 = QtWidgets.QLabel(Dialog)
+        font = QtGui.QFont()
+        font.setItalic(False)
+        self.label_18.setFont(font)
+        self.label_18.setObjectName("label_18")
+        self.gridLayout_4.addWidget(self.label_18, 1, 1, 1, 1)
+        self.label_14 = QtWidgets.QLabel(Dialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_14.sizePolicy().hasHeightForWidth())
+        self.label_14.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setItalic(False)
+        self.label_14.setFont(font)
+        self.label_14.setStyleSheet("QLabel {\n"
+                                    "    padding: 0.1em 1.0em;\n"
+                                    "}")
+        self.label_14.setObjectName("label_14")
+        self.gridLayout_4.addWidget(self.label_14, 0, 1, 1, 1)
+        self.toolButton_20 = QtWidgets.QToolButton(Dialog)
+        icon14 = QtGui.QIcon()
+        icon14.addPixmap(QtGui.QPixmap(":/keys/keys/esc.png"),
+                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.toolButton_20.setIcon(icon14)
+        self.toolButton_20.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_20.setObjectName("toolButton_20")
+        self.gridLayout_4.addWidget(self.toolButton_20, 1, 0, 1, 1)
+        self.toolButton_19 = QtWidgets.QToolButton(Dialog)
+        icon15 = QtGui.QIcon()
+        icon15.addPixmap(QtGui.QPixmap(":/keys/keys/slash-questionmark.png"),
+                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.toolButton_19.setIcon(icon15)
+        self.toolButton_19.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_19.setObjectName("toolButton_19")
+        self.gridLayout_4.addWidget(self.toolButton_19, 0, 0, 1, 1)
+        self.gridLayout_8.addLayout(self.gridLayout_4, 1, 0, 1, 1)
+        self.gridLayout_9.addLayout(self.gridLayout_8, 3, 2, 1, 1)
+        self.gridLayout_6 = QtWidgets.QGridLayout()
+        self.gridLayout_6.setObjectName("gridLayout_6")
+        self.label_16 = QtWidgets.QLabel(Dialog)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_16.setFont(font)
+        self.label_16.setObjectName("label_16")
+        self.gridLayout_6.addWidget(self.label_16, 0, 0, 1, 1)
+        self.gridLayout_2 = QtWidgets.QGridLayout()
+        self.gridLayout_2.setObjectName("gridLayout_2")
+        self.label_22 = QtWidgets.QLabel(Dialog)
+        font = QtGui.QFont()
+        font.setItalic(False)
+        self.label_22.setFont(font)
+        self.label_22.setStyleSheet("QLabel {\n"
+                                    "    padding: 0.1em 1.0em;\n"
+                                    "}")
+        self.label_22.setObjectName("label_22")
+        self.gridLayout_2.addWidget(self.label_22, 0, 1, 1, 1)
+        self.toolButton_14 = QtWidgets.QToolButton(Dialog)
+        icon16 = QtGui.QIcon()
+        icon16.addPixmap(QtGui.QPixmap(":/keys/keys/c.png"),
+                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.toolButton_14.setIcon(icon16)
+        self.toolButton_14.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_14.setObjectName("toolButton_14")
+        self.gridLayout_2.addWidget(self.toolButton_14, 0, 0, 1, 1)
+        self.gridLayout_6.addLayout(self.gridLayout_2, 1, 0, 1, 1)
+        self.gridLayout_9.addLayout(self.gridLayout_6, 1, 2, 1, 1)
+        self.gridLayout_7 = QtWidgets.QGridLayout()
+        self.gridLayout_7.setObjectName("gridLayout_7")
+        self.label_33 = QtWidgets.QLabel(Dialog)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_33.setFont(font)
+        self.label_33.setObjectName("label_33")
+        self.gridLayout_7.addWidget(self.label_33, 0, 0, 1, 1)
+        self.gridLayout_3 = QtWidgets.QGridLayout()
+        self.gridLayout_3.setObjectName("gridLayout_3")
+        self.toolButton_15 = QtWidgets.QToolButton(Dialog)
+        self.toolButton_15.setIcon(icon16)
+        self.toolButton_15.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_15.setObjectName("toolButton_15")
+        self.gridLayout_3.addWidget(self.toolButton_15, 0, 0, 1, 1)
+        self.toolButton_16 = QtWidgets.QToolButton(Dialog)
+        self.toolButton_16.setIcon(icon16)
+        self.toolButton_16.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_16.setObjectName("toolButton_16")
+        self.gridLayout_3.addWidget(self.toolButton_16, 0, 1, 1, 1)
+        self.toolButton_18 = QtWidgets.QToolButton(Dialog)
+        self.toolButton_18.setIcon(icon11)
+        self.toolButton_18.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_18.setObjectName("toolButton_18")
+        self.gridLayout_3.addWidget(self.toolButton_18, 1, 1, 1, 1)
+        self.toolButton_17 = QtWidgets.QToolButton(Dialog)
+        self.toolButton_17.setIcon(icon11)
+        self.toolButton_17.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_17.setObjectName("toolButton_17")
+        self.gridLayout_3.addWidget(self.toolButton_17, 1, 0, 1, 1)
         self.label_32 = QtWidgets.QLabel(Dialog)
+        self.label_32.setStyleSheet("QLabel {\n"
+                                    "    padding: 0.1em 1.0em;\n"
+                                    "}")
         self.label_32.setObjectName("label_32")
-        self.gridLayout.addWidget(self.label_32, 18, 1, 1, 1)
-        self.label_31 = QtWidgets.QLabel(Dialog)
-        self.label_31.setStyleSheet(
-            "QLabel {\n"
-            "    padding:0.1em 0.5em;\n"
-            "    font-family:Arial,Helvetica,sans-serif;\n"
-            "    background-color:#F7F7F7;\n"
-            "    color:#333;    \n"
-            "    border-radius:2px;\n"
-            "    border: 1px solid gray;\n"
-            "    margin:0 0.1em;\n"
-            "    line-height: 1.4;\n"
-            "}")
-        self.label_31.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_31.setObjectName("label_31")
-        self.gridLayout.addWidget(self.label_31, 18, 0, 1, 1)
-        self.label_7 = QtWidgets.QLabel(Dialog)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_7.sizePolicy().hasHeightForWidth())
-        self.label_7.setSizePolicy(sizePolicy)
-        self.label_7.setStyleSheet(
-            "QLabel {\n"
-            "    padding:0.1em 0.5em;\n"
-            "    font-family:Arial,Helvetica,sans-serif;\n"
-            "    background-color:#F7F7F7;\n"
-            "    color:#333;    \n"
-            "    border-radius:2px;\n"
-            "    border: 1px solid gray;\n"
-            "    margin:0 0.1em;\n"
-            "    line-height: 1.4;\n"
-            "}")
-        self.label_7.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_7.setObjectName("label_7")
-        self.gridLayout.addWidget(self.label_7, 20, 0, 1, 1)
-        self.label_29 = QtWidgets.QLabel(Dialog)
-        self.label_29.setStyleSheet(
-            "QLabel {\n"
-            "    padding:0.1em 0.5em;\n"
-            "    font-family:Arial,Helvetica,sans-serif;\n"
-            "    background-color:#F7F7F7;\n"
-            "    color:#333;    \n"
-            "    border-radius:2px;\n"
-            "    border: 1px solid gray;\n"
-            "    margin:0 0.1em;\n"
-            "    line-height: 1.4;\n"
-            "}")
-        self.label_29.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_29.setObjectName("label_29")
-        self.gridLayout.addWidget(self.label_29, 9, 0, 1, 1)
+        self.gridLayout_3.addWidget(self.label_32, 1, 2, 1, 1)
         self.label_30 = QtWidgets.QLabel(Dialog)
+        self.label_30.setStyleSheet("QLabel {\n"
+                                    "    padding: 0.1em 1.0em;\n"
+                                    "}")
         self.label_30.setObjectName("label_30")
-        self.gridLayout.addWidget(self.label_30, 9, 1, 1, 1)
+        self.gridLayout_3.addWidget(self.label_30, 0, 2, 1, 1)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 40,
+                                            QtWidgets.QSizePolicy.Minimum,
+                                            QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_3.addItem(spacerItem1, 2, 2, 1, 1)
+        self.gridLayout_7.addLayout(self.gridLayout_3, 1, 0, 1, 1)
+        self.gridLayout_9.addLayout(self.gridLayout_7, 2, 2, 1, 1)
+        self.gridLayout_12 = QtWidgets.QGridLayout()
+        self.gridLayout_12.setContentsMargins(-1, 0, -1, -1)
+        self.gridLayout_12.setObjectName("gridLayout_12")
+        self.label_2 = QtWidgets.QLabel(Dialog)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_2.setFont(font)
+        self.label_2.setObjectName("label_2")
+        self.gridLayout_12.addWidget(self.label_2, 0, 0, 1, 1)
+        self.gridLayout_13 = QtWidgets.QGridLayout()
+        self.gridLayout_13.setContentsMargins(-1, 0, -1, -1)
+        self.gridLayout_13.setObjectName("gridLayout_13")
+        self.toolButton_23 = QtWidgets.QToolButton(Dialog)
+        self.toolButton_23.setIcon(icon)
+        self.toolButton_23.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_23.setObjectName("toolButton_23")
+        self.gridLayout_13.addWidget(self.toolButton_23, 0, 1, 1, 1)
+        self.toolButton_22 = QtWidgets.QToolButton(Dialog)
+        icon17 = QtGui.QIcon()
+        icon17.addPixmap(QtGui.QPixmap(":/keys/keys/d.png"),
+                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.toolButton_22.setIcon(icon17)
+        self.toolButton_22.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_22.setObjectName("toolButton_22")
+        self.gridLayout_13.addWidget(self.toolButton_22, 0, 0, 1, 1)
+        self.label_3 = QtWidgets.QLabel(Dialog)
+        self.label_3.setStyleSheet("QLabel {\n"
+                                   "    padding: 0.1em 1.0em;\n"
+                                   "}")
+        self.label_3.setObjectName("label_3")
+        self.gridLayout_13.addWidget(self.label_3, 0, 2, 1, 1)
+        self.gridLayout_12.addLayout(self.gridLayout_13, 1, 0, 1, 1)
+        self.gridLayout_9.addLayout(self.gridLayout_12, 0, 2, 1, 1)
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -552,50 +588,96 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.label_14.setText(_translate("Dialog", "Show this window"))
-        self.label_2.setText(_translate("Dialog", "m"))
-        self.label_25.setText(_translate("Dialog", "a,y"))
-        self.label_22.setText(_translate("Dialog", "Change colormap"))
-        self.label_19.setText(_translate("Dialog", "s"))
-        self.label_6.setText(_translate("Dialog", "r"))
-        self.label_3.setText(_translate("Dialog", "a"))
-        self.label_24.setText(
-            _translate("Dialog",
-                       "<html><head/><body><p>Auto X scale</p></body></html>"))
-        self.label.setText(_translate("Dialog", "g"))
-        self.label_13.setText(_translate("Dialog", "Force refresh"))
-        self.label_26.setText(
-            _translate("Dialog",
-                       "<html><head/><body><p>Auto Y scale</p></body></html>"))
-        self.label_18.setText(_translate("Dialog", "Close this window"))
+        self.label.setText(_translate("Dialog", "Toolbar"))
+        self.toolButton_26.setText(_translate("Dialog", "S"))
+        self.label_17.setText(
+            _translate("Dialog", "Show/hide crosshair markers"))
+        self.toolButton_34.setText(_translate("Dialog", "P"))
+        self.toolButton_31.setText(_translate("Dialog", "Ctrl"))
+        self.label_6.setText(
+            _translate("Dialog", "Add/done a crosshair marker"))
+        self.toolButton_21.setText(_translate("Dialog", "Shift"))
+        self.label_19.setText(
+            _translate("Dialog", "Switch crosshair markers coordinates/names"))
+        self.label_5.setText(_translate("Dialog", "Enable snap probing"))
+        self.toolButton_24.setText(_translate("Dialog", "R"))
+        self.toolButton_30.setText(_translate("Dialog", "V"))
+        self.toolButton_32.setText(_translate("Dialog", "H"))
+        self.toolButton_29.setText(_translate("Dialog", "Ctrl"))
+        self.label_7.setText(
+            _translate("Dialog", "List/update all crosshair markers"))
+        self.label_4.setText(
+            _translate("Dialog", "Enable/disable crosshair tool"))
+        self.toolButton_33.setText(_translate("Dialog", "Shift"))
+        self.toolButton_25.setText(_translate("Dialog", "Shift"))
+        self.toolButton_27.setText(_translate("Dialog", "Ctrl"))
+        self.toolButton_28.setText(_translate("Dialog", "M"))
+        self.label_15.setText(_translate("Dialog", "General"))
         self.label_12.setText(_translate("Dialog", "Tight layout on/off"))
-        self.label_10.setText(
+        self.label_20.setText(_translate("Dialog", "Change y-axis scale"))
+        self.label_26.setText(
             _translate(
                 "Dialog",
-                "<html><head/><body><p>Auto X&amp;Y scale</p></body></html>"))
-        self.label_8.setText(_translate("Dialog", "Turn on/off grid"))
-        self.label_9.setText(_translate("Dialog", "Turn on/off minor ticks"))
+                "<html><head/><body><p>Auto Y scale (non-persistent)</p></body></html>"
+            ))
+        self.toolButton_7.setText(_translate("Dialog", "A"))
+        self.label_11.setText(_translate("Dialog", "Turn on/off legend"))
         self.label_28.setText(
             _translate(
                 "Dialog",
-                "<html><head/><body><p>Turn on/off auto scale</p></body></html>"
+                "<html><head/><body><p>Turn on/off auto scale for X&amp;Y</p><p>(persistent)</p></body></html>"
             ))
-        self.label_27.setText(_translate("Dialog", "a,a"))
-        self.label_11.setText(_translate("Dialog", "Turn on/off legend"))
-        self.label_21.setText(_translate("Dialog", "c"))
-        self.label_15.setText(_translate("Dialog", "Key"))
-        self.label_16.setText(_translate("Dialog", "Function"))
-        self.label_4.setText(_translate("Dialog", "l"))
-        self.label_5.setText(_translate("Dialog", "t"))
-        self.label_17.setText(_translate("Dialog", "ESC"))
-        self.label_20.setText(_translate("Dialog", "Change y-axis scale"))
-        self.label_23.setText(_translate("Dialog", "a,x"))
+        self.toolButton_5.setText(_translate("Dialog", "Y"))
+        self.toolButton.setText(_translate("Dialog", "A"))
+        self.label_24.setText(
+            _translate(
+                "Dialog",
+                "<html><head/><body><p>Auto X scale (non-persistent)</p></body></html>"
+            ))
+        self.toolButton_6.setText(_translate("Dialog", "A"))
+        self.toolButton_3.setText(_translate("Dialog", "X"))
+        self.label_13.setText(_translate("Dialog", "Force refresh"))
+        self.label_10.setText(
+            _translate(
+                "Dialog",
+                "<html><head/><body><p>Auto X&amp;Y scale (non-persistent)</p></body></html>"
+            ))
+        self.toolButton_4.setText(_translate("Dialog", "A"))
+        self.toolButton_12.setText(_translate("Dialog", "M"))
+        self.toolButton_10.setText(_translate("Dialog", "S"))
+        self.label_8.setText(_translate("Dialog", "Turn on/off grid"))
+        self.toolButton_8.setText(_translate("Dialog", "T"))
+        self.toolButton_2.setText(_translate("Dialog", "A"))
+        self.toolButton_9.setText(_translate("Dialog", "G"))
+        self.label_9.setText(_translate("Dialog", "Turn on/off minor ticks"))
+        self.toolButton_11.setText(_translate("Dialog", "L"))
+        self.toolButton_13.setText(_translate("Dialog", "R"))
+        self.label_34.setText(_translate("Dialog", "System"))
+        self.label_18.setStyleSheet(
+            _translate("Dialog", "QLabel {\n"
+                       "    padding: 0.1em 1.0em;\n"
+                       "}"))
+        self.label_18.setText(_translate("Dialog", "Close this window"))
+        self.label_14.setText(_translate("Dialog", "Show this window"))
+        self.toolButton_20.setText(_translate("Dialog", "Esc"))
+        self.toolButton_19.setText(_translate("Dialog", "?"))
+        self.label_16.setText(_translate("Dialog", "Image Wiget"))
+        self.label_22.setText(_translate("Dialog", "Change color map"))
+        self.toolButton_14.setText(_translate("Dialog", "C"))
+        self.label_33.setText(_translate("Dialog", "Right-clicking Menu"))
+        self.toolButton_15.setText(_translate("Dialog", "C"))
+        self.toolButton_16.setText(_translate("Dialog", "C"))
+        self.toolButton_18.setText(_translate("Dialog", "T"))
+        self.toolButton_17.setText(_translate("Dialog", "T"))
         self.label_32.setText(_translate("Dialog", "Show/close toolbar"))
-        self.label_31.setText(_translate("Dialog", "t,t"))
-        self.label_7.setText(_translate("Dialog", "?"))
-        self.label_29.setText(_translate("Dialog", "c,c"))
         self.label_30.setText(_translate("Dialog", "Open style configuration"))
+        self.label_2.setText(_translate("Dialog", "Curve/Errorbar Widgets"))
+        self.toolButton_23.setText(_translate("Dialog", "S"))
+        self.toolButton_22.setText(_translate("Dialog", "D"))
+        self.label_3.setText(_translate("Dialog", "Change line drawstyle"))
 
+
+from . import resources_rc
 
 if __name__ == "__main__":
     import sys
