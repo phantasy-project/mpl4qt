@@ -387,7 +387,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
         See Also
         --------
-        add_curve
+        add_curve : Add a new curve onto the widget.
         """
         if i < len(self._lines):
             self._line_id = i
@@ -692,7 +692,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
             self.setLineLabel(config['label'])
             self.setLineColor(QColor(config['line']['color']))
             self.setLineStyle(config['line']['style'])
-            self.setLineDrawStyle(LINE_DS_DICT[config['line']['drawstyle']])
+            self.setLineDrawStyle(LINE_DS_DICT[config['line'].get('drawstyle', 'Line')])
             self.setLineWidth(config['line']['width'])
             self.setMarkerStyle(config['marker']['style'])
             self.setMarkerSize(config['marker']['size'])
