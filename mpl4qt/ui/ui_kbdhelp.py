@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(1372, 638)
+        Dialog.resize(1613, 648)
         Dialog.setStyleSheet("QToolButton {\n" "    border: 0px;\n" "}")
         self.gridLayout_9 = QtWidgets.QGridLayout(Dialog)
         self.gridLayout_9.setObjectName("gridLayout_9")
@@ -485,7 +485,7 @@ class Ui_Dialog(object):
                                     "    padding: 0.1em 1.0em;\n"
                                     "}")
         self.label_22.setObjectName("label_22")
-        self.gridLayout_2.addWidget(self.label_22, 0, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.label_22, 0, 2, 1, 1)
         self.toolButton_14 = QtWidgets.QToolButton(Dialog)
         icon16 = QtGui.QIcon()
         icon16.addPixmap(QtGui.QPixmap(":/keys/keys/c.png"),
@@ -494,6 +494,38 @@ class Ui_Dialog(object):
         self.toolButton_14.setIconSize(QtCore.QSize(48, 48))
         self.toolButton_14.setObjectName("toolButton_14")
         self.gridLayout_2.addWidget(self.toolButton_14, 0, 0, 1, 1)
+        self.toolButton_35 = QtWidgets.QToolButton(Dialog)
+        self.toolButton_35.setIcon(icon8)
+        self.toolButton_35.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_35.setObjectName("toolButton_35")
+        self.gridLayout_2.addWidget(self.toolButton_35, 2, 0, 1, 1)
+        self.toolButton_36 = QtWidgets.QToolButton(Dialog)
+        self.toolButton_36.setIcon(icon16)
+        self.toolButton_36.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_36.setObjectName("toolButton_36")
+        self.gridLayout_2.addWidget(self.toolButton_36, 2, 1, 1, 1)
+        self.label_21 = QtWidgets.QLabel(Dialog)
+        self.label_21.setStyleSheet("QLabel {\n"
+                                    "    padding: 0.1em 1.0em;\n"
+                                    "}")
+        self.label_21.setObjectName("label_21")
+        self.gridLayout_2.addWidget(self.label_21, 2, 2, 1, 1)
+        self.toolButton_37 = QtWidgets.QToolButton(Dialog)
+        self.toolButton_37.setIcon(icon8)
+        self.toolButton_37.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_37.setObjectName("toolButton_37")
+        self.gridLayout_2.addWidget(self.toolButton_37, 1, 0, 1, 1)
+        self.toolButton_38 = QtWidgets.QToolButton(Dialog)
+        self.toolButton_38.setIcon(icon8)
+        self.toolButton_38.setIconSize(QtCore.QSize(48, 48))
+        self.toolButton_38.setObjectName("toolButton_38")
+        self.gridLayout_2.addWidget(self.toolButton_38, 1, 1, 1, 1)
+        self.label_23 = QtWidgets.QLabel(Dialog)
+        self.label_23.setStyleSheet("QLabel {\n"
+                                    "    padding: 0.1em 1.0em;\n"
+                                    "}")
+        self.label_23.setObjectName("label_23")
+        self.gridLayout_2.addWidget(self.label_23, 1, 2, 1, 1)
         self.gridLayout_6.addLayout(self.gridLayout_2, 1, 0, 1, 1)
         self.gridLayout_9.addLayout(self.gridLayout_6, 1, 2, 1, 1)
         self.gridLayout_7 = QtWidgets.QGridLayout()
@@ -664,6 +696,20 @@ class Ui_Dialog(object):
         self.label_16.setText(_translate("Dialog", "Image Wiget"))
         self.label_22.setText(_translate("Dialog", "Change color map"))
         self.toolButton_14.setText(_translate("Dialog", "C"))
+        self.toolButton_35.setText(_translate("Dialog", "..."))
+        self.toolButton_36.setText(_translate("Dialog", "..."))
+        self.label_21.setText(
+            _translate(
+                "Dialog",
+                "<html><head/><body><p>Auto color range (non-persistent)</p></body></html>"
+            ))
+        self.toolButton_37.setText(_translate("Dialog", "..."))
+        self.toolButton_38.setText(_translate("Dialog", "..."))
+        self.label_23.setText(
+            _translate(
+                "Dialog",
+                "<html><head/><body><p>Turn on/off auto scale for X&amp;Y</p><p>and color range (persistent)</p></body></html>"
+            ))
         self.label_33.setText(_translate("Dialog", "Right-clicking Menu"))
         self.toolButton_15.setText(_translate("Dialog", "C"))
         self.toolButton_16.setText(_translate("Dialog", "C"))
