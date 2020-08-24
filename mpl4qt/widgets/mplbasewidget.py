@@ -1717,8 +1717,13 @@ class BasePlotWidget(QWidget):
             # auto yscale
             self.set_autoscale('y')
         elif k1 == 'a' and k2 == 'a':
+            if self.widget_type == 'image':
+                self.setAutoColorLimit(not self.getAutoColorLimit())
             # turn on/off autoscale
             self.setFigureAutoScale(not self.getFigureAutoScale())
+        elif k1 == 'a' and k2 == 'c' and self.widget_type == 'image':
+            # auto color range
+            self.on_auto_clim()
         elif k1 == 'shift' and k2 == '?':
             # help msgbox
             self.kbd_help()
