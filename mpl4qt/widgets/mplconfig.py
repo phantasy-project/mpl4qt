@@ -898,7 +898,7 @@ class MatplotlibConfigCurvePanel(MatplotlibConfigPanel):
         # line style
         self.line_style_cbb.setCurrentText(LINE_STY_DICT[config['ls']])
         # line ds
-        self.line_ds_cbb.setCurrentText(LINE_DS_DICT_R[config['ds']])
+        self.line_ds_cbb.setCurrentText(LINE_DS_DICT_R[config['drawstyle']])
         # marker style
         self.mk_style_cbb.setCurrentIndex(MK_SYMBOL.index(config['marker']))
         # line width

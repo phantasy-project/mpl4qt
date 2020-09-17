@@ -255,7 +255,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         if s not in LINE_DS_VALS:
             return
         self._line_ds = s
-        self._line.set_ds(s)
+        self._line.set_drawstyle(s)
         self.update_figure()
 
     figureLineDrawStyle = pyqtProperty('QString', getLineDrawStyle, setLineDrawStyle)
@@ -409,7 +409,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
         lconf = {
             p: getattr(line, 'get_' + p)()
             for p in ('ls', 'lw', 'c', 'ms', 'mew', 'mec', 'mfc', 'marker',
-                      'label', 'visible', 'alpha', 'ds')
+                      'label', 'visible', 'alpha', 'drawstyle')
         }
         return lconf
 
