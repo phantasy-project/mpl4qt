@@ -152,6 +152,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def getLineAlpha(self):
         return self._line_alpha
 
+    @pyqtSlot(float)
     def setLineAlpha(self, x):
         """Set line opacity, range from 0 to 1.0.
 
@@ -450,7 +451,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
                 ('line_id', line_id),
                 ('line', dict([
                     ('style', config['ls']),
-                    ('drawstyle', LINE_DS_DICT_R[config['ds']]),
+                    ('drawstyle', LINE_DS_DICT_R[config['drawstyle']]),
                     ('color', mplcolor2hex(config['c'])),
                     ('width', config['lw']),
                     ])),
