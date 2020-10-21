@@ -161,6 +161,7 @@ DEFAULT_MFC = "#FFFFFF"
 DEFAULT_MK_SIZE = 6.0
 DEFAULT_MK_WIDTH = 1.0
 DEFAULT_LINE_LABEL = "line1"
+DEFAULT_LINE_ALPHA = 1.0
 DEFAULT_FIG_WIDTH = 4
 DEFAULT_FIG_HEIGHT = 3
 DEFAULT_FIG_DPI = 100
@@ -451,7 +452,8 @@ class MatplotlibCurveWidgetSettings(OrderedDict):
         scurve.update([('line', OrderedDict({'style': DEFAULT_LINE_STYLE,
                                              'drawstyle': DEFAULT_LINE_DRAWSTYLE,
                                              'color': DEFAULT_LINE_COLOR,
-                                             'width': DEFAULT_LINE_WIDTH}))])
+                                             'width': DEFAULT_LINE_WIDTH,
+                                             'alpha': DEFAULT_LINE_ALPHA}))])
         scurve.update([('marker', OrderedDict({'style': DEFAULT_MK_STYLE,
                                                'edgecolor': DEFAULT_MEC,
                                                'facecolor': DEFAULT_MFC,

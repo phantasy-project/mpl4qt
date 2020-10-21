@@ -410,8 +410,12 @@ class MatplotlibCurveWidget(BasePlotWidget):
         lconf = {
             p: getattr(line, 'get_' + p)()
             for p in ('ls', 'lw', 'c', 'ms', 'mew', 'mec', 'mfc', 'marker',
-                      'label', 'visible', 'alpha', 'drawstyle')
+                      'label', 'visible', 'drawstyle')
         }
+        alpha = line.get_alpha()
+        if alpha is None:
+            alpha = 1.0
+        lconf['alpha'] = alpha
         return lconf
 
     def get_mpl_settings(self):
@@ -454,6 +458,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
                     ('drawstyle', LINE_DS_DICT_R[config['drawstyle']]),
                     ('color', mplcolor2hex(config['c'])),
                     ('width', config['lw']),
+                    ('alpha', config['alpha']),
                     ])),
                 ('marker', dict([
                     ('style', config['marker']),
@@ -693,6 +698,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
             self.setLineLabel(config['label'])
             self.setLineColor(QColor(config['line']['color']))
             self.setLineStyle(config['line']['style'])
+            self.setLineAlpha(config['line'].get('alpha', 1.0)) # backward compatibility
             self.setLineDrawStyle(LINE_DS_DICT[config['line'].get('drawstyle', 'Line')])
             self.setLineWidth(config['line']['width'])
             self.setMarkerStyle(config['marker']['style'])
