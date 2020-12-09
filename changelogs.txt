@@ -1,3 +1,12 @@
+2.7.1, 2020-12-09
+  * Fix incompatiblity of 'drawstyle', use 'ds' instead
+  * Add support to configure line 'alpha'
+  * Update keyshort a,a and a,c for image widget
+    - a,a, toggle auto scale color range
+    - a,c, toggle for once
+  * Fix cross hair bug
+  * Not sort keys when dumping figure settings
+
 2.7.0, 2020-07-02
   * Toolbar enhancement
     - Comprehensive crosshair/marker system
