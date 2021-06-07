@@ -17,6 +17,8 @@ finally:
         matplotlib.use("Qt5Agg")
 #
 
+from .widgets import *
+
 __authors__ = "Tong Zhang"
 __copyright__ = "(c) 2018-2020, Facility for Rare Isotope beams," \
                 " Michigan State University"
