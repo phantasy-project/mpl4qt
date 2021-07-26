@@ -1595,7 +1595,10 @@ class BasePlotWidget(QWidget):
     def _get_default_xlim(self):
         """limit range from data
         """
-        xmin, xmax = self._x_data.min(), self._x_data.max()
+        try:
+            xmin, xmax = self._x_data.min(), self._x_data.max()
+        except:
+            xmin, xmax = self.axes.get_xlim()
         x0, xhw = (xmin + xmax) * 0.5, (xmax - xmin) * 0.5
         return x0 - xhw * 1.1, x0 + xhw * 1.1
 
@@ -1605,7 +1608,10 @@ class BasePlotWidget(QWidget):
     def _get_default_ylim(self):
         """limit range from data
         """
-        ymin, ymax = self._y_data.min(), self._y_data.max()
+        try:
+            ymin, ymax = self._y_data.min(), self._y_data.max()
+        except:
+            ymin, ymax = self.axes.get_ylim()
         y0, yhw = (ymin + ymax) * 0.5, (ymax - ymin) * 0.5
         return y0 - yhw * 1.1, y0 + yhw * 1.1
 
@@ -1775,6 +1781,26 @@ class BasePlotWidget(QWidget):
         w.setWindowTitle("Keyboard Shortcuts Help")
         w.exec_()
 
+    def set_xlimit(self, *args):
+        """Set xlimit with new limit, e.g. `set_xlimit(xmin, xmax)`.
+
+        See Also
+        --------
+        setXLimitMin, setXLimitMax
+        """
+        self.axes.set_xlim(args)
+        self.update_figure()
+
+    def set_ylimit(self, *args):
+        """Set ylimit with new limit.
+
+        See Also
+        --------
+        setYLimitMin, setYLimitMax
+        """
+        self.axes.set_ylim(args)
+        self.update_figure()
+
 
 class MatplotlibBaseWidget(BasePlotWidget):
     """MatplotlibBaseWidget(BasePlotWidget)
@@ -1792,6 +1818,16 @@ class MatplotlibBaseWidget(BasePlotWidget):
         from .mplconfig import MatplotlibConfigPanel
         config_panel = MatplotlibConfigPanel(self)
         config_panel.exec_()
+
+    def update_figure(self):
+        if self._fig_auto_scale:
+            try:
+                self.axes.relim()
+            except:
+                pass
+            else:
+                self.axes.autoscale()
+        self.canvas.draw_idle()
 
 
 class MatplotlibCMapWidget(BasePlotWidget):

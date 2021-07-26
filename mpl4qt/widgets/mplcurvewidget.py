@@ -790,26 +790,6 @@ class MatplotlibCurveWidget(BasePlotWidget):
         path = e.mimeData().urls()[0].toLocalFile()
         self._import_mpl_settings(path)
 
-    def set_xlimit(self, *args):
-        """Set xlimit with new limit, e.g. `set_xlimit(xmin, xmax)`.
-
-        See Also
-        --------
-        setXLimitMin, setXLimitMax
-        """
-        self.axes.set_xlim(args)
-        self.update_figure()
-
-    def set_ylimit(self, *args):
-        """Set ylimit with new limit.
-
-        See Also
-        --------
-        setYLimitMin, setYLimitMax
-        """
-        self.axes.set_ylim(args)
-        self.update_figure()
-
     def get_points(self):
         """Return array contains (x, y) coords on curve.
         """
