@@ -1,3 +1,7 @@
+2.7.2, 2021-07-27
+  * Move set_xlimit and set_ylimit from curvewidget to basewidget.
+  * Add widget classes into mpl4qt.widgets namespace.
+
 2.7.1, 2020-12-09
   * Fix incompatiblity of 'drawstyle', use 'ds' instead
   * Add support to configure line 'alpha'
