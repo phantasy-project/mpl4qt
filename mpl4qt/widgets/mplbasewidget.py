@@ -118,6 +118,13 @@ class BasePlotWidget(QWidget):
     # shaded area updated (mpltoolbar)
     shaded_area_updated = pyqtSignal(tuple, tuple)
 
+    # xlimit is changed
+    xlimitMinChanged = pyqtSignal(float)
+    xlimitMaxChanged = pyqtSignal(float)
+    # ylimit is changed
+    ylimitMinChanged = pyqtSignal(float)
+    ylimitMaxChanged = pyqtSignal(float)
+
     def __init__(self, parent=None, show_toolbar=True, **kws):
         super(BasePlotWidget, self).__init__(parent)
         self.widget_type = '__BasePlotWidget'
@@ -1196,6 +1203,7 @@ class BasePlotWidget(QWidget):
         if x < xmax:
             self.axes.set_xlim([x, xmax])
             self.update_figure()
+            self.xlimitMinChanged.emit(x)
 
     figureXLimitMin = pyqtProperty(float, getXLimitMin, setXLimitMin)
 
@@ -1218,6 +1226,7 @@ class BasePlotWidget(QWidget):
         if x > xmin:
             self.axes.set_xlim([xmin, x])
             self.update_figure()
+            self.xlimitMaxChanged.emit(x)
 
     figureXLimitMax = pyqtProperty(float, getXLimitMax, setXLimitMax)
 
@@ -1240,6 +1249,7 @@ class BasePlotWidget(QWidget):
         if y < ymax:
             self.axes.set_ylim([y, ymax])
             self.update_figure()
+            self.ylimitMinChanged.emit(y)
 
     figureYLimitMin = pyqtProperty(float, getYLimitMin, setYLimitMin)
 
@@ -1262,6 +1272,7 @@ class BasePlotWidget(QWidget):
         if y > ymin:
             self.axes.set_ylim([ymin, y])
             self.update_figure()
+            self.ylimitMaxChanged.emit(y)
 
     figureYLimitMax = pyqtProperty(float, getYLimitMax, setYLimitMax)
 
