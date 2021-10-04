@@ -38,7 +38,7 @@ jobs:
         pip install -r requirements-doc.txt
         cd docs
         make html
-        ! [ -e build/html/.nojekyll ] && touch build/html/.nojekyll
+        ! [ -e build/html/.nojekyll ] && touch build/html/.nojekyll || [ $? -eq 1 ]
     - name: Publish documentation
       uses: JamesIves/github-pages-deploy-action@3.7.1
       with:
