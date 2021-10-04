@@ -30,11 +30,12 @@ setup(
     version="2.7.3",
     description=app_description,
     long_description=app_long_description,
+    long_description_content_type='text/markdown',
     author=app_author,
     author_email=app_author_email,
     url=app_url,
     platforms=app_platform,
-    license=app_license,
+    license='MIT',
     keywords=app_keywords,
     packages=find_packages(),
     entry_points={
@@ -46,7 +47,7 @@ setup(
         ],
     },
     classifiers=[
-        'Programming Language :: Python :: 3'
+        'Programming Language :: Python :: 3',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Software Development :: User Interfaces',
         'Topic :: Scientific/Engineering :: Visualization'
