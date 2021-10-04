@@ -35,7 +35,7 @@ jobs:
 #        pytest -vs
     - name: Build documentation
       run: |
-        pip install requirements-doc.txt
+        pip install -r requirements-doc.txt
         cd docs
         make html
         ! [ -e build/html/.nojekyll ] && touch build/html/.nojekyll
