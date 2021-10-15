@@ -27,7 +27,7 @@ installrequires = [
 
 setup(
     name=app_name,
-    version="2.7.3",
+    version="2.7.3.1",
     description=app_description,
     long_description=app_long_description,
     long_description_content_type='text/markdown',
