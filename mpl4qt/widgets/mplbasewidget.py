@@ -1715,7 +1715,8 @@ class BasePlotWidget(QWidget):
         """Rotate *axis* ticks by *angle* in degree.
         """
         lbls = getattr(self.axes, "get_{}ticklabels".format(axis))()
-        for o in lbls:
+        mlbls = getattr(self.axes, "get_{}minorticklabels".format(axis))()
+        for o in lbls + mlbls:
             o.set_rotation(angle)
 
     def set_autoscale(self, axis='both'):
