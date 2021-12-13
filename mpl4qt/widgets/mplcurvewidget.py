@@ -145,6 +145,9 @@ class MatplotlibCurveWidget(BasePlotWidget):
         # set current line
         self.setLineID(0)
 
+        # first curve
+        self.curve0 = self._lines[0]
+
     def sizeHint(self):
         return QSize(1.1 * self._fig_width * self._fig_dpi,
                      1.1 * self._fig_height * self._fig_dpi)
