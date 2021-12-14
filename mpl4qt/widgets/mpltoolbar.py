@@ -24,12 +24,14 @@ from PyQt5.QtWidgets import QMenu
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtWidgets import QSpinBox
+from PyQt5.QtWidgets import QCheckBox
 from PyQt5.QtWidgets import QToolBar
 from PyQt5.QtWidgets import QToolButton
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QWidgetAction
 
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT
+from matplotlib.dates import num2date
 from matplotlib.path import Path
 from matplotlib.widgets import LassoSelector
 
@@ -266,9 +268,11 @@ class MToolbar(QToolBar):
         # tb config tool
         conf_act = QAction(QIcon(QPixmap(":/tools/preferences.png")), "Preferences", self)
         conf_act.setToolTip("Preferences")
+
+        # tb icon size
         conf_isize_w = QWidget(self)
         conf_isize_box = QHBoxLayout()
-        conf_isize_box.setContentsMargins(2, 0, 0, 0)
+        conf_isize_box.setContentsMargins(4, 2, 2, 4)
         conf_isize_sbox = QSpinBox(self)
         conf_isize_sbox.setToolTip("Adjust icon size")
         conf_isize_sbox.setValue(self._isize)
@@ -280,11 +284,28 @@ class MToolbar(QToolBar):
         conf_isize_box.addWidget(conf_isize_sbox, 1)
         conf_isize_box.addWidget(conf_isize_btn)
         conf_isize_w.setLayout(conf_isize_box)
-        conf_menu = QMenu(self)
-        conf_menu.setToolTipsVisible(True)
         conf_isize_act = QWidgetAction(self)
         conf_isize_act.setDefaultWidget(conf_isize_w)
+
+        # tb date string as xpos
+        self._tb_xpos_as_date = False
+        self._tb_xpos_datefmt = "%Y-%m-%d %H:%M:%S"
+        conf_sxpos_w = QWidget(self)
+        conf_sxpos_box = QHBoxLayout()
+        conf_sxpos_box.setContentsMargins(4, 2, 2, 4)
+        conf_sxpos_chkbox = QCheckBox("X-pos as Date")
+        conf_sxpos_chkbox.setToolTip("Show x-pos as date string")
+        conf_sxpos_chkbox.setChecked(False)
+        conf_sxpos_box.addWidget(conf_sxpos_chkbox, 1)
+        conf_sxpos_w.setLayout(conf_sxpos_box)
+        conf_sxpos_act = QWidgetAction(self)
+        conf_sxpos_act.setDefaultWidget(conf_sxpos_w)
+
+        #
+        conf_menu = QMenu(self)
+        conf_menu.setToolTipsVisible(True)
         conf_menu.addAction(conf_isize_act)
+        conf_menu.addAction(conf_sxpos_act)
         conf_act.setMenu(conf_menu)
 
         # dock tool
@@ -351,9 +372,16 @@ class MToolbar(QToolBar):
         info_act.triggered.connect(self.about_info)
         conf_isize_sbox.valueChanged.connect(self.on_update_isize)
         conf_isize_btn.clicked.connect(lambda:conf_isize_sbox.setValue(self._isize))
+        conf_sxpos_chkbox.toggled.connect(self.on_xpos_as_date)
 
         #
         self.floatable_changed.emit(self._floating)
+
+    @pyqtSlot(bool)
+    def on_xpos_as_date(self, is_checked):
+        """If checked, show xpos as date string.
+        """
+        self._tb_xpos_as_date = is_checked
 
     @pyqtSlot(bool)
     def on_snap_cross(self, is_snap):
@@ -549,8 +577,13 @@ class MToolbar(QToolBar):
     def on_update_xypos(self, coord):
         if len(coord) == 2:
             x, y = coord
-            self.pos_lbl.setText(
-                "<html><pre><sup>(x,y)</sup>({0:<.4g},{1:<.4g})</pre></html>".format(x, y))
+            if self._tb_xpos_as_date:
+                x = num2date(x).strftime(self._tb_xpos_datefmt)
+                self.pos_lbl.setText(
+                    "<html><pre><sup>(x,y)</sup>({0},{1:<.4g})</pre></html>".format(x, y))
+            else:
+                self.pos_lbl.setText(
+                    "<html><pre><sup>(x,y)</sup>({0:<.4g},{1:<.4g})</pre></html>".format(x, y))
         elif len(coord) == 3:
             x, y, z = coord
             self.pos_lbl.setText(
