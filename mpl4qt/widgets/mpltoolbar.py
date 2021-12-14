@@ -31,7 +31,7 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QWidgetAction
 
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT
-from matplotlib.dates import num2date
+from matplotlib.dates import num2date, date2num
 from matplotlib.path import Path
 from matplotlib.widgets import LassoSelector
 
@@ -293,7 +293,7 @@ class MToolbar(QToolBar):
         conf_sxpos_w = QWidget(self)
         conf_sxpos_box = QHBoxLayout()
         conf_sxpos_box.setContentsMargins(4, 2, 2, 4)
-        conf_sxpos_chkbox = QCheckBox("X-pos as Date")
+        self.conf_sxpos_chkbox = conf_sxpos_chkbox = QCheckBox("X-pos as Date")
         conf_sxpos_chkbox.setToolTip("Show x-pos as date string")
         conf_sxpos_chkbox.setChecked(False)
         conf_sxpos_box.addWidget(conf_sxpos_chkbox, 1)
@@ -454,7 +454,8 @@ class MToolbar(QToolBar):
                 self.snap_updated[bool, tuple].connect(self.snap_cursor.snap_enabled)
             except SnapCursorNotExist:
                 self.snap_cursor = SnapCursor(self.parent.axes, data_tuple,
-                                              self._is_snap_point)
+                                              self._is_snap_point,
+                                              parent=self)
                 self.parent.xyposUpdated.connect(self.snap_cursor.on_move)
                 if self.parent.widget_type != '__BasePlotWidget':
                     self.parent.dataChanged.connect(self.snap_cursor.set_data)
@@ -724,8 +725,9 @@ class SnapCursor(QObject):
     snap_enabled = pyqtSignal(bool, tuple)
     snap_disabled = pyqtSignal(bool)
 
-    def __init__(self, ax, data_tuple=None, is_snap=True):
+    def __init__(self, ax, data_tuple=None, is_snap=True, parent=None, **kws):
         super(SnapCursor, self).__init__()
+        self.parent = parent
         self.gobj = None
         self.ax = ax
         self.canvas = ax.figure.canvas
@@ -785,6 +787,8 @@ class SnapCursor(QObject):
 
     def set_xydata(self, xdata, ydata):
         # set x y array data.
+        if self.parent._tb_xpos_as_date:
+            xdata = date2num(xdata)
         ascend_data = np.asarray(sorted(zip(xdata, ydata), key=lambda i:i[0]))
         self.xdata = ascend_data[:, 0]
         self.ydata = ascend_data[:, 1]
@@ -795,7 +799,10 @@ class SnapCursor(QObject):
             if self.is_snap:
                 idx = min(np.searchsorted(self.xdata, x), len(self.xdata) - 1)
                 x, y = self.xdata[idx], self.ydata[idx]
-            xtext = "{0:g}".format(x)
+            if self.parent._tb_xpos_as_date:
+                xtext = num2date(x).strftime("%H:%M:%S")
+            else:
+                xtext = "{0:g}".format(x)
             ytext = "{0:g}".format(y)
         else: # 3d
             x, y, z = pos_tuple
