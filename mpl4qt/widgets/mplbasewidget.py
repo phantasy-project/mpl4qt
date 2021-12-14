@@ -51,6 +51,7 @@ from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtWidgets import QVBoxLayout
 from PyQt5.QtWidgets import QWidget
 
+import datetime
 import matplotlib as mpl
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.axes import Axes
@@ -539,7 +540,9 @@ class BasePlotWidget(QWidget):
             self._last_sel_lines.setdefault(
                     o.get_label(),
                     (o, lw0, mw0))
-            self.selectedPointChanged.emit(x0, y0)
+            if not isinstance(x0, datetime.datetime):
+                # WIP
+                self.selectedPointChanged.emit(x0, y0)
             self.selectedLineChanged.emit(o)
             self.update_figure()
         elif isinstance(evt.artist, Axes):
