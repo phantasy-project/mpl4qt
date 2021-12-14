@@ -194,7 +194,7 @@ class MatplotlibImageWidget(MatplotlibCurveWidget):
         et = (x[0, 0], x[-1, -1], y[0, 0], y[-1, -1])
         im = self.axes.imshow(z, cmap=self._cmap,
                               vmin=self._cr_min,
-                              vmax=self._cr_max, origin="lower left",
+                              vmax=self._cr_max, origin="lower",
                               extent=et)
 
         self._x_data, self._y_data, self.z = x, y, z
