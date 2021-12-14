@@ -4,6 +4,8 @@
 Navigation toolbar for matplotlib widgets
 """
 import numpy as np
+import pandas as pd
+from datetime import datetime
 
 from PyQt5.QtCore import QObject
 from PyQt5.QtCore import QPoint
@@ -18,6 +20,7 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtGui import QPixmap
 
 from PyQt5.QtWidgets import QAction
+from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtWidgets import QHBoxLayout
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtWidgets import QMenu
@@ -194,9 +197,13 @@ class MToolbar(QToolBar):
         self.pan_act = pan_act
         pan_act.setToolTip("Pan axes with left mouse")
 
-        # save tool
-        save_act = QAction(QIcon(QPixmap(":/tools/save.png")), "Save", self)
-        save_act.setToolTip("Save figure as file")
+        # save figure tool
+        save_fig_act = QAction(QIcon(QPixmap(":/tools/save.png")), "Save", self)
+        save_fig_act.setToolTip("Save figure to a file")
+
+        # save data tool
+        save_data_act = QAction(QIcon(QPixmap(":/tools/save-data.png")), "Save Data", self)
+        save_data_act.setToolTip("Save data to a file")
 
         # lasso tool
         lasso_act = QAction(QIcon(QPixmap(":/tools/lasso.png")), "Selector", self)
@@ -344,7 +351,8 @@ class MToolbar(QToolBar):
         self.addAction(zoom_act)
         self.addAction(lasso_act)
         self.addAction(cross_act)
-        self.addAction(save_act)
+        self.addAction(save_fig_act)
+        self.addAction(save_data_act)
         self.addSeparator()
 
         self.addWidget(self.pos_lbl)
@@ -365,7 +373,8 @@ class MToolbar(QToolBar):
         zoom_act.toggled.connect(self.zoom)
         lasso_act.toggled.connect(self.lasso)
         cross_act.toggled.connect(self.cross_ruler)
-        save_act.triggered.connect(self.save)
+        save_fig_act.triggered.connect(self.save_fig)
+        save_data_act.triggered.connect(self.save_data)
         repos_act.triggered.connect(self.repos_toolbar)
         exit_act.triggered.connect(self.close)
         dock_act.triggered.connect(self.dock)
@@ -627,8 +636,48 @@ class MToolbar(QToolBar):
         self.parent.set_autoscale('y')
 
     @pyqtSlot()
-    def save(self):
+    def save_fig(self):
         self.tb.save_figure()
+
+    @pyqtSlot()
+    def save_data(self):
+        """Save data to a file.
+        """
+        wtype = self.parent.widget_type
+        filepath, _ = QFileDialog.getSaveFileName(self,
+                "Save Data",
+                "./{}-{}-data.xlsx".format(wtype, datetime.now().strftime("%Y%m%dT%H%M%S")),
+                "XLSX Files (*.xlsx)")
+        if not filepath:
+            return
+
+        try:
+            if wtype == 'image':
+                x, y, z = self.parent.get_all_data()
+                dset = pd.DataFrame(data={'x': x.ravel(), 'y': y.ravel(), 'z': z.ravel()})
+            else:
+                df_list = []
+                for i, line in enumerate(self.parent.get_all_curves()):
+                    lbl = line.get_label()
+                    if lbl.startswith("_"):
+                        lbl = f"line{i+1}"
+                    data_columns = self.parent.get_all_data(line)
+                    data_dict = dict(zip(zip([lbl] * 3, ('x','y','z')), data_columns))
+                    df_list.append(pd.DataFrame(data=data_dict))
+                if len(df_list) > 1:
+                    dset = df_list[0].join(df_list[1:], how='outer')
+                else:
+                    dset = df_list[0]
+            # save data
+            dset.to_excel(filepath)
+        except:
+            QMessageBox.warning(self, "Save Data",
+                                "Failed to save data to {}".format(filepath),
+                                QMessageBox.Ok)
+        else:
+            QMessageBox.information(self, "Save Data",
+                                    "Successfully saved data to {}".format(filepath),
+                                    QMessageBox.Ok)
 
     @pyqtSlot()
     def lasso(self):
