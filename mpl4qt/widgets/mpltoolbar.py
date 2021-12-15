@@ -644,10 +644,10 @@ class MToolbar(QToolBar):
         """Save data to a file.
         """
         wtype = self.parent.widget_type
-        filepath, _ = QFileDialog.getSaveFileName(self,
+        filepath, ext = QFileDialog.getSaveFileName(self,
                 "Save Data",
-                "./{}-{}-data.xlsx".format(wtype, datetime.now().strftime("%Y%m%dT%H%M%S")),
-                "XLSX Files (*.xlsx)")
+                "./{}-{}-data".format(wtype, datetime.now().strftime("%Y%m%dT%H%M%S")),
+                "HDF5 Files (*.h5);;XLSX Files (*.xlsx);;CSV Files (*.csv)")
         if not filepath:
             return
 
@@ -668,8 +668,20 @@ class MToolbar(QToolBar):
                     dset = df_list[0].join(df_list[1:], how='outer')
                 else:
                     dset = df_list[0]
+
             # save data
-            dset.to_excel(filepath)
+            ext = ext[:-1].split('.')[-1]
+            filepath = f"{filepath.rsplit('.')[0]}.{ext}"
+            if ext == 'csv':
+                dset.to_csv(filepath)
+            elif ext == 'xlsx':
+                for i in dset.columns:
+                    if pd.api.types.is_datetime64_any_dtype(dset[i]):
+                        dset[i] = dset[i].apply(lambda t:str(t) if not pd.isnull(t) else '')
+                dset.to_excel(filepath)
+            elif ext == 'h5':
+                dset.to_hdf(filepath, key='data')
+
         except:
             QMessageBox.warning(self, "Save Data",
                                 "Failed to save data to {}".format(filepath),
