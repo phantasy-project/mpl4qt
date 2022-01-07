@@ -16,10 +16,8 @@ from matplotlib.font_manager import weight_dict
 from matplotlib.ticker import FuncFormatter
 from matplotlib.transforms import BboxTransform, Bbox
 
-try:
-    basestring
-except NameError:
-    basestring = str
+import os
+_curdir = os.path.abspath(os.path.dirname(__file__))
 
 BOOTSTRAP_GREEN = "#28A745"
 BOOTSTRAP_RED = "#DC3545"
@@ -136,42 +134,6 @@ SCALE_STY_DICT = OrderedDict([
 ])
 SCALE_STY_KEYS = [k for k in SCALE_STY_DICT]
 SCALE_STY_VALS = [v for v in SCALE_STY_DICT.values()]
-
-# default values for mpl settings
-DEFAULT_TITLE = "<title sample>"
-DEFAULT_TITLE_FONT = "DejaVu Sans,16,-1,5,50,0,0,0,0,0"
-DEFAULT_XLABEL = "<xlabel sample>"
-DEFAULT_YLABEL = "<ylabel sample>"
-DEFAULT_LABELS_FONT = "Sans Serif,14,-1,5,50,0,0,0,0,0"
-DEFAULT_AUTOSCALE = True
-DEFAULT_XMIN = 0
-DEFAULT_XMAX = 1
-DEFAULT_YMIN = 0
-DEFAULT_YMAX = 1
-DEFAULT_LEGEND_SHOW = False
-DEFAULT_LEGEND_LOC = 0
-DEFAULT_LINE_ID = 0
-DEFAULT_LINE_STYLE = "--"
-DEFAULT_LINE_DRAWSTYLE = "Line"
-DEFAULT_LINE_COLOR = "#FF0000"
-DEFAULT_LINE_WIDTH = 1.0
-DEFAULT_MK_STYLE = 'o'
-DEFAULT_MEC = "#0055FF"
-DEFAULT_MFC = "#FFFFFF"
-DEFAULT_MK_SIZE = 6.0
-DEFAULT_MK_WIDTH = 1.0
-DEFAULT_LINE_LABEL = "line1"
-DEFAULT_LINE_ALPHA = 1.0
-DEFAULT_FIG_WIDTH = 4
-DEFAULT_FIG_HEIGHT = 3
-DEFAULT_FIG_DPI = 100
-DEFAULT_BKGD_COLOR = "#EDECEB"
-DEFAULT_MTICKS_ON = False
-DEFAULT_MTICKS_FONT = "Sans Serif,10,-1,5,50,0,0,0,0,0"
-DEFAULT_MTICKS_COLOR = "#AA00FF"
-DEFAULT_LAYOUT_TIGHT_ON = False
-DEFAULT_LAYOUT_GRID_ON = False
-DEFAULT_LAYOUT_GRID_COLOR = "#808080"
 
 AUTOFORMATTER = FuncFormatter(lambda v, _: '{:g}'.format(v))
 AUTOFORMATTER_MATHTEXT = FuncFormatter(lambda v, _: '${:g}$'.format(v))
@@ -388,7 +350,7 @@ def mplcolor2hex(c):
     """
     if isinstance(c, (tuple, list)):
         clr = colors.rgb2hex(c)
-    elif isinstance(c, basestring):
+    elif isinstance(c, str):
         if c.startswith('#'):
             clr = c
         else:
@@ -406,7 +368,7 @@ def is_cmap_valid(cmap):
 class MatplotlibCurveWidgetSettings(OrderedDict):
     def __init__(self, path=None):
         super(MatplotlibCurveWidgetSettings, self).__init__()
-        if isinstance(path, basestring):
+        if isinstance(path, str):
             with open(path, "r") as fp:
                 self.read(fp)
 
@@ -431,54 +393,8 @@ class MatplotlibCurveWidgetSettings(OrderedDict):
     def default_settings():
         """Default settings.
         """
-        s = OrderedDict()
-
-        # figure tab
-        sfig = OrderedDict()
-        sfig.update([('title', OrderedDict({'value': DEFAULT_TITLE, 'font': DEFAULT_TITLE_FONT}))])
-        sfig.update([('labels', OrderedDict({'xlabel': DEFAULT_XLABEL, 'ylabel': DEFAULT_YLABEL,
-                                             'font': DEFAULT_LABELS_FONT}))])
-        sfig.update([('xy_range', OrderedDict({'auto_scale': DEFAULT_AUTOSCALE,
-                                               'xmin': DEFAULT_XMIN, 'xmax': DEFAULT_XMAX,
-                                               'ymin': DEFAULT_YMIN, 'ymax': DEFAULT_YMAX}))])
-        sfig.update([('legend', OrderedDict({'show': DEFAULT_LEGEND_SHOW,
-                                             'location': DEFAULT_LEGEND_LOC}))])
-        s.update([('figure', sfig)])
-
-        # curve tab (single curve)
-        scurve = OrderedDict()
-        scurve.update({'label': DEFAULT_LINE_LABEL})
-        scurve.update({'line_id': DEFAULT_LINE_ID})
-        scurve.update([('line', OrderedDict({'style': DEFAULT_LINE_STYLE,
-                                             'drawstyle': DEFAULT_LINE_DRAWSTYLE,
-                                             'color': DEFAULT_LINE_COLOR,
-                                             'width': DEFAULT_LINE_WIDTH,
-                                             'alpha': DEFAULT_LINE_ALPHA}))])
-        scurve.update([('marker', OrderedDict({'style': DEFAULT_MK_STYLE,
-                                               'edgecolor': DEFAULT_MEC,
-                                               'facecolor': DEFAULT_MFC,
-                                               'size': DEFAULT_MK_SIZE,
-                                               'width': DEFAULT_MK_WIDTH}))])
-
-        s.update({'curve': [scurve]})
-
-        # style tab
-        sstyle = OrderedDict()
-        sstyle.update([('figsize', OrderedDict({'width': DEFAULT_FIG_WIDTH,
-                                                'height': DEFAULT_FIG_HEIGHT,
-                                                'dpi': DEFAULT_FIG_DPI}))])
-        sstyle.update([('background', {'color': DEFAULT_BKGD_COLOR})])
-        sstyle.update([('ticks', OrderedDict({
-            'mticks_on': DEFAULT_MTICKS_ON,
-            'font': DEFAULT_MTICKS_FONT,
-            'color': DEFAULT_MTICKS_COLOR}))])
-        sstyle.update([('layout', OrderedDict({
-            'tight_on': DEFAULT_LAYOUT_TIGHT_ON,
-            'grid_on': DEFAULT_LAYOUT_GRID_ON,
-            'grid_color': DEFAULT_LAYOUT_GRID_COLOR}))])
-
-        s.update({'style': sstyle})
-
+        with open(os.path.join(_curdir, "..", "config", "default_mpl_settings.json")) as fp:
+            s = json.load(fp)
         return s
 
 

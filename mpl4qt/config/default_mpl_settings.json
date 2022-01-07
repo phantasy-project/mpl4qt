@@ -1,0 +1,75 @@
+{
+  "figure": {
+    "title": {
+      "value": "Figure Title",
+      "font": "Cantarell,16,-1,5,75,0,0,0,0,0,Bold",
+      "visible": true
+    },
+    "labels": {
+      "xlabel": "X Label Text",
+      "ylabel": "Y Label Text",
+      "font": "Cantarell,14,-1,5,50,0,0,0,0,0,Regular",
+      "visible": true
+    },
+    "xy_range": {
+      "auto_scale": true,
+      "xmin": -4.4,
+      "xmax": 4.4,
+      "ymin": -2.77232,
+      "ymax": 10.577
+    },
+    "legend": {
+      "show": false,
+      "location": 0
+    }
+  },
+  "curve": [
+    {
+      "label": "_line1",
+      "line_id": 0,
+      "line": {
+        "style": "--",
+        "drawstyle": "Line",
+        "color": "#FF0000",
+        "width": 1.5,
+        "alpha": 1.0
+      },
+      "marker": {
+        "style": "None",
+        "edgecolor": "#FF0000",
+        "facecolor": "#FF0000",
+        "size": 6.0,
+        "width": 1.0
+      }
+    }
+  ],
+  "style": {
+    "figsize": {
+      "width": 6.4,
+      "height": 4.8,
+      "dpi": 110.0,
+      "aspect_ratio": "auto"
+    },
+    "background": {
+      "color": "#FFFFFF"
+    },
+    "ticks": {
+      "mticks_on": false,
+      "font": "Cantarell,11,-1,5,50,0,0,0,0,0,Regular",
+      "color": "#000000",
+      "xtick_rotation": 0.0,
+      "ytick_rotation": 0.0
+    },
+    "layout": {
+      "tight_on": false,
+      "grid_on": true,
+      "grid_color": "#A4A4A4"
+    },
+    "border": {
+      "visible": true,
+      "color": "#000000",
+      "line_width": 0.8,
+      "line_style": "solid"
+    }
+  }
+}
