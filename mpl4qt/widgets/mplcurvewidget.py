@@ -423,6 +423,10 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
     def get_mpl_settings(self):
         """Return all the settings for the current figure.
+
+        See Also
+        --------
+        apply_mpl_settings
         """
         s = MatplotlibCurveWidgetSettings()
         s.update(s.default_settings())
@@ -430,12 +434,14 @@ class MatplotlibCurveWidget(BasePlotWidget):
         # figure
         s['figure']['title'].update([
             ('value', self.getFigureTitle()),
-            ('font', self.getFigureTitleFont().toString())
+            ('font', self.getFigureTitleFont().toString()),
+            ('visible', self.getFigureTitleVisible())
             ])
         s['figure']['labels'].update([
             ('xlabel', self.getFigureXlabel()),
             ('ylabel', self.getFigureYlabel()),
-            ('font', self.getFigureXYlabelFont().toString())
+            ('font', self.getFigureXYlabelFont().toString()),
+            ('visible', self.getFigureXYlabelVisible())
             ])
         s['figure']['xy_range'].update([
             ('auto_scale', self.getFigureAutoScale()),
@@ -478,6 +484,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
             ('width', self.getFigureWidth()),
             ('height', self.getFigureHeight()),
             ('dpi', self.getFigureDpi()),
+            ('aspect_ratio', self.getFigureAspectRatio())
             ])
         s['style']['background'].update([
             ('color', self.getFigureBgColor().name().upper()),
@@ -486,11 +493,19 @@ class MatplotlibCurveWidget(BasePlotWidget):
             ('mticks_on', self.getFigureMTicksToggle() is True),
             ('font', self.getFigureXYticksFont().toString()),
             ('color', self.getFigureXYticksColor().name().upper()),
+            ('xtick_rotation', self.getFigureXTicksAngle()),
+            ('ytick_rotation', self.getFigureYTicksAngle()),
             ])
         s['style']['layout'].update([
             ('tight_on', self.getTightLayoutToggle() is True),
             ('grid_on', self.getFigureGridToggle() is True),
-            ('grid_color', self.getFigureGridColor().name()),
+            ('grid_color', self.getFigureGridColor().name().upper()),
+            ])
+        s['style']['border'].update([
+            ('visible', self.getFigureBorderVisible()),
+            ('color', self.getFigureBorderColor().name().upper()),
+            ('line_width', self.getFigureBorderLineWidth()),
+            ('line_style', self.getFigureBorderLineStyle()),
             ])
         return s
 
@@ -582,7 +597,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
 
         See Also
         --------
-        MatplotlibCurveWidgetSettings
+        MatplotlibCurveWidgetSettings, get_mpl_settings
         """
         settings = DEFAULT_MPL_SETTINGS if settings is None else settings
 
@@ -608,23 +623,33 @@ class MatplotlibCurveWidget(BasePlotWidget):
         self.setFigureWidth(sstyle['figsize']['width'])
         self.setFigureHeight(sstyle['figsize']['height'])
         self.setFigureDpi(sstyle['figsize']['dpi'])
+        self.setFigureAspectRatio(sstyle['figsize'].get('aspect_ratio', 'auto'))
         self.setFigureGridToggle(bool(sstyle['layout']['grid_on']))
         self.setTightLayoutToggle(bool(sstyle['layout']['tight_on']))
         self.setFigureGridColor(QColor(sstyle['layout']['grid_color']))
+        self.setFigureXTicksAngle(sstyle['ticks'].get('xtick_rotation', 0))
+        self.setFigureYTicksAngle(sstyle['ticks'].get('ytick_rotation', 0))
         self.setFigureXYticksColor(QColor(sstyle['ticks']['color']))
         self.setFigureMTicksToggle(bool(sstyle['ticks']['mticks_on']))
         f = QFont()
         f.fromString(sstyle['ticks']['font'])
         self.setFigureXYticksFont(f)
+        if 'border' in sstyle:
+            self.setFigureBorderVisible(sstyle['border'].get('visible', True))
+            self.setFigureBorderColor(QColor(sstyle['border'].get('color', '#000000')))
+            self.setFigureBorderLineWidth(sstyle['border'].get('line_width', 0.8))
+            self.setFigureBorderLineStyle(sstyle['border'].get('line_style', 'solid'))
 
         # figure
         sfig = settings['figure']
         self.setFigureTitle(sfig['title']['value'])
+        self.setFigureTitleVisible(sfig['title'].get('visible', True))
         f = QFont()
         f.fromString(sfig['title']['font'])
         self.setFigureTitleFont(f)
         self.setFigureXlabel(sfig['labels']['xlabel'])
         self.setFigureYlabel(sfig['labels']['ylabel'])
+        self.setFigureXYlabelVisible(sfig['labels'].get('visible', True))
         f = QFont()
         f.fromString(sfig['labels']['font'])
         self.setFigureXYlabelFont(f)
