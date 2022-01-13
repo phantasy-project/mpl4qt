@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 import time
 import numpy as np
+import pandas as pd
 from collections import deque
 from collections import OrderedDict
 from functools import partial
@@ -1815,6 +1816,30 @@ class BasePlotWidget(QWidget):
         """
         self.axes.set_ylim(args)
         self.update_figure()
+
+    def get_dset(self, keep_nat=False):
+        """Return a DataFrame with all the data."""
+        if self.widget_type == 'image':
+            x, y, z = self.get_all_data()
+            dset = pd.DataFrame(data={'x': x.ravel(), 'y': y.ravel(), 'z': z.ravel()})
+        else:
+            df_list = []
+            for i, line in enumerate(self.get_all_curves()):
+                lbl = line.get_label()
+                if lbl.startswith("_"):
+                    lbl = f"line{i+1}"
+                data_columns = self.get_all_data(line)
+                data_dict = dict(zip(zip([lbl] * 3, ('x','y','z')), data_columns))
+                df_list.append(pd.DataFrame(data=data_dict))
+            if len(df_list) > 1:
+                dset = df_list[0].join(df_list[1:], how='outer')
+            else:
+                dset = df_list[0]
+        if not keep_nat: # replace nat with ''
+            for i in dset.columns:
+                if pd.api.types.is_datetime64_any_dtype(dset[i]):
+                    dset[i] = dset[i].apply(lambda t:str(t) if not pd.isnull(t) else '')
+        return dset
 
 
 class MatplotlibBaseWidget(BasePlotWidget):

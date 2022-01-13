@@ -344,10 +344,10 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         """
         xmin, xmax = self.parent.get_xlim()
         ymin, ymax = self.parent.get_ylim()
-        self.xmin_lineEdit.setText('{0:3g}'.format(xmin))
-        self.xmax_lineEdit.setText('{0:3g}'.format(xmax))
-        self.ymin_lineEdit.setText('{0:3g}'.format(ymin))
-        self.ymax_lineEdit.setText('{0:3g}'.format(ymax))
+        self.xmin_lineEdit.setText(f'{xmin}')
+        self.xmax_lineEdit.setText(f'{xmax}')
+        self.ymin_lineEdit.setText(f'{ymin}')
+        self.ymax_lineEdit.setText(f'{ymax}')
 
     @pyqtSlot(float)
     def set_border_lw(self, w):

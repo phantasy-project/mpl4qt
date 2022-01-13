@@ -652,23 +652,7 @@ class MToolbar(QToolBar):
             return
 
         try:
-            if wtype == 'image':
-                x, y, z = self.parent.get_all_data()
-                dset = pd.DataFrame(data={'x': x.ravel(), 'y': y.ravel(), 'z': z.ravel()})
-            else:
-                df_list = []
-                for i, line in enumerate(self.parent.get_all_curves()):
-                    lbl = line.get_label()
-                    if lbl.startswith("_"):
-                        lbl = f"line{i+1}"
-                    data_columns = self.parent.get_all_data(line)
-                    data_dict = dict(zip(zip([lbl] * 3, ('x','y','z')), data_columns))
-                    df_list.append(pd.DataFrame(data=data_dict))
-                if len(df_list) > 1:
-                    dset = df_list[0].join(df_list[1:], how='outer')
-                else:
-                    dset = df_list[0]
-
+            dset = self.parent.get_dset(keep_nat=True)
             # save data
             ext = ext[:-1].split('.')[-1]
             filepath = f"{filepath.rsplit('.')[0]}.{ext}"
@@ -680,7 +664,7 @@ class MToolbar(QToolBar):
                         dset[i] = dset[i].apply(lambda t:str(t) if not pd.isnull(t) else '')
                 dset.to_excel(filepath)
             elif ext == 'h5':
-                dset.to_hdf(filepath, key='data')
+                dset.to_hdf(filepath, key='data', complevel=9)
 
         except:
             QMessageBox.warning(self, "Save Data",
