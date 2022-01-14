@@ -2,3 +2,4 @@ numpy==1.17.4
 matplotlib==3.1.2
 pyqt5
 pandas
+openpyxl

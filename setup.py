@@ -19,6 +19,7 @@ installrequires = [
     'matplotlib',
     'PyQt5',
     'pandas',
+    'openpyxl', # save data as xlsx
 ]
 extras_require = {
     'dev': ['pyqt5-tools'],
