@@ -274,6 +274,10 @@ class MToolbar(QToolBar):
         info_act = QAction(QIcon(QPixmap(":/tools/info.png")), "About", self)
         info_act.setToolTip("About")
 
+        # keyshort help tool
+        keyshort_act = QAction(QIcon(QPixmap(":/tools/keyshort.png")), "Shortcuts", self)
+        keyshort_act.setToolTip("Keyboard shortcuts")
+
         # exit tool
         exit_act = QAction(QIcon(QPixmap(":/tools/exit.png")), "Exit", self)
         exit_act.setToolTip("Close toolbar")
@@ -366,6 +370,7 @@ class MToolbar(QToolBar):
         self.addSeparator()
 
         self.addAction(conf_act)
+        self.addAction(keyshort_act)
         self.addAction(info_act)
         self.addAction(exit_act)
 
@@ -387,6 +392,7 @@ class MToolbar(QToolBar):
         exit_act.triggered.connect(self.close)
         dock_act.triggered.connect(self.dock)
         info_act.triggered.connect(self.about_info)
+        keyshort_act.triggered.connect(self.parent.kbd_help)
         conf_isize_sbox.valueChanged.connect(self.on_update_isize)
         conf_isize_btn.clicked.connect(lambda:conf_isize_sbox.setValue(self._isize))
         conf_sxpos_chkbox.toggled.connect(self.on_xpos_as_date)
