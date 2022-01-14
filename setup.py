@@ -7,18 +7,13 @@ def readme():
     with open('README.md', 'r') as f:
         return f.read()
 
-def read_license():
-    with open('LICENSE', 'r') as f:
-        return f.read()
-
 app_name = "mpl4qt"
 app_description = "Data visualization widgets for PyQt5"
 app_long_description = readme() + '\n\n'
 app_platform = ["Linux"]
 app_author = "Tong Zhang"
 app_author_email = "zhangt@frib.msu.edu"
-app_license = read_license()
-app_url = "https://archman.github.io/mpl4qt/"
+app_url = "https://phantasy-project.github.io/mpl4qt/"
 app_keywords = "widgets Qt designer PyQt matplotlib"
 installrequires = [
     'matplotlib',
@@ -31,7 +26,7 @@ extras_require = {
 
 setup(
     name=app_name,
-    version="2.7.5",
+    version="2.8.0",
     description=app_description,
     long_description=app_long_description,
     long_description_content_type='text/markdown',
@@ -42,6 +37,7 @@ setup(
     license='MIT',
     keywords=app_keywords,
     packages=find_packages(),
+    include_package_data=True,
     entry_points={
         'gui_scripts': [
             'run_designer=mpl4qt.launchers.designer:main',
