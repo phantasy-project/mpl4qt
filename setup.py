@@ -20,6 +20,7 @@ installrequires = [
     'PyQt5',
     'pandas',
     'openpyxl', # save data as xlsx
+    'tables', # save data as hdf5
 ]
 extras_require = {
     'dev': ['pyqt5-tools'],
