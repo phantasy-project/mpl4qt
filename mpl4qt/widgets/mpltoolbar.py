@@ -282,6 +282,10 @@ class MToolbar(QToolBar):
         exit_act = QAction(QIcon(QPixmap(":/tools/exit.png")), "Exit", self)
         exit_act.setToolTip("Close toolbar")
 
+        # context config tool
+        context_conf_act = QAction(QIcon(QPixmap(":/tools/config.png")), "Configuration", self)
+        context_conf_act.setToolTip("Open configuration dialog")
+
         # tb config tool
         conf_act = QAction(QIcon(QPixmap(":/tools/preferences.png")), "Preferences", self)
         conf_act.setToolTip("Preferences")
@@ -370,6 +374,7 @@ class MToolbar(QToolBar):
         self.addSeparator()
 
         self.addAction(conf_act)
+        self.addAction(context_conf_act)
         self.addAction(keyshort_act)
         self.addAction(info_act)
         self.addAction(exit_act)
@@ -392,6 +397,9 @@ class MToolbar(QToolBar):
         exit_act.triggered.connect(self.close)
         dock_act.triggered.connect(self.dock)
         info_act.triggered.connect(self.about_info)
+        context_conf_act.triggered.connect(
+            lambda:self.parent._create_ctxtmenu().findChild(
+                QAction, 'config_action').triggered.emit())
         keyshort_act.triggered.connect(self.parent.kbd_help)
         conf_isize_sbox.valueChanged.connect(self.on_update_isize)
         conf_isize_btn.clicked.connect(lambda:conf_isize_sbox.setValue(self._isize))
