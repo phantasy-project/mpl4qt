@@ -1,3 +1,30 @@
+2.8.0, 2022-01-14
+  * Manage default configurations with a JSON file.
+  * Add support to export/import more configuration options.
+  * Use all digits for xylimit in config panel, see time-series data.
+  * Refactor save_data function.
+  * Add tools
+    - Toggle auto-scale
+    - Show keyboard shortcuts page
+    - Start up configuration panel
+
+2.7.5, 2022-01-04
+  * Support save data into H5, XLSX, CSV.
+  * Add tool for data saving.
+  * Change 'lower left' to 'lower' for image display
+    - New matplotlib (>3.1.3) drop support 'lower left', use 'lower'
+  * Support working with time-series data
+    - Support cross-hair work with timeseries data.
+    - WIP, Skip emit selectedPointChanged for time series data.
+    - Support show x-pos as datetime string, add toolbar controls.
+  * Rotate minor ticks with major onces.
+  * Add variable 'curve0' for the first line of curve widget.
+
+2.7.4, 2021-10-15
+  * Suspend Travis CI, set up GitHub Action for building doc, publish packages to PyPI.
+  * Fix setup.py.
+  * Add MatplotlibBarWidget into mpl4qt.widgets namespace.
+
 2.7.3, 2021-08-11
   * ENH: Add signals for xylimits changed.
 
