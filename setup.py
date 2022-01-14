@@ -25,6 +25,9 @@ installrequires = [
     'PyQt5',
     'pandas',
 ]
+extras_require = {
+    'dev': ['pyqt5-tools'],
+}
 
 setup(
     name=app_name,
@@ -54,4 +57,5 @@ setup(
         'Topic :: Scientific/Engineering :: Visualization'
     ],
     install_requires=installrequires,
+    extras_require=extras_require,
 )
