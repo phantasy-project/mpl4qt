@@ -1,0 +1,4 @@
+include LICENSE
+include README.md
+include changelogs.txt
+recursive-include mpl4qt/config *
