@@ -183,6 +183,12 @@ class MToolbar(QToolBar):
         auto_scale_act = QAction(QIcon(QPixmap(":/tools/auto-scale.png")), "Auto Scale", self)
         auto_scale_act.setToolTip("Auto Scale (a)")
 
+        # auto scale toggle tool
+        self.auto_scale_toggle_act = auto_scale_toggle_act = QAction(QIcon(QPixmap(":/tools/auto-scale-toggle.png")), "Toggle Auto-Scale", self)
+        auto_scale_toggle_act.setCheckable(True)
+        auto_scale_toggle_act.setToolTip("Toggle Auto-Scale (a,a)")
+        self.parent.autoScaleOnUpdated.connect(self.auto_scale_toggle_act.setChecked)
+
         # auto xscale tool
         auto_xscale_act = QAction(QIcon(QPixmap(":/tools/auto-xscale.png")), "Auto X-Scale", self)
         auto_xscale_act.setToolTip("Auto X-Scale (a,x)")
@@ -342,6 +348,7 @@ class MToolbar(QToolBar):
         self.addAction(forward_act)
         self.addSeparator()
 
+        self.addAction(auto_scale_toggle_act)
         self.addAction(auto_scale_act)
         self.addAction(auto_xscale_act)
         self.addAction(auto_yscale_act)
@@ -366,6 +373,7 @@ class MToolbar(QToolBar):
         home_act.triggered.connect(self.home)
         forward_act.triggered.connect(self.forward)
         backward_act.triggered.connect(self.backward)
+        auto_scale_toggle_act.toggled.connect(self.toggle_auto_scale)
         auto_scale_act.triggered.connect(self.auto_scale)
         auto_xscale_act.triggered.connect(self.auto_xscale)
         auto_yscale_act.triggered.connect(self.auto_yscale)
@@ -618,6 +626,12 @@ class MToolbar(QToolBar):
     @pyqtSlot()
     def backward(self):
         self.tb.back()
+
+    @pyqtSlot(bool)
+    def toggle_auto_scale(self, enabled):
+        """Enable/disable auto xyscale.
+        """
+        self.parent.setFigureAutoScale(enabled)
 
     @pyqtSlot()
     def auto_scale(self):
