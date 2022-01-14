@@ -23,6 +23,7 @@ app_keywords = "widgets Qt designer PyQt matplotlib"
 installrequires = [
     'matplotlib',
     'PyQt5',
+    'pandas',
 ]
 
 setup(
