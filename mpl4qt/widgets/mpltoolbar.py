@@ -6,16 +6,19 @@ Navigation toolbar for matplotlib widgets
 import numpy as np
 import pandas as pd
 import tzlocal
+import tempfile
 from datetime import datetime
 
 from PyQt5.QtCore import QObject
 from PyQt5.QtCore import QPoint
 from PyQt5.QtCore import QSize
+from PyQt5.QtCore import QUrl
 from PyQt5.QtCore import QVariant
 from PyQt5.QtCore import Qt
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import pyqtSlot
 
+from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtGui import QIcon
 from PyQt5.QtGui import QPixmap
@@ -205,12 +208,16 @@ class MToolbar(QToolBar):
         pan_act.setToolTip("Pan axes with left mouse")
 
         # save figure tool
-        save_fig_act = QAction(QIcon(QPixmap(":/tools/save.png")), "Save", self)
+        save_fig_act = QAction(QIcon(QPixmap(":/tools/save.png")), "Save Figure", self)
         save_fig_act.setToolTip("Save figure to a file")
 
         # save data tool
         save_data_act = QAction(QIcon(QPixmap(":/tools/save-data.png")), "Save Data", self)
         save_data_act.setToolTip("Save data to a file")
+
+        # read data tool
+        read_data_act = QAction(QIcon(QPixmap(":/tools/readfile.png")), "Read Data", self)
+        read_data_act.setToolTip("Read data in XLSX")
 
         # lasso tool
         lasso_act = QAction(QIcon(QPixmap(":/tools/lasso.png")), "Selector", self)
@@ -369,6 +376,7 @@ class MToolbar(QToolBar):
         self.addAction(cross_act)
         self.addAction(save_fig_act)
         self.addAction(save_data_act)
+        self.addAction(read_data_act)
         self.addSeparator()
 
         self.addWidget(self.pos_lbl)
@@ -394,6 +402,7 @@ class MToolbar(QToolBar):
         cross_act.toggled.connect(self.cross_ruler)
         save_fig_act.triggered.connect(self.save_fig)
         save_data_act.triggered.connect(self.save_data)
+        read_data_act.triggered.connect(self.read_data)
         repos_act.triggered.connect(self.repos_toolbar)
         exit_act.triggered.connect(self.close)
         dock_act.triggered.connect(self.dock)
@@ -681,20 +690,10 @@ class MToolbar(QToolBar):
             return
 
         try:
-            dset = self.parent.get_dset(keep_nat=True)
             # save data
             ext = ext[:-1].split('.')[-1]
             filepath = f"{filepath.rsplit('.')[0]}.{ext}"
-            if ext == 'csv':
-                dset.to_csv(filepath)
-            elif ext == 'xlsx':
-                for i in dset.columns:
-                    if pd.api.types.is_datetime64_any_dtype(dset[i]):
-                        dset[i] = dset[i].apply(lambda t:str(t) if not pd.isnull(t) else '')
-                dset.to_excel(filepath)
-            elif ext == 'h5':
-                dset.to_hdf(filepath, key='data', complevel=9)
-
+            self._save_data(filepath, ext)
         except:
             QMessageBox.warning(self, "Save Data",
                                 "Failed to save data to {}".format(filepath),
@@ -703,6 +702,28 @@ class MToolbar(QToolBar):
             QMessageBox.information(self, "Save Data",
                                     "Successfully saved data to {}".format(filepath),
                                     QMessageBox.Ok)
+
+    def _save_data(self, filepath, ext):
+        dset = self.parent.get_dset(keep_nat=True)
+        if ext == 'csv':
+            dset.to_csv(filepath)
+        elif ext == 'xlsx':
+            for i in dset.columns:
+                if pd.api.types.is_datetime64_any_dtype(dset[i]):
+                    dset[i] = dset[i].apply(lambda t:str(t) if not pd.isnull(t) else '')
+            dset.to_excel(filepath)
+        elif ext == 'h5':
+            dset.to_hdf(filepath, key='data', complevel=9)
+
+    @pyqtSlot()
+    def read_data(self):
+        """Read data in XLSX.
+        """
+        wtype = self.parent.widget_type
+        _, filename = tempfile.mkstemp('.xlsx')
+        self._save_data(filename, 'xlsx')
+        QDesktopServices.openUrl(QUrl(filename))
+        # todo, clean up tmp file.
 
     @pyqtSlot()
     def lasso(self):
