@@ -5,6 +5,7 @@ Navigation toolbar for matplotlib widgets
 """
 import numpy as np
 import pandas as pd
+import tzlocal
 from datetime import datetime
 
 from PyQt5.QtCore import QObject
@@ -310,7 +311,7 @@ class MToolbar(QToolBar):
 
         # tb date string as xpos
         self._tb_xpos_as_date = False
-        self._tb_xpos_datefmt = "%Y-%m-%d %H:%M:%S"
+        self._tb_xpos_datefmt = "%Y-%m-%d %H:%M:%S %Z"
         conf_sxpos_w = QWidget(self)
         conf_sxpos_box = QHBoxLayout()
         conf_sxpos_box.setContentsMargins(4, 2, 2, 4)
@@ -610,7 +611,7 @@ class MToolbar(QToolBar):
         if len(coord) == 2:
             x, y = coord
             if self._tb_xpos_as_date:
-                x = num2date(x).strftime(self._tb_xpos_datefmt)
+                x = num2date(x, tz=tzlocal.get_localzone()).strftime(self._tb_xpos_datefmt)
                 self.pos_lbl.setText(
                     "<html><pre><sup>(x,y)</sup>({0},{1:<.4g})</pre></html>".format(x, y))
             else:
