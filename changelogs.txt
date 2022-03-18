@@ -1,3 +1,8 @@
+2.8.2, 2022-03-18
+  * Add a button in toolbar for reading data in XLSX format.
+  * Show time data in localzone.
+  * Add new depands 'openpyxl', 'tables'.
+
 2.8.0, 2022-01-14
   * Manage default configurations with a JSON file.
   * Add support to export/import more configuration options.
