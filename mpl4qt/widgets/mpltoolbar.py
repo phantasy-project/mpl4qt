@@ -9,6 +9,7 @@ import tzlocal
 import tempfile
 from datetime import datetime
 
+from PyQt5.QtCore import QEventLoop
 from PyQt5.QtCore import QObject
 from PyQt5.QtCore import QPoint
 from PyQt5.QtCore import QSize
@@ -38,7 +39,8 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QWidgetAction
 
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT
-from matplotlib.dates import num2date, date2num
+from matplotlib.dates import num2date, date2num, DateFormatter
+from matplotlib.ticker import ScalarFormatter
 from matplotlib.path import Path
 from matplotlib.widgets import LassoSelector
 
@@ -423,6 +425,13 @@ class MToolbar(QToolBar):
         """If checked, show xpos as date string.
         """
         self._tb_xpos_as_date = is_checked
+        if is_checked:
+            self.parent.axes.xaxis.set_major_formatter(
+                    DateFormatter("%Y-%m-%d\n%H:%M:%S",
+                        tz=tzlocal.get_localzone()))
+        else:
+            self.parent.axes.xaxis.set_major_formatter(ScalarFormatter())
+        self.parent.update_figure()
 
     @pyqtSlot(bool)
     def on_snap_cross(self, is_snap):
