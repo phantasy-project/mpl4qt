@@ -250,7 +250,7 @@ def mfont_to_qfont(pf):
     weight = weight_as_number(pf.get_weight())
     stretch = stretch_as_number(pf.get_stretch())
     style = pf.get_style()
-    font = QFont(family, size)
+    font = QFont(family, int(size))
     font.setStyle(FONT_STYLE_M2Q[style])
     font.setWeight(FONT_WEIGHT_M2Q[weight])
     font.setStretch(FONT_STRETCH_M2Q[stretch])

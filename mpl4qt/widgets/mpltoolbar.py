@@ -782,7 +782,7 @@ class MToolbar(QToolBar):
         x = self.parent.geometry().x() + 0.5 * (
                 self.parent.geometry().width() - self.geometry().width())
         y = self.parent.geometry().y()
-        return self.parent.mapToGlobal(QPoint(x, y))
+        return self.parent.mapToGlobal(QPoint(int(x), int(y)))
 
     def mousePressEvent(self, e):
         self.pos_x = e.x()
