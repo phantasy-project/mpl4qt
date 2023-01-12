@@ -4,3 +4,4 @@ pyqt5
 pandas
 openpyxl
 tables
+tzlocal
