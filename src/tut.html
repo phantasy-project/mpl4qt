@@ -444,8 +444,66 @@ required to do the data updating for other lines, by
 <p><strong>What does this application do?</strong> This app will visualize the data with bar
 chart plot by using <em>MatplotlibBarWidget</em>.</p>
 <p>The following snippet shows how to use this widget:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/usr/bin/env python</span>
+<span class="linenos"> 2</span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="kn">from</span> <span class="nn">ui_test4</span> <span class="kn">import</span> <span class="n">Ui_Form</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="kn">import</span> <span class="n">QWidget</span>
+<span class="linenos"> 7</span><span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">pyqtSignal</span><span class="p">,</span> <span class="n">pyqtSlot</span>
+<span class="linenos"> 8</span><span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="n">QVariant</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="linenos">11</span><span class="kn">from</span> <span class="nn">phantasy</span> <span class="kn">import</span> <span class="n">MachinePortal</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="n">N</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="k">class</span> <span class="nc">MyWidget</span><span class="p">(</span><span class="n">Ui_Form</span><span class="p">,</span> <span class="n">QWidget</span><span class="p">):</span>
+<span class="linenos">17</span>    <span class="n">curveChanged</span> <span class="o">=</span> <span class="n">pyqtSignal</span><span class="p">(</span><span class="n">QVariant</span><span class="p">,</span> <span class="n">QVariant</span><span class="p">,</span> <span class="n">QVariant</span><span class="p">)</span>
+<span class="linenos">18</span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,):</span>
+<span class="linenos">19</span>        <span class="nb">super</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span>        <span class="c1"># UI</span>
+<span class="linenos">22</span>        <span class="bp">self</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span>        <span class="c1"># update curve</span>
+<span class="linenos">25</span>        <span class="bp">self</span><span class="o">.</span><span class="n">curveChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matplotlibbarWidget</span><span class="o">.</span><span class="n">update_curve</span><span class="p">)</span>
+<span class="linenos">26</span>        <span class="bp">self</span><span class="o">.</span><span class="n">update_btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_data</span><span class="p">)</span>
+<span class="linenos">27</span>        <span class="c1">#</span>
+<span class="linenos">28</span>        <span class="bp">self</span><span class="o">.</span><span class="n">matplotlibbarWidget</span><span class="o">.</span><span class="n">clear_figure</span><span class="p">()</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span>        <span class="bp">self</span><span class="o">.</span><span class="n">init_figure</span><span class="p">()</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span>    <span class="k">def</span> <span class="nf">init_figure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">33</span>        <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="linenos">34</span>        <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="linenos">35</span>        <span class="n">yerr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="linenos">36</span>        <span class="bp">self</span><span class="o">.</span><span class="n">matplotlibbarWidget</span><span class="o">.</span><span class="n">init_figure</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">yerr</span><span class="p">)</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span>    <span class="nd">@pyqtSlot</span><span class="p">()</span>
+<span class="linenos">39</span>    <span class="k">def</span> <span class="nf">update_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">40</span><span class="w">        </span><span class="sd">&quot;&quot;&quot;Set bar chart.</span>
+<span class="linenos">41</span><span class="sd">        &quot;&quot;&quot;</span>
+<span class="linenos">42</span>        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span>
+<span class="linenos">43</span>        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="mi">6</span>
+<span class="linenos">44</span>        <span class="n">yerr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="linenos">45</span>
+<span class="linenos">46</span>        <span class="bp">self</span><span class="o">.</span><span class="n">curveChanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">yerr</span><span class="p">)</span>
+<span class="linenos">47</span>
+<span class="linenos">48</span>
+<span class="linenos">49</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="linenos">50</span>    <span class="kn">import</span> <span class="nn">sys</span>
+<span class="linenos">51</span>    <span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="kn">import</span> <span class="n">QApplication</span>
+<span class="linenos">52</span>
+<span class="linenos">53</span>    <span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+<span class="linenos">54</span>    <span class="n">w</span> <span class="o">=</span> <span class="n">MyWidget</span><span class="p">()</span>
+<span class="linenos">55</span>    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="linenos">56</span>    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+</div>
 <p>The full working example could be downloaded from
-<code class="xref download docutils literal notranslate"><span class="pre">here</span></code>.</p>
+<a class="reference download internal" download="" href="../_downloads/55b20f04ac8aaafd58cb28c87c1ea8f9/app2.tar.bz2"><code class="xref download docutils literal notranslate"><span class="pre">here</span></code></a>.</p>
 <p class="rubric">Footnotes</p>
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="f1" role="note">
