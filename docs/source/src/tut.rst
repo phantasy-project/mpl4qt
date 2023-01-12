@@ -231,6 +231,27 @@ The full working example could be downloaded from
 :download:`here <../snippets/app1.tar.bz2>`.
 
 
+BarChart Plot Example
+---------------------
+
+**What does this application do?** This app will visualize the data with bar
+chart plot by using *MatplotlibBarWidget*.
+
+The following snippet shows how to use this widget:
+
+.. literalinclude:: ../snippets/test_barplot.py
+    :language: python
+    :linenos:
+
+
+The full working example could be downloaded from
+:download:`here <../snippets/app2.tar.bz2>`.
+
+
+
+
+
+
 .. only:: html
 
     .. rubric:: Footnotes
