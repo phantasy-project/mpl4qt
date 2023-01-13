@@ -21,6 +21,7 @@ installrequires = [
     'pandas',
     'openpyxl', # save data as xlsx
     'tables', # save data as hdf5
+    'tzlocal',
 ]
 extras_require = {
     'dev': ['pyqt5-tools'],
@@ -28,7 +29,7 @@ extras_require = {
 
 setup(
     name=app_name,
-    version="2.8.3",
+    version="2.8.3-1",
     description=app_description,
     long_description=app_long_description,
     long_description_content_type='text/markdown',
