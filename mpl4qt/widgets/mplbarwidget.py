@@ -356,7 +356,7 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
             else:
                 tp_y = iy - iyerr * eta
             tp = (ix - hw, tp_y)
-            anote = ax.annotate(s=fmt.format(iy, iyerr), xy=(ix, iy),
+            anote = ax.annotate(fmt.format(iy, iyerr), xy=(ix, iy),
                                 xytext=tp, bbox=dict(**bbox_dict),
                                 **kws)
             anote.set_picker(True)
