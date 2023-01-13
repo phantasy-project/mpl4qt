@@ -1487,7 +1487,7 @@ class MatplotlibConfigBarPanel(MatplotlibConfigCurvePanel):
         # eb color
         self.figEbLineColorChanged.emit(QColor(eb_color))
         # eb alpha
-        self.ebline_opacity_slider.setValue(eb_opacity)
+        self.ebline_opacity_slider.setValue(int(eb_opacity))
         # eb lw
         self.ebline_width_lineEdit.setText('{}'.format(eb_lw))
         # eb ls
@@ -1497,7 +1497,7 @@ class MatplotlibConfigBarPanel(MatplotlibConfigCurvePanel):
         # bar color
         self.figBarColorChanged.emit(QColor(bar_color))
         # bar alpha
-        self.bar_opacity_slider.setValue(bar_opacity)
+        self.bar_opacity_slider.setValue(int(bar_opacity))
         # bar width
         self.bar_width_lineEdit.setText('{}'.format(bar_width))
 
