@@ -8,7 +8,6 @@ from PyQt5.QtCore import pyqtSignal, pyqtSlot
 from PyQt5.QtCore import QVariant
 
 import numpy as np
-from phantasy import MachinePortal
 
 
 N = 5
