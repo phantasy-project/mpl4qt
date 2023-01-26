@@ -1,9 +1,9 @@
 .. role:: raw-html(raw)
     :format: html
 
-===============
-Getting Started
-===============
+=========
+Tutorials
+=========
 
 In this section, general guidelines about developing PyQt application with
 ``mpl4qt`` will be addressed, starting the development with the following
@@ -11,8 +11,8 @@ applications:
 
 * :ref:`Random X-Y curve plotter`
 
-Start Qt5-designer
-------------------
+Designer
+--------
 
 ``designer`` is a user-friendly GUI application to help the developer to build
 UI painlessly, in a WYSIWYG way. The created UI file from ``designer`` is
