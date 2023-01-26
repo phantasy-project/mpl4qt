@@ -912,7 +912,7 @@ class MatplotlibConfigCurvePanel(MatplotlibConfigPanel):
         # line visible
         self.line_hide_chkbox.setChecked(not config['visible'])
         # opacity: alpha = opacity / 100
-        opacity = config['alpha'] * 100
+        opacity = int(config['alpha'] * 100)
         self.opacity_val_slider.setValue(opacity)
 
     @pyqtSlot(int)
