@@ -248,8 +248,24 @@ The full working example could be downloaded from
 :download:`here <../snippets/app2.tar.bz2>`.
 
 
+Stem Plot Example
+-----------------
 
+**What does this application do?** This app will demonstrate how to use *MatplotlibErrorbarWidget*
+to visualize data in a stem plot style.
 
+.. image:: ../images/stemPlotEmulation.png
+    :align: center
+    :width: 800px
+
+The following snippet shows how to use this widget:
+
+.. literalinclude:: ../snippets/stem_emulation.py
+    :language: python
+    :linenos:
+
+The full working example could be downloaded from
+:download:`here <../snippets/stemEmulation.zip>`.
 
 
 .. only:: html
