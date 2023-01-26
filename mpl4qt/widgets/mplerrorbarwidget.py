@@ -450,7 +450,8 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
 
     figureEbLineVisible = pyqtProperty(bool, getEbLineVisible, setEbLineVisible)
 
-    def update_curve(self, x_data=None, y_data=None, xerr_data=None, yerr_data=None):
+    def update_curve(self, x_data=None, y_data=None, xerr_data=None, yerr_data=None,
+                     **kws):
         """Update curve with errorbar, with given data.
 
         Parameters
@@ -460,9 +461,20 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
         y_data : list or array
             Array of y data, which is the average in y.
         xerr_data : list or array
-            Error array in x.
+            Error array in x, or left error when err_method is defined.
         yerr_data : list or array
-            Error array in y.
+            Error array in y, or down error when err_method is defined.
+
+        Keyword Arguments
+        -----------------
+        err_method : str
+            The default is apply the base with +/- (x,y)err_data, if set as 'user', (x,y)err_data
+            will be used as the left/down error, and (x,y)err_data1 needs to be provided via
+            additional keyword arguments, otherwise fallback to the default method.
+        xerr_data_r : list or array
+            Array for right x error, if err_method is 'user'.
+        yerr_data_t : list or array
+            Array for top y error, if err_method is 'user'.
         """
         if isinstance(x_data, list):
             x_data = np.asarray(x_data)
@@ -473,9 +485,19 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
         if isinstance(yerr_data, list):
             yerr_data = np.asarray(yerr_data)
 
+        xerr_data_l, xerr_data_r = xerr_data, xerr_data
+        yerr_data_d, yerr_data_t = yerr_data, yerr_data
+
+        if kws.get('err_method', None) is not None:
+            # update right and top errors
+            xerr_data_r = np.asarray(kws.get('xerr_data_r', xerr_data_l))
+            yerr_data_t = np.asarray(kws.get('yerr_data_t', yerr_data_d))
+        #
         self._x_data = x_data
         self._y_data = y_data
-        adjust_errorbar(self._line, self._eb_line, x_data, y_data, xerr_data, yerr_data)
+        adjust_errorbar(self._line, self._eb_line, x_data, y_data,
+                        xerr_data_l, xerr_data_r,
+                        yerr_data_d, yerr_data_t)
         self.update_figure()
         self.dataChanged.emit((self._line, x_data, y_data))
 
@@ -486,7 +508,7 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
         self.update_curve(empty_arr, empty_arr, empty_arr, empty_arr)
 
 
-def adjust_errorbar(line_obj, ebline_obj, x, y, xerr, yerr):
+def adjust_errorbar(line_obj, ebline_obj, x, y, xerr_l, xerr_r, yerr_d, yerr_t):
     """Update curve with errorbars.
 
     Parameters
@@ -499,10 +521,14 @@ def adjust_errorbar(line_obj, ebline_obj, x, y, xerr, yerr):
         New x data for `line_obj`.
     y : array:
         New y data for `line_obj`.
-    xerr : array
-        New error for x data.
-    yerr : array
-        New error for y data.
+    xerr_l : array
+        New left error for x data.
+    xerr_r : array
+        New right error for x data.
+    yerr_d : array
+        New down error for y data.
+    yerr_t : array
+        New top error for y data.
     """
     l = line_obj
     (xerr_right, xerr_left), xbar = ebline_obj['xerr']
@@ -511,8 +537,8 @@ def adjust_errorbar(line_obj, ebline_obj, x, y, xerr, yerr):
     l.set_data(x, y)
 
     x_base, y_base = x, y
-    xerr_left_val, xerr_right_val = x_base - xerr, x_base + xerr
-    yerr_bottom_val, yerr_top_val = y_base - yerr, y_base + yerr
+    xerr_left_val, xerr_right_val = x_base - xerr_l, x_base + xerr_r
+    yerr_bottom_val, yerr_top_val = y_base - yerr_d, y_base + yerr_t
 
     xerr_left.set_data(xerr_left_val, y_base)
     xerr_right.set_data(xerr_right_val, y_base)
