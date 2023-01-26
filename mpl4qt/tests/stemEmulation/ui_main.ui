@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>985</width>
+    <height>917</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTextEdit" name="textEdit">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="html">
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Cantarell'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- This is an exmple of how to use &lt;span style=&quot; font-style:italic;&quot;&gt;MatplotlibErrorbarWidget&lt;/span&gt; to emulate the stem plot.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Press the button '&lt;span style=&quot; font-weight:600;&quot;&gt;Add&lt;/span&gt;' to add a new curve on the panel.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Press the button '&lt;span style=&quot; font-weight:600;&quot;&gt;Update&lt;/span&gt;' to update the selected curve.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;- Select the curve by ID by the left most combobox.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="MatplotlibErrorbarWidget" name="matplotliberrorbarWidget">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>1</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="figureAutoScale">
+      <bool>false</bool>
+     </property>
+     <property name="figureTitle">
+      <string>Stem plot with MatplotlibErrorbarWidget</string>
+     </property>
+     <property name="figureXYlabelFont">
+      <font>
+       <family>Cantarell</family>
+       <pointsize>13</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="figureTitleFont">
+      <font>
+       <family>Cantarell</family>
+       <pointsize>15</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="figureXYticksFont">
+      <font>
+       <family>Cantarell</family>
+       <pointsize>12</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="figureLineStyle" stdset="0">
+      <string>None</string>
+     </property>
+     <property name="figureMarkerStyle" stdset="0">
+      <string>o</string>
+     </property>
+     <property name="figureMarkerSize" stdset="0">
+      <double>10.000000000000000</double>
+     </property>
+     <property name="figureLineVisible" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="figureEbLineWidth" stdset="0">
+      <double>2.000000000000000</double>
+     </property>
+     <property name="figureEbMarkerSize" stdset="0">
+      <double>5.000000000000000</double>
+     </property>
+     <property name="figureEbMarkerThickness" stdset="0">
+      <double>2.000000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QComboBox" name="line_id_cbb"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="update_btn">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Update</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="add_curve_btn">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Add</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MatplotlibCurveWidget</class>
+   <extends>QWidget</extends>
+   <header>mpl4qt.widgets.mplcurvewidget</header>
+  </customwidget>
+  <customwidget>
+   <class>MatplotlibErrorbarWidget</class>
+   <extends>MatplotlibCurveWidget</extends>
+   <header>mpl4qt.widgets.mplerrorbarwidget</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+ <slots>
+  <signal>xDataChanged(QVariant)</signal>
+  <signal>yDataChanged(QVariant)</signal>
+  <signal>figWidthChanged(int)</signal>
+  <signal>figHeightChanged(int)</signal>
+ </slots>
+</ui>
