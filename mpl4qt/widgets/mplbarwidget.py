@@ -46,6 +46,10 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
         # widget type
         self.widget_type = 'bar'
 
+        # uncheck & disable snap cross by default
+        self._handlers['w_mpl_tools'].cross_snap_act.setChecked(False)
+        self._handlers['w_mpl_tools'].cross_snap_act.setEnabled(False)
+
     def _init_config(self):
         self._eb_line_width = 1
         self._eb_line_style = '-'
