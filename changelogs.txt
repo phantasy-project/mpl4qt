@@ -1,3 +1,24 @@
+2.8.6, 2023-08-07
+  * Update changelog.
+
+2.8.5, 2023-06-30
+  * Doc maintainence, update section names.
+  * Remove travis CI configs.
+  * Disable snap option of the cross-hair tool for bar widget.
+
+2.8.4, 2023-01-26
+  * Add a doc section for stem emulation with errorbar widget.
+  * Support passing arbitrary array of left/right, down/up errors.
+  * Strictly use int for QSlider value.
+
+2.8.3, 2023-01-13
+  * Add tzlocal as a new dependency.
+  * Fix axes.annotate() due to API changes of matplotlib.
+  * Update snippet for barchart example.
+  * Update with a doc page for barplot widget.
+  * Explicitly convert float to int.
+  * Support switching xaxis formatter between date and scalar.
+
 2.8.2, 2022-03-18
   * Add a button in toolbar for reading data in XLSX format.
   * Show time data in localzone.
