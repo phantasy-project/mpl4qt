@@ -483,8 +483,13 @@ class MToolbar(QToolBar):
                             else:
                                 lobj = list(self.parent._last_sel_lines.values())[0][0]
                             data_tuple = lobj, *self.parent.get_all_data(lobj)
-                        if data_tuple[1].size == 0:
-                            raise SnapCursorNoDataProbe("No data to probe.")
+                        try:
+                            if data_tuple[1].size == 0:
+                                raise SnapCursorNoDataProbe("No data to probe.")
+                        except AttributeError:
+                            # disable snap
+                            self.cross_snap_act.setChecked(False)
+                            self.cross_snap_act.setEnabled(False)
                     else:
                         data_tuple = None
                     raise SnapCursorNotExist("SnapCursor does not exist.")
