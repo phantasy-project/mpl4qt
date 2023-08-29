@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 import time
 import numpy as np
 import pandas as pd
+from typing import Tuple
 from collections import deque
 from collections import OrderedDict
 from functools import partial
@@ -177,6 +178,9 @@ class BasePlotWidget(QWidget):
         # patches container: mk_area,
         # see draw_shade_area()
         self._patches = {}
+
+        # annotate obj list
+        self._annote_list = []
 
         # dnd
         self.setAcceptDrops(True)
@@ -1840,6 +1844,68 @@ class BasePlotWidget(QWidget):
                 if pd.api.types.is_datetime64_any_dtype(dset[i]):
                     dset[i] = dset[i].apply(lambda t:str(t) if not pd.isnull(t) else '')
         return dset
+
+    def add_annotation(self, text: str, xy: Tuple[float, float],
+            xytext: Tuple[float, float] = None, color: str = 'k', fontsize: float = 10.0,
+            facecolor: str = "w", edgecolor: str = "0.5", linewidth: float = 1.0,
+            alpha: float = 1.0,
+            bbox: dict = None, **kws):
+        """Add an annotation of *text* to the canvas at *xy* coordinate, pass *xytext*
+        to relocate the text box, otherwise the text sits right besides at *xy*.
+
+        Parameters
+        ----------
+        text : str
+            The text string to annotate.
+        xy : tuple
+            A tuple of x, y coordinate in the context of `xycoords`.
+        xytext: tuple
+            A tuple of x, y coordinate in the context of `textcoords`.
+        color : str
+            The text color.
+        fontsize: float
+            The text font size.
+        facecolor: str
+            The background color of the text box.
+        edgecolor: str
+            The border color of the text box.
+        linewidth : float
+            The linewidth of the text border.
+        alpha: float
+            The alpha of the background of the text box.
+        bbox: dict
+            The additional dict of configuration for the text box.
+
+        Keyword Arguments
+        -----------------
+        See the keyword arguments of `matplotlib.pyplot.annotate`.
+
+        Examples
+        --------
+        >>> # o = self.matplotlibcurveWidget
+        >>> # Add an annotation at (0, 0)
+        >>> o.add_annotation('note1', (0, 0))
+        >>> # Add another annotation with style configurations
+        >>> o.add_annotation('note2', (1, 0), fontsize=12, color='blue', alpha=0.7)
+        >>> # clear all annotations
+        >>> o.clear_all_annotations()
+        """
+        if bbox is None:
+            bbox = kws.pop('bbox', {
+                "boxstyle": "round,pad=0.2",
+                "fc": "w", "ec": "0.5", "lw": 1, "alpha": 1.0})
+        bbox.update({'fc': facecolor, 'ec': edgecolor, 'lw': linewidth, 'alpha': alpha})
+        kws.update({'size': fontsize})
+        kws.update({'color': color})
+        annote = self.axes.annotate(text, xy=xy, xytext=xytext, bbox=bbox, **kws)
+        self._annote_list.append(annote)
+        self.update_figure()
+
+    def clear_all_annotations(self):
+        for o in self._annote_list:
+            if o in self.axes.texts:
+                o.remove()
+        self.update_figure()
 
 
 class MatplotlibBaseWidget(BasePlotWidget):
