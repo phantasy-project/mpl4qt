@@ -15,6 +15,8 @@ finally:
     # always use Qt5Agg for mpl < 2.0
     if matplotlib.__version__ < "2.0.0":
         matplotlib.use("Qt5Agg")
+    else: # Added starting Bookworm
+        matplotlib.use("Qt5Agg")
 #
 
 from .widgets import *
