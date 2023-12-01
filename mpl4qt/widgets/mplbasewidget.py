@@ -252,11 +252,11 @@ class BasePlotWidget(QWidget):
                             xy=(1.0, 1.01),
                             ha='right', va='bottom',
                             xycoords=('axes fraction'),
-                            color='w',
+                            color='#2E3436',
                             bbox=dict(
-                                boxstyle='round,pad=0.3',
+                                boxstyle='round,pad=0.2',
                                 fc=BOOTSTRAP_GREEN, ec=BOOTSTRAP_GREEN,
-                                lw=1.0, alpha=0.8))
+                                lw=1.0, alpha=0.15))
             else:
                 self.as_ann.set_visible(True)
         else:
