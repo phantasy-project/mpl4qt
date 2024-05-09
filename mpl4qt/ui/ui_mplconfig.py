@@ -14,7 +14,7 @@ class Ui_Dialog(object):
 
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(1521, 420)
+        Dialog.resize(1540, 420)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -146,6 +146,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_10.setFont(font)
+        self.label_10.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
         self.label_10.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
@@ -244,6 +248,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label.setFont(font)
+        self.label.setStyleSheet("QLabel {\n"
+                                 "    border-top: 0px solid gray;\n"
+                                 "    border-right: 5px solid gray;\n"
+                                 "}")
         self.label.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing
                                 | QtCore.Qt.AlignVCenter)
         self.label.setObjectName("label")
@@ -303,6 +311,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_25.setFont(font)
+        self.label_25.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
         self.label_25.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
@@ -313,6 +325,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_40.setFont(font)
+        self.label_40.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
         self.label_40.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
@@ -380,6 +396,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_13.setFont(font)
+        self.label_13.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
         self.label_13.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
@@ -580,6 +600,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_17.setFont(font)
+        self.label_17.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
         self.label_17.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
@@ -597,13 +621,12 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.label_59.sizePolicy().hasHeightForWidth())
         self.label_59.setSizePolicy(sizePolicy)
+        self.label_59.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 2px solid gray;\n"
+                                    "}")
         self.label_59.setObjectName("label_59")
         self.horizontalLayout_18.addWidget(self.label_59)
-        self.line_6 = QtWidgets.QFrame(self.style_tab)
-        self.line_6.setFrameShape(QtWidgets.QFrame.VLine)
-        self.line_6.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line_6.setObjectName("line_6")
-        self.horizontalLayout_18.addWidget(self.line_6)
         self.label_60 = QtWidgets.QLabel(self.style_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Preferred)
@@ -650,6 +673,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_16.setFont(font)
+        self.label_16.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
         self.label_16.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
@@ -659,14 +686,20 @@ class Ui_Dialog(object):
         self.horizontalLayout_9.setSpacing(4)
         self.horizontalLayout_9.setObjectName("horizontalLayout_9")
         self.enable_mathtext_chkbox = QtWidgets.QCheckBox(self.style_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.enable_mathtext_chkbox.sizePolicy().hasHeightForWidth())
+        self.enable_mathtext_chkbox.setSizePolicy(sizePolicy)
+        self.enable_mathtext_chkbox.setStyleSheet(
+            "QCheckBox {\n"
+            "    border-top: 0px solid gray;\n"
+            "    border-right: 2px solid gray;\n"
+            "}")
         self.enable_mathtext_chkbox.setObjectName("enable_mathtext_chkbox")
         self.horizontalLayout_9.addWidget(self.enable_mathtext_chkbox)
-        self.line = QtWidgets.QFrame(self.style_tab)
-        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line.setLineWidth(1)
-        self.line.setFrameShape(QtWidgets.QFrame.VLine)
-        self.line.setObjectName("line")
-        self.horizontalLayout_9.addWidget(self.line)
         self.label_38 = QtWidgets.QLabel(self.style_tab)
         font = QtGui.QFont()
         font.setUnderline(False)
@@ -707,6 +740,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_6.setFont(font)
+        self.label_6.setStyleSheet("QLabel {\n"
+                                   "    border-top: 0px solid gray;\n"
+                                   "    border-right: 5px solid gray;\n"
+                                   "}")
         self.label_6.setAlignment(QtCore.Qt.AlignRight
                                   | QtCore.Qt.AlignTrailing
                                   | QtCore.Qt.AlignVCenter)
@@ -717,6 +754,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_7.setFont(font)
+        self.label_7.setStyleSheet("QLabel {\n"
+                                   "    border-top: 0px solid gray;\n"
+                                   "    border-right: 5px solid gray;\n"
+                                   "}")
         self.label_7.setAlignment(QtCore.Qt.AlignRight
                                   | QtCore.Qt.AlignTrailing
                                   | QtCore.Qt.AlignVCenter)
@@ -788,13 +829,20 @@ class Ui_Dialog(object):
         self.border_style_hbox.setSpacing(4)
         self.border_style_hbox.setObjectName("border_style_hbox")
         self.border_hide_chkbox = QtWidgets.QCheckBox(self.style_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.border_hide_chkbox.sizePolicy().hasHeightForWidth())
+        self.border_hide_chkbox.setSizePolicy(sizePolicy)
+        self.border_hide_chkbox.setStyleSheet(
+            "QCheckBox {\n"
+            "    border-top: 0px solid gray;\n"
+            "    border-right: 2px solid gray;\n"
+            "}")
         self.border_hide_chkbox.setObjectName("border_hide_chkbox")
         self.border_style_hbox.addWidget(self.border_hide_chkbox)
-        self.line_2 = QtWidgets.QFrame(self.style_tab)
-        self.line_2.setFrameShape(QtWidgets.QFrame.VLine)
-        self.line_2.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line_2.setObjectName("line_2")
-        self.border_style_hbox.addWidget(self.line_2)
         self.label_67 = QtWidgets.QLabel(self.style_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Preferred)
@@ -932,6 +980,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_66.setFont(font)
+        self.label_66.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
         self.label_66.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
@@ -956,6 +1008,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_173.setFont(font)
+        self.label_173.setStyleSheet("QLabel {\n"
+                                     "    border-top: 0px solid gray;\n"
+                                     "    border-right: 5px solid gray;\n"
+                                     "}")
         self.label_173.setAlignment(QtCore.Qt.AlignRight
                                     | QtCore.Qt.AlignTrailing
                                     | QtCore.Qt.AlignVCenter)
@@ -970,6 +1026,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_164.setFont(font)
+        self.label_164.setStyleSheet("QLabel {\n"
+                                     "    border-top: 0px solid gray;\n"
+                                     "    border-right: 5px solid gray;\n"
+                                     "}")
         self.label_164.setAlignment(QtCore.Qt.AlignRight
                                     | QtCore.Qt.AlignTrailing
                                     | QtCore.Qt.AlignVCenter)
@@ -1148,6 +1208,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_163.setFont(font)
+        self.label_163.setStyleSheet("QLabel {\n"
+                                     "    border-top: 0px solid gray;\n"
+                                     "    border-right: 5px solid gray;\n"
+                                     "}")
         self.label_163.setAlignment(QtCore.Qt.AlignRight
                                     | QtCore.Qt.AlignTrailing
                                     | QtCore.Qt.AlignVCenter)
@@ -1158,6 +1222,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_174.setFont(font)
+        self.label_174.setStyleSheet("QLabel {\n"
+                                     "    border-top: 0px solid gray;\n"
+                                     "    border-right: 5px solid gray;\n"
+                                     "}")
         self.label_174.setAlignment(QtCore.Qt.AlignRight
                                     | QtCore.Qt.AlignTrailing
                                     | QtCore.Qt.AlignVCenter)
@@ -1232,6 +1300,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_3.setFont(font)
+        self.label_3.setStyleSheet("QLabel {\n"
+                                   "    border-top: 0px solid gray;\n"
+                                   "    border-right: 5px solid gray;\n"
+                                   "}")
         self.label_3.setAlignment(QtCore.Qt.AlignRight
                                   | QtCore.Qt.AlignTrailing
                                   | QtCore.Qt.AlignVCenter)
@@ -1306,6 +1378,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_2.setFont(font)
+        self.label_2.setStyleSheet("QLabel {\n"
+                                   "    border-top: 0px solid gray;\n"
+                                   "    border-right: 5px solid gray;\n"
+                                   "}")
         self.label_2.setAlignment(QtCore.Qt.AlignRight
                                   | QtCore.Qt.AlignTrailing
                                   | QtCore.Qt.AlignVCenter)
@@ -1316,6 +1392,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_26.setFont(font)
+        self.label_26.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
         self.label_26.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
@@ -1326,6 +1406,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_23.setFont(font)
+        self.label_23.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
         self.label_23.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
@@ -1336,6 +1420,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_4.setFont(font)
+        self.label_4.setStyleSheet("QLabel {\n"
+                                   "    border-top: 0px solid gray;\n"
+                                   "    border-right: 5px solid gray;\n"
+                                   "}")
         self.label_4.setAlignment(QtCore.Qt.AlignRight
                                   | QtCore.Qt.AlignTrailing
                                   | QtCore.Qt.AlignVCenter)
@@ -1538,6 +1626,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_36.setFont(font)
+        self.label_36.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
         self.label_36.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
@@ -1558,6 +1650,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_30.setFont(font)
+        self.label_30.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
         self.label_30.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
@@ -1736,6 +1832,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_28.setFont(font)
+        self.label_28.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
         self.label_28.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
@@ -1746,6 +1846,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_80.setFont(font)
+        self.label_80.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
         self.label_80.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
@@ -1780,6 +1884,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_47.setFont(font)
+        self.label_47.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
         self.label_47.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
@@ -1925,6 +2033,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_43.setFont(font)
+        self.label_43.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
         self.label_43.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
@@ -1935,6 +2047,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_44.setFont(font)
+        self.label_44.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
         self.label_44.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
@@ -2274,13 +2390,21 @@ class Ui_Dialog(object):
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
         self.label_75.setObjectName("label_75")
-        self.gridLayout_4.addWidget(self.label_75, 5, 4, 1, 1)
-        self.label_74 = QtWidgets.QLabel(self.barchart_tab)
-        self.label_74.setAlignment(QtCore.Qt.AlignRight
+        self.gridLayout_4.addWidget(self.label_75, 5, 3, 1, 1)
+        spacerItem14 = QtWidgets.QSpacerItem(40, 20,
+                                             QtWidgets.QSizePolicy.Expanding,
+                                             QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout_4.addItem(spacerItem14, 4, 7, 1, 1)
+        self.label_76 = QtWidgets.QLabel(self.barchart_tab)
+        self.label_76.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 2px solid gray;\n"
+                                    "}")
+        self.label_76.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
-        self.label_74.setObjectName("label_74")
-        self.gridLayout_4.addWidget(self.label_74, 4, 4, 1, 1)
+        self.label_76.setObjectName("label_76")
+        self.gridLayout_4.addWidget(self.label_76, 5, 1, 1, 1)
         self.annote_bbox_alpha_dsbox = QtWidgets.QDoubleSpinBox(
             self.barchart_tab)
         self.annote_bbox_alpha_dsbox.setDecimals(1)
@@ -2288,33 +2412,33 @@ class Ui_Dialog(object):
         self.annote_bbox_alpha_dsbox.setSingleStep(0.1)
         self.annote_bbox_alpha_dsbox.setProperty("value", 0.8)
         self.annote_bbox_alpha_dsbox.setObjectName("annote_bbox_alpha_dsbox")
-        self.gridLayout_4.addWidget(self.annote_bbox_alpha_dsbox, 5, 5, 1, 1)
-        self.line_4 = QtWidgets.QFrame(self.barchart_tab)
-        self.line_4.setFrameShape(QtWidgets.QFrame.VLine)
-        self.line_4.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line_4.setObjectName("line_4")
-        self.gridLayout_4.addWidget(self.line_4, 5, 2, 1, 1)
-        self.annote_fmt_lineEdit = QtWidgets.QLineEdit(self.barchart_tab)
-        self.annote_fmt_lineEdit.setObjectName("annote_fmt_lineEdit")
-        self.gridLayout_4.addWidget(self.annote_fmt_lineEdit, 6, 5, 1, 4)
-        self.line_5 = QtWidgets.QFrame(self.barchart_tab)
-        self.line_5.setFrameShape(QtWidgets.QFrame.VLine)
-        self.line_5.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line_5.setObjectName("line_5")
-        self.gridLayout_4.addWidget(self.line_5, 6, 2, 1, 1)
-        self.label_73 = QtWidgets.QLabel(self.barchart_tab)
-        self.label_73.setAlignment(QtCore.Qt.AlignRight
+        self.gridLayout_4.addWidget(self.annote_bbox_alpha_dsbox, 5, 4, 1, 1)
+        self.label_77 = QtWidgets.QLabel(self.barchart_tab)
+        self.label_77.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 2px solid gray;\n"
+                                    "}")
+        self.label_77.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
-        self.label_73.setObjectName("label_73")
-        self.gridLayout_4.addWidget(self.label_73, 4, 6, 1, 1)
+        self.label_77.setObjectName("label_77")
+        self.gridLayout_4.addWidget(self.label_77, 4, 1, 1, 1)
+        self.annote_fmt_lineEdit = QtWidgets.QLineEdit(self.barchart_tab)
+        self.annote_fmt_lineEdit.setObjectName("annote_fmt_lineEdit")
+        self.gridLayout_4.addWidget(self.annote_fmt_lineEdit, 6, 4, 1, 4)
+        self.label_74 = QtWidgets.QLabel(self.barchart_tab)
+        self.label_74.setAlignment(QtCore.Qt.AlignRight
+                                   | QtCore.Qt.AlignTrailing
+                                   | QtCore.Qt.AlignVCenter)
+        self.label_74.setObjectName("label_74")
+        self.gridLayout_4.addWidget(self.label_74, 4, 3, 1, 1)
         self.horizontalLayout_14 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_14.setSpacing(4)
         self.horizontalLayout_14.setObjectName("horizontalLayout_14")
-        spacerItem14 = QtWidgets.QSpacerItem(40, 20,
+        spacerItem15 = QtWidgets.QSpacerItem(40, 20,
                                              QtWidgets.QSizePolicy.Preferred,
                                              QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_14.addItem(spacerItem14)
+        self.horizontalLayout_14.addItem(spacerItem15)
         self.reset_annote_fmt_btn = QtWidgets.QToolButton(self.barchart_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
@@ -2326,66 +2450,68 @@ class Ui_Dialog(object):
         self.reset_annote_fmt_btn.setIcon(icon8)
         self.reset_annote_fmt_btn.setObjectName("reset_annote_fmt_btn")
         self.horizontalLayout_14.addWidget(self.reset_annote_fmt_btn)
-        self.gridLayout_4.addLayout(self.horizontalLayout_14, 6, 4, 1, 1)
-        self.label_76 = QtWidgets.QLabel(self.barchart_tab)
-        self.label_76.setAlignment(QtCore.Qt.AlignRight
-                                   | QtCore.Qt.AlignTrailing
-                                   | QtCore.Qt.AlignVCenter)
-        self.label_76.setObjectName("label_76")
-        self.gridLayout_4.addWidget(self.label_76, 5, 1, 1, 1)
+        self.gridLayout_4.addLayout(self.horizontalLayout_14, 6, 3, 1, 1)
         self.annote_fontsize_sbox = QtWidgets.QSpinBox(self.barchart_tab)
         self.annote_fontsize_sbox.setMinimum(8)
         self.annote_fontsize_sbox.setMaximum(30)
         self.annote_fontsize_sbox.setProperty("value", 10)
         self.annote_fontsize_sbox.setObjectName("annote_fontsize_sbox")
-        self.gridLayout_4.addWidget(self.annote_fontsize_sbox, 4, 5, 1, 1)
-        spacerItem15 = QtWidgets.QSpacerItem(40, 20,
-                                             QtWidgets.QSizePolicy.Expanding,
-                                             QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_4.addItem(spacerItem15, 4, 8, 1, 1)
-        self.label_78 = QtWidgets.QLabel(self.barchart_tab)
-        self.label_78.setAlignment(QtCore.Qt.AlignRight
-                                   | QtCore.Qt.AlignTrailing
-                                   | QtCore.Qt.AlignVCenter)
-        self.label_78.setObjectName("label_78")
-        self.gridLayout_4.addWidget(self.label_78, 6, 1, 1, 1)
-        self.label_77 = QtWidgets.QLabel(self.barchart_tab)
-        self.label_77.setAlignment(QtCore.Qt.AlignRight
-                                   | QtCore.Qt.AlignTrailing
-                                   | QtCore.Qt.AlignVCenter)
-        self.label_77.setObjectName("label_77")
-        self.gridLayout_4.addWidget(self.label_77, 4, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.annote_fontsize_sbox, 4, 4, 1, 1)
         self.annote_angle_dsbox = QtWidgets.QDoubleSpinBox(self.barchart_tab)
         self.annote_angle_dsbox.setDecimals(1)
         self.annote_angle_dsbox.setMaximum(360.0)
         self.annote_angle_dsbox.setSingleStep(1.0)
         self.annote_angle_dsbox.setObjectName("annote_angle_dsbox")
-        self.gridLayout_4.addWidget(self.annote_angle_dsbox, 4, 7, 1, 1)
-        self.line_3 = QtWidgets.QFrame(self.barchart_tab)
-        self.line_3.setFrameShape(QtWidgets.QFrame.VLine)
-        self.line_3.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.line_3.setObjectName("line_3")
-        self.gridLayout_4.addWidget(self.line_3, 4, 2, 1, 1)
+        self.gridLayout_4.addWidget(self.annote_angle_dsbox, 4, 6, 1, 1)
+        self.label_73 = QtWidgets.QLabel(self.barchart_tab)
+        self.label_73.setAlignment(QtCore.Qt.AlignRight
+                                   | QtCore.Qt.AlignTrailing
+                                   | QtCore.Qt.AlignVCenter)
+        self.label_73.setObjectName("label_73")
+        self.gridLayout_4.addWidget(self.label_73, 4, 5, 1, 1)
+        self.label_78 = QtWidgets.QLabel(self.barchart_tab)
+        self.label_78.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 2px solid gray;\n"
+                                    "}")
+        self.label_78.setAlignment(QtCore.Qt.AlignRight
+                                   | QtCore.Qt.AlignTrailing
+                                   | QtCore.Qt.AlignVCenter)
+        self.label_78.setObjectName("label_78")
+        self.gridLayout_4.addWidget(self.label_78, 6, 1, 1, 1)
         self.gridLayout_11.addLayout(self.gridLayout_4, 3, 2, 1, 1)
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setContentsMargins(0, -1, -1, -1)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setSpacing(0)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        spacerItem16 = QtWidgets.QSpacerItem(40, 20,
+                                             QtWidgets.QSizePolicy.Fixed,
+                                             QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem16)
         self.annote_visible_chkbox = QtWidgets.QCheckBox(self.barchart_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Fixed)
+                                           QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
             self.annote_visible_chkbox.sizePolicy().hasHeightForWidth())
         self.annote_visible_chkbox.setSizePolicy(sizePolicy)
+        self.annote_visible_chkbox.setStyleSheet(
+            "QCheckBox {\n"
+            "    border-top: 0px solid gray;\n"
+            "    border-right: 5px solid gray;\n"
+            "}")
         self.annote_visible_chkbox.setObjectName("annote_visible_chkbox")
-        self.verticalLayout.addWidget(self.annote_visible_chkbox)
+        self.horizontalLayout.addWidget(self.annote_visible_chkbox)
+        self.verticalLayout.addLayout(self.horizontalLayout)
         self.label_72 = QtWidgets.QLabel(self.barchart_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setVerticalStretch(1)
         sizePolicy.setHeightForWidth(
             self.label_72.sizePolicy().hasHeightForWidth())
         self.label_72.setSizePolicy(sizePolicy)
@@ -2393,6 +2519,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_72.setFont(font)
+        self.label_72.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
         self.label_72.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTop
                                    | QtCore.Qt.AlignTrailing)
         self.label_72.setObjectName("label_72")
@@ -2410,6 +2540,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_48.setFont(font)
+        self.label_48.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
         self.label_48.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
@@ -2420,6 +2554,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_51.setFont(font)
+        self.label_51.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
         self.label_51.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
@@ -2430,6 +2568,10 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_57.setFont(font)
+        self.label_57.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
         self.label_57.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
@@ -2808,15 +2950,15 @@ class Ui_Dialog(object):
         self.label_55.setText(_translate("Dialog", "Opacity"))
         self.label_71.setText(_translate("Dialog", "Opacity"))
         self.label_75.setText(_translate("Dialog", "Alpha"))
+        self.label_76.setText(_translate("Dialog", "BBox"))
+        self.label_77.setText(_translate("Dialog", "Text"))
         self.label_74.setText(_translate("Dialog", "Font Size"))
-        self.label_73.setText(_translate("Dialog", "Rotation"))
         self.reset_annote_fmt_btn.setToolTip(
             _translate("Dialog", "Reset to default format."))
         self.reset_annote_fmt_btn.setText(_translate("Dialog", "Reset"))
-        self.label_76.setText(_translate("Dialog", "BBox"))
-        self.label_78.setText(_translate("Dialog", "Format"))
-        self.label_77.setText(_translate("Dialog", "Text"))
         self.annote_angle_dsbox.setSuffix(_translate("Dialog", " deg"))
+        self.label_73.setText(_translate("Dialog", "Rotation"))
+        self.label_78.setText(_translate("Dialog", "Format"))
         self.annote_visible_chkbox.setText(_translate("Dialog", "Visible"))
         self.label_72.setText(_translate("Dialog", "Annotation"))
         self.label_48.setText(_translate("Dialog", "Bar"))
