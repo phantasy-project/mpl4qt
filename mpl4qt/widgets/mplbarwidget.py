@@ -64,9 +64,10 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
         self._all_annotes = None
         self._default_annote_fmt = "${0:.3g}\pm{1:.3g}$"
         self._annote_config_dict = {
+            "visible": True,
             "fmt": self._default_annote_fmt,
-            "size": 10, # fontsize
-            "rotation": 0.0, # rotation
+            "size": 10,  # fontsize
+            "rotation": 0.0,  # rotation
             "bbox_dict": {
                 "boxstyle": "round,pad=0.2",
                 "fc": "w", "ec": "0.5", "lw": 1, "alpha": 1.0},
@@ -77,6 +78,8 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
         self._annote_config_dict.update(**kws)
 
     def init_figure(self, x=None, y=None, yerr=None):
+        """Initialize barchart, should not call update_figure() or any canvas methods.
+        """
         if x is None:
             x = np.linspace(1, 10, 5)
             y = np.sin(10 * x)
@@ -85,15 +88,18 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
         self._x_data = x
         self._y_data = y
         self._yerr_data = yerr
-        self._bars = self.axes.bar(x, y, self._bar_width,
-                                   color=self._bar_color.getRgbF(),
-                                   alpha=self._bar_alpha,
-                                   label=self._label,
-                                   yerr=yerr, error_kw={
+        self._bars = self.axes.bar(
+            x, y, self._bar_width,
+            color=self._bar_color.getRgbF(),
+            alpha=self._bar_alpha,
+            label=self._label,
+            yerr=yerr,
+            error_kw={
                 'ecolor': self._eb_line_color.getRgbF(),
                 'alpha': self._eb_line_alpha,
-                'lw': self._eb_line_width, })
-
+                'lw': self._eb_line_width,
+            }
+        )
         self._eb_lines = self._bars.errorbar.lines[-1][0]
         self._rects = self._bars.patches
 
@@ -320,6 +326,7 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
         self._yerr_data = yerr_data
         adjust_bar(self._rects, self._eb_lines, x_data, y_data, yerr_data,
                    self._bar_width)
+        self._update_annote()
         self.update_figure()
 
     def reset_data(self, x, y, yerr):
@@ -332,9 +339,15 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
     def on_annote_config_changed(self):
         """Annotations style config is changed.
         """
-        self.clear_annote()
-        self.annotate_bar(**self._annote_config_dict)
+        self._update_annote()
         self.update_figure()
+
+    def _update_annote(self):
+        if not self._annote_config_dict.get('visible'):
+            self.clear_annote()
+        else:
+            self.clear_annote()
+            self.annotate_bar(**self._annote_config_dict)
 
     def annotate_bar(self, **kws):
         """Annotate with height value on top/bottom of bar.
@@ -348,6 +361,7 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
         --------
         clear_annote : Clear all annotations.
         """
+        kws.pop('visible', None)
         all_annotes = []
         ax = self.axes
         fmt = kws.pop('fmt')
