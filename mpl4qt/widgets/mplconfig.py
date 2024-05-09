@@ -1343,9 +1343,6 @@ class MatplotlibConfigBarPanel(MatplotlibConfigCurvePanel):
         self.config_tabWidget.setTabEnabled(
             self.config_tabWidget.indexOf(self.barchart_tab), True)
 
-        self.ebline_width_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
-        self.bar_width_lineEdit.setValidator(QDoubleValidator(0, 50, 1, self))
-
         # events
         # ebline color
         self.figEbLineColorChanged[QColor].connect(self.set_ebline_color_btn)
@@ -1359,7 +1356,7 @@ class MatplotlibConfigBarPanel(MatplotlibConfigCurvePanel):
         self.figEbLineAlphaChanged[float].connect(self.parent.setEbLineAlpha)
 
         # ebline linewidth
-        self.ebline_width_lineEdit.textChanged.connect(self.set_ebline_width)
+        self.ebline_width_dsbox.valueChanged.connect(self.set_ebline_width)
         self.figEbLineWidthChanged[float].connect(self.parent.setEbLineWidth)
 
         # ebline linestyle
@@ -1381,7 +1378,7 @@ class MatplotlibConfigBarPanel(MatplotlibConfigCurvePanel):
         self.figBarAlphaChanged[float].connect(self.parent.setBarAlpha)
 
         # bar width
-        self.bar_width_lineEdit.textChanged.connect(self.set_bar_width)
+        self.bar_width_dsbox.valueChanged.connect(self.set_bar_width)
         self.figBarWidthChanged[float].connect(self.parent.setBarWidth)
 
         # annotation config
@@ -1430,17 +1427,13 @@ class MatplotlibConfigBarPanel(MatplotlibConfigCurvePanel):
                 fmt=self.annote_fmt_lineEdit.text())
         self.figAnnoteConfigChanged.emit()
 
-    @pyqtSlot('QString')
-    def set_ebline_width(self, s):
-        if s == '': return
-        w = max(float(s), 0.05)
-        self.figEbLineWidthChanged.emit(w)
+    @pyqtSlot(float)
+    def set_ebline_width(self, x: float):
+        self.figEbLineWidthChanged.emit(max(x, 0.05))
 
-    @pyqtSlot('QString')
-    def set_bar_width(self, s):
-        if s == '': return
-        w = max(float(s), 0.05)
-        self.figBarWidthChanged.emit(w)
+    @pyqtSlot(float)
+    def set_bar_width(self, x: float):
+        self.figBarWidthChanged.emit(max(x, 0.05))
 
     @pyqtSlot(int)
     def set_ebline_opacity(self, i):
@@ -1489,7 +1482,7 @@ class MatplotlibConfigBarPanel(MatplotlibConfigCurvePanel):
         # eb alpha
         self.ebline_opacity_slider.setValue(int(eb_opacity))
         # eb lw
-        self.ebline_width_lineEdit.setText('{}'.format(eb_lw))
+        self.ebline_width_dsbox.setValue(eb_lw)
         # eb ls
         self.ebline_style_cbb.setCurrentText(eb_ls)
         # label
@@ -1499,7 +1492,7 @@ class MatplotlibConfigBarPanel(MatplotlibConfigCurvePanel):
         # bar alpha
         self.bar_opacity_slider.setValue(int(bar_opacity))
         # bar width
-        self.bar_width_lineEdit.setText('{}'.format(bar_width))
+        self.bar_width_dsbox.setValue(bar_width)
 
         # annotations
         fontsize = annote_config['size']
