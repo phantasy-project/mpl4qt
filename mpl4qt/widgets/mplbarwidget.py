@@ -50,6 +50,9 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
         self._handlers['w_mpl_tools'].cross_snap_act.setChecked(False)
         self._handlers['w_mpl_tools'].cross_snap_act.setEnabled(False)
 
+        # clear the figure
+        self.clear_figure()
+
     def _init_config(self):
         self._eb_line_width = 1
         self._eb_line_style = '-'
@@ -330,10 +333,18 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
         self.update_figure()
 
     def reset_data(self, x, y, yerr):
-        """Reset data with *x*, *y* and *yerr*, only requires for barchar.
+        """Reset data with *x*, *y* and *yerr*, only requires for barchart.
         """
         self.clear_figure()
         self.init_figure(x, y, yerr)
+
+    def clear_figure(self):
+        # call this overridden method for a clean graph but with grid on.
+        MatplotlibCurveWidget.clear_figure(self)
+        # enable grid
+        # workaround for: first entering configuration panel will turn grid on, don't
+        # know the root cause, so initialize with grid on to make it consistent.
+        self.setFigureGridToggle(True)
 
     @pyqtSlot()
     def on_annote_config_changed(self):
