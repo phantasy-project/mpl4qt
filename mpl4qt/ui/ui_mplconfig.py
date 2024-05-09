@@ -502,7 +502,10 @@ class Ui_Dialog(object):
         self.label_25.raise_()
         self.label_40.raise_()
         self.label.raise_()
-        self.config_tabWidget.addTab(self.figure_tab, "")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(":/icons/dashboard.png"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.config_tabWidget.addTab(self.figure_tab, icon1, "")
         self.style_tab = QtWidgets.QWidget()
         self.style_tab.setObjectName("style_tab")
         self.gridLayout_7 = QtWidgets.QGridLayout(self.style_tab)
@@ -938,7 +941,10 @@ class Ui_Dialog(object):
                                             QtWidgets.QSizePolicy.Minimum,
                                             QtWidgets.QSizePolicy.Expanding)
         self.gridLayout_7.addItem(spacerItem5, 7, 1, 1, 1)
-        self.config_tabWidget.addTab(self.style_tab, "")
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(":/icons/style.png"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
+        self.config_tabWidget.addTab(self.style_tab, icon2, "")
         self.cross_tab = QtWidgets.QWidget()
         self.cross_tab.setObjectName("cross_tab")
         self.gridLayout_27 = QtWidgets.QGridLayout(self.cross_tab)
@@ -1190,7 +1196,10 @@ class Ui_Dialog(object):
         self.cross_cbb = QtWidgets.QComboBox(self.cross_tab)
         self.cross_cbb.setObjectName("cross_cbb")
         self.gridLayout_27.addWidget(self.cross_cbb, 0, 1, 1, 4)
-        self.config_tabWidget.addTab(self.cross_tab, "")
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(":/icons/marker.png"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.config_tabWidget.addTab(self.cross_tab, icon3, "")
         self.curve_tab = QtWidgets.QWidget()
         self.curve_tab.setObjectName("curve_tab")
         self.gridLayout_12 = QtWidgets.QGridLayout(self.curve_tab)
@@ -1514,10 +1523,10 @@ class Ui_Dialog(object):
         self.line_label_lineEdit = QtWidgets.QLineEdit(self.curve_tab)
         self.line_label_lineEdit.setObjectName("line_label_lineEdit")
         self.gridLayout_12.addWidget(self.line_label_lineEdit, 1, 1, 1, 2)
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/logos/mplcurvewidget_icon.png"),
-                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.config_tabWidget.addTab(self.curve_tab, icon1, "")
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap(":/icons/curve.png"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
+        self.config_tabWidget.addTab(self.curve_tab, icon4, "")
         self.eb_tab = QtWidgets.QWidget()
         self.eb_tab.setObjectName("eb_tab")
         self.gridLayout_13 = QtWidgets.QGridLayout(self.eb_tab)
@@ -1756,10 +1765,10 @@ class Ui_Dialog(object):
                                             QtWidgets.QSizePolicy.Minimum,
                                             QtWidgets.QSizePolicy.Expanding)
         self.gridLayout_13.addItem(spacerItem8, 4, 1, 1, 1)
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/logos/mplerrorbarwidget_icon.png"),
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap(":/icons/candlestick.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.config_tabWidget.addTab(self.eb_tab, icon2, "")
+        self.config_tabWidget.addTab(self.eb_tab, icon5, "")
         self.image_tab = QtWidgets.QWidget()
         self.image_tab.setObjectName("image_tab")
         self.gridLayout_8 = QtWidgets.QGridLayout(self.image_tab)
@@ -1789,18 +1798,18 @@ class Ui_Dialog(object):
         self.cmap_cbb.setObjectName("cmap_cbb")
         self.horizontalLayout_15.addWidget(self.cmap_cbb)
         self.add_to_fav_btn = QtWidgets.QToolButton(self.image_tab)
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(":/icons/add.png"), QtGui.QIcon.Normal,
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap(":/icons/add.png"), QtGui.QIcon.Normal,
                         QtGui.QIcon.Off)
-        self.add_to_fav_btn.setIcon(icon3)
+        self.add_to_fav_btn.setIcon(icon6)
         self.add_to_fav_btn.setAutoRaise(False)
         self.add_to_fav_btn.setObjectName("add_to_fav_btn")
         self.horizontalLayout_15.addWidget(self.add_to_fav_btn)
         self.del_from_fav_btn = QtWidgets.QToolButton(self.image_tab)
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(":/icons/del.png"), QtGui.QIcon.Normal,
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap(":/icons/del.png"), QtGui.QIcon.Normal,
                         QtGui.QIcon.Off)
-        self.del_from_fav_btn.setIcon(icon4)
+        self.del_from_fav_btn.setIcon(icon7)
         self.del_from_fav_btn.setAutoRaise(False)
         self.del_from_fav_btn.setObjectName("del_from_fav_btn")
         self.horizontalLayout_15.addWidget(self.del_from_fav_btn)
@@ -1833,10 +1842,10 @@ class Ui_Dialog(object):
         self.auto_clim_chkbox.setObjectName("auto_clim_chkbox")
         self.horizontalLayout_4.addWidget(self.auto_clim_chkbox)
         self.cr_reset_tbtn = QtWidgets.QToolButton(self.image_tab)
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(":/icons/reset_btn.png"),
+        icon8 = QtGui.QIcon()
+        icon8.addPixmap(QtGui.QPixmap(":/icons/reset_btn.png"),
                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.cr_reset_tbtn.setIcon(icon5)
+        self.cr_reset_tbtn.setIcon(icon8)
         self.cr_reset_tbtn.setAutoRaise(False)
         self.cr_reset_tbtn.setObjectName("cr_reset_tbtn")
         self.horizontalLayout_4.addWidget(self.cr_reset_tbtn)
@@ -1935,10 +1944,10 @@ class Ui_Dialog(object):
                                              QtWidgets.QSizePolicy.Minimum,
                                              QtWidgets.QSizePolicy.Expanding)
         self.gridLayout_8.addItem(spacerItem10, 3, 1, 1, 1)
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(":/logos/mplimagewidget_icon.png"),
-                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.config_tabWidget.addTab(self.image_tab, icon6, "")
+        icon9 = QtGui.QIcon()
+        icon9.addPixmap(QtGui.QPixmap(":/icons/image.png"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
+        self.config_tabWidget.addTab(self.image_tab, icon9, "")
         self.barchart_tab = QtWidgets.QWidget()
         self.barchart_tab.setObjectName("barchart_tab")
         self.gridLayout_11 = QtWidgets.QGridLayout(self.barchart_tab)
@@ -2314,7 +2323,7 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(
             self.reset_annote_fmt_btn.sizePolicy().hasHeightForWidth())
         self.reset_annote_fmt_btn.setSizePolicy(sizePolicy)
-        self.reset_annote_fmt_btn.setIcon(icon5)
+        self.reset_annote_fmt_btn.setIcon(icon8)
         self.reset_annote_fmt_btn.setObjectName("reset_annote_fmt_btn")
         self.horizontalLayout_14.addWidget(self.reset_annote_fmt_btn)
         self.gridLayout_4.addLayout(self.horizontalLayout_14, 6, 4, 1, 1)
@@ -2426,10 +2435,10 @@ class Ui_Dialog(object):
                                    | QtCore.Qt.AlignVCenter)
         self.label_57.setObjectName("label_57")
         self.gridLayout_11.addWidget(self.label_57, 2, 1, 1, 1)
-        icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap(":/logos/mplbarwidget_icon.png"),
-                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.config_tabWidget.addTab(self.barchart_tab, icon7, "")
+        icon10 = QtGui.QIcon()
+        icon10.addPixmap(QtGui.QPixmap(":/icons/bar_chart.png"),
+                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.config_tabWidget.addTab(self.barchart_tab, icon10, "")
         self.gridLayout_3.addWidget(self.config_tabWidget, 1, 0, 1, 1)
 
         self.retranslateUi(Dialog)
@@ -2528,7 +2537,7 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.label_42.setText(_translate("Dialog", "X"))
+        self.label_42.setText(_translate("Dialog", "X-Axis"))
         self.xaxis_scale_cbb.setItemText(0, _translate("Dialog",
                                                        "Linear Scale"))
         self.xaxis_scale_cbb.setItemText(1,
@@ -2537,7 +2546,7 @@ class Ui_Dialog(object):
             2, _translate("Dialog", "Symmetrical Log Transform"))
         self.xaxis_scale_cbb.setItemText(
             3, _translate("Dialog", "Logistic Transform"))
-        self.label_41.setText(_translate("Dialog", "Y"))
+        self.label_41.setText(_translate("Dialog", "Y-Axis"))
         self.yaxis_scale_cbb.setItemText(0, _translate("Dialog",
                                                        "Linear Scale"))
         self.yaxis_scale_cbb.setItemText(1,
@@ -2547,8 +2556,8 @@ class Ui_Dialog(object):
         self.yaxis_scale_cbb.setItemText(
             3, _translate("Dialog", "Logistic Transform"))
         self.label_10.setText(_translate("Dialog", "Labels"))
-        self.label_18.setText(_translate("Dialog", "X-Label"))
-        self.label_11.setText(_translate("Dialog", "Y-Label"))
+        self.label_18.setText(_translate("Dialog", "X-Axis"))
+        self.label_11.setText(_translate("Dialog", "Y-Axis"))
         self.hide_xylabel_chkbox.setText(_translate("Dialog", "Hide"))
         self.xy_label_font_btn.setToolTip(_translate("Dialog", "Change font."))
         self.xy_label_font_btn.setText(_translate("Dialog", "Font"))
@@ -2557,7 +2566,7 @@ class Ui_Dialog(object):
         self.title_font_btn.setToolTip(_translate("Dialog", "Change font."))
         self.title_font_btn.setText(_translate("Dialog", "Font"))
         self.label_25.setText(_translate("Dialog", "Legend"))
-        self.label_40.setText(_translate("Dialog", "Axis Scale"))
+        self.label_40.setText(_translate("Dialog", "Scale"))
         self.legend_on_chkbox.setToolTip(
             _translate("Dialog", "Check to show legend"))
         self.legend_on_chkbox.setText(_translate("Dialog", "Show"))
@@ -2580,10 +2589,10 @@ class Ui_Dialog(object):
         self.legend_loc_cbb.setItemText(10, _translate("Dialog", "Center"))
         self.label_13.setText(_translate("Dialog", "Title"))
         self.autoScale_chkbox.setText(_translate("Dialog", "Auto Scale"))
-        self.xmin_lbl.setText(_translate("Dialog", "X-min"))
-        self.xmax_lbl.setText(_translate("Dialog", "X-max"))
-        self.ymin_lbl.setText(_translate("Dialog", "Y-min"))
-        self.ymax_lbl.setText(_translate("Dialog", "Y-max"))
+        self.xmin_lbl.setText(_translate("Dialog", "X-Min"))
+        self.xmax_lbl.setText(_translate("Dialog", "X-Max"))
+        self.ymin_lbl.setText(_translate("Dialog", "Y-Min"))
+        self.ymax_lbl.setText(_translate("Dialog", "Y-Max"))
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.figure_tab),
             _translate("Dialog", "Figure"))
