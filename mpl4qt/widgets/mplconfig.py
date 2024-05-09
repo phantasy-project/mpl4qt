@@ -1382,6 +1382,7 @@ class MatplotlibConfigBarPanel(MatplotlibConfigCurvePanel):
         self.figBarWidthChanged[float].connect(self.parent.setBarWidth)
 
         # annotation config
+        self.annote_visible_chkbox.toggled.connect(self.set_annote_visible)
         self.annote_fontsize_sbox.valueChanged.connect(self.set_annote_fontsize)
         self.annote_angle_dsbox.valueChanged.connect(self.set_annote_angle)
         self.annote_bbox_alpha_dsbox.valueChanged.connect(self.set_annote_bbox_alpha)
@@ -1397,6 +1398,13 @@ class MatplotlibConfigBarPanel(MatplotlibConfigCurvePanel):
     def on_reset_annote_fmt(self):
         self.annote_fmt_lineEdit.setText(self.parent._default_annote_fmt)
         self.annote_fmt_lineEdit.returnPressed.emit()
+
+    @pyqtSlot(bool)
+    def set_annote_visible(self, checked: bool):
+        """If show the annotations or not.
+        """
+        self.parent.update_annote_config_dict(visible=checked)
+        self.figAnnoteConfigChanged.emit()
 
     @pyqtSlot(int)
     def set_annote_fontsize(self, i):
@@ -1495,10 +1503,12 @@ class MatplotlibConfigBarPanel(MatplotlibConfigCurvePanel):
         self.bar_width_dsbox.setValue(bar_width)
 
         # annotations
+        visible = annote_config['visible']
         fontsize = annote_config['size']
         angle = annote_config['rotation']
         bbox_alpha = annote_config['bbox_dict']['alpha']
         fmt = annote_config['fmt']
+        self.annote_visible_chkbox.setChecked(visible)
         self.annote_fontsize_sbox.setValue(fontsize)
         self.annote_angle_dsbox.setValue(angle)
         self.annote_bbox_alpha_dsbox.setValue(bbox_alpha)
