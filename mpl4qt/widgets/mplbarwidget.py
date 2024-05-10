@@ -297,6 +297,24 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
 
     figureEbLineVisible = pyqtProperty(bool, getEbLineVisible, setEbLineVisible)
 
+    def getBarAnnoteVisible(self):
+        return self._annote_config_dict.get('visible')
+
+    @pyqtSlot(bool)
+    def setBarAnnoteVisible(self, f: bool):
+        """Set the bar height annotations visible or not.
+
+        Parameters
+        ----------
+        f : bool
+            Bar height Annotations visible (True) or not (False).
+        """
+        self._annote_config_dict.update({'visible': f})
+        self._update_annote()
+        self.update_figure()
+
+    figureBarAnnoteVisible = pyqtProperty(bool, getBarAnnoteVisible, setBarAnnoteVisible)
+
     def _set_bar_width(self, w):
         # set bar with width *w*.
         w0 = self.getBarWidth()
