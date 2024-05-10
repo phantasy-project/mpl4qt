@@ -93,6 +93,14 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         self.setupUi(self)
         self.setWindowTitle("Figure Configurations")
 
+        # info post to the right-bottom corner
+        def _get_info():
+            from ._info import get_pkg_info_short, get_pkg_info
+            return get_pkg_info_short(), get_pkg_info()
+        _short_info, _full_info = _get_info()
+        self.info_lbl.setText(_short_info)
+        self.info_btn.clicked.connect(lambda: QMessageBox.about(self, 'About mpl4qt', _full_info))
+
         # hide eb_tab and image_tab
         for tab in (self.cross_tab, self.curve_tab, self.eb_tab,
                     self.image_tab, self.barchart_tab):

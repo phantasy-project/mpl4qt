@@ -14,3 +14,14 @@ def get_pkg_info():
     </html>
     """.format(v=ver)
     return info
+
+
+def get_pkg_info_short():
+    import mpl4qt
+    ver = mpl4qt.__version__
+    info = """
+    <html>
+    <p><span>mpl4qt</span><span style="color:#888a85;"> - Dataviz widgets for PyQt5 apps, v{v}</span></p>
+    </html>
+    """.format(v=ver)
+    return info
