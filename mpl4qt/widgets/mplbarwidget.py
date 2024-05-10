@@ -432,6 +432,11 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
         self.update_figure()
         self._pk_text = None
 
+    def get_all_data(self):
+        """Return a tuple of x, y, yerr arrays.
+        """
+        return self._x_data, self._y_data, self._yerr_data
+
 
 def adjust_bar(patches, eblines, x, y, yerr, bar_width):
     segs = eblines.get_segments()

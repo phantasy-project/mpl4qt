@@ -1826,6 +1826,9 @@ class BasePlotWidget(QWidget):
         if self.widget_type == 'image':
             x, y, z = self.get_all_data()
             dset = pd.DataFrame(data={'x': x.ravel(), 'y': y.ravel(), 'z': z.ravel()})
+        elif self.widget_type == 'bar':
+            x, y, yerr = self.get_all_data()
+            dset = pd.DataFrame(data={'x': x, 'y': y, 'yerr': yerr})
         else:
             df_list = []
             for i, line in enumerate(self.get_all_curves()):
@@ -1842,7 +1845,7 @@ class BasePlotWidget(QWidget):
         if not keep_nat: # replace nat with ''
             for i in dset.columns:
                 if pd.api.types.is_datetime64_any_dtype(dset[i]):
-                    dset[i] = dset[i].apply(lambda t:str(t) if not pd.isnull(t) else '')
+                    dset[i] = dset[i].apply(lambda t: str(t) if not pd.isnull(t) else '')
         return dset
 
     def add_annotation(self, text: str, xy: Tuple[float, float],
