@@ -112,9 +112,11 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
                 QDoubleValidator(FIG_HEIGHT_MIN, FIG_HEIGHT_MAX, 6, self))
         self.figDpi_lineEdit.setValidator(
                 QDoubleValidator(FIG_DPI_MIN, FIG_DPI_MAX, 6, self))
+        _validator = QDoubleValidator(self)
+        _validator.setDecimals(6)
         for o in (self.xmin_lineEdit, self.xmax_lineEdit,
                   self.ymin_lineEdit, self.ymax_lineEdit,):
-            o.setValidator(QDoubleValidator(self))
+            o.setValidator(_validator)
 
         # events
         self.figWidth_lineEdit.textChanged.connect(self.set_figsize_width)
@@ -344,10 +346,10 @@ class MatplotlibConfigPanel(QDialog, Ui_Dialog):
         """
         xmin, xmax = self.parent.get_xlim()
         ymin, ymax = self.parent.get_ylim()
-        self.xmin_lineEdit.setText(f'{xmin}')
-        self.xmax_lineEdit.setText(f'{xmax}')
-        self.ymin_lineEdit.setText(f'{ymin}')
-        self.ymax_lineEdit.setText(f'{ymax}')
+        self.xmin_lineEdit.setText(f'{xmin:.6f}')
+        self.xmax_lineEdit.setText(f'{xmax:.6f}')
+        self.ymin_lineEdit.setText(f'{ymin:.6f}')
+        self.ymax_lineEdit.setText(f'{ymax:.6f}')
 
     @pyqtSlot(float)
     def set_border_lw(self, w):
