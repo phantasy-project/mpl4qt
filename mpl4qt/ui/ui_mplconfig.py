@@ -14,7 +14,7 @@ class Ui_Dialog(object):
 
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(1540, 420)
+        Dialog.resize(1536, 457)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -44,8 +44,13 @@ class Ui_Dialog(object):
             "    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #DADBDE, stop: 1 #F6F7FA);\n"
             "}\n"
             "\n"
-            "QTabBar::tab::disabled {width: 0; height: 0; margin: 0; padding: 0; border: none;}"
-        )
+            "QTabBar::tab::disabled {\n"
+            "    width: 0;\n"
+            "    height: 0;\n"
+            "    margin: 0;\n"
+            "    padding: 0;\n"
+            "    border: none;\n"
+            "} ")
         Dialog.setSizeGripEnabled(True)
         Dialog.setModal(False)
         self.gridLayout_3 = QtWidgets.QGridLayout(Dialog)
@@ -65,6 +70,7 @@ class Ui_Dialog(object):
         self.config_tabWidget.setFont(font)
         self.config_tabWidget.setTabPosition(QtWidgets.QTabWidget.West)
         self.config_tabWidget.setTabShape(QtWidgets.QTabWidget.Rounded)
+        self.config_tabWidget.setIconSize(QtCore.QSize(32, 32))
         self.config_tabWidget.setDocumentMode(True)
         self.config_tabWidget.setTabsClosable(False)
         self.config_tabWidget.setMovable(False)
@@ -73,9 +79,176 @@ class Ui_Dialog(object):
         self.figure_tab = QtWidgets.QWidget()
         self.figure_tab.setObjectName("figure_tab")
         self.gridLayout_6 = QtWidgets.QGridLayout(self.figure_tab)
-        self.gridLayout_6.setContentsMargins(6, 12, 6, 6)
+        self.gridLayout_6.setContentsMargins(4, 6, 4, 4)
         self.gridLayout_6.setSpacing(4)
         self.gridLayout_6.setObjectName("gridLayout_6")
+        self.label_10 = QtWidgets.QLabel(self.figure_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_10.sizePolicy().hasHeightForWidth())
+        self.label_10.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_10.setFont(font)
+        self.label_10.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
+        self.label_10.setAlignment(QtCore.Qt.AlignRight
+                                   | QtCore.Qt.AlignTrailing
+                                   | QtCore.Qt.AlignVCenter)
+        self.label_10.setObjectName("label_10")
+        self.gridLayout_6.addWidget(self.label_10, 1, 0, 1, 1)
+        self.horizontalLayout_20 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_20.setContentsMargins(-1, -1, 0, -1)
+        self.horizontalLayout_20.setSpacing(4)
+        self.horizontalLayout_20.setObjectName("horizontalLayout_20")
+        self.label_18 = QtWidgets.QLabel(self.figure_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_18.sizePolicy().hasHeightForWidth())
+        self.label_18.setSizePolicy(sizePolicy)
+        self.label_18.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft
+                                   | QtCore.Qt.AlignVCenter)
+        self.label_18.setObjectName("label_18")
+        self.horizontalLayout_20.addWidget(self.label_18)
+        self.fig_xlabel_lineEdit = QtWidgets.QLineEdit(self.figure_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.fig_xlabel_lineEdit.sizePolicy().hasHeightForWidth())
+        self.fig_xlabel_lineEdit.setSizePolicy(sizePolicy)
+        self.fig_xlabel_lineEdit.setText("")
+        self.fig_xlabel_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
+        self.fig_xlabel_lineEdit.setObjectName("fig_xlabel_lineEdit")
+        self.horizontalLayout_20.addWidget(self.fig_xlabel_lineEdit)
+        self.label_11 = QtWidgets.QLabel(self.figure_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_11.sizePolicy().hasHeightForWidth())
+        self.label_11.setSizePolicy(sizePolicy)
+        self.label_11.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft
+                                   | QtCore.Qt.AlignVCenter)
+        self.label_11.setObjectName("label_11")
+        self.horizontalLayout_20.addWidget(self.label_11)
+        self.fig_ylabel_lineEdit = QtWidgets.QLineEdit(self.figure_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.fig_ylabel_lineEdit.sizePolicy().hasHeightForWidth())
+        self.fig_ylabel_lineEdit.setSizePolicy(sizePolicy)
+        self.fig_ylabel_lineEdit.setText("")
+        self.fig_ylabel_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
+        self.fig_ylabel_lineEdit.setObjectName("fig_ylabel_lineEdit")
+        self.horizontalLayout_20.addWidget(self.fig_ylabel_lineEdit)
+        self.hide_xylabel_chkbox = QtWidgets.QCheckBox(self.figure_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.hide_xylabel_chkbox.sizePolicy().hasHeightForWidth())
+        self.hide_xylabel_chkbox.setSizePolicy(sizePolicy)
+        self.hide_xylabel_chkbox.setObjectName("hide_xylabel_chkbox")
+        self.horizontalLayout_20.addWidget(self.hide_xylabel_chkbox)
+        self.xy_label_font_btn = QtWidgets.QToolButton(self.figure_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.xy_label_font_btn.sizePolicy().hasHeightForWidth())
+        self.xy_label_font_btn.setSizePolicy(sizePolicy)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/icons/choose-font.png"),
+                       QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.xy_label_font_btn.setIcon(icon)
+        self.xy_label_font_btn.setIconSize(QtCore.QSize(24, 24))
+        self.xy_label_font_btn.setAutoRaise(True)
+        self.xy_label_font_btn.setObjectName("xy_label_font_btn")
+        self.horizontalLayout_20.addWidget(self.xy_label_font_btn)
+        self.gridLayout_6.addLayout(self.horizontalLayout_20, 1, 2, 1, 1)
+        self.label_25 = QtWidgets.QLabel(self.figure_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.label_25.sizePolicy().hasHeightForWidth())
+        self.label_25.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_25.setFont(font)
+        self.label_25.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
+        self.label_25.setAlignment(QtCore.Qt.AlignRight
+                                   | QtCore.Qt.AlignTrailing
+                                   | QtCore.Qt.AlignVCenter)
+        self.label_25.setObjectName("label_25")
+        self.gridLayout_6.addWidget(self.label_25, 3, 0, 1, 1)
+        spacerItem = QtWidgets.QSpacerItem(20, 40,
+                                           QtWidgets.QSizePolicy.Minimum,
+                                           QtWidgets.QSizePolicy.Expanding)
+        self.gridLayout_6.addItem(spacerItem, 5, 2, 1, 1)
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setContentsMargins(-1, 0, -1, -1)
+        self.horizontalLayout_2.setSpacing(4)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.fig_title_lineEdit = QtWidgets.QLineEdit(self.figure_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.fig_title_lineEdit.sizePolicy().hasHeightForWidth())
+        self.fig_title_lineEdit.setSizePolicy(sizePolicy)
+        self.fig_title_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
+        self.fig_title_lineEdit.setObjectName("fig_title_lineEdit")
+        self.horizontalLayout_2.addWidget(self.fig_title_lineEdit)
+        self.hide_title_chkbox = QtWidgets.QCheckBox(self.figure_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.hide_title_chkbox.sizePolicy().hasHeightForWidth())
+        self.hide_title_chkbox.setSizePolicy(sizePolicy)
+        self.hide_title_chkbox.setObjectName("hide_title_chkbox")
+        self.horizontalLayout_2.addWidget(self.hide_title_chkbox)
+        self.title_font_btn = QtWidgets.QToolButton(self.figure_tab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
+                                           QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.title_font_btn.sizePolicy().hasHeightForWidth())
+        self.title_font_btn.setSizePolicy(sizePolicy)
+        self.title_font_btn.setIcon(icon)
+        self.title_font_btn.setIconSize(QtCore.QSize(24, 24))
+        self.title_font_btn.setPopupMode(QtWidgets.QToolButton.DelayedPopup)
+        self.title_font_btn.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
+        self.title_font_btn.setAutoRaise(True)
+        self.title_font_btn.setArrowType(QtCore.Qt.NoArrow)
+        self.title_font_btn.setObjectName("title_font_btn")
+        self.horizontalLayout_2.addWidget(self.title_font_btn)
+        self.gridLayout_6.addLayout(self.horizontalLayout_2, 0, 2, 1, 1)
         self.horizontalLayout_11 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_11.setSpacing(4)
         self.horizontalLayout_11.setObjectName("horizontalLayout_11")
@@ -134,108 +307,41 @@ class Ui_Dialog(object):
         self.yaxis_scale_cbb.addItem("")
         self.horizontalLayout_11.addWidget(self.yaxis_scale_cbb)
         self.gridLayout_6.addLayout(self.horizontalLayout_11, 4, 2, 1, 1)
-        self.label_10 = QtWidgets.QLabel(self.figure_tab)
+        self.label_40 = QtWidgets.QLabel(self.figure_tab)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_40.setFont(font)
+        self.label_40.setStyleSheet("QLabel {\n"
+                                    "    border-top: 0px solid gray;\n"
+                                    "    border-right: 5px solid gray;\n"
+                                    "}")
+        self.label_40.setAlignment(QtCore.Qt.AlignRight
+                                   | QtCore.Qt.AlignTrailing
+                                   | QtCore.Qt.AlignVCenter)
+        self.label_40.setObjectName("label_40")
+        self.gridLayout_6.addWidget(self.label_40, 4, 0, 1, 1)
+        self.label_13 = QtWidgets.QLabel(self.figure_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
-            self.label_10.sizePolicy().hasHeightForWidth())
-        self.label_10.setSizePolicy(sizePolicy)
+            self.label_13.sizePolicy().hasHeightForWidth())
+        self.label_13.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
-        self.label_10.setFont(font)
-        self.label_10.setStyleSheet("QLabel {\n"
+        self.label_13.setFont(font)
+        self.label_13.setStyleSheet("QLabel {\n"
                                     "    border-top: 0px solid gray;\n"
                                     "    border-right: 5px solid gray;\n"
                                     "}")
-        self.label_10.setAlignment(QtCore.Qt.AlignRight
+        self.label_13.setAlignment(QtCore.Qt.AlignRight
                                    | QtCore.Qt.AlignTrailing
                                    | QtCore.Qt.AlignVCenter)
-        self.label_10.setObjectName("label_10")
-        self.gridLayout_6.addWidget(self.label_10, 1, 0, 1, 1)
-        self.horizontalLayout_20 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_20.setContentsMargins(-1, -1, 0, -1)
-        self.horizontalLayout_20.setSpacing(4)
-        self.horizontalLayout_20.setObjectName("horizontalLayout_20")
-        self.label_18 = QtWidgets.QLabel(self.figure_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_18.sizePolicy().hasHeightForWidth())
-        self.label_18.setSizePolicy(sizePolicy)
-        self.label_18.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft
-                                   | QtCore.Qt.AlignVCenter)
-        self.label_18.setObjectName("label_18")
-        self.horizontalLayout_20.addWidget(self.label_18)
-        self.fig_xlabel_lineEdit = QtWidgets.QLineEdit(self.figure_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.fig_xlabel_lineEdit.sizePolicy().hasHeightForWidth())
-        self.fig_xlabel_lineEdit.setSizePolicy(sizePolicy)
-        self.fig_xlabel_lineEdit.setText("")
-        self.fig_xlabel_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
-        self.fig_xlabel_lineEdit.setPlaceholderText("")
-        self.fig_xlabel_lineEdit.setObjectName("fig_xlabel_lineEdit")
-        self.horizontalLayout_20.addWidget(self.fig_xlabel_lineEdit)
-        self.label_11 = QtWidgets.QLabel(self.figure_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_11.sizePolicy().hasHeightForWidth())
-        self.label_11.setSizePolicy(sizePolicy)
-        self.label_11.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft
-                                   | QtCore.Qt.AlignVCenter)
-        self.label_11.setObjectName("label_11")
-        self.horizontalLayout_20.addWidget(self.label_11)
-        self.fig_ylabel_lineEdit = QtWidgets.QLineEdit(self.figure_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.fig_ylabel_lineEdit.sizePolicy().hasHeightForWidth())
-        self.fig_ylabel_lineEdit.setSizePolicy(sizePolicy)
-        self.fig_ylabel_lineEdit.setText("")
-        self.fig_ylabel_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
-        self.fig_ylabel_lineEdit.setPlaceholderText("")
-        self.fig_ylabel_lineEdit.setObjectName("fig_ylabel_lineEdit")
-        self.horizontalLayout_20.addWidget(self.fig_ylabel_lineEdit)
-        self.hide_xylabel_chkbox = QtWidgets.QCheckBox(self.figure_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.hide_xylabel_chkbox.sizePolicy().hasHeightForWidth())
-        self.hide_xylabel_chkbox.setSizePolicy(sizePolicy)
-        self.hide_xylabel_chkbox.setObjectName("hide_xylabel_chkbox")
-        self.horizontalLayout_20.addWidget(self.hide_xylabel_chkbox)
-        self.xy_label_font_btn = QtWidgets.QToolButton(self.figure_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.xy_label_font_btn.sizePolicy().hasHeightForWidth())
-        self.xy_label_font_btn.setSizePolicy(sizePolicy)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icons/choose-font.png"),
-                       QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.xy_label_font_btn.setIcon(icon)
-        self.xy_label_font_btn.setIconSize(QtCore.QSize(24, 24))
-        self.xy_label_font_btn.setAutoRaise(True)
-        self.xy_label_font_btn.setObjectName("xy_label_font_btn")
-        self.horizontalLayout_20.addWidget(self.xy_label_font_btn)
-        self.gridLayout_6.addLayout(self.horizontalLayout_20, 1, 2, 1, 1)
+        self.label_13.setObjectName("label_13")
+        self.gridLayout_6.addWidget(self.label_13, 0, 0, 1, 1)
         self.label = QtWidgets.QLabel(self.figure_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
                                            QtWidgets.QSizePolicy.Preferred)
@@ -256,84 +362,6 @@ class Ui_Dialog(object):
                                 | QtCore.Qt.AlignVCenter)
         self.label.setObjectName("label")
         self.gridLayout_6.addWidget(self.label, 2, 0, 1, 1)
-        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_2.setContentsMargins(-1, 0, -1, -1)
-        self.horizontalLayout_2.setSpacing(4)
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.fig_title_lineEdit = QtWidgets.QLineEdit(self.figure_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.fig_title_lineEdit.sizePolicy().hasHeightForWidth())
-        self.fig_title_lineEdit.setSizePolicy(sizePolicy)
-        self.fig_title_lineEdit.setAlignment(QtCore.Qt.AlignCenter)
-        self.fig_title_lineEdit.setPlaceholderText("")
-        self.fig_title_lineEdit.setObjectName("fig_title_lineEdit")
-        self.horizontalLayout_2.addWidget(self.fig_title_lineEdit)
-        self.hide_title_chkbox = QtWidgets.QCheckBox(self.figure_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.hide_title_chkbox.sizePolicy().hasHeightForWidth())
-        self.hide_title_chkbox.setSizePolicy(sizePolicy)
-        self.hide_title_chkbox.setObjectName("hide_title_chkbox")
-        self.horizontalLayout_2.addWidget(self.hide_title_chkbox)
-        self.title_font_btn = QtWidgets.QToolButton(self.figure_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                                           QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.title_font_btn.sizePolicy().hasHeightForWidth())
-        self.title_font_btn.setSizePolicy(sizePolicy)
-        self.title_font_btn.setIcon(icon)
-        self.title_font_btn.setIconSize(QtCore.QSize(24, 24))
-        self.title_font_btn.setPopupMode(QtWidgets.QToolButton.DelayedPopup)
-        self.title_font_btn.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
-        self.title_font_btn.setAutoRaise(True)
-        self.title_font_btn.setArrowType(QtCore.Qt.NoArrow)
-        self.title_font_btn.setObjectName("title_font_btn")
-        self.horizontalLayout_2.addWidget(self.title_font_btn)
-        self.gridLayout_6.addLayout(self.horizontalLayout_2, 0, 2, 1, 1)
-        self.label_25 = QtWidgets.QLabel(self.figure_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_25.sizePolicy().hasHeightForWidth())
-        self.label_25.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_25.setFont(font)
-        self.label_25.setStyleSheet("QLabel {\n"
-                                    "    border-top: 0px solid gray;\n"
-                                    "    border-right: 5px solid gray;\n"
-                                    "}")
-        self.label_25.setAlignment(QtCore.Qt.AlignRight
-                                   | QtCore.Qt.AlignTrailing
-                                   | QtCore.Qt.AlignVCenter)
-        self.label_25.setObjectName("label_25")
-        self.gridLayout_6.addWidget(self.label_25, 3, 0, 1, 1)
-        self.label_40 = QtWidgets.QLabel(self.figure_tab)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_40.setFont(font)
-        self.label_40.setStyleSheet("QLabel {\n"
-                                    "    border-top: 0px solid gray;\n"
-                                    "    border-right: 5px solid gray;\n"
-                                    "}")
-        self.label_40.setAlignment(QtCore.Qt.AlignRight
-                                   | QtCore.Qt.AlignTrailing
-                                   | QtCore.Qt.AlignVCenter)
-        self.label_40.setObjectName("label_40")
-        self.gridLayout_6.addWidget(self.label_40, 4, 0, 1, 1)
         self.horizontalLayout_10 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_10.setSpacing(4)
         self.horizontalLayout_10.setObjectName("horizontalLayout_10")
@@ -347,10 +375,10 @@ class Ui_Dialog(object):
         self.legend_on_chkbox.setSizePolicy(sizePolicy)
         self.legend_on_chkbox.setObjectName("legend_on_chkbox")
         self.horizontalLayout_10.addWidget(self.legend_on_chkbox)
-        spacerItem = QtWidgets.QSpacerItem(40, 20,
-                                           QtWidgets.QSizePolicy.Expanding,
-                                           QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_10.addItem(spacerItem)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20,
+                                            QtWidgets.QSizePolicy.Expanding,
+                                            QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_10.addItem(spacerItem1)
         self.label_24 = QtWidgets.QLabel(self.figure_tab)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                            QtWidgets.QSizePolicy.Fixed)
@@ -384,27 +412,6 @@ class Ui_Dialog(object):
         self.legend_loc_cbb.addItem("")
         self.horizontalLayout_10.addWidget(self.legend_loc_cbb)
         self.gridLayout_6.addLayout(self.horizontalLayout_10, 3, 2, 1, 1)
-        self.label_13 = QtWidgets.QLabel(self.figure_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
-                                           QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_13.sizePolicy().hasHeightForWidth())
-        self.label_13.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_13.setFont(font)
-        self.label_13.setStyleSheet("QLabel {\n"
-                                    "    border-top: 0px solid gray;\n"
-                                    "    border-right: 5px solid gray;\n"
-                                    "}")
-        self.label_13.setAlignment(QtCore.Qt.AlignRight
-                                   | QtCore.Qt.AlignTrailing
-                                   | QtCore.Qt.AlignVCenter)
-        self.label_13.setObjectName("label_13")
-        self.gridLayout_6.addWidget(self.label_13, 0, 0, 1, 1)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setSpacing(4)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
@@ -435,7 +442,7 @@ class Ui_Dialog(object):
         self.xmin_lbl.setObjectName("xmin_lbl")
         self.gridLayout_5.addWidget(self.xmin_lbl, 0, 0, 1, 1)
         self.xmin_lineEdit = QtWidgets.QLineEdit(self.figure_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -457,7 +464,7 @@ class Ui_Dialog(object):
         self.xmax_lbl.setObjectName("xmax_lbl")
         self.gridLayout_5.addWidget(self.xmax_lbl, 0, 2, 1, 1)
         self.xmax_lineEdit = QtWidgets.QLineEdit(self.figure_tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred,
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding,
                                            QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -513,10 +520,6 @@ class Ui_Dialog(object):
         self.gridLayout_5.addWidget(self.ymax_lineEdit, 1, 3, 1, 1)
         self.horizontalLayout_3.addLayout(self.gridLayout_5)
         self.gridLayout_6.addLayout(self.horizontalLayout_3, 2, 2, 1, 1)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 40,
-                                            QtWidgets.QSizePolicy.Minimum,
-                                            QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_6.addItem(spacerItem1, 5, 2, 1, 1)
         self.label_10.raise_()
         self.label_13.raise_()
         self.label_25.raise_()
@@ -529,7 +532,7 @@ class Ui_Dialog(object):
         self.style_tab = QtWidgets.QWidget()
         self.style_tab.setObjectName("style_tab")
         self.gridLayout_7 = QtWidgets.QGridLayout(self.style_tab)
-        self.gridLayout_7.setContentsMargins(6, 12, 6, 6)
+        self.gridLayout_7.setContentsMargins(4, 6, 4, 4)
         self.gridLayout_7.setSpacing(4)
         self.gridLayout_7.setObjectName("gridLayout_7")
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
@@ -1000,7 +1003,7 @@ class Ui_Dialog(object):
         self.cross_tab = QtWidgets.QWidget()
         self.cross_tab.setObjectName("cross_tab")
         self.gridLayout_27 = QtWidgets.QGridLayout(self.cross_tab)
-        self.gridLayout_27.setContentsMargins(6, 12, 6, 6)
+        self.gridLayout_27.setContentsMargins(4, 6, 4, 4)
         self.gridLayout_27.setSpacing(4)
         self.gridLayout_27.setObjectName("gridLayout_27")
         self.label_173 = QtWidgets.QLabel(self.cross_tab)
@@ -1271,7 +1274,7 @@ class Ui_Dialog(object):
         self.curve_tab = QtWidgets.QWidget()
         self.curve_tab.setObjectName("curve_tab")
         self.gridLayout_12 = QtWidgets.QGridLayout(self.curve_tab)
-        self.gridLayout_12.setContentsMargins(6, 12, 6, 6)
+        self.gridLayout_12.setContentsMargins(4, 6, 4, 4)
         self.gridLayout_12.setSpacing(4)
         self.gridLayout_12.setObjectName("gridLayout_12")
         self.horizontalLayout_12 = QtWidgets.QHBoxLayout()
@@ -1618,7 +1621,7 @@ class Ui_Dialog(object):
         self.eb_tab = QtWidgets.QWidget()
         self.eb_tab.setObjectName("eb_tab")
         self.gridLayout_13 = QtWidgets.QGridLayout(self.eb_tab)
-        self.gridLayout_13.setContentsMargins(6, 12, 6, 6)
+        self.gridLayout_13.setContentsMargins(4, 6, 4, 4)
         self.gridLayout_13.setSpacing(4)
         self.gridLayout_13.setObjectName("gridLayout_13")
         self.label_36 = QtWidgets.QLabel(self.eb_tab)
@@ -1876,7 +1879,7 @@ class Ui_Dialog(object):
         self.image_tab = QtWidgets.QWidget()
         self.image_tab.setObjectName("image_tab")
         self.gridLayout_8 = QtWidgets.QGridLayout(self.image_tab)
-        self.gridLayout_8.setContentsMargins(6, 12, 6, 6)
+        self.gridLayout_8.setContentsMargins(4, 6, 4, 4)
         self.gridLayout_8.setSpacing(4)
         self.gridLayout_8.setObjectName("gridLayout_8")
         self.label_47 = QtWidgets.QLabel(self.image_tab)
@@ -2067,7 +2070,7 @@ class Ui_Dialog(object):
         self.barchart_tab = QtWidgets.QWidget()
         self.barchart_tab.setObjectName("barchart_tab")
         self.gridLayout_11 = QtWidgets.QGridLayout(self.barchart_tab)
-        self.gridLayout_11.setContentsMargins(6, 12, 6, 6)
+        self.gridLayout_11.setContentsMargins(4, 6, 4, 4)
         self.gridLayout_11.setSpacing(4)
         self.gridLayout_11.setObjectName("gridLayout_11")
         self.label_lineEdit = QtWidgets.QLineEdit(self.barchart_tab)
@@ -2582,6 +2585,25 @@ class Ui_Dialog(object):
                          QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.config_tabWidget.addTab(self.barchart_tab, icon10, "")
         self.gridLayout_3.addWidget(self.config_tabWidget, 1, 0, 1, 1)
+        self.horizontalLayout_13 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_13.setContentsMargins(-1, -1, -1, 0)
+        self.horizontalLayout_13.setSpacing(2)
+        self.horizontalLayout_13.setObjectName("horizontalLayout_13")
+        self.info_lbl = QtWidgets.QLabel(Dialog)
+        self.info_lbl.setAlignment(QtCore.Qt.AlignRight
+                                   | QtCore.Qt.AlignTrailing
+                                   | QtCore.Qt.AlignVCenter)
+        self.info_lbl.setObjectName("info_lbl")
+        self.horizontalLayout_13.addWidget(self.info_lbl)
+        self.info_btn = QtWidgets.QToolButton(Dialog)
+        icon11 = QtGui.QIcon()
+        icon11.addPixmap(QtGui.QPixmap(":/tools/info.png"), QtGui.QIcon.Normal,
+                         QtGui.QIcon.Off)
+        self.info_btn.setIcon(icon11)
+        self.info_btn.setAutoRaise(True)
+        self.info_btn.setObjectName("info_btn")
+        self.horizontalLayout_13.addWidget(self.info_btn)
+        self.gridLayout_3.addLayout(self.horizontalLayout_13, 2, 0, 1, 1)
 
         self.retranslateUi(Dialog)
         self.config_tabWidget.setCurrentIndex(0)
@@ -2679,6 +2701,22 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        self.label_10.setText(_translate("Dialog", "Labels"))
+        self.label_18.setText(_translate("Dialog", "X-Axis"))
+        self.fig_xlabel_lineEdit.setPlaceholderText(
+            _translate("Dialog", "x label string"))
+        self.label_11.setText(_translate("Dialog", "Y-Axis"))
+        self.fig_ylabel_lineEdit.setPlaceholderText(
+            _translate("Dialog", "y label string"))
+        self.hide_xylabel_chkbox.setText(_translate("Dialog", "Hide"))
+        self.xy_label_font_btn.setToolTip(_translate("Dialog", "Change font."))
+        self.xy_label_font_btn.setText(_translate("Dialog", "Font"))
+        self.label_25.setText(_translate("Dialog", "Legend"))
+        self.fig_title_lineEdit.setPlaceholderText(
+            _translate("Dialog", "figure title string"))
+        self.hide_title_chkbox.setText(_translate("Dialog", "Hide"))
+        self.title_font_btn.setToolTip(_translate("Dialog", "Change font."))
+        self.title_font_btn.setText(_translate("Dialog", "Font"))
         self.label_42.setText(_translate("Dialog", "X-Axis"))
         self.xaxis_scale_cbb.setItemText(0, _translate("Dialog",
                                                        "Linear Scale"))
@@ -2697,18 +2735,9 @@ class Ui_Dialog(object):
             2, _translate("Dialog", "Symmetrical Log Transform"))
         self.yaxis_scale_cbb.setItemText(
             3, _translate("Dialog", "Logistic Transform"))
-        self.label_10.setText(_translate("Dialog", "Labels"))
-        self.label_18.setText(_translate("Dialog", "X-Axis"))
-        self.label_11.setText(_translate("Dialog", "Y-Axis"))
-        self.hide_xylabel_chkbox.setText(_translate("Dialog", "Hide"))
-        self.xy_label_font_btn.setToolTip(_translate("Dialog", "Change font."))
-        self.xy_label_font_btn.setText(_translate("Dialog", "Font"))
-        self.label.setText(_translate("Dialog", "XY Range"))
-        self.hide_title_chkbox.setText(_translate("Dialog", "Hide"))
-        self.title_font_btn.setToolTip(_translate("Dialog", "Change font."))
-        self.title_font_btn.setText(_translate("Dialog", "Font"))
-        self.label_25.setText(_translate("Dialog", "Legend"))
         self.label_40.setText(_translate("Dialog", "Scale"))
+        self.label_13.setText(_translate("Dialog", "Title"))
+        self.label.setText(_translate("Dialog", "XY Range"))
         self.legend_on_chkbox.setToolTip(
             _translate("Dialog", "Check to show legend"))
         self.legend_on_chkbox.setText(_translate("Dialog", "Show"))
@@ -2729,7 +2758,6 @@ class Ui_Dialog(object):
         self.legend_loc_cbb.setItemText(9, _translate("Dialog",
                                                       "Upper Center"))
         self.legend_loc_cbb.setItemText(10, _translate("Dialog", "Center"))
-        self.label_13.setText(_translate("Dialog", "Title"))
         self.autoScale_chkbox.setText(_translate("Dialog", "Auto Scale"))
         self.xmin_lbl.setText(_translate("Dialog", "X-Min"))
         self.xmax_lbl.setText(_translate("Dialog", "X-Max"))
@@ -2967,6 +2995,12 @@ class Ui_Dialog(object):
         self.config_tabWidget.setTabText(
             self.config_tabWidget.indexOf(self.barchart_tab),
             _translate("Dialog", "BarChart"))
+        self.info_lbl.setText(
+            _translate(
+                "Dialog",
+                "<html><head/><body><p><span style=\" font-weight:600;\">mpl4qt</span>: version: xxx</p></body></html>"
+            ))
+        self.info_btn.setText(_translate("Dialog", "..."))
 
 
 from mpl4qt.widgets._widgets import TabWidget
