@@ -3,6 +3,7 @@
 """
 Navigation toolbar for matplotlib widgets
 """
+import os
 import numpy as np
 import pandas as pd
 import tzlocal
@@ -12,6 +13,7 @@ from datetime import datetime
 from PyQt5.QtCore import QEventLoop
 from PyQt5.QtCore import QObject
 from PyQt5.QtCore import QPoint
+from PyQt5.QtCore import QTimer
 from PyQt5.QtCore import QSize
 from PyQt5.QtCore import QUrl
 from PyQt5.QtCore import QVariant
@@ -736,8 +738,9 @@ class MToolbar(QToolBar):
         wtype = self.parent.widget_type
         _, filename = tempfile.mkstemp('.xlsx')
         self._save_data(filename, 'xlsx')
-        QDesktopServices.openUrl(QUrl(filename))
-        # todo, clean up tmp file.
+        opened = QDesktopServices.openUrl(QUrl(filename))
+        if opened:
+            QTimer.singleShot(5000, lambda: os.remove(filename))
 
     @pyqtSlot()
     def lasso(self):
