@@ -3,5 +3,5 @@ matplotlib
 pyqt5
 pandas
 openpyxl
-tables
+# tables
 tzlocal
