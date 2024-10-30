@@ -29,7 +29,7 @@ extras_require = {
 
 setup(
     name=app_name,
-    version="2.8.8",
+    version="2.8.9",
     description=app_description,
     long_description=app_long_description,
     long_description_content_type='text/markdown',
