@@ -439,12 +439,17 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
 
 
 def adjust_bar(patches, eblines, x, y, yerr, bar_width):
+    # there must be no nan in yerr, otherwise, the second time invoking get_segments() will crash,
+    # now fix: fill the segment with nans
     segs = eblines.get_segments()
     for i, (patch, seg) in enumerate(zip(patches, segs)):
         patch.set_height(y[i])
         patch.set_xy((x[i] - bar_width / 2.0, 0))
-        seg[:, 0] = (x[i], x[i])
-        seg[:, 1] = (y[i] - yerr[i], y[i] + yerr[i])
+        if seg.shape != (2, 2):
+            segs[i] = np.ones([2, 2]) * np.nan
+        else:
+            seg[:, 0] = (x[i], x[i])
+            seg[:, 1] = (y[i] - yerr[i], y[i] + yerr[i])
     eblines.set_segments(segs)
 
 
