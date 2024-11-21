@@ -685,6 +685,7 @@ class MatplotlibCurveWidget(BasePlotWidget):
             self._pan_ylim0 = self.axes.get_ylim()
             self._pan_on = True
             self.setCursor(Qt.ClosedHandCursor)
+        BasePlotWidget.on_press(self, e)
 
     def on_release(self, e):
         if e.inaxes is None:
