@@ -539,6 +539,8 @@ class BasePlotWidget(QWidget):
             lw0, mw0 = o.get_lw(), o.get_mew()
             x, y = o.get_data()
             ind = evt.ind
+            x = np.asarray(x)
+            y = np.asarray(y)
             x0, y0 = x[ind][0], y[ind][0]
             o.set_lw(lw0 * 2)
             o.set_mew(mw0 * 2)
