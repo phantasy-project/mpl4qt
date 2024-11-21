@@ -108,8 +108,11 @@ class BasePlotWidget(QWidget):
     # bg color
     bgColorChanged = pyqtSignal(QColor)
 
-    # xy pos, x,y (default) or x,y,z
+    # xy pos, x,y (default) or x,y,z, reports when mouse is moving
     xyposUpdated = pyqtSignal(list)
+
+    # xy pos, x,y (default) or x,y,z, reports when mouse is middle-clicked
+    xyposMiddleClicked = pyqtSignal(list)
 
     # cross markers updated, is_new_marker?, x, y, mk_name
     markerUpdated = pyqtSignal(bool, float, float, 'QString')
@@ -561,11 +564,9 @@ class BasePlotWidget(QWidget):
     def on_press(self, e):
         if e.inaxes is None:
             return
-        if e.button == 1 and self._to_add_marker:
-            self.draw_hvlines(e.xdata, e.ydata, self._mk_name, self._current_mc)
-            self.set_visible_hvlines(self._visible_hvlines)
-            self._added_marker = True
-            QGuiApplication.restoreOverrideCursor()
+        if e.button == 2:  # middle button clicking
+            x_pos, y_pos = e.xdata, e.ydata
+            self.xyposMiddleClicked.emit([x_pos, y_pos])
 
     def on_release(self, e):
         pass
