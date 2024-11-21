@@ -84,6 +84,12 @@ class NavigationToolbar(NavigationToolbar2QT):
         ylim = self.mpl.axes.get_ylim()
         self.tb.zoom_roi_changed.emit(xlim, ylim)
 
+    def release_pan(self, e):
+        NavigationToolbar2QT.release_pan(self, e)
+        xlim = self.mpl.axes.get_xlim()
+        ylim = self.mpl.axes.get_ylim()
+        self.tb.pan_roi_changed.emit(xlim, ylim)
+
 
 class MToolbar(QToolBar):
     """Toolbar for mpl widgets.
@@ -104,6 +110,9 @@ class MToolbar(QToolBar):
 
     # zoomed ROI changed
     zoom_roi_changed = pyqtSignal(tuple, tuple)
+
+    # panned ROI changed
+    pan_roi_changed = pyqtSignal(tuple, tuple)
 
     # add marker tool is checked or not, with mk_name, update/new flag
     marker_add_checked = pyqtSignal(bool, 'QString', bool)
@@ -676,10 +685,6 @@ class MToolbar(QToolBar):
     @pyqtSlot()
     def auto_scale(self):
         self.parent.set_autoscale()
-
-    @pyqtSlot()
-    def auto_xscale(self):
-        self.parent.set_autoscale('x')
 
     @pyqtSlot()
     def auto_xscale(self):

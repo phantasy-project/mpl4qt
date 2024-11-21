@@ -96,6 +96,9 @@ class BasePlotWidget(QWidget):
     # zoomed ROI changed
     zoom_roi_changed = pyqtSignal(tuple, tuple)
 
+    # panned ROI changed
+    pan_roi_changed = pyqtSignal(tuple, tuple)
+
     # grid
     gridOnUpdated = pyqtSignal(bool)
 
@@ -222,6 +225,29 @@ class BasePlotWidget(QWidget):
 
         # [(lbl, (o,lw,mw))]
         self._last_sel_lines = {}
+
+        # emit xylimit in a delayed manner
+        QTimer.singleShot(1000, self.notify_xylimits)
+
+    def notify_xylimits(self):
+        """ Notify the xylimits via signals.
+        """
+        self.notify_xlimits()
+        self.notify_ylimits()
+
+    def notify_xlimits(self):
+        """ Notify the xlimits via signals.
+        """
+        x1, x2 = self.getXLimitMin(), self.getXLimitMax()
+        self.xlimitMinChanged.emit(x1)
+        self.xlimitMaxChanged.emit(x2)
+
+    def notify_ylimits(self):
+        """ Notify the ylimits via signals.
+        """
+        y1, y2 = self.getYLimitMin(), self.getYLimitMax()
+        self.ylimitMinChanged.emit(y1)
+        self.ylimitMaxChanged.emit(y2)
 
     def on_cross_markers_update(self):
         # cross markers updated.
@@ -381,6 +407,7 @@ class BasePlotWidget(QWidget):
             self._handlers['w_mpl_tools'] = w
             w.selectedIndicesUpdated.connect(self.on_selected_indices)
             w.zoom_roi_changed.connect(self.on_zoom_roi_changed)
+            w.pan_roi_changed.connect(self.on_pan_roi_changed)
             w.shaded_area_updated.connect(self.on_shaded_area_updated)
         w.show_toolbar()
         w.floatable_changed.emit(False)
@@ -397,6 +424,22 @@ class BasePlotWidget(QWidget):
     def on_zoom_roi_changed(self, xlim, ylim):
         # print("Zoomed Rect ROI: ", xlim, ylim)
         self.zoom_roi_changed.emit(xlim, ylim)
+        x1, x2 = xlim
+        self._update_xlim_min(x1)
+        self._update_xlim_max(x2)
+        y1, y2 = ylim
+        self._update_ylim_min(y1)
+        self._update_ylim_max(y2)
+
+    @pyqtSlot(tuple, tuple)
+    def on_pan_roi_changed(self, xlim, ylim):
+        self.pan_roi_changed.emit(xlim, ylim)
+        x1, x2 = xlim
+        self._update_xlim_min(x1)
+        self._update_xlim_max(x2)
+        y1, y2 = ylim
+        self._update_ylim_min(y1)
+        self._update_ylim_max(y2)
 
     def set_up_layout(self):
         self.vbox = QVBoxLayout()
@@ -510,11 +553,20 @@ class BasePlotWidget(QWidget):
         x0, y0 = e.xdata, e.ydata
         x_left, x_right = self.axes.get_xlim()
         y_bottom, y_up = self.axes.get_ylim()
+        # X
+        xmin, xmax = x0 - (x0 - x_left) * factor, x0 + (x_right - x0) * factor
+        self.axes.set_xlim((xmin, xmax))
+        # Y
+        ymin, ymax = y0 - (y0 - y_bottom) * factor, y0 + (y_up - y0) * factor
+        self.axes.set_ylim((ymin, ymax))
 
-        self.axes.set_xlim((x0 - (x0 - x_left) * factor,
-                            x0 + (x_right - x0) * factor))
-        self.axes.set_ylim((y0 - (y0 - y_bottom) * factor,
-                            y0 + (y_up - y0) * factor))
+        # emit x[y]limitMin[Max]Changed if autoscale is off
+        if not self._fig_auto_scale:
+            self._update_xlim_min(xmin)
+            self._update_xlim_max(xmax)
+            self._update_ylim_min(ymin)
+            self._update_ylim_max(ymax)
+        #
         self.update_figure()
 
     def on_motion(self, evt):
@@ -588,6 +640,8 @@ class BasePlotWidget(QWidget):
                 pass
             else:
                 self.axes.autoscale()
+            self._update_xlim()
+            self._update_ylim()
         self.canvas.draw_idle()
 
     def contextMenuEvent(self, evt):
@@ -1207,12 +1261,11 @@ class BasePlotWidget(QWidget):
         """
         if x is None:
             x, _ = self._get_default_xlim()
-        self._xlim_min = x
-        xmin, xmax = self.get_xlim()
+        self._update_xlim_min(x)
+        _, xmax = self.get_xlim()
         if x < xmax:
             self.axes.set_xlim([x, xmax])
             self.update_figure()
-            self.xlimitMinChanged.emit(x)
 
     figureXLimitMin = pyqtProperty(float, getXLimitMin, setXLimitMin)
 
@@ -1230,12 +1283,11 @@ class BasePlotWidget(QWidget):
         """
         if x is None:
             _, x = self._get_default_xlim()
-        self._xlim_max = x
-        xmin, xmax = self.get_xlim()
+        self._update_xlim_max(x)
+        xmin, _ = self.get_xlim()
         if x > xmin:
             self.axes.set_xlim([xmin, x])
             self.update_figure()
-            self.xlimitMaxChanged.emit(x)
 
     figureXLimitMax = pyqtProperty(float, getXLimitMax, setXLimitMax)
 
@@ -1253,12 +1305,11 @@ class BasePlotWidget(QWidget):
         """
         if y is None:
             y, _ = self._get_default_ylim()
-        self._ylim_min = y
-        ymin, ymax = self.get_ylim()
+        self._update_ylim_min(y)
+        _, ymax = self.get_ylim()
         if y < ymax:
             self.axes.set_ylim([y, ymax])
             self.update_figure()
-            self.ylimitMinChanged.emit(y)
 
     figureYLimitMin = pyqtProperty(float, getYLimitMin, setYLimitMin)
 
@@ -1276,12 +1327,11 @@ class BasePlotWidget(QWidget):
         """
         if y is None:
             _, y = self._get_default_ylim()
-        self._ylim_max = y
-        ymin, ymax = self.get_ylim()
+        self._update_ylim_max(y)
+        ymin, _ = self.get_ylim()
         if y > ymin:
             self.axes.set_ylim([ymin, y])
             self.update_figure()
-            self.ylimitMaxChanged.emit(y)
 
     figureYLimitMax = pyqtProperty(float, getYLimitMax, setYLimitMax)
 
@@ -1728,10 +1778,26 @@ class BasePlotWidget(QWidget):
         for o in lbls + mlbls:
             o.set_rotation(angle)
 
+    def _update_xlim(self):
+        # just update xlimits and emit via signals, not set them
+        x1, x2 = self.axes.get_xlim()
+        self._update_xlim_min(x1)
+        self._update_xlim_max(x2)
+
+    def _update_ylim(self):
+        # just update ylimits and emit via signals, not set them
+        y1, y2 = self.axes.get_ylim()
+        self._update_ylim_min(y1)
+        self._update_ylim_max(y2)
+
     def set_autoscale(self, axis='both'):
         self.axes.relim(visible_only=True)
         self.axes.autoscale(axis=axis)
         self.update_figure()
+        if axis in ('both', 'x'):
+            self._update_xlim()
+        if axis in ('both', 'y'):
+            self._update_ylim()
 
     def process_keyshort_combo(self, k1, k2):
         """Override this method to define combo keyshorts.
@@ -1910,6 +1976,22 @@ class BasePlotWidget(QWidget):
             if o in self.axes.texts:
                 o.remove()
         self.update_figure()
+
+    def _update_xlim_min(self, x: float):
+        self._xlim_min = x
+        self.xlimitMinChanged.emit(x)
+
+    def _update_xlim_max(self, x: float):
+        self._xlim_max = x
+        self.xlimitMaxChanged.emit(x)
+
+    def _update_ylim_min(self, y: float):
+        self._ylim_min = y
+        self.ylimitMinChanged.emit(y)
+
+    def _update_ylim_max(self, y: float):
+        self._ylim_max = y
+        self.ylimitMaxChanged.emit(y)
 
 
 class MatplotlibBaseWidget(BasePlotWidget):
