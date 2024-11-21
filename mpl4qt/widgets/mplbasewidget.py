@@ -1929,16 +1929,6 @@ class MatplotlibBaseWidget(BasePlotWidget):
         config_panel = MatplotlibConfigPanel(self)
         config_panel.exec_()
 
-    def update_figure(self):
-        if self._fig_auto_scale:
-            try:
-                self.axes.relim()
-            except:
-                pass
-            else:
-                self.axes.autoscale()
-        self.canvas.draw_idle()
-
 
 class MatplotlibCMapWidget(BasePlotWidget):
     def __init__(self, parent=None):
