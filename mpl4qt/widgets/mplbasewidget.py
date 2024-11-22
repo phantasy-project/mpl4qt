@@ -99,6 +99,15 @@ class BasePlotWidget(QWidget):
     # panned ROI changed
     pan_roi_changed = pyqtSignal(tuple, tuple)
 
+    # home ROI changed
+    home_roi_changed = pyqtSignal(tuple, tuple)
+
+    # forward ROI changed
+    forward_roi_changed = pyqtSignal(tuple, tuple)
+
+    # backward ROI changed
+    backward_roi_changed = pyqtSignal(tuple, tuple)
+
     # grid
     gridOnUpdated = pyqtSignal(bool)
 
@@ -406,8 +415,16 @@ class BasePlotWidget(QWidget):
             w = MToolbar(self.figure.canvas, self)
             self._handlers['w_mpl_tools'] = w
             w.selectedIndicesUpdated.connect(self.on_selected_indices)
-            w.zoom_roi_changed.connect(self.on_zoom_roi_changed)
-            w.pan_roi_changed.connect(self.on_pan_roi_changed)
+            w.zoom_roi_changed.connect(
+                partial(self.on_tool_roi_changed, self.zoom_roi_changed))
+            w.pan_roi_changed.connect(
+                partial(self.on_tool_roi_changed, self.pan_roi_changed))
+            w.home_roi_changed.connect(
+                partial(self.on_tool_roi_changed, self.home_roi_changed))
+            w.forward_roi_changed.connect(
+                partial(self.on_tool_roi_changed, self.forward_roi_changed))
+            w.backward_roi_changed.connect(
+                partial(self.on_tool_roi_changed, self.backward_roi_changed))
             w.shaded_area_updated.connect(self.on_shaded_area_updated)
         w.show_toolbar()
         w.floatable_changed.emit(False)
@@ -421,19 +438,10 @@ class BasePlotWidget(QWidget):
         self.shaded_area_updated.emit(xlim, ylim)
 
     @pyqtSlot(tuple, tuple)
-    def on_zoom_roi_changed(self, xlim, ylim):
-        # print("Zoomed Rect ROI: ", xlim, ylim)
-        self.zoom_roi_changed.emit(xlim, ylim)
-        x1, x2 = xlim
-        self._update_xlim_min(x1)
-        self._update_xlim_max(x2)
-        y1, y2 = ylim
-        self._update_ylim_min(y1)
-        self._update_ylim_max(y2)
-
-    @pyqtSlot(tuple, tuple)
-    def on_pan_roi_changed(self, xlim, ylim):
-        self.pan_roi_changed.emit(xlim, ylim)
+    def on_tool_roi_changed(self, sig: pyqtSignal,
+                            xlim: tuple[float, float],
+                            ylim: tuple[float, float]):
+        sig.emit(xlim, ylim)
         x1, x2 = xlim
         self._update_xlim_min(x1)
         self._update_xlim_max(x2)

@@ -80,15 +80,28 @@ class NavigationToolbar(NavigationToolbar2QT):
 
     def release_zoom(self, e):
         NavigationToolbar2QT.release_zoom(self, e)
-        xlim = self.mpl.axes.get_xlim()
-        ylim = self.mpl.axes.get_ylim()
-        self.tb.zoom_roi_changed.emit(xlim, ylim)
+        self._get_and_notify_xylimts(self.tb.zoom_roi_changed)
 
     def release_pan(self, e):
         NavigationToolbar2QT.release_pan(self, e)
+        self._get_and_notify_xylimts(self.tb.pan_roi_changed)
+
+    def home(self):
+        NavigationToolbar2QT.home(self)
+        self._get_and_notify_xylimts(self.tb.home_roi_changed)
+
+    def forward(self):
+        NavigationToolbar2QT.forward(self)
+        self._get_and_notify_xylimts(self.tb.forward_roi_changed)
+
+    def back(self):
+        NavigationToolbar2QT.back(self)
+        self._get_and_notify_xylimts(self.tb.backward_roi_changed)
+
+    def _get_and_notify_xylimts(self, sig: pyqtSignal):
         xlim = self.mpl.axes.get_xlim()
         ylim = self.mpl.axes.get_ylim()
-        self.tb.pan_roi_changed.emit(xlim, ylim)
+        sig.emit(xlim, ylim)
 
 
 class MToolbar(QToolBar):
@@ -113,6 +126,15 @@ class MToolbar(QToolBar):
 
     # panned ROI changed
     pan_roi_changed = pyqtSignal(tuple, tuple)
+
+    # home ROI changed
+    home_roi_changed = pyqtSignal(tuple, tuple)
+
+    # forward ROI changed
+    forward_roi_changed = pyqtSignal(tuple, tuple)
+
+    # backward ROI changed
+    backward_roi_changed = pyqtSignal(tuple, tuple)
 
     # add marker tool is checked or not, with mk_name, update/new flag
     marker_add_checked = pyqtSignal(bool, 'QString', bool)
