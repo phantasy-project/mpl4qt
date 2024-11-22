@@ -665,6 +665,14 @@ class MatplotlibCurveWidget(BasePlotWidget):
         """Force update widget."""
         self.update_legend()
         self.update_figure()
+        BasePlotWidget.force_update()
+
+    def fixSetFigureYScale(self, is_linear: bool):
+        # fix the Y scale switching from other types to "linear"
+        if not is_linear:
+            return
+        x, y = self.getXData(), self.getYData()
+        self.update_curve(x, y)
 
     def update_legend(self):
         # update legend if on

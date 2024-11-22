@@ -644,6 +644,9 @@ class BasePlotWidget(QWidget):
             self._update_ylim()
         self.canvas.draw_idle()
 
+    def force_update(self):
+        self.canvas.draw()
+
     def contextMenuEvent(self, evt):
         self._create_ctxtmenu().exec_(self.mapToGlobal(evt.pos()))
 
@@ -1636,6 +1639,7 @@ class BasePlotWidget(QWidget):
         self._fig_yscale = s
         self.axes.set_yscale(s)
         self.update_figure()
+        self.fixSetFigureYScale(s=="linear")
 
     figureYScale = pyqtProperty('QString', getFigureYScale, setFigureYScale)
 
@@ -1992,6 +1996,16 @@ class BasePlotWidget(QWidget):
     def _update_ylim_max(self, y: float):
         self._ylim_max = y
         self.ylimitMaxChanged.emit(y)
+
+    def fixSetFigureYScale(self, is_linear: bool):
+        """Post actions to fix the Y scale visual style:
+        Switching Y scale from other type to 'linear' breaks
+        the visual style of Y scale, though the Y data is untouched,
+        but the visually they do not look right, usually looks shrinked
+        by a few factors. This method needs to be overridden to provide
+        the fix in the subclasses."""
+        if not is_linear:
+            return
 
 
 class MatplotlibBaseWidget(BasePlotWidget):
