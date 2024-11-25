@@ -68,6 +68,7 @@ from mpl4qt.widgets.utils import AUTOFORMATTER
 from mpl4qt.widgets.utils import AUTOFORMATTER_MATHTEXT
 from mpl4qt.widgets.utils import BOOTSTRAP_GREEN
 from mpl4qt.widgets.utils import BOOTSTRAP_RED
+from mpl4qt.widgets.utils import BOOTSTRAP_WHITE
 from mpl4qt.widgets.utils import LINE_STY_VALS
 from mpl4qt.widgets.utils import LINE_DS_VALS
 from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
@@ -286,15 +287,15 @@ class BasePlotWidget(QWidget):
         # if auto scale is enabled, put text label
         if auto_scale_enabled:
             if self.as_ann is None:
-                self.as_ann = self.axes.annotate('AutoScale is Enabled',
+                self.as_ann = self.axes.annotate('AutoScale',
                             xy=(1.0, 1.01),
                             ha='right', va='bottom',
                             xycoords=('axes fraction'),
-                            color='#2E3436',
+                            color=BOOTSTRAP_WHITE,
                             bbox=dict(
-                                boxstyle='round,pad=0.2',
+                                boxstyle='round,pad=0.15',
                                 fc=BOOTSTRAP_GREEN, ec=BOOTSTRAP_GREEN,
-                                lw=1.0, alpha=0.15))
+                                lw=0.5, alpha=0.65))
             else:
                 self.as_ann.set_visible(True)
         else:
