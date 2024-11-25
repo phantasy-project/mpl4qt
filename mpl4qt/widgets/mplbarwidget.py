@@ -23,6 +23,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 """
 
 import numpy as np
+from typing import Union
+
 from PyQt5.QtCore import pyqtProperty
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QColor
@@ -30,6 +32,7 @@ from PyQt5.QtGui import QColor
 from mpl4qt.widgets.mplconfig import MatplotlibConfigBarPanel
 from mpl4qt.widgets.mplcurvewidget import MatplotlibCurveWidget
 
+from matplotlib.collections import LineCollection
 from matplotlib.text import Text
 
 
@@ -323,7 +326,8 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
             rect.set_xy((x0 - (w - w0) / 2.0, y0))
             rect.set_width(w)
 
-    def update_curve(self, x_data=None, y_data=None, yerr_data=None):
+    def update_curve(self, x_data: np.ndarray, y_data: np.ndarray,
+                     yerr_data: Union[np.ndarray, None] = None):
         """Update bar, with given data.
 
         Parameters
@@ -341,6 +345,8 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
             y_data = np.asarray(y_data)
         if isinstance(yerr_data, list):
             yerr_data = np.asarray(yerr_data)
+        if yerr_data is None:
+            yerr_data = np.zeros(x_data.shape)
 
         self._x_data = x_data
         self._y_data = y_data
@@ -437,8 +443,14 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
         """
         return self._x_data, self._y_data, self._yerr_data
 
+    def fixSetFigureYScale(self, is_linear: bool):
+        # fix the Y scale switching from other types to "linear"
+        # do nothing
+        pass
 
-def adjust_bar(patches, eblines, x, y, yerr, bar_width):
+
+def adjust_bar(patches: list, eblines: LineCollection, x: np.ndarray, y: np.ndarray,
+               yerr: np.ndarray, bar_width: float):
     # there must be no nan in yerr, otherwise, the second time invoking get_segments() will crash,
     # now fix: fill the segment with nans
     segs = eblines.get_segments()
