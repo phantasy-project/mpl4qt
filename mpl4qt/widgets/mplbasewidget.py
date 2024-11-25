@@ -66,9 +66,11 @@ from mpl4qt.widgets.mpltoolbar import MToolbar
 from mpl4qt.widgets.utils import ALL_COLORMAPS
 from mpl4qt.widgets.utils import AUTOFORMATTER
 from mpl4qt.widgets.utils import AUTOFORMATTER_MATHTEXT
+from mpl4qt.widgets.utils import BOOTSTRAP_BLACK
 from mpl4qt.widgets.utils import BOOTSTRAP_GREEN
 from mpl4qt.widgets.utils import BOOTSTRAP_RED
 from mpl4qt.widgets.utils import BOOTSTRAP_WHITE
+from mpl4qt.widgets.utils import BOOTSTRAP_YELLOW
 from mpl4qt.widgets.utils import LINE_STY_VALS
 from mpl4qt.widgets.utils import LINE_DS_VALS
 from mpl4qt.widgets.utils import MatplotlibCurveWidgetSettings
@@ -140,9 +142,13 @@ class BasePlotWidget(QWidget):
     # xlimit is changed
     xlimitMinChanged = pyqtSignal(float)
     xlimitMaxChanged = pyqtSignal(float)
+
     # ylimit is changed
     ylimitMinChanged = pyqtSignal(float)
     ylimitMaxChanged = pyqtSignal(float)
+
+    # Y scale is changed
+    yScaleChanged = pyqtSignal('QString')
 
     def __init__(self, parent=None, show_toolbar=True, **kws):
         super(BasePlotWidget, self).__init__(parent)
@@ -230,6 +236,10 @@ class BasePlotWidget(QWidget):
         self.as_ann = None
         self.autoScaleOnUpdated.connect(self.on_autoscale_toggled)
 
+        #
+        self.yscale_ann = None
+        self.yScaleChanged.connect(self.on_yscale_changed)
+
         # add marker mpltool
         self._mk_add_hint_ann = None
 
@@ -282,8 +292,34 @@ class BasePlotWidget(QWidget):
         self.axes.add_patch(p)
         self.update_figure()
 
+    @pyqtSlot('QString')
+    def on_yscale_changed(self, scale_name: str):
+        """Y scale is changed.
+        """
+        as_ann_width_pts = 0
+        if self.as_ann is not None and self.as_ann.get_visible():
+            as_ann_bbox = self.as_ann.get_window_extent(self.canvas.get_renderer())
+            as_ann_width_pts = int(as_ann_bbox.bounds[2] / (self.figure.dpi / 72)) + 5
+
+        if self.yscale_ann is not None:
+            self.yscale_ann.remove()
+
+        self.yscale_ann = self.axes.annotate(
+            scale_name.capitalize(), xy=(1.0, 1.01),
+            ha='right', va='bottom',
+            xycoords=('axes fraction'),
+            xytext=(-as_ann_width_pts, 0), textcoords='offset points',
+            color=BOOTSTRAP_BLACK,
+            bbox=dict(
+                boxstyle='round,pad=0.15',
+                fc=BOOTSTRAP_YELLOW, ec=BOOTSTRAP_YELLOW,
+                lw=0.5, alpha=0.65))
+        if scale_name == "linear":
+            self.yscale_ann.set_visible(False)
+        self.update_figure()
+
     @pyqtSlot(bool)
-    def on_autoscale_toggled(self, auto_scale_enabled):
+    def on_autoscale_toggled(self, auto_scale_enabled: bool):
         # if auto scale is enabled, put text label
         if auto_scale_enabled:
             if self.as_ann is None:
@@ -301,6 +337,9 @@ class BasePlotWidget(QWidget):
         else:
             if self.as_ann is not None:
                 self.as_ann.set_visible(False)
+        # if yscale_ann is non-linear, re-emit yScaleChanged to displace the two annotations
+        if self.getFigureYScale() != "linear":
+            self.yScaleChanged.emit(self.getFigureYScale())
         self.update_figure()
 
     @pyqtSlot(bool, 'QString', bool)
@@ -1639,7 +1678,7 @@ class BasePlotWidget(QWidget):
         return self._fig_yscale
 
     @pyqtSlot('QString')
-    def setFigureYScale(self, s):
+    def setFigureYScale(self, s: str):
         """Set y-axis scale.
 
         Parameters
@@ -1651,6 +1690,7 @@ class BasePlotWidget(QWidget):
         self.axes.set_yscale(s)
         self.update_figure()
         self.fixSetFigureYScale(s=="linear")
+        self.yScaleChanged.emit(s)
 
     figureYScale = pyqtProperty('QString', getFigureYScale, setFigureYScale)
 
