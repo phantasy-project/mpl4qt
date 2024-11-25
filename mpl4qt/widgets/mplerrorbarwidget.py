@@ -23,6 +23,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 """
 
 import numpy as np
+from matplotlib.lines import Line2D
+from typing import Union
+
 from PyQt5.QtCore import pyqtProperty
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QColor
@@ -450,7 +453,9 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
 
     figureEbLineVisible = pyqtProperty(bool, getEbLineVisible, setEbLineVisible)
 
-    def update_curve(self, x_data=None, y_data=None, xerr_data=None, yerr_data=None,
+    def update_curve(self, x_data: np.ndarray, y_data: np.ndarray,
+                     xerr_data: Union[np.ndarray, None] = None,
+                     yerr_data: Union[np.ndarray, None] = None,
                      **kws):
         """Update curve with errorbar, with given data.
 
@@ -484,6 +489,13 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
             xerr_data = np.asarray(xerr_data)
         if isinstance(yerr_data, list):
             yerr_data = np.asarray(yerr_data)
+        if xerr_data is None:
+            xerr_data = np.zeros(x_data.shape)
+        if yerr_data is None:
+            yerr_data = np.zeros(y_data.shape)
+
+        self._xerr = xerr_data
+        self._yerr = yerr_data
 
         xerr_data_l, xerr_data_r = xerr_data, xerr_data
         yerr_data_d, yerr_data_t = yerr_data, yerr_data
@@ -507,8 +519,17 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
         empty_arr = np.asarray([])
         self.update_curve(empty_arr, empty_arr, empty_arr, empty_arr)
 
+    def fixSetFigureYScale(self, is_linear: bool):
+        # fix the Y scale switching from other types to "linear"
+        if not is_linear:
+            return
+        x, y = self.getXData(), self.getYData()
+        self.update_curve(x, y, self._xerr, self._yerr)
 
-def adjust_errorbar(line_obj, ebline_obj, x, y, xerr_l, xerr_r, yerr_d, yerr_t):
+
+def adjust_errorbar(line_obj: Line2D, ebline_obj: dict, x: np.ndarray, y: np.ndarray,
+                    xerr_l: np.ndarray, xerr_r: np.ndarray,
+                    yerr_d: np.ndarray, yerr_t: np.ndarray):
     """Update curve with errorbars.
 
     Parameters
