@@ -1,10 +1,19 @@
-from PyQt5.QtWidgets import QTabBar
-from PyQt5.QtWidgets import QStylePainter
-from PyQt5.QtWidgets import QStyleOptionTab
-from PyQt5.QtWidgets import QStyle
-from PyQt5.QtWidgets import QWidget
-from PyQt5.QtWidgets import QTabWidget
-from PyQt5.QtCore import QPoint, QRect
+from PyQt5.QtWidgets import (
+    QGraphicsDropShadowEffect,
+    QLabel,
+    QSizePolicy,
+    QStyle,
+    QStyleOptionTab,
+    QStylePainter,
+    QTabBar,
+    QTabWidget,
+    QWidget
+)
+from PyQt5.QtCore import (
+    QPoint,
+    QRect,
+    Qt
+)
 
 
 class TabBar(QTabBar):
@@ -46,3 +55,56 @@ class TabWidget(QTabWidget):
         super(self.__class__, self).__init__(*args, **kws)
         self.setTabBar(TabBar())
         self.setTabPosition(QTabWidget.West)
+
+
+class KeyLabel(QLabel):
+
+    def __init__(self, parent = None):
+        super().__init__(parent)
+        self.setAlignment(Qt.AlignCenter)
+        self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        self.setStyleSheet("""
+        QLabel {
+            background-color: #FFFFFF;
+            border: 3px solid #ECF0F1;
+            border-radius: 4px;
+            padding: 8px;
+        }""")
+        #
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(5)
+        shadow.setOffset(3)
+        self.setGraphicsEffect(shadow)
+
+
+if __name__ == "__main__":
+    from PyQt5.QtWidgets import QApplication
+    from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout
+    from PyQt5.QtWidgets import QSpacerItem, QWidget
+    import sys
+    import string
+
+    app = QApplication(sys.argv)
+    w = QWidget()
+    vbox = QVBoxLayout()
+    w.setLayout(vbox)
+
+    def add_keys(keys, w: int, h: int, maxlen: int = 32):
+        hbox = QHBoxLayout()
+        vbox.addLayout(hbox)
+        for c in keys:
+            key = KeyLabel()
+            key.setText(c)
+            key.setFixedWidth(w)
+            key.setFixedHeight(h)
+            hbox.addWidget(key)
+        if len(keys) < maxlen:
+            hbox.addSpacerItem(QSpacerItem(20, 20, QSizePolicy.Expanding))
+
+    add_keys(string.punctuation, 64, 64)
+    add_keys(string.ascii_uppercase, 64, 64)
+    add_keys(string.ascii_lowercase, 64, 64)
+    add_keys(("Ctrl", "Shift", "Alt", "Enter"), 64, 108)
+
+    w.show()
+    sys.exit(app.exec_())
