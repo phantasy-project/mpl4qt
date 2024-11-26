@@ -86,6 +86,9 @@ MPL_VERSION = mpl.__version__
 DTMSEC = 500  # msec
 DTSEC = DTMSEC / 1000.0  # sec
 
+import matplotlib
+MPL_VERSION = matplotlib.__version__
+
 
 class BasePlotWidget(QWidget):
     # combo keyshorts, keystring, timestamp
@@ -1689,7 +1692,8 @@ class BasePlotWidget(QWidget):
         self._fig_yscale = s
         self.axes.set_yscale(s)
         self.update_figure()
-        self.fixSetFigureYScale(s=="linear")
+        if MPL_VERSION == "3.6.3":  # Debian 12
+            self.fixSetFigureYScale(s=="linear")
         self.yScaleChanged.emit(s)
 
     figureYScale = pyqtProperty('QString', getFigureYScale, setFigureYScale)
