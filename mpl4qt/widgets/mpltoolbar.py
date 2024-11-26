@@ -295,6 +295,7 @@ class MToolbar(QToolBar):
         else:
             self._is_snap_point = True
         cross_snap_act.setChecked(self._is_snap_point)
+        cross_act.toggled.connect(cross_snap_act.setDisabled)
 
         cross_marker_act = QAction(QIcon(QPixmap(":/tools/add_marker.png")), "Add Marker", self)
         self.cross_marker_act = cross_marker_act
@@ -475,7 +476,7 @@ class MToolbar(QToolBar):
         self.parent.update_figure()
 
     @pyqtSlot(bool)
-    def on_snap_cross(self, is_snap):
+    def on_snap_cross(self, is_snap: bool):
         # snap to point or not
         self._is_snap_point = is_snap
         if is_snap:
@@ -901,13 +902,13 @@ class SnapCursor(QObject):
         self.set_data((o, *o.get_data()))
 
     @pyqtSlot(bool, tuple)
-    def on_enable_snap(self, is_snap, t):
+    def on_enable_snap(self, is_snap: bool, t):
         # enable snap, tuple of gobj,xy(z)data
         self.is_snap = is_snap
         self.set_data(t)
 
     @pyqtSlot(bool)
-    def on_disable_snap(self, is_snap):
+    def on_disable_snap(self, is_snap: bool):
         self.is_snap = is_snap
 
     def init_cursor(self):
@@ -932,7 +933,10 @@ class SnapCursor(QObject):
                                             lw=1.0, alpha=0.95))
 
     def set_data(self, t):
+        # t: Line2D, np.ndarray, np.ndarray, Line2D(legend), Line2D
+        # t: AxesImage, np.ndarray, np.ndarray, np.ma.core.MaskedArray, AxesImage(size), AxesImage
         gobj, *tdata = t
+
         if self.gobj is None:
             self.gobj = gobj
         if gobj == self.gobj:
