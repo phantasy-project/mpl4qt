@@ -692,7 +692,7 @@ class Ui_Dialog(object):
         self.label_3.setText(_translate("Dialog", "Change line drawstyle"))
         self.label_56.setText(_translate("Dialog", "D"))
         self.label_57.setText(_translate("Dialog", "S"))
-        self.label_16.setText(_translate("Dialog", "Image Wiget"))
+        self.label_16.setText(_translate("Dialog", "Image Widget"))
         self.label_22.setText(_translate("Dialog", "Change color map"))
         self.label_21.setText(
             _translate(
