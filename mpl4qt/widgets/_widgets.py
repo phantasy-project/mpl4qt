@@ -66,14 +66,14 @@ class KeyLabel(QLabel):
         self.setStyleSheet("""
         QLabel {
             background-color: #FFFFFF;
-            border: 3px solid #ECF0F1;
-            border-radius: 4px;
-            padding: 8px;
+            border: 1px solid #BDC3C7;
+            border-radius: 1px;
+            padding: 2px;
         }""")
         #
         shadow = QGraphicsDropShadowEffect()
-        shadow.setBlurRadius(5)
-        shadow.setOffset(3)
+        shadow.setBlurRadius(4)
+        shadow.setOffset(2)
         self.setGraphicsEffect(shadow)
 
 
