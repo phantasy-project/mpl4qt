@@ -236,6 +236,12 @@ class MToolbar(QToolBar):
         auto_yscale_act = QAction(QIcon(QPixmap(":/tools/auto-yscale.png")), "Auto Y-Scale", self)
         auto_yscale_act.setToolTip("Auto Y-Scale (a,y)")
 
+        # grid on/off tool
+        self.grid_toggle_act = grid_toggle_act = QAction(QIcon(QPixmap(":/tools/grid-on.png")), "Grid", self)
+        grid_toggle_act.setCheckable(True)
+        grid_toggle_act.setToolTip("Toggle Grid (g)")
+        self.parent.gridOnUpdated.connect(self.grid_toggle_act.setChecked)
+
         # pan tool
         pan_act = QAction(QIcon(QPixmap(":/tools/pan.png")), "Pan", self)
         pan_act.setCheckable(True)
@@ -405,6 +411,7 @@ class MToolbar(QToolBar):
         self.addAction(auto_yscale_act)
         self.addSeparator()
 
+        self.addAction(grid_toggle_act)
         self.addAction(pan_act)
         self.addAction(zoom_act)
         self.addAction(lasso_act)
@@ -431,6 +438,7 @@ class MToolbar(QToolBar):
         auto_scale_act.triggered.connect(self.auto_scale)
         auto_xscale_act.triggered.connect(self.auto_xscale)
         auto_yscale_act.triggered.connect(self.auto_yscale)
+        grid_toggle_act.toggled.connect(self.toggle_grid)
         pan_act.toggled.connect(self.pan)
         zoom_act.toggled.connect(self.zoom)
         lasso_act.toggled.connect(self.lasso)
@@ -699,10 +707,21 @@ class MToolbar(QToolBar):
         self.tb.back()
 
     @pyqtSlot(bool)
-    def toggle_auto_scale(self, enabled):
+    def toggle_auto_scale(self, enabled: bool):
         """Enable/disable auto xyscale.
         """
         self.parent.setFigureAutoScale(enabled)
+
+    @pyqtSlot(bool)
+    def toggle_grid(self, enabled: bool):
+        """Enable/disable (ON/OFF) grids.
+        """
+        self.parent.setFigureGridToggle(enabled)
+        if enabled:
+            px = QPixmap(":/tools/grid-on.png")
+        else:
+            px = QPixmap(":/tools/grid-off.png")
+        self.grid_toggle_act.setIcon(QIcon(px))
 
     @pyqtSlot()
     def auto_scale(self):
