@@ -727,6 +727,7 @@ class BasePlotWidget(QWidget):
                                 "About", menu)
         keyshort_action = QAction(QIcon(QPixmap(":/tools/keyshort.png")),
                                 "Shortcuts", menu)
+        keyshort_action.setShortcut("?")  # or F1
 
         menu.addAction(config_action)
         menu.addAction(export_action)
@@ -1858,7 +1859,7 @@ class BasePlotWidget(QWidget):
         if axis in ('both', 'y'):
             self._update_ylim()
 
-    def process_keyshort_combo(self, k1, k2):
+    def process_keyshort_combo(self, k1: str, k2: str):
         """Override this method to define combo keyshorts.
         """
         # print("Capture key combo: ", k1, k2)
@@ -1888,11 +1889,14 @@ class BasePlotWidget(QWidget):
             self.setLineDrawStyle(
                 cycle_list_next(list(LINE_DS_VALS), self.getLineDrawStyle()))
 
-    def process_keyshort(self, k):
+    def process_keyshort(self, k: str):
         """Override this method to define keyshorts.
         """
         # print("Capture key: ", k)
-        if k == 'g':
+        if k == 'f1':
+            # help msgbox
+            self.kbd_help()
+        elif k == 'g':
             # turn on/off grid
             self.setFigureGridToggle(not self.getFigureGridToggle())
         elif k == 'a': # and self.widget_type != 'image':
