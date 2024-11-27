@@ -671,8 +671,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
         # fix the Y scale switching from other types to "linear"
         if not is_linear:
             return
-        x, y = self.getXData(), self.getYData()
-        self.update_curve(x, y)
+        [l.set_data(*l.get_data()) for l in self._lines]
+        self.update_figure()
 
     def update_legend(self):
         # update legend if on
