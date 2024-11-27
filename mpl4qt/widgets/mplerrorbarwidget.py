@@ -523,8 +523,18 @@ class MatplotlibErrorbarWidget(MatplotlibCurveWidget):
         # fix the Y scale switching from other types to "linear"
         if not is_linear:
             return
-        x, y = self.getXData(), self.getYData()
-        self.update_curve(x, y, self._xerr, self._yerr)
+        for avgline, ebline in zip(self._lines, self._eb_lines):
+            (xcap_r, xcap_l), _ = ebline['xerr']
+            (ycap_t, ycap_d), _ = ebline['yerr']
+            xerr_l_val = xcap_l.get_xdata()
+            xerr_r_val = xcap_r.get_xdata()
+            yerr_d_val = ycap_d.get_ydata()
+            yerr_t_val = ycap_t.get_ydata()
+            x, y = avgline.get_data()
+            adjust_errorbar(avgline, ebline, x, y,
+                            x - xerr_l_val, xerr_r_val - x,
+                            y - yerr_d_val, yerr_t_val - y)
+        self.update_figure()
 
 
 def adjust_errorbar(line_obj: Line2D, ebline_obj: dict, x: np.ndarray, y: np.ndarray,
