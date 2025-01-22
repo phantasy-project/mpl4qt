@@ -27,18 +27,23 @@ from typing import Union
 
 from PyQt5.QtCore import pyqtProperty
 from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QColor
 
 from mpl4qt.widgets.mplconfig import MatplotlibConfigBarPanel
 from mpl4qt.widgets.mplcurvewidget import MatplotlibCurveWidget
 
 from matplotlib.collections import LineCollection
+from matplotlib.patches import Rectangle
 from matplotlib.text import Text
 
 
 class MatplotlibBarWidget(MatplotlibCurveWidget):
     """MatplotlibBarWidget(MatplotlibCurveWidget)
     """
+
+    # the x pos of the picked bar(s): list[tuple[int, float]]
+    selectedBarsUpdated = pyqtSignal(list)
 
     def __init__(self, parent=None):
         self._init_config()
@@ -108,6 +113,7 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
         )
         self._eb_lines = self._bars.errorbar.lines[-1][0]
         self._rects = self._bars.patches
+        [p.set_picker(True) for p in self._rects]
 
     def on_config(self):
         config_panel = MatplotlibConfigBarPanel(self)
@@ -421,10 +427,15 @@ class MatplotlibBarWidget(MatplotlibCurveWidget):
             [o.remove() for o in self._all_annotes if o in self.axes.texts]
 
     def on_pick(self, evt):
-        if isinstance(evt.artist, Text):
-            obj = evt.artist
+        o = evt.artist
+        if isinstance(o, Text):
             pos = evt.mouseevent.xdata, evt.mouseevent.ydata
-            self._pk_text = (obj, pos)
+            self._pk_text = (o, pos)
+        elif isinstance(o, Rectangle):
+            l, r = o.get_x(), o.get_x() + o.get_width()
+            xs = [(i, v) for i, v in enumerate(self._x_data) if l < v < r]
+            if xs and evt.mouseevent.button == 1:  # left mouse button clicked only
+                self.selectedBarsUpdated.emit(xs)
 
     def on_release(self, evt):
         if not evt.inaxes or self._pk_text is None:
