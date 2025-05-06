@@ -125,6 +125,8 @@ class MatplotlibCurveWidget(BasePlotWidget):
     def update_curve(self, x_data, y_data, **kws):
         """Update curve by feeding two 1D array: *x_data* and *y_data*.
         """
+        if x_data is None or y_data is None:
+            x_data, y_data = [], []
         self._line.set_data(x_data, y_data)
         self._x_data, self._y_data = x_data, y_data
         self.update_figure()
