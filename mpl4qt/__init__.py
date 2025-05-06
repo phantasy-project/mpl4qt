@@ -22,7 +22,7 @@ finally:
 from .widgets import *
 
 __authors__ = "Tong Zhang"
-__copyright__ = "(c) 2018-2024, Facility for Rare Isotope beams," \
+__copyright__ = "(c) 2025, Facility for Rare Isotope beams," \
                 " Michigan State University"
 __contact__ = "Tong Zhang <zhangt@frib.msu.edu>"
-__version__ = "3.0.1"
+__version__ = "3.1.0"
