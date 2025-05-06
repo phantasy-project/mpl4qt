@@ -1962,6 +1962,8 @@ class BasePlotWidget(QWidget):
         else:
             df_list = []
             for i, line in enumerate(self.get_all_curves()):
+                if not line.get_visible():
+                    continue
                 lbl = line.get_label()
                 if lbl.startswith("_"):
                     lbl = f"line{i+1}"
