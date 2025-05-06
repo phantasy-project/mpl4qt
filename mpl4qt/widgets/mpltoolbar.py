@@ -757,9 +757,9 @@ class MToolbar(QToolBar):
             ext = ext[:-1].split('.')[-1]
             filepath = f"{filepath.rsplit('.')[0]}.{ext}"
             self._save_data(filepath, ext)
-        except:
+        except Exception as e:
             QMessageBox.warning(self, "Save Data",
-                                "Failed to save data to {}".format(filepath),
+                                f"Failed to save data to {filepath}:\n{e}",
                                 QMessageBox.Ok)
         else:
             QMessageBox.information(self, "Save Data",
@@ -784,10 +784,15 @@ class MToolbar(QToolBar):
         """
         wtype = self.parent.widget_type
         _, filename = tempfile.mkstemp('.xlsx')
-        self._save_data(filename, 'xlsx')
-        opened = QDesktopServices.openUrl(QUrl(filename))
-        if opened:
-            QTimer.singleShot(5000, lambda: os.remove(filename))
+        try:
+            self._save_data(filename, 'xlsx')
+            opened = QDesktopServices.openUrl(QUrl(filename))
+            if opened:
+                QTimer.singleShot(5000, lambda: os.remove(filename))
+        except Exception as e:
+            QMessageBox.warning(self, "Read Data",
+                                f"Failed to read data:\n{e}",
+                                QMessageBox.Ok)
 
     @pyqtSlot()
     def lasso(self):
