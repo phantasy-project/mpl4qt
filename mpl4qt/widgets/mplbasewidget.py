@@ -901,8 +901,9 @@ class BasePlotWidget(QWidget):
             which = 'both' if kws.get('mticks', True) else 'major'
             self.axes.grid(which=which, color=color, linestyle='--')
         else:
-            self.axes.grid(b=False, which='minor')
-            self.axes.grid(b=False)
+            # use 'b' for matplotlib version <=3.4
+            self.axes.grid(visible=False, which='minor')
+            self.axes.grid(visible=False)
 
     def set_xylabel_font(self, font=None):
         if font is None:
